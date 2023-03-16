@@ -1,9 +1,8 @@
 #! /bin/bash
 
 ## PATH ##
-if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
-then
-    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
+    PATH="$PATH:$HOME/.local/bin:$HOME/bin"
 fi
 # Look in PWD last.
 export PATH=$PATH:.
