@@ -60,7 +60,7 @@ function example {
 		# Determine what option user gave.
 		case $fullArg in
 			-h|--help)
-				echo "$OUTPUT_DOC"
+				echo "$FUNCTION_NAME_DOC"
 				exit 0  ;;
 			*)
 				log $errorLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
@@ -73,7 +73,7 @@ function example {
 	## Error Check Argument(s) ##
 	 ###########################
 	log $traceLvl -m="Ensuring all required argument(s) were given..."
-#	checkRequiredOpts "$THIS_FUNCTIONS_DOC" "-a=$varHoldingValOfRequiredArg"
+#	checkRequiredOpts "$FUNCTION_NAME_DOC" "-a=$varHoldingValOfRequiredArg"
 #	declare rtVal=$?
 #	if [[ $rtVal -ne 0 ]]; then
 #		return $rtVal
