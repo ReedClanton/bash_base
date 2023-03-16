@@ -33,9 +33,8 @@ IFS='' read -r -d '' FUNCTION_NAME_DOC <<"EOF"
 #/ TODO(S):
 #/	- TODO
 EOF
-function example {
-	echo "HERE"
-	log -i -c=${FUNCNAME[0]} --full-title -m="Title Text Here (${FUNCNAME[0]})"
+function functionName {
+	log -i -c=${FUNCNAME[0]} --full-title -m="<titleTextHere>"
 
 	log -c=${FUNCNAME[0]} -m="Resetting local variable(s)..."
 	 ###############################
@@ -73,14 +72,20 @@ function example {
 	## Error Check Argument(s) ##
 	 ###########################
 	log $traceLvl -m="Ensuring all required argument(s) were given..."
-#	checkRequiredOpts "$FUNCTION_NAME_DOC" "-a=$varHoldingValOfRequiredArg"
-#	declare rtVal=$?
-#	if [[ $rtVal -ne 0 ]]; then
-#		return $rtVal
-#	fi
+	checkRequiredOpts "$FUNCTION_NAME_DOC" "-a=$varHoldingValOfRequiredArg"
+	declare rtVal=$?
+	if [[ $rtVal -ne 0 ]]; then
+		return $rtVal
+	fi
 	log $debugLvl -m="All required argument(s) were given."
+	
+	 #####################
+	## Next Section Name ##
+	 #####################
+	
 }
 
+# TODO: Move to README.md.
 # Allows calling of file's function(s) from the terminal (fileName.sh functionName args).
 case "$1" in
     "")
@@ -92,3 +97,12 @@ case "$1" in
     	log_error "Unkown function: $1()"
     	exit 2  ;;
 esac
+
+# TODO: Move to README.md.
+#How to call function/command and save off what it returnes, as well as it's std and err output:
+cmd="Command you want to run here"
+unset stdOut errOut rtOut
+eval "$( (eval $cmd) \
+	2> >(errOut=$(cat); typeset -p errOut) \
+	 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
+
