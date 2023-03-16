@@ -4,7 +4,6 @@
 ## Global(s)/Constant(s) ##
  #########################
 ## Constant(s) ##
-# Includes constant(s) relevant to logger method.
 source $BASH_FUNCTIONS_CONSTANTS/output.sh
 
  #####################
