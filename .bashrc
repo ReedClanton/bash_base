@@ -1,6 +1,8 @@
 # .bashrc
 
-# Source global definitions
+ #############################
+## Source Global Definitions ##
+ #############################
 if [ -f /etc/bashrc ]; then
 	source /etc/bashrc
 fi
@@ -37,4 +39,10 @@ bind "set show-all-if-ambiguous on"
 # export SYSTEMD_PAGER=
 
 unset rc
+
+ ##########
+## Backup ##
+ ##########
+# Back up home directory each time any terminal is opened.
+$HOME/bash/functions/backUp.sh
 
