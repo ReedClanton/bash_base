@@ -1,5 +1,4 @@
 #! /bin/bash
-# .bash_profile
 
 ## PATH ##
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]
@@ -18,6 +17,6 @@ export GIT_ROOT=$HOME/git
 
 # Get the aliases and functions
 if [ -f ~/.bashrc ]; then
-	. ~/.bashrc
+	source ~/.bashrc
 fi
 
