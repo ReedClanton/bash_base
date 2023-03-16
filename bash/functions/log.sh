@@ -106,7 +106,8 @@ IFS='' read -r -d '' LOG_DOC <<"EOF"
 #/	- 0:
 #/		Returned when:
 #/			- Help message is requested OR
-#/			- Processing is successfull.
+#/			- Processing is successfull OR
+#/			- No arguments are provided.
 #/	- 1:
 #/		Returned when:
 #/			- Required argument(s) haven't been provided.
@@ -179,7 +180,7 @@ for fullArg in "${@}"; do
 			title=$LINE_TITLE  ;;
 		*)
 			printf "$pfix ERROR log:\t"
-			$BASH_FUNCTIONS/output.sh --prefix --postfix -m="Calling function provided invalid option: '$fullArg', see doc:"
+			$BASH_FUNCTIONS/output.sh --pp -m="Calling function provided invalid option: '$fullArg', see doc:"
 			echo "$LOG_DOC"
 			exit 20  ;;
 	esac
@@ -223,7 +224,7 @@ if [[ $BASH_LOG_LEVEL -ge $lvl ]]; then
 		if [[ $title -eq $FULL_TITLE ]]; then
 			msg="$pfix\n$($output_call --indent=4 -p -m="$msg")\n"
 		else
-			msg="$pfix\n$($output_call --indent=8 --pre-post-fix -m="$msg")\n"
+			msg="$pfix $($output_call --pre-post-fix -m="$msg")\n"
 		fi
 	else
 		msg="$pfix\t$msg\n"
