@@ -100,9 +100,11 @@ esac
 
 # TODO: Move to README.md.
 #How to call function/command and save off what it returnes, as well as it's std and err output:
+```
 cmd="Command you want to run here"
 unset stdOut errOut rtOut
 eval "$( (eval $cmd) \
 	2> >(errOut=$(cat); typeset -p errOut) \
 	 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
+```
 
