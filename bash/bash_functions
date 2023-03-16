@@ -15,7 +15,7 @@ declare -x BASH_FUNCTIONS_CONSTANTS=$BASH_FUNCTIONS/constants
  ###########################
 ## Data ##
 # Includes variables relevant to all functions.
-source $BASH_FUNCTIONS/variables-global.sh
+source $BASH_FUNCTIONS/variablesGlobal.sh
 
 ## Function(s) ##
 # Include output producing/formatting function(s) used by other function(s) in the same/child directories.
@@ -30,9 +30,4 @@ function log() {
 export -f log
 # Include function that backs up local home directory to "external" drive.
 alias backUp=$BASH_FUNCTIONS/backUp.sh
-
- ################################
-## <NameOfDirectoryInFunctions> ##
- ################################
-# NoOp
 
