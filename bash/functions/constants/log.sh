@@ -34,5 +34,5 @@ declare -irx TRACE=5
 # Indicates that all logs should be produced.
 declare -irx ALL=$TRACE
 # Determines bash function logging level.
-declare -ix BASH_LOG_LEVEL=$WARN
+declare -ix BASH_LOG_LEVEL=$INFO
 

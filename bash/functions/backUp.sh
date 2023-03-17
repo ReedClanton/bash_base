@@ -110,7 +110,7 @@ done
  ###############
 ## Run Back Up ##
  ###############
-log $traceLvl -m="Running back up..."
+log $infoLvl -m="Running back up..."
 declare -r cmd="rsync $options $backUpSourcePath $backUpDestPath"
 unset stdOut errOut rtOut
 eval "$( (eval $cmd) \
