@@ -44,5 +44,5 @@ unset rc
 ## Backup ##
  ##########
 # Back up home directory each time any terminal is opened.
-$HOME/bash/functions/backUp.sh
+backUp
 

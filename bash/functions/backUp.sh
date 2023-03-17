@@ -63,33 +63,31 @@ IFS='' read -r -d '' BACKUP_DOC <<"EOF"
 #/	- Missing back up location should be handled.
 #/	- Logger usage should be made more robust.
 EOF
-# Code is offten called prior to environment initialization,
-# so logging function must be manually called.
-declare localLogger="/home/reedclanton/bash/functions/log.sh -c=backUp"
-
-$localLogger -m="Resetting local variable(s)..."
+log -c="backUp" -m="Resetting local variable(s)..."
  ###############################
 ## Reset/Set Local Variable(s) ##
  ###############################
 # Logging var(s).
-declare traceLvl="$localLogger"
-declare debugLvl="$localLogger -d"
-declare infoLvl="$localLogger -i"
-declare warnLvl="$localLogger -w"
-declare errorLvl="$localLogger -e"
+declare traceLvl="-c=backUp"
+declare debugLvl="-c=backUp -d"
+declare infoLvl="-c=backUp -i"
+declare warnLvl="-c=backUp -w"
+declare errLvl="-c=backUp -e"
 # Name of directory back ups are stored in.
 declare backUpDir=$DEFAULT_BACK_UP_DEST_DIR
 # Tracks directory being backed up.
 declare backUpSourcePath=$DEFAULT_BACK_UP_SOURCE_PATH
 # Tracks path backup will be created at.
 declare backUpDestPath=$DEFAULT_BACK_UP_DEST_PATH
-$traceLvl -m="Local variable(s) reset."
+# TODO: Comment.
+declare options="--delete-excluded -r -p --include='/.bash*' --exclude='/.*' --exclude='/GDrive'"
+log $traceLvl -m="Local variable(s) reset."
 
  #####################
 ## Process Option(s) ##
  #####################
 for fullArg in "${@}"; do
-	$traceLvl -m="Processing option: '$fullArg'..."
+	log $traceLvl -m="Processing option: '$fullArg'..."
 	# Tracks value of current option.
 	declare arg=${fullArg#*=}
 
@@ -99,9 +97,9 @@ for fullArg in "${@}"; do
 			echo "$BACKUP_DOC"
 			exit 0  ;;
 		-q|--quiet)
-			echo "-q/--quiet not implemented yet"  ;;
+			log $warnLvl -m="-q/--quiet not implemented yet"  ;;
 		*)
-			$errorLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
+			log $errLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
 			echo "$BACKUP_DOC"
 			exit 20  ;;
 	esac
@@ -115,14 +113,18 @@ done
  ###############
 ## Run Back Up ##
  ###############
-# Determine what directory backup should be placed in.
-rsync \
-	--delete-excluded \
-	-r \
-	-q \
-	--include='/.bash*' \
-	--exclude='/.*' --exclude='/GDrive' \
-	$backUpSourcePath \
-	$backUpDestPath
-exit 0
+log $traceLvl -m="Running back up..."
+declare -r cmd="rsync $options $backUpSourcePath $backUpDestPath"
+unset stdOut errOut rtOut
+eval "$( (eval $cmd) \
+	2> >(errOut=$(cat); typeset -p errOut) \
+	 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
+
+if [[ $rtOut -ne 0 ]]; then
+	log $errLvl -m="$errOut"
+else
+	log $traceLvl -m="$stdOut"
+fi
+
+exit $rtOut
 
