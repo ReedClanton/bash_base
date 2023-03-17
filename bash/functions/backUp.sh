@@ -58,10 +58,7 @@ IFS='' read -r -d '' BACKUP_DOC <<"EOF"
 #/	- Implement -q option.
 #/	- Implement environment error checking.
 #/	- Fill out doc.
-#/	- Fix logger so it takes into account log level.
-#/	- Success of backup should be reflected in return value.
 #/	- Missing back up location should be handled.
-#/	- Logger usage should be made more robust.
 EOF
 log -c="backUp" -m="Resetting local variable(s)..."
  ###############################
