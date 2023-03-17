@@ -56,7 +56,8 @@ IFS='' read -r -d '' BACKUP_DOC <<"EOF"
 #/ 
 #/ TODO(S):
 #/	- Implement -q option.
-#/	- Implement environment error checking.
+#/	- Implement options for changing location back ups are written to.
+#/	- Explore alternatives to rsync that may be used if rsync isn't installed.
 #/	- Fill out doc.
 #/	- Missing back up location should be handled.
 EOF
@@ -105,7 +106,13 @@ done
  ##############################
 ## Error Checking Environment ##
  ##############################
-# TODO: Check if rsync is installed, if it's not, deal with that.
+log $traceLvl -m="Ensuring rsync is installed..."
+if [[ "$(command -v rsync)" != "" ]]; then
+	log $traceLvl -m="rsync is installed."
+else
+	log $errLvl -m="rsync isn't installed."
+	exit 21
+fi
 
  ###############
 ## Run Back Up ##
