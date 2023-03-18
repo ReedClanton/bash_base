@@ -34,8 +34,7 @@ else
 			mv $HOME/bash $BACK_UP_DIR
 			
 			printf "Copying file(s) to '$HOME'...\n"
-			cp $PWD/.bashrc $HOME/
-			cp $PWD/.bash_profile $HOME/
+			cp $PWD/.* $HOME/
 			
 			printf "Copying directory(ies) to '$HOME'...\n"
 			if [[ -d "$HOME/bash" ]]; then
