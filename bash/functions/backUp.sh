@@ -78,7 +78,7 @@ declare backUpSourcePath=$DEFAULT_BACK_UP_SOURCE_PATH
 # Tracks path backup will be created at.
 declare backUpDestPath=$DEFAULT_BACK_UP_DEST_PATH
 # TODO: Comment.
-declare options="--delete-excluded -r -p --include='/.bash*' --exclude='/.*' --exclude='/GDrive'"
+declare options="--delete-excluded -r --include='/.bash*' --exclude='/.*' --exclude='/GDrive'"
 log $traceLvl -m="Local variable(s) reset."
 
  #####################
@@ -127,6 +127,7 @@ eval "$( (eval $cmd) \
 if [[ $rtOut -ne 0 ]]; then
 	log $errLvl -m="$errOut"
 else
+	# TODO: Handle condidtion where rsync stdOut is empty (currently errors).
 	log $traceLvl -m="$stdOut"
 fi
 
