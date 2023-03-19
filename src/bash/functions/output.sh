@@ -72,6 +72,7 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/	- Implement: Error checking to ensure requried options are provided.
 #/	- Return 1 when required arguments are not provided.
 #/	- Display this message when required argument(s) are not provided.
+#/	- Move this function to its own file.
 EOF
 function createHeaderFooter {
 	 ###############################
@@ -490,4 +491,5 @@ fi
 
 ## Write Final Message ##
 printf "$rtOutput"
+exit 0
 
