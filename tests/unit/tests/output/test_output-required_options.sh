@@ -106,6 +106,50 @@ test_output__single_line__upper_alphanumeric__multiple_char() {
 }
 
 #/ DESCRIPTION:
+#/	Ensure messages with text containing a single special character
+#/	is re-produced as given.
+#/
+#/ TODO(S):
+#/	- Mock out method call(s).
+#/	- Mock out constant(s).
+test_output__single_line__special__single_char() {
+ 	assert_equals "!" "$(output -m='!')"
+ 	assert_equals "@" "$(output -m='@')"
+ 	assert_equals "#" "$(output -m='#')"
+ 	assert_equals "$" "$(output -m='$')"
+# 	assert_equals "%" "$(output -m='%')"
+ 	assert_equals "^" "$(output -m='^')"
+ 	assert_equals "&" "$(output -m='&')"
+ 	assert_equals "*" "$(output -m='*')"
+ 	assert_equals "(" "$(output -m='(')"
+ 	assert_equals ")" "$(output -m=')')"
+ 	assert_equals "\-" "$(output -m='\-')"
+ 	assert_equals "_" "$(output -m='_')"
+ 	assert_equals "=" "$(output -m='=')"
+ 	assert_equals "+" "$(output -m='+')"
+ 	assert_equals "[" "$(output -m='[')"
+ 	assert_equals "{" "$(output -m='{')"
+ 	assert_equals "]" "$(output -m=']')"
+ 	assert_equals "}" "$(output -m='}')"
+ 	assert_equals "\\" "$(output -m='\\')"
+ 	assert_equals "\\" "$(output -m='\\')"
+ 	assert_equals ";" "$(output -m=';')"
+ 	assert_equals ":" "$(output -m=':')"
+# 	assert_equals "'" "$(output -m=''')"
+ 	assert_equals '"' "$(output -m='"')"
+ 	assert_equals "," "$(output -m=',')"
+ 	assert_equals "<" "$(output -m='<')"
+ 	assert_equals "." "$(output -m='.')"
+ 	assert_equals ">" "$(output -m='>')"
+ 	assert_equals "/" "$(output -m='/')"
+ 	assert_equals "?" "$(output -m='?')"
+ 	assert_equals " " "$(output -m=' ')"
+ 	assert_equals '`' "$(output -m='`')"
+ 	assert_equals "~" "$(output -m='~')"
+ 	assert_equals "?" "$(output -m='?')"
+}
+
+#/ DESCRIPTION:
 #/	Ensure message text containing a single lower case letter results in a
 #/	non-error return code.
 #/
