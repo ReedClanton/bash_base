@@ -1,11 +1,14 @@
 #/ DESCRIPTION:
-#/	Contains unit tests of output.sh.
+#/	Contains unit test(s) of output.sh that only deals with required option(s).
 #/
-#/ USAGE: ./bash_unit [OPTIONS]... tests/test_output
+#/ USAGE: ./bash_unit [OPTIONS]... ./tests/output/<thisFileName>.sh
 #/
 #/ TODO(S):
+#/	- Test special characters.
+#/	- Test when message text is spread out over multiple lines.
 #/	- Test return values.
-#/	- TODO
+#/	- Test --help.
+#/	- Test -h.
 
 #/ DESCRIPTION:
 #/	Setup that's run once prior to all test(s) in this file.
@@ -15,8 +18,9 @@
 setup_suite() {
 	# Allows tests to just call `output` rather than accessing the full path.
 	function output() {
-		../../../src/bash/functions/output.sh "${@}"
+		../../../../src/bash/functions/output.sh "${@}"
 	}
+	
 }
 
 #/ DESCRIPTION:
@@ -25,8 +29,8 @@ setup_suite() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__lower_alpha__single_char__valid_output() {
-	assert_equals "t" "$(output -m='t')"
+test_output__single_line__lower_alpha__single_char() {
+	assert_equals "q" "$(output -m='q')"
 }
 
 #/ DESCRIPTION:
@@ -35,8 +39,8 @@ test_output__single_line__lower_alpha__single_char__valid_output() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__upper_alpha__single_char__valid_output() {
-	assert_equals "B" "$(output -m='B')"
+test_output__single_line__upper_alpha__single_char() {
+	assert_equals "Q" "$(output -m='Q')"
 }
 
 #/ DESCRIPTION:
@@ -45,7 +49,7 @@ test_output__single_line__upper_alpha__single_char__valid_output() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__lower_alpha__multiple_char__valid_output() {
+test_output__single_line__lower_alpha__multiple_char() {
 	assert_equals "test" "$(output -m='test')"
 }
 
@@ -55,7 +59,7 @@ test_output__single_line__lower_alpha__multiple_char__valid_output() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__upper_alpha__multiple_char__valid_output() {
+test_output__single_line__upper_alpha__multiple_char() {
 	assert_equals "TEST" "$(output -m='TEST')"
 }
 
@@ -65,7 +69,7 @@ test_output__single_line__upper_alpha__multiple_char__valid_output() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__numeric__single_char__valid_output() {
+test_output__single_line__numeric__single_char() {
 	assert_equals "1" "$(output -m='1')"
 }
 
@@ -75,7 +79,7 @@ test_output__single_line__numeric__single_char__valid_output() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__numeric__multiple_char__valid_output() {
+test_output__single_line__numeric__multiple_char() {
 	assert_equals "1234567890" "$(output -m='1234567890')"
 }
 
@@ -86,7 +90,7 @@ test_output__single_line__numeric__multiple_char__valid_output() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__lower_alphanumeric__multiple_char__valid_output() {
+test_output__single_line__lower_alphanumeric__multiple_char() {
 	assert_equals "t1e2s3t4" "$(output -m='t1e2s3t4')"
 }
 
@@ -97,7 +101,7 @@ test_output__single_line__lower_alphanumeric__multiple_char__valid_output() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__upper_alphanumeric__multiple_char__valid_output() {
+test_output__single_line__upper_alphanumeric__multiple_char() {
  	assert_equals "T1E2S3T4" "$(output -m='T1E2S3T4')"
 }
 
