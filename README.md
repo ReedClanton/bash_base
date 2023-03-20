@@ -16,63 +16,26 @@ Section covers where to go to find out more about the functionality provided by 
 
 #### [Basic Environment Setup and Configuration](src/README.md)
 
-See **[this `README.md`](src/README.md)** for more information.
-
 There is an environment setup script here as well as the base file(s) used when configuring a POSIX complient environment. The `README.md` linked to above contains more info.
 
 Please note that an attempt is made to ensure everything is POSIX complient, but most of my systems run `bash`.
 
-#### Advanced Environment Configuration
+#### [Advanced Environment Configuration](src/bash/README.md)
 
-See **[this `README.md`](src/bash/README.md)** for more information.
+These file(s) are used (sourced) by the files covered by [Basic Environment Setup and Configuration](#basic-environment-setup-and-configuration). The `README.md` linked to above contains more info.
 
-These file(s) are used (sourced) by the files covered by [Basic Environment Setup and Configuration](#basic-environment-setup-and-configuration).
+#### [POSIX Functions](src/bash/functions/README.md)
 
+These file(s) contain POSIX complient function(s). The `README.md` linked to above contains more info.
 
-Bash function that produces formatted logs to stdout.
+#### [POSIX Function Constants](src/bash/functions/constants/README.md)
 
-#### Location
+These file(s) contain constants used by the POSIX functions in the parient directory. The `README.md` linked to above contains more info.
 
-bash/functions/log.sh
-
-#### Example Usage
-
-```sh
-declare infoLvl="-i -c=example_script"
-
-log $infoLvl -m="Requesting input from user..."
-printf "Enter number you'd like to count to: "
-read userVar
-log $infoLvl -m="User entered: '$userVar'"
-
-for (( i=1; i<=$userVar; i++)); do
-	echo "$i"
-done
-```
-
-### output
+### Tests
 
 TODO
 
-#### Location
+#### [Unit Tests](tests/unit/README.md)
 
-bash/functions/output.sh
-
-#### Example Usage
-
-TODO
-
-### backUp
-
-Bash script that copies files and directories from user's home directory to another location.
-
-#### Location
-
-bash/functions/backUp.sh
-
-#### Example Usage
-
-```sh
-backUp
-```
-
+The `README.md` linked to above contains more info.

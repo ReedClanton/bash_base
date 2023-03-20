@@ -11,5 +11,3 @@ Unit tests should:
 ## Organization
 
 Unit tests are stored in directories with the same name as the Code Under Test (COT) in the `tests` directory (`<currentDir>/tests/<cotName>/test_<cotName>*.sh`).
-
-
