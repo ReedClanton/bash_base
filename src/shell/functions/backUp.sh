@@ -125,7 +125,7 @@ eval "$( (eval $cmd) \
 	 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
 
 if [[ $rtOut -ne 0 ]]; then
-	log $errLvl -m="$errOut"
+	log $errLvl -m="rsync error output:" -m="$errOut"
 # Figure out why this is failing.
 #else
 	# TODO: Handle condidtion where rsync stdOut is empty (currently errors).
