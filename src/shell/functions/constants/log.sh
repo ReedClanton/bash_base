@@ -16,9 +16,9 @@ declare -irx FULL_TITLE=1
 #		## Title Text ##
 declare -irx LINE_TITLE=2
 
- #########################
-## Bash Function Logging ##
- #########################
+ ##########################
+## SHELL Function Logging ##
+ ##########################
 # Indicates no logs should be produced.
 declare -irx NONE=0
 # Indicates that only error level logs should be produced.
@@ -33,6 +33,6 @@ declare -irx DEBUG=4
 declare -irx TRACE=5
 # Indicates that all logs should be produced.
 declare -irx ALL=$TRACE
-# Determines bash function logging level.
-declare -ix BASH_LOG_LEVEL=$INFO
+# Determines shell function logging level.
+declare -ix SHELL_LOG_LEVEL=$INFO
 

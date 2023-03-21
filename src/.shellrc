@@ -1,16 +1,14 @@
-# .bashrc
-
  #############################
 ## Source Global Definitions ##
  #############################
 if [ -f /etc/bashrc ]; then
 	source /etc/bashrc
 fi
-if [ -f $HOME/bash/bash_aliases ]; then
-	source $HOME/bash/bash_aliases
+if [ -f $HOME/shell/shell_aliases ]; then
+	source $HOME/shell/shell_aliases
 fi
-if [ -f $HOME/bash/bash_functions ]; then
-	source $HOME/bash/bash_functions
+if [ -f $HOME/shell/shell_functions ]; then
+	source $HOME/shell/shell_functions
 fi
 
  #####################

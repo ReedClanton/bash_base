@@ -5,20 +5,20 @@
  ###########################################
 ## Constant(s) ##
 # Includes constant(s) relevant to logger method.
-source $BASH_FUNCTIONS_CONSTANTS/log.sh
+source $SHELL_FUNCTIONS_CONSTANTS/log.sh
 
  ###############
 ## Function(s) ##
  ###############
 IFS='' read -r -d '' LOG_DOC <<"EOF"
 #/ DESCRIPTION:
-#/	Used to produce log messages. Current global log level, tracked by 'BASH_LOG_LEVEL',
+#/	Used to produce log messages. Current global log level, tracked by 'SHELL_LOG_LEVEL',
 #/	is used to determine if given message should be printed.
 #/
 #/ USAGE: log [OPTIONS]... -m="message text"...
 #/
 #/ NOTE(S):
-#/	- Method may not use bash logger... hopfully it's obvious why.
+#/	- Method may not use log... hopfully it's obvious why.
 #/
 #/ OPTION(S):
 #/	-h, --help
@@ -50,8 +50,8 @@ IFS='' read -r -d '' LOG_DOC <<"EOF"
 #/	-t, --trace
 #/		When given, the default *trace* formatting character will be used by prefix,
 #/		postfix, header, and footer (if used). Providing this option will also cause a
-#/		log message with the given text to be printed to stdout *if* the bash log level
-#/		($BASH_LOG_LEVEL) is equal to, or higher than, *trace*. This includes: trace,
+#/		log message with the given text to be printed to stdout *if* the shell log level
+#/		($SHELL_LOG_LEVEL) is equal to, or higher than, *trace*. This includes: trace,
 #/		debug, info, warn, and error.
 #/			- Note: Shouldn't be combined with any other log level option.
 #/			- Note: If multiple loge level options are given in a single call, the
@@ -61,8 +61,8 @@ IFS='' read -r -d '' LOG_DOC <<"EOF"
 #/	-d, --debug
 #/		When given, the default *debug* formatting character will be used by prefix,
 #/		postfix, header, and footer (if used). Providing this option will also cause a
-#/		log message with the given text to be printed to stdout *if* the bash log level
-#/		($BASH_LOG_LEVEL) is equal to, or higher than, *debug*. This includes: debug,
+#/		log message with the given text to be printed to stdout *if* the shell log level
+#/		($SHELL_LOG_LEVEL) is equal to, or higher than, *debug*. This includes: debug,
 #/		info, warn, and error.
 #/			- Note: Shouldn't be combined with any other log level option.
 #/			- Note: If multiple loge level options are given in a single call, the
@@ -72,8 +72,8 @@ IFS='' read -r -d '' LOG_DOC <<"EOF"
 #/	-i, --info
 #/		When given, the default *info* formatting character will be used by prefix,
 #/		postfix, header, and footer (if used). Providing this option will also cause a
-#/		log message with the given text to be printed to stdout *if* the bash log level
-#/		($BASH_LOG_LEVEL) is equal to, or higher than, *info*. This includes: info, warn,
+#/		log message with the given text to be printed to stdout *if* the shell log level
+#/		($SHELL_LOG_LEVEL) is equal to, or higher than, *info*. This includes: info, warn,
 #/		and error.
 #/			- Note: Shouldn't be combined with any other log level option.
 #/			- Note: If multiple loge level options are given in a single call, the
@@ -83,8 +83,8 @@ IFS='' read -r -d '' LOG_DOC <<"EOF"
 #/	-w, --warn
 #/		When given, the default *warn* formatting character will be used by prefix,
 #/		postfix, header, and footer (if used). Providing this option will also cause a
-#/		log message with the given text to be printed to stdout *if* the bash log level
-#/		($BASH_LOG_LEVEL) is equal to, or higher than, *debug*. This includes: warn
+#/		log message with the given text to be printed to stdout *if* the shell log level
+#/		($SHELL_LOG_LEVEL) is equal to, or higher than, *debug*. This includes: warn
 #/		and error.
 #/			- Note: Shouldn't be combined with any other log level option.
 #/			- Note: If multiple loge level options are given in a single call, the
@@ -94,8 +94,8 @@ IFS='' read -r -d '' LOG_DOC <<"EOF"
 #/	-e, --error
 #/		When given, the default *error* formatting character will be used by prefix,
 #/		postfix, header, and footer (if used). Providing this option will also cause a
-#/		log message with the given text to be printed to stdout *if* the bash log level
-#/		($BASH_LOG_LEVEL) is equal to, or higher than, *error*. This includes: error.
+#/		log message with the given text to be printed to stdout *if* the shell log level
+#/		($SHELL_LOG_LEVEL) is equal to, or higher than, *error*. This includes: error.
 #/			- Note: Shouldn't be combined with any other log level option.
 #/			- Note: If multiple loge level options are given in a single call, the
 #/				last one given will be used.
@@ -180,7 +180,7 @@ for fullArg in "${@}"; do
 			title=$LINE_TITLE  ;;
 		*)
 			printf "$pfix ERROR log:\t"
-			$BASH_FUNCTIONS/output.sh --pp -m="Calling function provided invalid option: '$fullArg', see doc:"
+			$SHELL_FUNCTIONS/output.sh --pp -m="Calling function provided invalid option: '$fullArg', see doc:"
 			echo "$LOG_DOC"
 			exit 20  ;;
 	esac
@@ -189,14 +189,14 @@ done
  ###########################
 ## Error Check Argument(s) ##
  ###########################
-$BASH_FUNCTIONS/checkRequiredOpts.sh "$LOG_DOC" -a="${msg[@]}"
+$SHELL_FUNCTIONS/checkRequiredOpts.sh "$LOG_DOC" -a="${msg[@]}"
 declare rtVal=$?
 if [[ $rtVal -ne 0 ]]; then
 	exit $rtVal
 fi
 
 # Determine if log message should be output.
-if [[ $BASH_LOG_LEVEL -ge $lvl ]]; then
+if [[ $SHELL_LOG_LEVEL -ge $lvl ]]; then
 	# Build Log Prefix #
 	if [[ $caller == "" ]]; then
 		pfix+=" $lvlNm:"
@@ -207,7 +207,7 @@ if [[ $BASH_LOG_LEVEL -ge $lvl ]]; then
 	# Determine how log message should be built.
 	if [[ $title -gt $NO_TITLE ]]; then
 		## Build Call to Output ##
-		output_call="$BASH_FUNCTIONS/output.sh -l=200"
+		output_call="$SHELL_FUNCTIONS/output.sh -l=200"
 		# Set level.
 		if [[ $lvl -eq $TRACE ]]; then
 			output_call+=" --trace"

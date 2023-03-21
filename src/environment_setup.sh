@@ -6,6 +6,8 @@
 declare -r BACK_UP_DIR="$PWD/$USER-homeBackUp-$(date +"%Y_%m_%d-%H_%M_%S")"
 # List of users, specificly there UIDs, that script should be run as.
 declare -ra INVALID_USERS="0 65534"
+# TODO: Comment.
+declare -r LOG=$PWD/shell/functions/log.sh -c="environment_setup.sh"
 
 # TODO: Set a default answer and make user input checking more robust.
 # Ask user if the user that's currently running this script is the one they would like to setup.
@@ -16,7 +18,6 @@ if [[ "$userAnswer" != "y" ]]; then
 	exit 21
 fi
 
-# TODO: Clean up exit values.
 
 # Ensure script is being run by a plausibly valid user.
 if ! [[ " ${INVALID_USERS[*]} " =~ " $EUID " ]]; then
@@ -41,7 +42,7 @@ if ! [[ " ${INVALID_USERS[*]} " =~ " $EUID " ]]; then
 			
 			# Ensure shell name was found.
 			if [[ "$SHELL" != "$shellName" && "$shellName" != "" ]]; then
-				printf "Creating local directory for storring $USER's file(s) that are being replaced...\n"
+				$LOG -i -m="Creating local directory for storing $USER's file(s) that are being replaced..."
 				
 				declare cmd="mkdir $BACK_UP_DIR"
 				unset stdOut errOut rtOut

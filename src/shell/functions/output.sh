@@ -4,7 +4,7 @@
 ## Global(s)/Constant(s) ##
  #########################
 ## Constant(s) ##
-source $BASH_FUNCTIONS_CONSTANTS/output.sh
+source $SHELL_FUNCTIONS_CONSTANTS/output.sh
 
  #####################
 ## Local Variable(s) ##
@@ -23,7 +23,7 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/ USAGE: createHeaderFooter [OPTIONS]... -l=<maxMsgLength>
 #/
 #/ NOTE(S):
-#/	- Method may not use bash logger because it's used by that method.
+#/	- Method may not use log because this is used by that method.
 #/	- This method is in the same directory as output because a local variable is used by
 #/		this method to return a value to the output method when called by the output
 #/		method.
@@ -142,7 +142,7 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/ USAGE: output [OPTIONS]... -m="message text"...
 #/
 #/ NOTE(S):
-#/	- Method may not use bash logger because it's used by that method.
+#/	- Method may not use log because this is used by that method.
 #/
 #/ OPTION(S):
 #/	-h, --help
