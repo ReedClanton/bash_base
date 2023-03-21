@@ -1,13 +1,17 @@
-#! /bin/bash
+#!/usr/bin/env sh
 
+ ########
 ## PATH ##
+ ########
 if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
     PATH="$PATH:$HOME/.local/bin:$HOME/bin"
 fi
 # Look in PWD last.
 export PATH=$PATH:.
 
+ ########################
 ## Standard Location(s) ##
+ ########################
 # Git Setup #
 # Root.
 export GIT_ROOT=$HOME/git

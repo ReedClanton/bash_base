@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env sh
 
 # Tracks directory that file(s)/directory(ies) being replaced will be moved to.
 declare -r BACK_UP_DIR="$PWD/userHomeBackUp-$(date +"%Y_%m_%d-%H_%M_%S")"
