@@ -18,6 +18,8 @@ echo "readlink '$0':"
 tmp=$(readlink '$zero')
 echo $tmp
 echo "############"
+basename -- "$( readlink dev_12 )"
+echo $(basename -- "$( readlink dev_12 )")
 
 #local pathToThisFile=$(readlink "$0")
 #echo "\$pathToThisFile: '$pathToThisFile'"
@@ -34,6 +36,8 @@ elif [[ -d "$0/../../../shell" ]]; then
 	export SHELL_ROOT=$0/../../../
 elif [[ -d "$0/../../../../shell" ]]; then
 	export SHELL_ROOT=$0/../../../../
+else
+	echo "ERROR, couldn't find root of shell scripts."
 fi
 echo "\$SHELL_ROOT: '$SHELL_ROOT'"
 cmdOut="$(readlink $SHELL_ROOT)"
