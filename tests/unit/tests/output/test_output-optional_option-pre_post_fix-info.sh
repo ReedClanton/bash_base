@@ -19,7 +19,7 @@
 setup_suite() {
 	# Allows tests to just call `output` rather than accessing the full path.
 	function output() {
-		../../../../src/bash/functions/output.sh "${@}"
+		../../../../src/shell/functions/output.sh "${@}"
 	}
 }
 
@@ -31,7 +31,7 @@ setup_suite() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_-i() {
-	source ../../../../src/bash/functions/constants/output.sh
+	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$INFO_CHAR iI7 $INFO_CHAR" "$(output -m='iI7' --pp -i)"
 }
 
@@ -43,7 +43,7 @@ test_output__single_line__--pp_-i() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_--info() {
-	source ../../../../src/bash/functions/constants/output.sh
+	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$INFO_CHAR oO7 $INFO_CHAR" "$(output -m='oO7' --pp --info)"
 }
 
@@ -55,7 +55,7 @@ test_output__single_line__--pp_--info() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_-i() {
-	source ../../../../src/bash/functions/constants/output.sh
+	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$INFO_CHAR pP8 $INFO_CHAR" "$(output -m='pP8' --pre-post-fix -i)"
 }
 
@@ -67,7 +67,7 @@ test_output__single_line__--pre-post-fix_-i() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_--info() {
-	source ../../../../src/bash/functions/constants/output.sh
+	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$INFO_CHAR aA9 $INFO_CHAR" "$(output -m='aA9' --pre-post-fix --info)"
 }
 

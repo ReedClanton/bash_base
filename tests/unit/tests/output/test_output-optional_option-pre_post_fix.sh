@@ -18,7 +18,7 @@
 setup_suite() {
 	# Allows tests to just call `output` rather than accessing the full path.
 	function output() {
-		../../../../src/bash/functions/output.sh "${@}"
+		../../../../src/shell/functions/output.sh "${@}"
 	}
 }
 
@@ -30,7 +30,7 @@ setup_suite() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp() {
-	source ../../../../src/bash/functions/constants/output.sh
+	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$DEFAULT_CHAR wW1 $DEFAULT_CHAR" "$(output -m='wW1' --pp)"
 }
 
@@ -42,7 +42,7 @@ test_output__single_line__--pp() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix() {
-	source ../../../../src/bash/functions/constants/output.sh
+	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$DEFAULT_CHAR eE2 $DEFAULT_CHAR" "$(output -m='eE2' --pre-post-fix)"
 }
 
