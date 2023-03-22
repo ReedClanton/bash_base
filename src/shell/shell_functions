@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env sh
 
  ######################
 ## Path Short Hand(s) ##

@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env sh
 
  #########################
 ## Global(s)/Constant(s) ##
@@ -23,7 +23,7 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/ USAGE: createHeaderFooter [OPTIONS]... -l=<maxMsgLength>
 #/
 #/ NOTE(S):
-#/	- Method may not use log because this is used by that method.
+#/	- Method may not use the log function because this is used a method that's used by log.
 #/	- This method is in the same directory as output because a local variable is used by
 #/		this method to return a value to the output method when called by the output
 #/		method.
@@ -142,7 +142,7 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/ USAGE: output [OPTIONS]... -m="message text"...
 #/
 #/ NOTE(S):
-#/	- Method may not use log because this is used by that method.
+#/	- Method may not use the log function because this is used by that method.
 #/
 #/ OPTION(S):
 #/	-h, --help

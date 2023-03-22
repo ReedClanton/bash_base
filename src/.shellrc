@@ -1,3 +1,5 @@
+#!/usr/bin/env sh
+
  #############################
 ## Source Global Definitions ##
  #############################
@@ -24,7 +26,7 @@ export HISTCONTROL=$HISTCONTROL:ignoredups
 # Ignores commands that start with ' '.
 export HISTCONTROL=$HISTCONTROL:ignorespace
 # Moves location of history file.
-export HISTFILE=$HOME/bash/bash_history
+export HISTFILE=$HOME/shell/shell_history
 
 ## Terminal Setup ##
 # When tab-completing, match regardless of case.

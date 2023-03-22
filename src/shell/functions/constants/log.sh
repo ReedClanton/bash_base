@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env sh
 
  #####################
 ## Output Formatting ##
@@ -16,9 +16,10 @@ declare -irx FULL_TITLE=1
 #		## Title Text ##
 declare -irx LINE_TITLE=2
 
- ##########################
-## SHELL Function Logging ##
- ##########################
+ #########################
+## Shell Function Logging ##
+ #########################
+>>>>>>> main
 # Indicates no logs should be produced.
 declare -irx NONE=0
 # Indicates that only error level logs should be produced.
