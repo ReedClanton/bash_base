@@ -8,9 +8,9 @@ jobs:
       - run: echo "Checking out branch ${{ github.ref }} from ${{ github.repository }} repo on ${{ runner.os }}..."
       - name: Check out repository code
         uses: actions/checkout@v3
-      - run: echo "pwd: '$(pwd)'"
-      - run: echo "PWD: '$PWD'"
-      - run: echo "ls -GApl: '$(ls -GApl)'"
+      - run: pwd
+      - run: $PWD
+      - run: ls -GApl
       - name: Run unit tests
         run: tests/unit/bash_unit -f tap tests/unit/tests/*
 
