@@ -4,23 +4,31 @@
 ## Text Formatting ##
  ###################
 # Default line length including formatting (ex. prefix & postfix).
-declare -ir DEFAULT_LINE_LENGTH=100
+DEFAULT_LINE_LENGTH=100
+readonly DEFAULT_LINE_LENGTH
 # Default number of spaces message text should be indented by.
-declare -ir DEFAULT_INDENT=0
+DEFAULT_INDENT=0
+readonly DEFAULT_INDENT
 
  #################################
 ## Message Severity Character(s) ##
  #################################
 # Default formatting character.
-declare -r DEFAULT_CHAR='#'
+DEFAULT_CHAR='#'
+readonly DEFAULT_CHAR
 # Trace formatting character.
-declare -r TRACE_CHAR='.'
+TRACE_CHAR='.'
+readonly TRACE_CHAR
 # Info formatting character.
-declare -r INFO_CHAR=$DEFAULT_CHAR
+INFO_CHAR=$DEFAULT_CHAR
+readonly INFO_CHAR
 # Debug formatting character.
-declare -r DEBUG_CHAR='+'
+DEBUG_CHAR='+'
+readonly DEBUG_CHAR
 # Warning formatting character.
-declare -r WARN_CHAR='*'
+WARN_CHAR='*'
+readonly WARN_CHAR
 # Error formatting character.
-declare -r ERROR_CHAR='!'
+ERROR_CHAR='!'
+readonly ERROR_CHAR
 
