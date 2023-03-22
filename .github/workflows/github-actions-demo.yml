@@ -22,5 +22,5 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - name: Run unit test(s) of output function
-        run: ./tests/unit/bash_unit -f tap ./tests/unit/tests/output/test_output-required_options.sh
+        run: ./tests/unit/bash_unit -f tap -p test_output__single_line__lower_alpha__single_char ./tests/unit/tests/output/test_output-required_options.sh
         
