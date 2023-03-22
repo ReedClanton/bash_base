@@ -25,7 +25,7 @@ echo "############"
 readlink -f "$0"
 echo "############"
 
-local pathToZero=$(readlink -f '$0')
+local pathToZero=$(readlink -f $0)
 echo "\$pathToZero: '$pathToZero'"
 
 if [[ -d "$HOME/shell" ]]; then
