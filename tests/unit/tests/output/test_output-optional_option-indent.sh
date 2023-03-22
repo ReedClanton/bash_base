@@ -21,6 +21,13 @@ setup_suite() {
 	}
 }
 
+setup() {
+	# Ensure required environment variable(s) are set.
+	. ../../../../src/shell/shell_functions
+	# Ensure required constants have been set.
+	. $SHELL_FUNCTIONS_CONSTANTS/output.sh
+}
+
 #/ DESCRIPTION:
 #/	Ensure indent option can handle a value of 0.
 #/

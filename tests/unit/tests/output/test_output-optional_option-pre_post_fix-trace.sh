@@ -23,6 +23,13 @@ setup_suite() {
 	}
 }
 
+setup() {
+	# Ensure required environment variable(s) are set.
+	. ../../../../src/shell/shell_functions
+	# Ensure required constants have been set.
+	. $SHELL_FUNCTIONS_CONSTANTS/output.sh
+}
+
 #/ DESCRIPTION:
 #/	Ensure message text includes $TRACE_CHAR as pre-fix and post-fix when
 #/	provided `--pp` and `-t`.
@@ -31,7 +38,6 @@ setup_suite() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_-t() {
-	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$TRACE_CHAR rR3 $TRACE_CHAR" "$(output -m='rR3' --pp -t)"
 }
 
@@ -43,7 +49,6 @@ test_output__single_line__--pp_-t() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_--trace() {
-	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$TRACE_CHAR tT4 $TRACE_CHAR" "$(output -m='tT4' --pp --trace)"
 }
 
@@ -55,7 +60,6 @@ test_output__single_line__--pp_--trace() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_-t() {
-	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$TRACE_CHAR yY5 $TRACE_CHAR" "$(output -m='yY5' --pre-post-fix -t)"
 }
 
@@ -67,7 +71,6 @@ test_output__single_line__--pre-post-fix_-t() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_--trace() {
-	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$TRACE_CHAR uU6 $TRACE_CHAR" "$(output -m='uU6' --pre-post-fix --trace)"
 }
 

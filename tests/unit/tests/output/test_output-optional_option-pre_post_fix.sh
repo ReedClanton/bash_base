@@ -22,6 +22,13 @@ setup_suite() {
 	}
 }
 
+setup() {
+	# Ensure required environment variable(s) are set.
+	. ../../../../src/shell/shell_functions
+	# Ensure required constants have been set.
+	. $SHELL_FUNCTIONS_CONSTANTS/output.sh
+}
+
 #/ DESCRIPTION:
 #/	Ensure message text includes $DEFAULT_CHAR as pre-fix and post-fix when
 #/	provided `--pp`.
@@ -30,7 +37,6 @@ setup_suite() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp() {
-	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$DEFAULT_CHAR wW1 $DEFAULT_CHAR" "$(output -m='wW1' --pp)"
 }
 
@@ -42,7 +48,6 @@ test_output__single_line__--pp() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix() {
-	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$DEFAULT_CHAR eE2 $DEFAULT_CHAR" "$(output -m='eE2' --pre-post-fix)"
 }
 

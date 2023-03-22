@@ -23,6 +23,13 @@ setup_suite() {
 	}
 }
 
+setup() {
+	# Ensure required environment variable(s) are set.
+	. ../../../../src/shell/shell_functions
+	# Ensure required constants have been set.
+	. $SHELL_FUNCTIONS_CONSTANTS/output.sh
+}
+
 #/ DESCRIPTION:
 #/	Ensure message text includes $WARN_CHAR as pre-fix and post-fix when
 #/	provided `--pp` and `-w`.
@@ -31,7 +38,6 @@ setup_suite() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_-w() {
-	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$WARN_CHAR 3hH $WARN_CHAR" "$(output -m='3hH' --pp -w)"
 }
 
@@ -43,7 +49,6 @@ test_output__single_line__--pp_-w() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_--warn() {
-	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$WARN_CHAR 4jJ $WARN_CHAR" "$(output -m='4jJ' --pp --warn)"
 }
 
@@ -55,7 +60,6 @@ test_output__single_line__--pp_--warn() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_-w() {
-	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$WARN_CHAR 5kK $WARN_CHAR" "$(output -m='5kK' --pre-post-fix -w)"
 }
 
@@ -67,7 +71,6 @@ test_output__single_line__--pre-post-fix_-w() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_--warn() {
-	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$WARN_CHAR 6lL $WARN_CHAR" "$(output -m='6lL' --pre-post-fix --warn)"
 }
 
