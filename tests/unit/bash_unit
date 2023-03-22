@@ -477,6 +477,7 @@ do
     if [[ "${STICK_TO_CWD}" != true ]]
     then
       cd "$(dirname "$test_file")"
+      echo "test_file: '$test_file'"
       source "$(basename "$test_file")"
     else
       source "$test_file"
