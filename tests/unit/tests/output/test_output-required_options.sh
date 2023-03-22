@@ -16,15 +16,10 @@
 #/ TODO(S):
 #/	- None
 setup_suite() {
-	# Allows tests to just call `output` rather than accessing the full path.
-	function output() {
-		../../../../src/shell/functions/output.sh "${@}"
-	}
-}
-
-setup() {
 	# Ensure required environment variable(s) are set.
 	. ../../../../src/shell/shell_functions
+	# Short hand used to call function so full path doesn't have to be used each time.
+	output=$SHELL_FUNCTIONS/output/output.sh "${@}"
 }
 
 #/ DESCRIPTION:
@@ -34,7 +29,7 @@ setup() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__lower_alpha__single_char() {
-	assert_equals "q" "$(output -m='q')"
+	assert_equals "q" "$($output -m='q')"
 }
 
 #/ DESCRIPTION:
@@ -44,7 +39,7 @@ test_output__single_line__lower_alpha__single_char() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__upper_alpha__single_char() {
-	assert_equals "Q" "$(output -m='Q')"
+	assert_equals "Q" "$($output -m='Q')"
 }
 
 #/ DESCRIPTION:
@@ -54,7 +49,7 @@ test_output__single_line__upper_alpha__single_char() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__lower_alpha__multiple_char() {
-	assert_equals "test" "$(output -m='test')"
+	assert_equals "test" "$($output -m='test')"
 }
 
 #/ DESCRIPTION:
@@ -64,7 +59,7 @@ test_output__single_line__lower_alpha__multiple_char() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__upper_alpha__multiple_char() {
-	assert_equals "TEST" "$(output -m='TEST')"
+	assert_equals "TEST" "$($output -m='TEST')"
 }
 
 #/ DESCRIPTION:
@@ -74,7 +69,7 @@ test_output__single_line__upper_alpha__multiple_char() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__numeric__single_char() {
-	assert_equals "1" "$(output -m='1')"
+	assert_equals "1" "$($output -m='1')"
 }
 
 #/ DESCRIPTION:
@@ -84,7 +79,7 @@ test_output__single_line__numeric__single_char() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__numeric__multiple_char() {
-	assert_equals "1234567890" "$(output -m='1234567890')"
+	assert_equals "1234567890" "$($output -m='1234567890')"
 }
 
 #/ DESCRIPTION:
@@ -95,7 +90,7 @@ test_output__single_line__numeric__multiple_char() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__lower_alphanumeric__multiple_char() {
-	assert_equals "t1e2s3t4" "$(output -m='t1e2s3t4')"
+	assert_equals "t1e2s3t4" "$($output -m='t1e2s3t4')"
 }
 
 #/ DESCRIPTION:
@@ -106,7 +101,7 @@ test_output__single_line__lower_alphanumeric__multiple_char() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__upper_alphanumeric__multiple_char() {
- 	assert_equals "T1E2S3T4" "$(output -m='T1E2S3T4')"
+ 	assert_equals "T1E2S3T4" "$($output -m='T1E2S3T4')"
 }
 
 #/ DESCRIPTION:
@@ -117,40 +112,40 @@ test_output__single_line__upper_alphanumeric__multiple_char() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__special__single_char() {
- 	assert_equals "!" "$(output -m='!')"
- 	assert_equals "@" "$(output -m='@')"
- 	assert_equals "#" "$(output -m='#')"
- 	assert_equals "$" "$(output -m='$')"
-# 	assert_equals "%" "$(output -m='%')"
- 	assert_equals "^" "$(output -m='^')"
- 	assert_equals "&" "$(output -m='&')"
- 	assert_equals "*" "$(output -m='*')"
- 	assert_equals "(" "$(output -m='(')"
- 	assert_equals ")" "$(output -m=')')"
- 	assert_equals "\-" "$(output -m='\-')"
- 	assert_equals "_" "$(output -m='_')"
- 	assert_equals "=" "$(output -m='=')"
- 	assert_equals "+" "$(output -m='+')"
- 	assert_equals "[" "$(output -m='[')"
- 	assert_equals "{" "$(output -m='{')"
- 	assert_equals "]" "$(output -m=']')"
- 	assert_equals "}" "$(output -m='}')"
- 	assert_equals "\\" "$(output -m='\\')"
- 	assert_equals "\\" "$(output -m='\\')"
- 	assert_equals ";" "$(output -m=';')"
- 	assert_equals ":" "$(output -m=':')"
-# 	assert_equals "'" "$(output -m=''')"
- 	assert_equals '"' "$(output -m='"')"
- 	assert_equals "," "$(output -m=',')"
- 	assert_equals "<" "$(output -m='<')"
- 	assert_equals "." "$(output -m='.')"
- 	assert_equals ">" "$(output -m='>')"
- 	assert_equals "/" "$(output -m='/')"
- 	assert_equals "?" "$(output -m='?')"
- 	assert_equals " " "$(output -m=' ')"
- 	assert_equals '`' "$(output -m='`')"
- 	assert_equals "~" "$(output -m='~')"
- 	assert_equals "?" "$(output -m='?')"
+ 	assert_equals "!" "$($output -m='!')"
+ 	assert_equals "@" "$($output -m='@')"
+ 	assert_equals "#" "$($output -m='#')"
+ 	assert_equals "$" "$($output -m='$')"
+# 	assert_equals "%" "$($output -m='%')"
+ 	assert_equals "^" "$($output -m='^')"
+ 	assert_equals "&" "$($output -m='&')"
+ 	assert_equals "*" "$($output -m='*')"
+ 	assert_equals "(" "$($output -m='(')"
+ 	assert_equals ")" "$($output -m=')')"
+ 	assert_equals "\-" "$($output -m='\-')"
+ 	assert_equals "_" "$($output -m='_')"
+ 	assert_equals "=" "$($output -m='=')"
+ 	assert_equals "+" "$($output -m='+')"
+ 	assert_equals "[" "$($output -m='[')"
+ 	assert_equals "{" "$($output -m='{')"
+ 	assert_equals "]" "$($output -m=']')"
+ 	assert_equals "}" "$($output -m='}')"
+ 	assert_equals "\\" "$($output -m='\\')"
+ 	assert_equals "\\" "$($output -m='\\')"
+ 	assert_equals ";" "$($output -m=';')"
+ 	assert_equals ":" "$($output -m=':')"
+# 	assert_equals "'" "$($output -m=''')"
+ 	assert_equals '"' "$($output -m='"')"
+ 	assert_equals "," "$($output -m=',')"
+ 	assert_equals "<" "$($output -m='<')"
+ 	assert_equals "." "$($output -m='.')"
+ 	assert_equals ">" "$($output -m='>')"
+ 	assert_equals "/" "$($output -m='/')"
+ 	assert_equals "?" "$($output -m='?')"
+ 	assert_equals " " "$($output -m=' ')"
+ 	assert_equals '`' "$($output -m='`')"
+ 	assert_equals "~" "$($output -m='~')"
+ 	assert_equals "?" "$($output -m='?')"
 }
 
 #/ DESCRIPTION:
@@ -162,6 +157,6 @@ test_output__single_line__special__single_char() {
 #/	- Mock out constant(s).
 #/	- Figure out why output always returns 127.
 #test_output__single_line__lower_alpha__single_char__valid_return_code() {
-#	assert_status_code 0 "$(output -m='t')"
+#	assert_status_code 0 "$($output -m='t')"
 #}
 
