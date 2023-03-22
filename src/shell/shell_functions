@@ -15,6 +15,9 @@ if [[ -d "$HOME/shell" ]]; then
 # a user's environment.
 else
 	# Attempt to find root using $0.
+	local pathToZero=$(readlink -f '$0')
+	echo ${pathToZero%$0}
+	echo ${pathToZero#$0}
 	if [[ -d "$pathToZero/shell" ]]; then
 		export SHELL_ROOT=$pathToZero/shell
 	elif [[ -d "$pathToZero/src/shell" ]]; then
