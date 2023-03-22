@@ -5,7 +5,8 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-20.04
     steps:
-      - run: echo "$pwd"
+      - run: echo "$(pwd)"
+      - run: echo "$(ls -GApl)"
       - run: echo "$PWD"
       - name: Run unit test(s) of output function
         run: ./tests/unit/bash_unit -f tap ./tests/unit/tests/output/*
