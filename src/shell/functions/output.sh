@@ -4,7 +4,7 @@
 ## Global(s)/Constant(s) ##
  #########################
 ## Constant(s) ##
-source $SHELL_FUNCTIONS_CONSTANTS/output.sh
+. $SHELL_FUNCTIONS_CONSTANTS/output.sh
 
  #####################
 ## Local Variable(s) ##
