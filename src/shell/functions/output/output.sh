@@ -173,7 +173,7 @@ maxGvnLineLen=0
 #	- Minus postfix length (if used).
 maxAlwMsgLen=0
 # Used to track each line of message.
-msg=()
+msg=( )
 # Contains final (formatted) message text.
 rtOutput=''
 # Prefix used to produce error logs.
