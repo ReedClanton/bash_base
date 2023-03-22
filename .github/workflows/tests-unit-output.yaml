@@ -9,7 +9,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
       - run: pwd
-      - run: $PWD
+      - run: echo '$PWD'
       - run: ls -GApl
       - name: Run unit tests
         run: tests/unit/bash_unit -f tap tests/unit/tests/*
