@@ -15,7 +15,7 @@ echo "readlink \"$0\":"
 tmp="$(readlink "$zero")"
 echo $tmp
 echo "readlink '$0':"
-tmp="$(readlink '$zero')"
+tmp=$(readlink '$zero')
 echo $tmp
 echo "############"
 
