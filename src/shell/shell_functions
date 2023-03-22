@@ -6,15 +6,16 @@
 # Shell root.
 echo "## shell_functions: ##"
 echo "\$0: '$0'"
+zero=$0
 echo "############"
 echo "readlink $0:"
-tmp="$(readlink $0)"
+tmp="$(readlink $zero)"
 echo $tmp
 echo "readlink \"$0\":"
-tmp='$(readlink "$0")'
+tmp="$(readlink "$zero")"
 echo $tmp
 echo "readlink '$0':"
-tmp="$(readlink '$0')"
+tmp="$(readlink '$zero')"
 echo $tmp
 echo "############"
 
