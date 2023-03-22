@@ -16,6 +16,17 @@
 #/ TODO(S):
 #/	- None
 setup_suite() {
+	# TODO: Comment.
+	. ../../../../src/shell/shell_functions
+	echo "test_output-required_options.sh:"
+	echo "BASH_SOURCE: '$BASH_SOURCE'"
+	echo "dirname '\$BASH_SOURCE': '$(dirname '$BASH_SOURCE')'"
+	echo "{BASH_SOURCE%/*}: '${BASH_SOURCE%/*}'"
+	echo "dirname '\${BASH_SOURCE%/*}': '$(dirname '${BASH_SOURCE%/*}')'"
+	echo "HOME: '$HOME'"
+	echo "PWD: '$PWD'"
+	echo "pwd: '$(pwd)'"
+	echo "ls -GApl: '$(ls -GApl)'"
 	# Allows tests to just call `output` rather than accessing the full path.
 	function output() {
 		../../../../src/shell/functions/output.sh "${@}"
