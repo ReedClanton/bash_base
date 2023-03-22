@@ -5,7 +5,8 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-20.04
     steps:
-      - run: echo "$(pwd)"
+      - name: Explore files
+        run: cd ${{ github.workspace }}; ls -GApl ${{ github.workspace }};
       - run: echo "$(ls -GApl)"
       - run: cd ../
       - run: echo "$(pwd)"
