@@ -7,11 +7,14 @@
 echo "## shell_functions: ##"
 echo "\$0: '$0'"
 echo "readlink $0:"
-echo $(readlink $0)
+tmp=$(readlink $0)
+echo $tmp
 echo "readlink \"$0\":"
-echo $(readlink "$0")
+tmp=$(readlink "$0")
+echo $tmp
 echo "readlink '$0':"
-echo $(readlink '$0')
+tmp=$(readlink '$0')
+echo $tmp
 
 #local pathToThisFile=$(readlink "$0")
 #echo "\$pathToThisFile: '$pathToThisFile'"
