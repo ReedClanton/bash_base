@@ -27,6 +27,7 @@ setup_suite() {
 	echo "pwd: '$(pwd)'"
 	echo "ls -GApl: '$(ls -GApl)'"
 	. ../../../../src/shell/shell_functions
+	echo "\$SHELL_FUNCTIONS_CONSTANTS: '$SHELL_FUNCTIONS_CONSTANTS'"
 	# Allows tests to just call `output` rather than accessing the full path.
 	function output() {
 		../../../../src/shell/functions/output.sh "${@}"
