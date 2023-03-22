@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
 
+# TODO: Add doc.
+
 # Tracks directory that file(s)/directory(ies) being replaced will be moved to.
 declare -r BACK_UP_DIR="$PWD/userHomeBackUp-$(date +"%Y_%m_%d-%H_%M_%S")"
 # List of users, specificly there UIDs, that script should be run as.

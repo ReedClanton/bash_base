@@ -4,7 +4,21 @@
 ## Path Short Hand(s) ##
  ######################
 # Shell root.
-declare -x SHELL_ROOT=$HOME/shell
+echo "BASH_SOURCE: '$BASH_SOURCE'"
+echo "dirname '\$BASH_SOURCE': '$(dirname '$BASH_SOURCE')
+echo "{BASH_SOURCE%/*}: '${BASH_SOURCE%/*}'"
+echo "dirname '\${BASH_SOURCE%/*}': '$(dirname '${BASH_SOURCE%/*}')
+echo "HOME: '$HOME'"
+echo "PWD: '$PWD'"
+echo "pwd: '$(pwd)'"
+echo "ls -GApl: '$(ls -GApl)'"
+if [[ -d "$HOME/shell" ]]; then
+	declare -x SHELL_ROOT=$HOME/shell
+else
+	if [[ -d "${BASH_SOURCE%/*}" ]]; then
+		export SHELL_ROOT=${BASH_SOURCE%/*}/shell
+	fi
+fi
 # Shell function(s) root.
 declare -x SHELL_FUNCTIONS=$SHELL_ROOT/functions
 # Shell function's constant(s).
