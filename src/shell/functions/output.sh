@@ -4,6 +4,7 @@
 ## Global(s)/Constant(s) ##
  #########################
 ## Constant(s) ##
+echo "SHELL_FUNCTIONS_CONSTANTS/output.sh: '$SHELL_FUNCTIONS_CONSTANTS/output.sh'"
 . $SHELL_FUNCTIONS_CONSTANTS/output.sh
 
  #####################

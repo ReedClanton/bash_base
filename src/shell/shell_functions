@@ -6,15 +6,21 @@
 # Shell root.
 if [[ -d "$HOME/shell" ]]; then
 	declare -x SHELL_ROOT=$HOME/shell
-elif [[ -d "${BASH_SOURCE%/*}" ]]; then
-	declare -x SHELL_ROOT=${BASH_SOURCE%/*}
 else
-	echo "Failed to find root of shell scripts."
+	# Attempt to find shell root in bash.
+	if [[ -d "${BASH_SOURCE%/*}" ]]; then
+		declare -x SHELL_ROOT=${BASH_SOURCE%/*}
+	else
+		echo "Failed to find root of shell scripts."
+	fi
 fi
+echo "SHELL_ROOT: '$SHELL_ROOT'"
 # Shell function(s) root.
 declare -x SHELL_FUNCTIONS=$SHELL_ROOT/functions
+echo "SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'"
 # Shell function's constant(s).
 declare -x SHELL_FUNCTIONS_CONSTANTS=$SHELL_FUNCTIONS/constants
+echo "SHELL_FUNCTIONS_CONSTANTS: '$SHELL_FUNCTIONS_CONSTANTS'"
 
  ###########################
 ## Global Function(s)/Data ##
