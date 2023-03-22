@@ -7,9 +7,7 @@ jobs:
     steps:
       - run: echo "$(pwd)"
       - run: echo "$(ls -GApl)"
-      - run: echo "$PWD"
-      - name: Run unit test(s) of output function
-        run: ./tests/unit/bash_unit -f tap ./tests/unit/tests/output/*
+      - run: echo "$(ls -GApl ../)"
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
@@ -21,3 +19,6 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+      - name: Run unit test(s) of output function
+        run: ./tests/unit/bash_unit -f tap ./tests/unit/tests/output/*
+        
