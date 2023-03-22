@@ -77,8 +77,8 @@ else
 	exit 1
 fi
 echo "\$SHELL_ROOT: '$SHELL_ROOT'"
-cmdOut=$(readlink '$SHELL_ROOT')
-echo "\$(readlink $SHELL_ROOT): '$cmdOut'"
+cmdOut=$(readlink -f '$SHELL_ROOT')
+echo "\$(readlink -f $SHELL_ROOT): '$cmdOut'"
 # Shell function(s) root.
 declare -x SHELL_FUNCTIONS=$SHELL_ROOT/functions
 # Shell function's constant(s).
