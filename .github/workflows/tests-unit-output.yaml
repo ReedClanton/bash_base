@@ -1,6 +1,6 @@
 name: Unit Tests of output
 run-name: ${{ github.actor }} is unit testing POSIX script output
-on: [push, pull_request]
+on: [push]
 jobs:
   unit-test-output:
     runs-on: ubuntu-20.04
