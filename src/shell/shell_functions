@@ -5,7 +5,7 @@
  ######################
 # Shell root.
 
-local pathToZero=$(readlink -f $0)
+local pathToZero=$(readlink -f '$0')
 echo "\$pathToZero: '$pathToZero'"
 
 # Get shell script root for users running this in there local environment.
