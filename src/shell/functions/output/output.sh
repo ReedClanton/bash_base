@@ -162,22 +162,23 @@ headerFooterTxt=''
 # Determines if message prefix and postfix should be used.
 prePostFix=false
 # Tracks message indent.
-declare -i indent=$DEFAULT_INDENT
+indent=$DEFAULT_INDENT
 # Tracks max allowed line length.
-declare -i maxAlwLineLen=$DEFAULT_LINE_LENGTH
+maxAlwLineLen=$DEFAULT_LINE_LENGTH
 # Tracks length of longest given line.
-declare -i maxGvnLineLen=0
+maxGvnLineLen=0
 # Used to track max length any line of message is allowed to be based on:
 #	- Max allowed line length.
 #	- Minus prefix length (if used).
 #	- Minus postfix length (if used).
-declare -i maxAlwMsgLen=0
+maxAlwMsgLen=0
 # Used to track each line of message.
-declare -a msg=()
+msg=()
 # Contains final (formatted) message text.
 rtOutput=''
 # Prefix used to produce error logs.
-declare -r errPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR output:"
+errPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR output:"
+readonly errPrefix
 
  #####################
 ## Process Option(s) ##
@@ -185,7 +186,7 @@ declare -r errPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR output:"
 # Process option(s).
 for fullArg in "${@}"; do
 	# Tracks value of current option.
-	declare arg=${fullArg#*=}
+	arg=${fullArg#*=}
 	
 	# Determine what option user gave.
 	case $fullArg in
@@ -287,24 +288,25 @@ fi
 ## Format Given Message ##
  ########################
 ## Generate indentation text ##
-declare -r indentTxt=$(printf %${indent}s |tr " " " ")
+indentTxt=$(printf %${indent}s |tr " " " ")
+readonly indentTxt
 
 ## Split Long Lines ##
 # Determine if any lines given are long enough to require splitting.
 if [[ $maxGvnLineLen -gt $maxAlwMsgLen ]]; then
 	# Used to track current message line being processed.
-	declare -i i=0
+	i=0
 	# Used to track final line of message as total number of lines increases.
-	declare -i end=${#msg[*]}
+	end=${#msg[*]}
 	# Tracks length of new longest line.
-	declare -i newMaxMsgLen=0
+	newMaxMsgLen=0
 
 	# Loop through each line, breaking up long ones along the way.
 	while [ $i -lt $end ]; do
 		# Determine if current line requires splitting.
 		if [[ ${#msg[$i]} -gt $maxAlwMsgLen ]]; then
 			# Copy previous array elements in.
-			declare -a tmp=("${msg[@]:0:$i}")
+			tmp=("${msg[@]:0:$i}")
 			# Add first part of split line.
 			tmp+=("${msg[$i]:0:$maxAlwMsgLen}")
 			# Add last part of split line.
