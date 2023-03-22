@@ -43,18 +43,20 @@ if [[ -d "$HOME/shell" ]]; then
 	declare -x SHELL_ROOT=$HOME/shell
 elif [[ -d "${BASH_SOURCE%/*}" ]]; then
 	export SHELL_ROOT=${BASH_SOURCE%/*}/shell
-elif [ -e "$0/shell" ]; then
-	export SHELL_ROOT=$0/shell
-elif [ -e "$0/../shell" ]; then
-	export SHELL_ROOT=$0/../shell
-elif [ -e "$0/../../shell" ]; then
-	export SHELL_ROOT=$0/../../shell
-elif [ -e "$0/../../../shell" ]; then
-	export SHELL_ROOT=$0/../../../shell
-elif [ -e "$0/../../../../shell" ]; then
-	export SHELL_ROOT=$0/../../../../shell
+elif [ -e "$0/shell_functions" ]; then
+	export SHELL_ROOT=$0
+elif [ -e "$0/../shell_functions" ]; then
+	export SHELL_ROOT=$0/../
+elif [ -e "$0/../../shell_functions" ]; then
+	export SHELL_ROOT=$0/../../
+elif [ -e "$0/../../../shell_functions" ]; then
+	export SHELL_ROOT=$0/../../../
+elif [ -e "$0/../../../../shell_functions" ]; then
+	export SHELL_ROOT=$0/../../../../
 fi
 echo "\$SHELL_ROOT: '$SHELL_ROOT'"
+cmdOut="$(readlink $SHELL_ROOT)"
+echo "\$(readlink \$SHELL_ROOT): '$cmdOut'"
 # Shell function(s) root.
 declare -x SHELL_FUNCTIONS=$SHELL_ROOT/functions
 # Shell function's constant(s).
