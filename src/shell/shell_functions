@@ -60,10 +60,13 @@ else
 		exit 1
 	fi
 fi
+echo "\$SHELL_ROOT: '$SHELL_ROOT'"
 # Shell function(s) root.
 declare -x SHELL_FUNCTIONS=$SHELL_ROOT/functions
+echo "\$SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'"
 # Shell function's constant(s).
 declare -x SHELL_FUNCTIONS_CONSTANTS=$SHELL_FUNCTIONS/constants
+echo "\$SHELL_FUNCTIONS_CONSTANTS: '$SHELL_FUNCTIONS_CONSTANTS'"
 
  ###########################
 ## Global Function(s)/Data ##
