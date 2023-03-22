@@ -28,7 +28,6 @@ dirname "$0"
 echo "basename \"\$0\":"
 basename "$0"
 echo "readlink \"\$0\":"
-readlink '$0'
 readlink "$0"
 
 
