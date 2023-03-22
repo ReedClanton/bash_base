@@ -40,6 +40,8 @@ else
     echo "$(cd "$(dirname "$1")"; pwd)/$(basename "$1")"
 fi
 
+local pathToThisFile=$(readlink "$0")
+echo "\$pathToThisFile: '$pathToThisFile'"
 
 if [[ -d "$HOME/shell" ]]; then
 	declare -x SHELL_ROOT=$HOME/shell
