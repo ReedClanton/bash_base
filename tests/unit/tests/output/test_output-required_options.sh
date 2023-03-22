@@ -16,23 +16,15 @@
 #/ TODO(S):
 #/	- None
 setup_suite() {
-	# TODO: Comment.
-	echo "test_output-required_options.sh:"
-	echo "BASH_SOURCE: '$BASH_SOURCE'"
-	echo "dirname '\$BASH_SOURCE': '$(dirname '$BASH_SOURCE')'"
-	echo "{BASH_SOURCE%/*}: '${BASH_SOURCE%/*}'"
-	echo "dirname '\${BASH_SOURCE%/*}': '$(dirname '${BASH_SOURCE%/*}')'"
-	echo "HOME: '$HOME'"
-	echo "PWD: '$PWD'"
-	echo "pwd: '$(pwd)'"
-	echo "ls -GApl: '$(ls -GApl)'"
-#	. ../../../../src/shell/shell_functions
-#	echo "\$SHELL_FUNCTIONS_CONSTANTS: '$SHELL_FUNCTIONS_CONSTANTS'"
 	# Allows tests to just call `output` rather than accessing the full path.
 	function output() {
 		../../../../src/shell/functions/output.sh "${@}"
 	}
-	
+}
+
+setup() {
+	# Ensure required environment variable(s) are set.
+	. ../../../../src/shell/shell_functions
 }
 
 #/ DESCRIPTION:
@@ -42,8 +34,6 @@ setup_suite() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__lower_alpha__single_char() {
-	. ../../../../src/shell/shell_functions
-	echo "\$SHELL_FUNCTIONS_CONSTANTS: '$SHELL_FUNCTIONS_CONSTANTS'"
 	assert_equals "q" "$(output -m='q')"
 }
 

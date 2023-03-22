@@ -6,7 +6,7 @@
 # Shell Script Root #
 # Get shell script root for users running this in there local environment.
 if [[ -d "$HOME/shell" ]]; then
-	declare -x SHELL_ROOT=$HOME/shell
+	export SHELL_ROOT=$HOME/shell
 # Attempt to find shell script root when run from CI/CD runner or any other time that this isn't be sourced to setup
 # a user's environment.
 else
@@ -60,20 +60,17 @@ else
 		exit 1
 	fi
 fi
-echo "\$SHELL_ROOT: '$SHELL_ROOT'"
 # Shell function(s) root.
-declare -x SHELL_FUNCTIONS=$SHELL_ROOT/functions
-echo "\$SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'"
+export SHELL_FUNCTIONS=$SHELL_ROOT/functions
 # Shell function's constant(s).
-declare -x SHELL_FUNCTIONS_CONSTANTS=$SHELL_FUNCTIONS/constants
-echo "\$SHELL_FUNCTIONS_CONSTANTS: '$SHELL_FUNCTIONS_CONSTANTS'"
+export SHELL_FUNCTIONS_CONSTANTS=$SHELL_FUNCTIONS/constants
 
  ###########################
 ## Global Function(s)/Data ##
  ###########################
 ## Data ##
 # Includes variables relevant to all functions.
-source $SHELL_FUNCTIONS/variablesGlobal.sh
+. $SHELL_FUNCTIONS/variablesGlobal.sh
 
 ## Function(s) ##
 # Include output producing/formatting function(s) used by other function(s) in the same/child directories.
