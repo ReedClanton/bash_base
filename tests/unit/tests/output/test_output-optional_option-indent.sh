@@ -17,7 +17,7 @@
 setup_suite() {
 	# Allows tests to just call `output` rather than accessing the full path.
 	function output() {
-		../../../../src/bash/functions/output.sh "${@}"
+		../../../../src/shell/functions/output.sh "${@}"
 	}
 }
 

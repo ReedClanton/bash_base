@@ -19,7 +19,7 @@
 setup_suite() {
 	# Allows tests to just call `output` rather than accessing the full path.
 	function output() {
-		../../../../src/bash/functions/output.sh "${@}"
+		../../../../src/shell/functions/output.sh "${@}"
 	}
 }
 
@@ -31,7 +31,7 @@ setup_suite() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_-d() {
-	source ../../../../src/bash/functions/constants/output.sh
+	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$DEBUG_CHAR sS0 $DEBUG_CHAR" "$(output -m='sS0' --pp -d)"
 }
 
@@ -43,7 +43,7 @@ test_output__single_line__--pp_-d() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_--debug() {
-	source ../../../../src/bash/functions/constants/output.sh
+	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$DEBUG_CHAR 0dD $DEBUG_CHAR" "$(output -m='0dD' --pp --debug)"
 }
 
@@ -55,7 +55,7 @@ test_output__single_line__--pp_--debug() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_-d() {
-	source ../../../../src/bash/functions/constants/output.sh
+	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$DEBUG_CHAR 1fF $DEBUG_CHAR" "$(output -m='1fF' --pre-post-fix -d)"
 }
 
@@ -67,7 +67,7 @@ test_output__single_line__--pre-post-fix_-d() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_--debug() {
-	source ../../../../src/bash/functions/constants/output.sh
+	source ../../../../src/shell/functions/constants/output.sh
  	assert_equals "$DEBUG_CHAR 2gG $DEBUG_CHAR" "$(output -m='2gG' --pre-post-fix --debug)"
 }
 

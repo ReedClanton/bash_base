@@ -40,7 +40,7 @@ else
 			if [[ -d "$HOME/bash" ]]; then
 				printf "Directory named 'bash' already exists in '$HOME'...\n"
 			else
-				cp -r $PWD/bash $HOME/bash
+				cp -r $PWD/shell $HOME/bash
 				printf "Success!\n"
 				exit 0
 			fi
