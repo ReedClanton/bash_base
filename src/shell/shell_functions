@@ -30,26 +30,48 @@ echo "\$pathToZero: '$pathToZero'"
 
 if [[ -d "$HOME/shell" ]]; then
 	declare -x SHELL_ROOT=$HOME/shell
+# Attempt to find root using $0.
 elif [[ -d "$pathToZero/shell" ]]; then
 	export SHELL_ROOT=$pathToZero
-elif [[ -d "$PWD/shell" ]]; then
-	export SHELL_ROOT=$PWD
+elif [[ -d "$pathToZero/src/shell" ]]; then
+	export SHELL_ROOT=$pathToZero/src
 elif [[ -d "$pathToZero/../shell" ]]; then
 	export SHELL_ROOT=$pathToZero/../
-elif [[ -d "$PWD/../shell" ]]; then
-	export SHELL_ROOT=$PWD/../
+elif [[ -d "$pathToZero/../src/shell" ]]; then
+	export SHELL_ROOT=$pathToZero/../src
 elif [[ -d "$pathToZero/../../shell" ]]; then
 	export SHELL_ROOT=$pathToZero/../../
-elif [[ -d "$PWD/../../shell" ]]; then
-	export SHELL_ROOT=$PWD/../../
+elif [[ -d "$pathToZero/../../src/shell" ]]; then
+	export SHELL_ROOT=$pathToZero/../../src
 elif [[ -d "$pathToZero/../../../shell" ]]; then
 	export SHELL_ROOT=$pathToZero/../../../
-elif [[ -d "$PWD/../../../shell" ]]; then
-	export SHELL_ROOT=$PWD/../../../
+elif [[ -d "$pathToZero/../../../src/shell" ]]; then
+	export SHELL_ROOT=$pathToZero/../../../src
 elif [[ -d "$pathToZero/../../../../shell" ]]; then
 	export SHELL_ROOT=$pathToZero/../../../../
+elif [[ -d "$pathToZero/../../../../src/shell" ]]; then
+	export SHELL_ROOT=$pathToZero/../../../../src
+# Attempt to find root using $PWD.
+elif [[ -d "$PWD/shell" ]]; then
+	export SHELL_ROOT=$PWD
+elif [[ -d "$PWD/src/shell" ]]; then
+	export SHELL_ROOT=$PWD/src
+elif [[ -d "$PWD/../shell" ]]; then
+	export SHELL_ROOT=$PWD/../
+elif [[ -d "$PWD/../src/shell" ]]; then
+	export SHELL_ROOT=$PWD/../src
+elif [[ -d "$PWD/../../shell" ]]; then
+	export SHELL_ROOT=$PWD/../../
+elif [[ -d "$PWD/../../src/shell" ]]; then
+	export SHELL_ROOT=$PWD/../../src
+elif [[ -d "$PWD/../../../shell" ]]; then
+	export SHELL_ROOT=$PWD/../../../
+elif [[ -d "$PWD/../../../src/shell" ]]; then
+	export SHELL_ROOT=$PWD/../../../src
 elif [[ -d "$PWD/../../../../shell" ]]; then
 	export SHELL_ROOT=$PWD/../../../../
+elif [[ -d "$PWD/../../../../src/shell" ]]; then
+	export SHELL_ROOT=$PWD/../../../../src
 else
 	echo "ERROR, couldn't find root of shell scripts."
 	exit 1
