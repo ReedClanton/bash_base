@@ -5,15 +5,11 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-20.04
     steps:
-      - name: Explore files
-        run: cd ${{ github.workspace }}; ls -GApl ${{ github.workspace }};
-      - run: echo "$(ls -GApl)"
-      - run: cd ../
-      - run: echo "$(pwd)"
-      - run: echo "$(ls -GApl)"
-      - run: cd ../
-      - run: echo "$(pwd)"
-      - run: echo "$(ls -GApl)"
+      - uses: actions/checkout@v3
+      - run: pwd
+      - run: ls -GApl
+      - run: ls -GApl ../
+      - run: ls -GApl ../../
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
