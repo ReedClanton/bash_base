@@ -19,7 +19,6 @@ declare -irx LINE_TITLE=2
  #########################
 ## Shell Function Logging ##
  #########################
->>>>>>> main
 # Indicates no logs should be produced.
 declare -irx NONE=0
 # Indicates that only error level logs should be produced.

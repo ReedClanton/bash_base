@@ -4,7 +4,13 @@
 ## Path Short Hand(s) ##
  ######################
 # Shell root.
-declare -x SHELL_ROOT=$HOME/shell
+if [[ -d "$HOME/shell" ]]; then
+	declare -x SHELL_ROOT=$HOME/shell
+elif [[ -d "${BASH_SOURCE%/*}" ]]; then
+	declare -x SHELL_ROOT=${BASH_SOURCE%/*}
+else
+	echo "Failed to find root of shell scripts."
+fi
 # Shell function(s) root.
 declare -x SHELL_FUNCTIONS=$SHELL_ROOT/functions
 # Shell function's constant(s).
