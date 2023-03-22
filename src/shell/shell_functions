@@ -23,20 +23,15 @@ echo "\$HOME: '$cmdOut'"
 #echo "\$(dirname '\${BASH_SOURCE%/*}'): '$cmdOut'"
 cmdOut="$0"
 echo "\$0: '$0'"
-cmdOut="$1"
-echo "\$1: '$1'"
-cmdOut="$(dirname '$0')"
-echo "\$(dirname '\$0'): '$cmdOut'"
-cmdOut="$(dirname '$1')"
-echo "\$(dirname '\$1'): '$cmdOut'"
-cmdOut="$(basename '$0')"
-echo "\$(basename '\$0'): '$cmdOut'"
-cmdOut="$(basename '$1')"
-echo "\$(basename '\$1'): '$cmdOut'"
-cmdOut="$(readlink '$0')"
-echo "\$(readlink '\$0'): '$cmdOut'"
-cmdOut="$(readlink '$1')"
-echo "\$(readlink '\$1'): '$cmdOut'"
+echo "\$(dirname '\$0'):"
+dirname '$0'
+dirname "$0"
+echo "\$(basename '\$0'):"
+basename '$0'
+basename "$0"
+echo "\$(readlink '\$0'):"
+readlink '$0'
+readlink "$0"
 
 
 if [[ -d "$HOME/shell" ]]; then
