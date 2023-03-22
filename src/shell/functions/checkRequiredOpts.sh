@@ -1,4 +1,4 @@
-#! /bin/bash
+#!/usr/bin/env sh
 
  ###############
 ## Function(s) ##
@@ -13,7 +13,7 @@ IFS='' read -r -d '' CHECK_REQUIRED_OPTS_DOC <<"EOF"
 #/ USAGE: checkRequiredOpts "<callingFunctionDoc>" [OPTIONS]...
 #/
 #/ NOTE(S):
-#/	- Method may not use bash logger because it's used by that method.
+#/	- Method may not use the log function because this is used by that method.
 #/
 #/ ARGUMENT(S):
 #/	"<CallingFuncDoc>"

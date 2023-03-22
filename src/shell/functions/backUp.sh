@@ -1,10 +1,10 @@
-#! /bin/bash
+#!/usr/bin/env sh
 
  #########################
 ## Global(s)/Constant(s) ##
  #########################
 ## Constant(s) ##
-source $BASH_FUNCTIONS_CONSTANTS/backUp.sh
+source $SHELL_FUNCTIONS_CONSTANTS/backUp.sh
 
  #####################
 ## Local Variable(s) ##
@@ -24,7 +24,7 @@ IFS='' read -r -d '' BACKUP_DOC <<"EOF"
 #/	that don't start with '.bash' won't be included. Also the folder called
 #/	'GDrive' at the root of $DEFAULT_BACK_UP_SOURCE_PATH will be ignored.
 #/ 
-#/ USAGE: functionName [OPTIONS]...
+#/ USAGE: backUp [OPTIONS]...
 #/
 #/ NOTE(S):
 #/	- This is intended to be run each time a terminal is opened.
@@ -36,7 +36,7 @@ IFS='' read -r -d '' BACKUP_DOC <<"EOF"
 #/		(OPTIONAL)
 #/	-q, --quiet
 #/		Produces no output other than error level.
-#/			- Note: Default log level value: $BASH_LOG_LEVEL.
+#/			- Note: Default log level value: $SHELL_LOG_LEVEL.
 #/			- Note: *Not yet implemented.*
 #/		(OPTIONAL)
 #/ 
@@ -125,7 +125,7 @@ eval "$( (eval $cmd) \
 	 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
 
 if [[ $rtOut -ne 0 ]]; then
-	log $errLvl -m="$errOut"
+	log $errLvl -m="rsync error output:" -m="$errOut"
 # Figure out why this is failing.
 #else
 	# TODO: Handle condidtion where rsync stdOut is empty (currently errors).

@@ -1,4 +1,4 @@
-# .bashrc
+#!/usr/bin/env sh
 
  #############################
 ## Source Global Definitions ##
@@ -6,11 +6,11 @@
 if [ -f /etc/bashrc ]; then
 	source /etc/bashrc
 fi
-if [ -f $HOME/bash/bash_aliases ]; then
-	source $HOME/bash/bash_aliases
+if [ -f $HOME/shell/shell_aliases ]; then
+	source $HOME/shell/shell_aliases
 fi
-if [ -f $HOME/bash/bash_functions ]; then
-	source $HOME/bash/bash_functions
+if [ -f $HOME/shell/shell_functions ]; then
+	source $HOME/shell/shell_functions
 fi
 
  #####################
@@ -26,7 +26,7 @@ export HISTCONTROL=$HISTCONTROL:ignoredups
 # Ignores commands that start with ' '.
 export HISTCONTROL=$HISTCONTROL:ignorespace
 # Moves location of history file.
-export HISTFILE=$HOME/bash/bash_history
+export HISTFILE=$HOME/shell/shell_history
 
 ## Terminal Setup ##
 # When tab-completing, match regardless of case.
