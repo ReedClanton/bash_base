@@ -15,7 +15,7 @@ declare -x SHELL_FUNCTIONS_CONSTANTS=$SHELL_FUNCTIONS/constants
  ###########################
 ## Data ##
 # Includes variables relevant to all functions.
-source $SHELL_FUNCTIONS/variablesGlobal.sh
+. $SHELL_FUNCTIONS/variablesGlobal.sh
 
 ## Function(s) ##
 # Include output producing/formatting function(s) used by other function(s) in the same/child directories.

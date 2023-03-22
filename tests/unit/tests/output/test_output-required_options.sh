@@ -16,6 +16,10 @@
 #/ TODO(S):
 #/	- None
 setup_suite() {
+	echo "pwd: '$(pwd)'"
+	echo "PWD: '$PWD'"
+	echo "ls -GApl: '$(ls -GApl)'"
+	echo "\$HOME: '$HOME'"
 	# TODO: Comment.
 	. ../../../../src/shell/shell_functions
 	# Allows tests to just call `output` rather than accessing the full path.
