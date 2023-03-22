@@ -16,6 +16,8 @@
 #/ TODO(S):
 #/	- None
 setup_suite() {
+	echo "pwd: '$(pwd)'"
+	echo "ls -GApl: '$(ls -GApl)'"
 	# Allows tests to just call `output` rather than accessing the full path.
 	function output() {
 		../../../../src/shell/functions/output.sh "${@}"
