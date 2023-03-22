@@ -4,44 +4,17 @@
 ## Path Short Hand(s) ##
  ######################
 # Shell root.
-echo "shell_functions:"
-cmdOut="$PWD"
-echo "\$PWD: '$cmdOut'"
-cmdOut="$(pwd)"
-echo "pwd: '$cmdOut'"
-cmdOut="$(ls -GApl)"
-echo "ls -GApl: '$cmdOut'"
-cmdOut="$HOME"
-echo "\$HOME: '$cmdOut'"
-#cmdOut="$BASH_SOURCE"
-#echo "\$BASH_SOURCE: '$cmdOut'"
-#cmdOut="${BASH_SOURCE%/*}"
-#echo "\${BASH_SOURCE%/*}: '$cmdOut'"
-#cmdOut="$(dirname '$BASH_SOURCE')"
-#echo "\$(dirname '\$BASH_SOURCE'): '$cmdOut'"
-#cmdOut="$(dirname '$BASH_SOURCE')"
-#echo "\$(dirname '\${BASH_SOURCE%/*}'): '$cmdOut'"
-cmdOut="$0"
+echo "## shell_functions: ##"
 echo "\$0: '$0'"
-echo "dirname \"\$0\":"
-dirname "$0"
-echo "basename \"\$0\":"
-basename "$0"
+echo "readlink $0:"
+readlink $0
 echo "readlink \"$0\":"
 readlink "$0"
+echo "readlink '$0':"
+readlink '$0'
 
-local target="$1"
-
-if [ "$target" == "." ]; then
-    echo "$(pwd)"
-elif [ "$target" == ".." ]; then
-    echo "$(dirname "$(pwd)")"
-else
-    echo "$(cd "$(dirname "$1")"; pwd)/$(basename "$1")"
-fi
-
-local pathToThisFile=$(readlink "$0")
-echo "\$pathToThisFile: '$pathToThisFile'"
+#local pathToThisFile=$(readlink "$0")
+#echo "\$pathToThisFile: '$pathToThisFile'"
 
 if [[ -d "$HOME/shell" ]]; then
 	declare -x SHELL_ROOT=$HOME/shell
@@ -56,9 +29,9 @@ elif [[ -d "$0/../../../shell" ]]; then
 elif [[ -d "$0/../../../../shell" ]]; then
 	export SHELL_ROOT=$0/../../../../
 fi
-echo "\$SHELL_ROOT: '$SHELL_ROOT'"
-cmdOut="$(readlink $SHELL_ROOT)"
-echo "\$(readlink \$SHELL_ROOT): '$cmdOut'"
+#echo "\$SHELL_ROOT: '$SHELL_ROOT'"
+#cmdOut="$(readlink $SHELL_ROOT)"
+#echo "\$(readlink \$SHELL_ROOT): '$cmdOut'"
 # Shell function(s) root.
 declare -x SHELL_FUNCTIONS=$SHELL_ROOT/functions
 # Shell function's constant(s).
