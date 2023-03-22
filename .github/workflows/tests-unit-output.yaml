@@ -1,0 +1,16 @@
+name: Unit Tests of output
+run-name: ${{ github.actor }} is unit testing POSIX script output
+on: [push, pull_request]
+jobs:
+  unit-test-output:
+    runs-on: ubuntu-20.04
+    steps:
+      - run: echo "Checking out branch ${{ github.ref }} from ${{ github.repository }} repo on ${{ runner.os }}..."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "pwd: '$(pwd)'"
+      - run: echo "PWD: '$PWD'"
+      - run: echo "ls -GApl: '$(ls -GApl)'"
+      - name: Run unit tests
+        run: tests/unit/bash_unit -f tap tests/unit/tests/*
+
