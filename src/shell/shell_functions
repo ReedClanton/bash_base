@@ -3,6 +3,11 @@
  ######################
 ## Path Short Hand(s) ##
  ######################
+echo "pwd: '$(pwd)'"
+echo "PWD: '$PWD'"
+echo "HOME: '$HOME'"
+echo "BASH_SOURCE: '$BASH_SOURCE'"
+echo "{BASH_SOURCE%/*}: '${BASH_SOURCE%/*}'"
 # Shell root.
 if [[ -d "$HOME/shell" ]]; then
 	declare -x SHELL_ROOT=$HOME/shell
