@@ -25,21 +25,31 @@ echo "############"
 readlink -f "$0"
 echo "############"
 
-#local pathToThisFile=$(readlink "$0")
-#echo "\$pathToThisFile: '$pathToThisFile'"
+local pathToZero=$(readlink -f '$0')
+echo "\$pathToZero: '$pathToZero'"
 
 if [[ -d "$HOME/shell" ]]; then
 	declare -x SHELL_ROOT=$HOME/shell
-elif [[ -d "$0/shell" ]]; then
-	export SHELL_ROOT=$0
-elif [[ -d "$0/../shell" ]]; then
-	export SHELL_ROOT=$0/../
-elif [[ -d "$0/../../shell" ]]; then
-	export SHELL_ROOT=$0/../../
-elif [[ -d "$0/../../../shell" ]]; then
-	export SHELL_ROOT=$0/../../../
-elif [[ -d "$0/../../../../shell" ]]; then
-	export SHELL_ROOT=$0/../../../../
+elif [[ -d "$pathToZero/shell" ]]; then
+	export SHELL_ROOT=$pathToZero
+elif [[ -d "$PWD/shell" ]]; then
+	export SHELL_ROOT=$PWD
+elif [[ -d "$pathToZero/../shell" ]]; then
+	export SHELL_ROOT=$pathToZero/../
+elif [[ -d "$PWD/../shell" ]]; then
+	export SHELL_ROOT=$PWD/../
+elif [[ -d "$pathToZero/../../shell" ]]; then
+	export SHELL_ROOT=$pathToZero/../../
+elif [[ -d "$PWD/../../shell" ]]; then
+	export SHELL_ROOT=$PWD/../../
+elif [[ -d "$pathToZero/../../../shell" ]]; then
+	export SHELL_ROOT=$pathToZero/../../../
+elif [[ -d "$PWD/../../../shell" ]]; then
+	export SHELL_ROOT=$PWD/../../../
+elif [[ -d "$pathToZero/../../../../shell" ]]; then
+	export SHELL_ROOT=$pathToZero/../../../../
+elif [[ -d "$PWD/../../../../shell" ]]; then
+	export SHELL_ROOT=$PWD/../../../../
 else
 	echo "ERROR, couldn't find root of shell scripts."
 	exit 1
