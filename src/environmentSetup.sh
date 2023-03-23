@@ -24,7 +24,7 @@ IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
 #/	shell files. The original files are backed up to a directory that's created
 #/	in the same location as this script.
 #/
-#/ USAGE: ./<thisFilesName> [OPTIONS]...
+#/ USAGE: ./environmentSetup.sh [OPTIONS]...
 #/
 #/ NOTE(S):
 #/	- None
