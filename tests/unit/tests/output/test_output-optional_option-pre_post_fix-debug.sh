@@ -17,10 +17,12 @@
 #/ TODO(S):
 #/	- None
 setup_suite() {
-	# Allows tests to just call `output` rather than accessing the full path.
-	function output() {
-		../../../../src/shell/functions/output.sh "${@}"
-	}
+	# Ensure required environment variable(s) are set.
+	. ../../../../src/shell/shell_functions
+	# Short hand used to call function so full path doesn't have to be used each time.
+	output=$SHELL_FUNCTIONS/output/output.sh "${@}"
+	# Ensure required constants have been set.
+	. $SHELL_FUNCTIONS/output/constents.sh
 }
 
 #/ DESCRIPTION:
@@ -30,9 +32,10 @@ setup_suite() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pp_-d() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$DEBUG_CHAR sS0 $DEBUG_CHAR" "$(output -m='sS0' --pp -d)"
+test__--pp_-d() {
+ 	assert_equals \
+ 		"$DEBUG_CHAR sS0 $DEBUG_CHAR" \
+ 		"$($output -m='sS0' --pp -d)"
 }
 
 #/ DESCRIPTION:
@@ -42,9 +45,10 @@ test_output__single_line__--pp_-d() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pp_--debug() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$DEBUG_CHAR 0dD $DEBUG_CHAR" "$(output -m='0dD' --pp --debug)"
+test__--pp_--debug() {
+ 	assert_equals \
+ 		"$DEBUG_CHAR 0dD $DEBUG_CHAR" \
+ 		"$($output -m='0dD' --pp --debug)"
 }
 
 #/ DESCRIPTION:
@@ -54,9 +58,10 @@ test_output__single_line__--pp_--debug() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pre-post-fix_-d() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$DEBUG_CHAR 1fF $DEBUG_CHAR" "$(output -m='1fF' --pre-post-fix -d)"
+test__--pre-post-fix_-d() {
+ 	assert_equals \
+ 		"$DEBUG_CHAR 1fF $DEBUG_CHAR" \
+ 		"$($output -m='1fF' --pre-post-fix -d)"
 }
 
 #/ DESCRIPTION:
@@ -66,8 +71,9 @@ test_output__single_line__--pre-post-fix_-d() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pre-post-fix_--debug() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$DEBUG_CHAR 2gG $DEBUG_CHAR" "$(output -m='2gG' --pre-post-fix --debug)"
+test__--pre-post-fix_--debug() {
+ 	assert_equals \
+ 		"$DEBUG_CHAR 2gG $DEBUG_CHAR" \
+ 		"$($output -m='2gG' --pre-post-fix --debug)"
 }
 

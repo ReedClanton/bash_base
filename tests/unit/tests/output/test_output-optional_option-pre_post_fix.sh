@@ -16,10 +16,12 @@
 #/ TODO(S):
 #/	- None
 setup_suite() {
-	# Allows tests to just call `output` rather than accessing the full path.
-	function output() {
-		../../../../src/shell/functions/output.sh "${@}"
-	}
+	# Ensure required environment variable(s) are set.
+	. ../../../../src/shell/shell_functions
+	# Short hand used to call function so full path doesn't have to be used each time.
+	output=$SHELL_FUNCTIONS/output/output.sh "${@}"
+	# Ensure required constants have been set.
+	. $SHELL_FUNCTIONS/output/constents.sh
 }
 
 #/ DESCRIPTION:
@@ -29,9 +31,10 @@ setup_suite() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pp() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$DEFAULT_CHAR wW1 $DEFAULT_CHAR" "$(output -m='wW1' --pp)"
+test__--pp() {
+ 	assert_equals \
+ 		"$DEFAULT_CHAR wW1 $DEFAULT_CHAR" \
+ 		"$($output -m='wW1' --pp)"
 }
 
 #/ DESCRIPTION:
@@ -41,8 +44,9 @@ test_output__single_line__--pp() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pre-post-fix() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$DEFAULT_CHAR eE2 $DEFAULT_CHAR" "$(output -m='eE2' --pre-post-fix)"
+test__--pre-post-fix() {
+ 	assert_equals \
+ 		"$DEFAULT_CHAR eE2 $DEFAULT_CHAR" \
+ 		"$($output -m='eE2' --pre-post-fix)"
 }
 

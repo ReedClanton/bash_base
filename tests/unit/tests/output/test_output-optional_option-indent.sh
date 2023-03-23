@@ -15,10 +15,10 @@
 #/ TODO(S):
 #/	- None
 setup_suite() {
-	# Allows tests to just call `output` rather than accessing the full path.
-	function output() {
-		../../../../src/shell/functions/output.sh "${@}"
-	}
+	# Ensure required environment variable(s) are set.
+	. ../../../../src/shell/shell_functions
+	# Short hand used to call function so full path doesn't have to be used each time.
+	output=$SHELL_FUNCTIONS/output/output.sh "${@}"
 }
 
 #/ DESCRIPTION:
@@ -27,8 +27,10 @@ setup_suite() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__no_indent() {
- 	assert_equals "a" "$(output -m='a' --indent=0)"
+test__no_indent() {
+ 	assert_equals \
+ 		"a" \
+ 		"$($output -m='a' --indent=0)"
 }
 
 #/ DESCRIPTION:
@@ -37,8 +39,10 @@ test_output__single_line__no_indent() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__single_indent() {
- 	assert_equals " a" "$(output -m='a' --indent=1)"
+test__single_indent() {
+ 	assert_equals \
+ 		" a" \
+ 		"$($output -m='a' --indent=1)"
 }
 
 #/ DESCRIPTION:
@@ -48,7 +52,7 @@ test_output__single_line__single_indent() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 #/	- Figure out why it always returns 3 rather than 2.
-#test_output__single_line__lower_alpha__single_char__invalid_return_code() {
-# 	assert_status_code 2 "$(output -m='a' --indent=-1)"
+#test__lower_alpha__single_char__invalid_return_code() {
+# 	assert_status_code 2 "$($output -m='a' --indent=-1)"
 #}
 

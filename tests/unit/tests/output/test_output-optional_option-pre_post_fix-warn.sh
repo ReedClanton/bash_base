@@ -17,10 +17,12 @@
 #/ TODO(S):
 #/	- None
 setup_suite() {
-	# Allows tests to just call `output` rather than accessing the full path.
-	function output() {
-		../../../../src/shell/functions/output.sh "${@}"
-	}
+	# Ensure required environment variable(s) are set.
+	. ../../../../src/shell/shell_functions
+	# Short hand used to call function so full path doesn't have to be used each time.
+	output=$SHELL_FUNCTIONS/output/output.sh "${@}"
+	# Ensure required constants have been set.
+	. $SHELL_FUNCTIONS/output/constents.sh
 }
 
 #/ DESCRIPTION:
@@ -30,9 +32,10 @@ setup_suite() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pp_-w() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$WARN_CHAR 3hH $WARN_CHAR" "$(output -m='3hH' --pp -w)"
+test__--pp_-w() {
+ 	assert_equals \
+ 		"$WARN_CHAR 3hH $WARN_CHAR" \
+ 		"$($output -m='3hH' --pp -w)"
 }
 
 #/ DESCRIPTION:
@@ -42,9 +45,10 @@ test_output__single_line__--pp_-w() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pp_--warn() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$WARN_CHAR 4jJ $WARN_CHAR" "$(output -m='4jJ' --pp --warn)"
+test__--pp_--warn() {
+ 	assert_equals \
+ 		"$WARN_CHAR 4jJ $WARN_CHAR" \
+ 		"$($output -m='4jJ' --pp --warn)"
 }
 
 #/ DESCRIPTION:
@@ -54,9 +58,10 @@ test_output__single_line__--pp_--warn() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pre-post-fix_-w() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$WARN_CHAR 5kK $WARN_CHAR" "$(output -m='5kK' --pre-post-fix -w)"
+test__--pre-post-fix_-w() {
+ 	assert_equals \
+ 		"$WARN_CHAR 5kK $WARN_CHAR" \
+ 		"$($output -m='5kK' --pre-post-fix -w)"
 }
 
 #/ DESCRIPTION:
@@ -66,8 +71,9 @@ test_output__single_line__--pre-post-fix_-w() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pre-post-fix_--warn() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$WARN_CHAR 6lL $WARN_CHAR" "$(output -m='6lL' --pre-post-fix --warn)"
+test__--pre-post-fix_--warn() {
+ 	assert_equals \
+ 		"$WARN_CHAR 6lL $WARN_CHAR" \
+ 		"$($output -m='6lL' --pre-post-fix --warn)"
 }
 

@@ -5,7 +5,7 @@
  ###########################################
 ## Constant(s) ##
 # Includes constant(s) relevant to logger method.
-source $SHELL_FUNCTIONS_CONSTANTS/log.sh
+. $SHELL_FUNCTIONS_CONSTANTS/log.sh
 
  ###############
 ## Function(s) ##
@@ -129,7 +129,7 @@ EOF
 ## Reset/Set Local Variable(s) ##
  ###############################
 # Tracks given log level.
-declare -i lvl=$TRACE
+lvl=$TRACE
 # Tracks name of given log level.
 lvlNm="TRACE"
 # Tracks name of calling function.
@@ -146,7 +146,7 @@ msg=""
  #####################
 for fullArg in "${@}"; do
 	# Tracks value of current option.
-	declare arg=${fullArg#*=}
+	arg=${fullArg#*=}
 
 	# Determine what option user gave.
 	case $fullArg in
@@ -190,7 +190,7 @@ done
 ## Error Check Argument(s) ##
  ###########################
 $SHELL_FUNCTIONS/checkRequiredOpts.sh "$LOG_DOC" -a="${msg[@]}"
-declare rtVal=$?
+rtVal=$?
 if [[ $rtVal -ne 0 ]]; then
 	exit $rtVal
 fi

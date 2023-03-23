@@ -4,7 +4,7 @@
 ## Global(s)/Constant(s) ##
  #########################
 ## Constant(s) ##
-source $SHELL_FUNCTIONS_CONSTANTS/backUp.sh
+. $SHELL_FUNCTIONS_CONSTANTS/backUp.sh
 
  #####################
 ## Local Variable(s) ##
@@ -66,19 +66,24 @@ log -c="backUp" -m="Resetting local variable(s)..."
 ## Reset/Set Local Variable(s) ##
  ###############################
 # Logging var(s).
-declare traceLvl="-c=backUp"
-declare debugLvl="-c=backUp -d"
-declare infoLvl="-c=backUp -i"
-declare warnLvl="-c=backUp -w"
-declare errLvl="-c=backUp -e"
+traceLvl="-c=backUp"
+readonly traceLvl
+debugLvl="-c=backUp -d"
+readonly debugLvl
+infoLvl="-c=backUp -i"
+readonly infoLvl
+warnLvl="-c=backUp -w"
+readonly warnLvl
+errLvl="-c=backUp -e"
+readonly errLvl
 # Name of directory back ups are stored in.
-declare backUpDir=$DEFAULT_BACK_UP_DEST_DIR
+backUpDir=$DEFAULT_BACK_UP_DEST_DIR
 # Tracks directory being backed up.
-declare backUpSourcePath=$DEFAULT_BACK_UP_SOURCE_PATH
+backUpSourcePath=$DEFAULT_BACK_UP_SOURCE_PATH
 # Tracks path backup will be created at.
-declare backUpDestPath=$DEFAULT_BACK_UP_DEST_PATH
+backUpDestPath=$DEFAULT_BACK_UP_DEST_PATH
 # TODO: Comment.
-declare options="-rLtU --specials --safe-links --inplace --delete-excluded --include='/.bash*' --exclude='/.*' --exclude='/GDrive'"
+options="-rLtU --specials --safe-links --inplace --delete-excluded --include='/.bash*' --exclude='/.*' --exclude='/GDrive'"
 log $traceLvl -m="Local variable(s) reset."
 
  #####################
@@ -87,7 +92,7 @@ log $traceLvl -m="Local variable(s) reset."
 for fullArg in "${@}"; do
 	log $traceLvl -m="Processing option: '$fullArg'..."
 	# Tracks value of current option.
-	declare arg=${fullArg#*=}
+	arg=${fullArg#*=}
 
 	# Determine what option user gave.
 	case $fullArg in
@@ -118,7 +123,8 @@ fi
 ## Run Back Up ##
  ###############
 log $infoLvl -m="Running back up..."
-declare -r cmd="rsync $options $backUpSourcePath $backUpDestPath"
+cmd="rsync $options $backUpSourcePath $backUpDestPath"
+readonly cmd
 unset stdOut errOut rtOut
 eval "$( (eval $cmd) \
 	2> >(errOut=$(cat); typeset -p errOut) \

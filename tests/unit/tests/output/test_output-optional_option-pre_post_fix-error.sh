@@ -17,10 +17,12 @@
 #/ TODO(S):
 #/	- None
 setup_suite() {
-	# Allows tests to just call `output` rather than accessing the full path.
-	function output() {
-		../../../../src/shell/functions/output.sh "${@}"
-	}
+	# Ensure required environment variable(s) are set.
+	. ../../../../src/shell/shell_functions
+	# Short hand used to call function so full path doesn't have to be used each time.
+	output=$SHELL_FUNCTIONS/output/output.sh "${@}"
+	# Ensure required constants have been set.
+	. $SHELL_FUNCTIONS/output/constents.sh
 }
 
 #/ DESCRIPTION:
@@ -30,9 +32,10 @@ setup_suite() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pp_-e() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$ERROR_CHAR 7zZ $ERROR_CHAR" "$(output -m='7zZ' --pp -e)"
+test__--pp_-e() {
+ 	assert_equals \
+ 		"$ERROR_CHAR 7zZ $ERROR_CHAR" \
+ 		"$($output -m='7zZ' --pp -e)"
 }
 
 #/ DESCRIPTION:
@@ -42,9 +45,10 @@ test_output__single_line__--pp_-e() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pp_--error() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$ERROR_CHAR 8xX $ERROR_CHAR" "$(output -m='8xX' --pp --error)"
+test__--pp_--error() {
+ 	assert_equals \
+ 		"$ERROR_CHAR 8xX $ERROR_CHAR" \
+ 		"$($output -m='8xX' --pp --error)"
 }
 
 #/ DESCRIPTION:
@@ -54,9 +58,10 @@ test_output__single_line__--pp_--error() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pre-post-fix_-e() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$ERROR_CHAR 9cC $ERROR_CHAR" "$(output -m='9cC' --pre-post-fix -e)"
+test__--pre-post-fix_-e() {\
+ 	assert_equals \
+ 		"$ERROR_CHAR 9cC $ERROR_CHAR" \
+ 		"$($output -m='9cC' --pre-post-fix -e)"
 }
 
 #/ DESCRIPTION:
@@ -66,8 +71,9 @@ test_output__single_line__--pre-post-fix_-e() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pre-post-fix_--error() {
-	source ../../../../src/shell/functions/constants/output.sh
- 	assert_equals "$ERROR_CHAR 0vV $ERROR_CHAR" "$(output -m='0vV' --pre-post-fix --error)"
+test__--pre-post-fix_--error() {
+ 	assert_equals \
+ 		"$ERROR_CHAR 0vV $ERROR_CHAR" \
+ 		"$($output -m='0vV' --pre-post-fix --error)"
 }
 
