@@ -180,7 +180,7 @@ for fullArg in "${@}"; do
 			title=$LINE_TITLE  ;;
 		*)
 			printf "$pfix ERROR log:\t"
-			$SHELL_FUNCTIONS/output.sh --pp -m="Calling function provided invalid option: '$fullArg', see doc:"
+			$SHELL_FUNCTIONS/output/output.sh --pp -m="Calling function provided invalid option: '$fullArg', see doc:"
 			echo "$LOG_DOC"
 			exit 20  ;;
 	esac
@@ -207,7 +207,7 @@ if [[ $SHELL_LOG_LEVEL -ge $lvl ]]; then
 	# Determine how log message should be built.
 	if [[ $title -gt $NO_TITLE ]]; then
 		## Build Call to Output ##
-		output_call="$SHELL_FUNCTIONS/output.sh -l=200"
+		output_call="$SHELL_FUNCTIONS/output/output.sh -l=200"
 		# Set level.
 		if [[ $lvl -eq $TRACE ]]; then
 			output_call+=" --trace"
