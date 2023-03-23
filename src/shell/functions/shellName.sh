@@ -3,6 +3,8 @@
  #########################
 ## Global(s)/Constant(s) ##
  #########################
+## Global(s) ##
+# NoOp
 ## Constant(s) ##
 # NoOp
 
@@ -21,7 +23,7 @@ IFS='' read -r -d '' SHELL_NAME_DOC <<"EOF"
 #/ USAGE: shellName [OPTIONS]...
 #/
 #/ NOTE(S):
-#/	- TODO
+#/	- Used by shell environment config file(s). Thus log function can't be used.
 #/  
 #/ OPTION(S):
 #/	-h, --help
@@ -46,25 +48,12 @@ IFS='' read -r -d '' SHELL_NAME_DOC <<"EOF"
 #/	shellName --help
 #/ 
 #/ TODO(S):
-#/	- Fill out doc.
+#/	- None
 EOF
-log -c="shellName" -m="Resetting local variable(s)..."
- ###############################
-## Reset/Set Local Variable(s) ##
- ###############################
-# Logging var(s).
-traceLvl="-c=shellName"
-debugLvl="-c=shellName -d"
-infoLvl="-c=shellName -i"
-warnLvl="-c=shellName -w"
-errLvl="-c=shellName -e"
-log $traceLvl -m="Local variable(s) reset."
-
  #####################
 ## Process Option(s) ##
  #####################
 for fullArg in "${@}"; do
-	log $traceLvl -m="Processing option: '$fullArg'..."
 	# Tracks value of current option.
 	arg=${fullArg#*=}
 
@@ -74,7 +63,7 @@ for fullArg in "${@}"; do
 			echo "$SHELL_NAME_DOC"
 			exit 0  ;;
 		*)
-			log $errLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
+			echo "Invalid given argument: '$fullArg', see doc:"
 			echo "$SHELL_NAME_DOC"
 			exit 20  ;;
 	esac

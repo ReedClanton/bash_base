@@ -83,6 +83,8 @@ function log() {
 	$SHELL_FUNCTIONS/log.sh "${@}"
 }
 export -f log
+# Include function for returning name of current shell.
+alias shellName=$SHELL_FUNCTIONS/shellName.sh
 # Include function that backs up local home directory to "external" drive.
 alias backUp=$SHELL_FUNCTIONS/backUp.sh
 
