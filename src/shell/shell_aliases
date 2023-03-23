@@ -6,6 +6,12 @@
 alias src='source $HOME/.bashrc'
 alias ssh='ssh -X'
 
+ #######################
+## Development Tool(s) ##
+ #######################
+## Git Setup ##
+export GIT_ROOT=$HOME/git
+
  ##################
 ## Combination(s) ##
  ##################
@@ -16,22 +22,4 @@ alias c='clear;pwd;ls -a'
 alias g='c;git status;git branch -a'
 # Git fetch.
 alias gF='git fetch --all -ftp'
-
- #######################
-## Development Tool(s) ##
- #######################
-## Eclipse ##
-#alias eclipse='nohup /opt/eclipse/eclipse &'
-
-## VS Code ##
-# NoOp
-
-## Docker ##
-# Basic(s).
-# NoOp
-# Delete dangling image(s).
-#alias dangling='sudo docker rmi $(sudo docker images --filter dangling=ture -p)'
-
-## Kubectl ##
-# NoOp
 

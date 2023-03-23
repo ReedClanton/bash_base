@@ -65,7 +65,7 @@ EOF
  ##########################################
 for fullArg in "${@}"; do
 	# Tracks value of current option.
-	declare arg=${fullArg#*=}
+	arg=${fullArg#*=}
 
 	# Determine what type of value user gave.
 	case $fullArg in
@@ -93,7 +93,7 @@ fi
  #####################
 for fullArg in "${@}"; do
 	# Tracks value of current option.
-	declare arg=${fullArg#*=}
+	arg=${fullArg#*=}
 
 	# Determine what type of value user gave.
 	case $fullArg in
