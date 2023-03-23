@@ -1,4 +1,4 @@
-# Bash Base
+# Shell Base
 
 I create symbolic links to a local clone of this repo in my local environment. This repo provides almost all environment files I use on my machines. I provide no warranties.
 
