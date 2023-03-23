@@ -182,18 +182,18 @@ if [[ "./$(basename $0)" == $0 ]]; then
 						
 						# Ensure hidden shell file(s) were moved to the back up directory.
 						if [[ $rtOut -eq 0 ]]; then
-							# Directories with the same name as the user's shell must be backed up because they'll be repalced by this script.
+							# If a directory named shell exists it must be backed up because it'll be replaced by this script.
 							# TODO: Revert bellow home path and remove this comment.
-							if [[ -d "$HOME/setupTest/$shellName" ]]; then
-								log $debugLvl -m="Backing up shell directory '$HOME/$shellName' from $USER's home directory..."
+							if [[ -d "$HOME/setupTest/shell" ]]; then
+								log $debugLvl -m="Backing up shell directory '$HOME/shell' from $USER's home directory..."
 								# TODO: Revert bellow home path and remove this comment.
-								cmd="mv $HOME/setupTest/$shellName $BACK_UP_DIR/"
+								cmd="mv $HOME/setupTest/shell $BACK_UP_DIR/"
 								unset stdOut errOut rtOut
 								eval "$( (eval $cmd) \
 									2> >(errOut=$(cat); typeset -p errOut) \
 									 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
 							else
-								log $infoLvl -m="No directory containing environment setup found in $USER's home, back up skipped."
+								log $infoLvl -m="No directory named 'shell' found in $USER's home, back up skipped."
 								rtOut=0
 							fi
 							
@@ -219,9 +219,9 @@ if [[ "./$(basename $0)" == $0 ]]; then
 								
 								# Ensure hidden shell file(s) were moved.
 								if [[ $rtOut -eq 0 ]]; then
-									log $debugLvl -m="Copying '$PWD/$shellName' to '$HOME/'..."
+									log $debugLvl -m="Copying '$PWD/shell' to '$HOME/'..."
 									# TODO: Revert bellow home path and remove this comment.
-									cmd="cp -r $PWD/shell $HOME/setupTest/$shellName"
+									cmd="cp -r $PWD/shell $HOME/setupTest/shell"
 									unset stdOut errOut rtOut
 									eval "$( (eval $cmd) \
 										2> >(errOut=$(cat); typeset -p errOut) \
@@ -236,10 +236,10 @@ if [[ "./$(basename $0)" == $0 ]]; then
 									
 									# Remove shell directory that copy failed for.
 									# TODO: Revert bellow home path and remove this comment.
-									if [[ -d "$HOME/setupTest/$shellName" ]]; then
-										log $debugLvl -m="Removing '$HOME/$shellName..."
+									if [[ -d "$HOME/setupTest/shell" ]]; then
+										log $debugLvl -m="Removing '$HOME/shell..."
 										# TODO: Revert bellow home path and remove this comment.
-										cmd="rm -rf $HOME/setupTest/$shellName"
+										cmd="rm -rf $HOME/setupTest/shell"
 										unset stdOut errOut rtOut
 										eval "$( (eval $cmd) \
 											2> >(errOut=$(cat); typeset -p errOut) \
@@ -250,15 +250,15 @@ if [[ "./$(basename $0)" == $0 ]]; then
 											exit 32
 										fi
 									else
-										log $infoLvl -m="Skipping removal of '$shellName' directory from $USER's home because it doesn't exist."
+										log $infoLvl -m="Skipping removal of 'shell' directory from $USER's home because it doesn't exist."
 									fi
 									
 									# Check if back up contains a shell directory.
-									if [[ -d "$BACK_UP_DIR/$shellName" ]]; then
-										log $debugLvl -m="Copying '$shellName' directory to $USER's home from back up copy..."
+									if [[ -d "$BACK_UP_DIR/shell" ]]; then
+										log $debugLvl -m="Copying 'shell' directory to $USER's home from back up copy..."
 										# Copy old shell directory back.
 										# TODO: Revert bellow home path and remove this comment.
-										cmd="cp -r $BACK_UP_DIR/$shellName $HOME/setupTest/"
+										cmd="cp -r $BACK_UP_DIR/shell $HOME/setupTest/"
 										unset stdOut errOut rtOut
 										eval "$( (eval $cmd) \
 											2> >(errOut=$(cat); typeset -p errOut) \
@@ -269,7 +269,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 											exit 33
 										fi
 									else
-										log $infoLvl -m="Skipping copying '$shellName' directory from back up because the back up doesn't contain it."
+										log $infoLvl -m="Skipping copying 'shell' directory from back up because the back up doesn't contain it."
 									fi
 								else
 									log $errorLvl -m="Failed to move hidden shell file(s) to $USER's home."
@@ -307,13 +307,13 @@ if [[ "./$(basename $0)" == $0 ]]; then
 									log $warnLvl -m="Skipping copying of hidden shell file(s) because the back up doesn't contain any."
 								fi
 							else
-								log $errorLvl -m="Failed to back up (move) '$HOME/$shellName' to '$BACK_UP_DIR/'."
+								log $errorLvl -m="Failed to back up (move) '$HOME/shell' to '$BACK_UP_DIR/'."
 							fi
 							
 							# Attempt to move shell directory back to user's home.
-							if [[ -d "$BACK_UP_DIR/$shellName" ]]; then
+							if [[ -d "$BACK_UP_DIR/shell" ]]; then
 								# TODO: Revert bellow home path and remove this comment.
-								cmd="cp -r $BACK_UP_DIR/$shellName $HOME/setupTest/"
+								cmd="cp -r $BACK_UP_DIR/shell $HOME/setupTest/"
 								unset stdOut errOut rtOut
 								eval "$( (eval $cmd) \
 									2> >(errOut=$(cat); typeset -p errOut) \
