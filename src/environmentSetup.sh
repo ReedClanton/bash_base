@@ -88,8 +88,9 @@ IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
 #/			to there home directory.
 #/
 #/ EXAMPLE(S):
-#/	./environmentSetup
-#/	./environmentSetup --help
+#/	./environmentSetup.sh
+#/	./environmentSetup.sh -h
+#/	./environmentSetup.sh --help
 #/
 #/ TODO(S):
 #/	- Rather than moving user's original files to the back up directory, copy them then remove them.
