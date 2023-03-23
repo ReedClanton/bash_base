@@ -18,12 +18,16 @@
  ###############
 IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
 #/ DESCRIPTION:
-#/	TODO
+#/	Copies shell scripts and environent configuration files,
+#/	like `~/.<yourShellName>rc`, to the home directory of the user that runs
+#/	the script. Basically, the files in this repo replace your user level
+#/	shell files. The original files are backed up to a directory that's created
+#/	in the same location as this script.
 #/
-#/ USAGE: ./<thisFilesName> [OPTIONS]... [ARGUMENTS]...
+#/ USAGE: ./<thisFilesName> [OPTIONS]...
 #/
 #/ NOTE(S):
-#/	- TODO
+#/	- None
 #/
 #/ OPTION(S):
 #/	-h, --help
@@ -84,11 +88,12 @@ IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
 #/			to there home directory.
 #/
 #/ EXAMPLE(S):
-#/	environmentSetup --help
+#/	./environmentSetup
+#/	./environmentSetup --help
 #/
 #/ TODO(S):
-#/	- Fill out doc.
-#/	- Implement help option.
+#/	- Rather than moving user's original files to the back up directory, copy them then remove them.
+#/	- Set a default answer and make user input checking more robust.
 EOF
 # Ensure script is being run from the same location as it's located.
 if [[ "./$(basename $0)" == $0 ]]; then
@@ -139,7 +144,6 @@ if [[ "./$(basename $0)" == $0 ]]; then
 		esac
 	done
 
-	# TODO: Set a default answer and make user input checking more robust.
 	# Ask user if the user that's currently running this script is the one they would like to setup.
 	log $infoLvl --line-title -m="The user that's running this script ($USER) is the one that will have there environment setup."
 	printf "Would you like to run environment setup for '$USER' (y or n): "
@@ -166,11 +170,9 @@ if [[ "./$(basename $0)" == $0 ]]; then
 					# Ensure directory for storring user's current environment setup was created.
 					if [[ $rtOut -eq 0 ]]; then
 						# Back up user's hidden shell file(s) if they exist.
-						# TODO: Revert bellow home path and remove this comment.
-						if compgen -G "$HOME/setupTest/.$shellName*" > /dev/null; then
+						if compgen -G "$HOME/.$shellName*" > /dev/null; then
 							log $debugLvl -m="Backing up '$HOME/.$shellName*' files to '$BACK_UP_DIR'..."
-							# TODO: Revert bellow home path and remove this comment.
-							cmd="mv $HOME/setupTest/.$shellName* $BACK_UP_DIR/"
+							cmd="mv $HOME/.$shellName* $BACK_UP_DIR/"
 							unset stdOut errOut rtOut
 							eval "$( (eval $cmd) \
 								2> >(errOut=$(cat); typeset -p errOut) \
@@ -183,11 +185,9 @@ if [[ "./$(basename $0)" == $0 ]]; then
 						# Ensure hidden shell file(s) were moved to the back up directory.
 						if [[ $rtOut -eq 0 ]]; then
 							# If a directory named shell exists it must be backed up because it'll be replaced by this script.
-							# TODO: Revert bellow home path and remove this comment.
-							if [[ -d "$HOME/setupTest/shell" ]]; then
+							if [[ -d "$HOME/shell" ]]; then
 								log $debugLvl -m="Backing up shell directory '$HOME/shell' from $USER's home directory..."
-								# TODO: Revert bellow home path and remove this comment.
-								cmd="mv $HOME/setupTest/shell $BACK_UP_DIR/"
+								cmd="mv $HOME/shell $BACK_UP_DIR/"
 								unset stdOut errOut rtOut
 								eval "$( (eval $cmd) \
 									2> >(errOut=$(cat); typeset -p errOut) \
@@ -202,8 +202,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 								log $debugLvl -m="Copying hidden shell setup file(s) from '$PWD/.shell*' file(s) to '$HOME/'..."
 								
 								for shellFilePath in $PWD/.shell*; do
-									# TODO: Revert bellow home path and remove this comment.
-									newShellFilePath=$HOME/setupTest/.$shellName${shellFilePath#$PWD/.shell}
+									newShellFilePath=$HOME/.$shellName${shellFilePath#$PWD/.shell}
 									log $traceLvl -m="Copying '$shellFilePath' to '$newShellFilePath'..."
 									cmd="cp $shellFilePath $newShellFilePath"
 									unset stdOut errOut rtOut
@@ -220,8 +219,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 								# Ensure hidden shell file(s) were moved.
 								if [[ $rtOut -eq 0 ]]; then
 									log $debugLvl -m="Copying '$PWD/shell' to '$HOME/'..."
-									# TODO: Revert bellow home path and remove this comment.
-									cmd="cp -r $PWD/shell $HOME/setupTest/shell"
+									cmd="cp -r $PWD/shell $HOME/shell"
 									unset stdOut errOut rtOut
 									eval "$( (eval $cmd) \
 										2> >(errOut=$(cat); typeset -p errOut) \
@@ -234,12 +232,10 @@ if [[ "./$(basename $0)" == $0 ]]; then
 										log $errorLvl -m="Failed to copy directory with shell scripts to $USER's home."
 									fi
 									
-									# Remove shell directory that copy failed for.
-									# TODO: Revert bellow home path and remove this comment.
-									if [[ -d "$HOME/setupTest/shell" ]]; then
+									# Remove shell directory that copy failed for.\
+									if [[ -d "$HOME/shell" ]]; then
 										log $debugLvl -m="Removing '$HOME/shell..."
-										# TODO: Revert bellow home path and remove this comment.
-										cmd="rm -rf $HOME/setupTest/shell"
+										cmd="rm -rf $HOME/shell"
 										unset stdOut errOut rtOut
 										eval "$( (eval $cmd) \
 											2> >(errOut=$(cat); typeset -p errOut) \
@@ -257,8 +253,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 									if [[ -d "$BACK_UP_DIR/shell" ]]; then
 										log $debugLvl -m="Copying 'shell' directory to $USER's home from back up copy..."
 										# Copy old shell directory back.
-										# TODO: Revert bellow home path and remove this comment.
-										cmd="cp -r $BACK_UP_DIR/shell $HOME/setupTest/"
+										cmd="cp -r $BACK_UP_DIR/shell $HOME/"
 										unset stdOut errOut rtOut
 										eval "$( (eval $cmd) \
 											2> >(errOut=$(cat); typeset -p errOut) \
@@ -276,8 +271,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 								fi
 								
 								# Remove hidden file(s) that were copied to user's home.
-								# TODO: Revert bellow home path and remove this comment.
-								cmd="rm $HOME/setupTest/.$shellName*"
+								cmd="rm $HOME/.$shellName*"
 								unset stdOut errOut rtOut
 								eval "$( (eval $cmd) \
 									2> >(errOut=$(cat); typeset -p errOut) \
@@ -292,8 +286,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 								if compgen -G "$BACK_UP_DIR/.*" > /dev/null; then
 									log $debugLvl -m="Copying hidden shell file(s) from back up to $USER's home..."
 									# Copy backed up files to user's home.
-									# TODO: Revert bellow home path and remove this comment.
-									cmd="cp $BACK_UP_DIR/.* $HOME/setupTest/"
+									cmd="cp $BACK_UP_DIR/.* $HOME/"
 									unset stdOut errOut rtOut
 									eval "$( (eval $cmd) \
 										2> >(errOut=$(cat); typeset -p errOut) \
@@ -312,8 +305,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 							
 							# Attempt to move shell directory back to user's home.
 							if [[ -d "$BACK_UP_DIR/shell" ]]; then
-								# TODO: Revert bellow home path and remove this comment.
-								cmd="cp -r $BACK_UP_DIR/shell $HOME/setupTest/"
+								cmd="cp -r $BACK_UP_DIR/shell $HOME/"
 								unset stdOut errOut rtOut
 								eval "$( (eval $cmd) \
 									2> >(errOut=$(cat); typeset -p errOut) \
@@ -330,8 +322,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 						
 						# Ensure any file(s) that were moved from user's home are moved back.
 						if compgen -G "$BACK_UP_DIR/.$shellName*" > /dev/null; then
-							# TODO: Revert bellow home path and remove this comment.
-							cmd="cp $BACK_UP_DIR/.* $HOME/setupTest/"
+							cmd="cp $BACK_UP_DIR/.* $HOME/"
 							unset stdOut errOut rtOut
 							eval "$( (eval $cmd) \
 								2> >(errOut=$(cat); typeset -p errOut) \
