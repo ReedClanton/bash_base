@@ -32,8 +32,10 @@ setup_suite() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pp_-d() {
- 	assert_equals "$DEBUG_CHAR sS0 $DEBUG_CHAR" "$($output -m='sS0' --pp -d)"
+test__--pp_-d() {
+ 	assert_equals \
+ 		"$DEBUG_CHAR sS0 $DEBUG_CHAR" \
+ 		"$($output -m='sS0' --pp -d)"
 }
 
 #/ DESCRIPTION:
@@ -43,8 +45,10 @@ test_output__single_line__--pp_-d() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pp_--debug() {
- 	assert_equals "$DEBUG_CHAR 0dD $DEBUG_CHAR" "$($output -m='0dD' --pp --debug)"
+test__--pp_--debug() {
+ 	assert_equals \
+ 		"$DEBUG_CHAR 0dD $DEBUG_CHAR" \
+ 		"$($output -m='0dD' --pp --debug)"
 }
 
 #/ DESCRIPTION:
@@ -54,8 +58,10 @@ test_output__single_line__--pp_--debug() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pre-post-fix_-d() {
- 	assert_equals "$DEBUG_CHAR 1fF $DEBUG_CHAR" "$($output -m='1fF' --pre-post-fix -d)"
+test__--pre-post-fix_-d() {
+ 	assert_equals \
+ 		"$DEBUG_CHAR 1fF $DEBUG_CHAR" \
+ 		"$($output -m='1fF' --pre-post-fix -d)"
 }
 
 #/ DESCRIPTION:
@@ -65,7 +71,9 @@ test_output__single_line__--pre-post-fix_-d() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pre-post-fix_--debug() {
- 	assert_equals "$DEBUG_CHAR 2gG $DEBUG_CHAR" "$($output -m='2gG' --pre-post-fix --debug)"
+test__--pre-post-fix_--debug() {
+ 	assert_equals \
+ 		"$DEBUG_CHAR 2gG $DEBUG_CHAR" \
+ 		"$($output -m='2gG' --pre-post-fix --debug)"
 }
 

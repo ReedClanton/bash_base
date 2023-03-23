@@ -32,8 +32,10 @@ setup_suite() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pp_-t() {
- 	assert_equals "$TRACE_CHAR rR3 $TRACE_CHAR" "$($output -m='rR3' --pp -t)"
+test__--pp_-t() {
+ 	assert_equals \
+ 		"$TRACE_CHAR rR3 $TRACE_CHAR" \
+ 		"$($output -m='rR3' --pp -t)"
 }
 
 #/ DESCRIPTION:
@@ -43,8 +45,10 @@ test_output__single_line__--pp_-t() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pp_--trace() {
- 	assert_equals "$TRACE_CHAR tT4 $TRACE_CHAR" "$($output -m='tT4' --pp --trace)"
+test__--pp_--trace() {
+ 	assert_equals \
+ 		"$TRACE_CHAR tT4 $TRACE_CHAR" \
+ 		"$($output -m='tT4' --pp --trace)"
 }
 
 #/ DESCRIPTION:
@@ -54,8 +58,10 @@ test_output__single_line__--pp_--trace() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pre-post-fix_-t() {
- 	assert_equals "$TRACE_CHAR yY5 $TRACE_CHAR" "$($output -m='yY5' --pre-post-fix -t)"
+test__--pre-post-fix_-t() {
+ 	assert_equals \
+ 		"$TRACE_CHAR yY5 $TRACE_CHAR" \
+ 		"$($output -m='yY5' --pre-post-fix -t)"
 }
 
 #/ DESCRIPTION:
@@ -65,7 +71,9 @@ test_output__single_line__--pre-post-fix_-t() {
 #/ TODO(S):
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
-test_output__single_line__--pre-post-fix_--trace() {
- 	assert_equals "$TRACE_CHAR uU6 $TRACE_CHAR" "$($output -m='uU6' --pre-post-fix --trace)"
+test__--pre-post-fix_--trace() {
+ 	assert_equals \
+ 		"$TRACE_CHAR uU6 $TRACE_CHAR" \
+ 		"$($output -m='uU6' --pre-post-fix --trace)"
 }
 

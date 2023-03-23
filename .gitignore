@@ -1,2 +1,2 @@
 # Ensure backups of local user's bash file(s) aren't included.
-/src/userHomeBackUp-*
+/src/*-homeBackUp-*

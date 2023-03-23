@@ -20,15 +20,15 @@ There is an environment setup script here as well as the base file(s) used when 
 
 Please note that an attempt is made to ensure everything is POSIX complient, but most of my systems run `bash`.
 
-#### [Advanced Environment Configuration](src/bash/README.md)
+#### [Advanced Environment Configuration](src/shell/README.md)
 
 These file(s) are used (sourced) by the files covered by [Basic Environment Setup and Configuration](#basic-environment-setup-and-configuration). The `README.md` linked to above contains more info.
 
-#### [POSIX Functions](src/bash/functions/README.md)
+#### [POSIX Functions](src/shell/functions/README.md)
 
 These file(s) contain POSIX complient function(s). The `README.md` linked to above contains more info.
 
-#### [POSIX Function Constants](src/bash/functions/constants/README.md)
+#### [POSIX Function Constants](src/shell/functions/constants/README.md)
 
 These file(s) contain constants used by the POSIX functions in the parient directory. The `README.md` linked to above contains more info.
 

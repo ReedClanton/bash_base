@@ -23,7 +23,7 @@ IFS='' read -r -d '' FUNCTION_NAME_DOC <<"EOF"
 #/ USAGE: functionName [OPTIONS]... [ARGUMENTS]...
 #/
 #/ NOTE(S):
-#/	- None.
+#/	- TODO
 #/
 #/ OPTION(S):
 #/	-h, --help
@@ -32,13 +32,11 @@ IFS='' read -r -d '' FUNCTION_NAME_DOC <<"EOF"
 #/		(OPTIONAL)
 #/ 
 #/ RETURN CODE(S):
-#/	- 0:
-#/		Returned when:
-#/			- Help message is requested OR
-#/			- Processing is successful.
-#/	- 20:
-#/		Returned when:
-#/			- Given option is invalid.
+#/	- 0: Returned when:
+#/		- Help message is requested OR
+#/		- Processing is successful.
+#/	- 20: Returned when:
+#/		- Given option is invalid.
 #/
 #/ EXAMPLE(S):
 #/	functionName --help
