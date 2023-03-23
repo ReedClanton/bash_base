@@ -25,7 +25,7 @@ else
 			printf "Directory used to back up file(s) modified by this script already exists.\n"
 			exit 23
 		else
-			printf "Backing up bash file(s) from $USER's home directory ($HOME)...\n"
+			printf "Backing up shell file(s) from $USER's home directory ($HOME)...\n"
 			# TODO: Check if mkdir command worked, if not, exit.
 			mkdir $BACK_UP_DIR
 			# TODO: Check if move was successful, if it's not, exit.
@@ -42,7 +42,7 @@ else
 			if [[ -d "$HOME/bash" ]]; then
 				printf "Directory named 'bash' already exists in '$HOME'...\n"
 			else
-				cp -r $PWD/shell $HOME/bash
+				cp -r $PWD/shell $HOME/shell
 				printf "Success!\n"
 				exit 0
 			fi
@@ -55,7 +55,7 @@ else
 		rm $HOME/.bash_profile
 		rm -r $HOME/bash
 
-		printf "Restoring $USER's original bash file(s)...\n"
+		printf "Restoring $USER's original shell file(s)...\n"
 		mv $BACK_UP_DIR/* $HOME/
 		exit 24
 	fi
