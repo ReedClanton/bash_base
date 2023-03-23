@@ -1,5 +1,5 @@
-name: Unit Tests of output()
-run-name: ${{ github.actor }} is unit testing POSIX script output()
+name: Unit Tests of output
+run-name: ${{ github.actor }} is unit testing POSIX script output
 on: [push]
 jobs:
   unit-test-output:
