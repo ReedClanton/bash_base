@@ -17,10 +17,12 @@
 #/ TODO(S):
 #/	- None
 setup_suite() {
-	# Allows tests to just call `output` rather than accessing the full path.
-	function output() {
-		../../../../src/bash/functions/output.sh "${@}"
-	}
+	# Ensure required environment variable(s) are set.
+	. ../../../../src/shell/shell_functions
+	# Short hand used to call function so full path doesn't have to be used each time.
+	output=$SHELL_FUNCTIONS/output/output.sh "${@}"
+	# Ensure required constants have been set.
+	. $SHELL_FUNCTIONS/output/constents.sh
 }
 
 #/ DESCRIPTION:
@@ -31,8 +33,7 @@ setup_suite() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_-d() {
-	source ../../../../src/bash/functions/constants/output.sh
- 	assert_equals "$DEBUG_CHAR sS0 $DEBUG_CHAR" "$(output -m='sS0' --pp -d)"
+ 	assert_equals "$DEBUG_CHAR sS0 $DEBUG_CHAR" "$($output -m='sS0' --pp -d)"
 }
 
 #/ DESCRIPTION:
@@ -43,8 +44,7 @@ test_output__single_line__--pp_-d() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_--debug() {
-	source ../../../../src/bash/functions/constants/output.sh
- 	assert_equals "$DEBUG_CHAR 0dD $DEBUG_CHAR" "$(output -m='0dD' --pp --debug)"
+ 	assert_equals "$DEBUG_CHAR 0dD $DEBUG_CHAR" "$($output -m='0dD' --pp --debug)"
 }
 
 #/ DESCRIPTION:
@@ -55,8 +55,7 @@ test_output__single_line__--pp_--debug() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_-d() {
-	source ../../../../src/bash/functions/constants/output.sh
- 	assert_equals "$DEBUG_CHAR 1fF $DEBUG_CHAR" "$(output -m='1fF' --pre-post-fix -d)"
+ 	assert_equals "$DEBUG_CHAR 1fF $DEBUG_CHAR" "$($output -m='1fF' --pre-post-fix -d)"
 }
 
 #/ DESCRIPTION:
@@ -67,7 +66,6 @@ test_output__single_line__--pre-post-fix_-d() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_--debug() {
-	source ../../../../src/bash/functions/constants/output.sh
- 	assert_equals "$DEBUG_CHAR 2gG $DEBUG_CHAR" "$(output -m='2gG' --pre-post-fix --debug)"
+ 	assert_equals "$DEBUG_CHAR 2gG $DEBUG_CHAR" "$($output -m='2gG' --pre-post-fix --debug)"
 }
 

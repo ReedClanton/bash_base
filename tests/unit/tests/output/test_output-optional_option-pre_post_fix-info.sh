@@ -17,10 +17,12 @@
 #/ TODO(S):
 #/	- None
 setup_suite() {
-	# Allows tests to just call `output` rather than accessing the full path.
-	function output() {
-		../../../../src/bash/functions/output.sh "${@}"
-	}
+	# Ensure required environment variable(s) are set.
+	. ../../../../src/shell/shell_functions
+	# Short hand used to call function so full path doesn't have to be used each time.
+	output=$SHELL_FUNCTIONS/output/output.sh "${@}"
+	# Ensure required constants have been set.
+	. $SHELL_FUNCTIONS/output/constents.sh
 }
 
 #/ DESCRIPTION:
@@ -31,8 +33,7 @@ setup_suite() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_-i() {
-	source ../../../../src/bash/functions/constants/output.sh
- 	assert_equals "$INFO_CHAR iI7 $INFO_CHAR" "$(output -m='iI7' --pp -i)"
+ 	assert_equals "$INFO_CHAR iI7 $INFO_CHAR" "$($output -m='iI7' --pp -i)"
 }
 
 #/ DESCRIPTION:
@@ -43,8 +44,7 @@ test_output__single_line__--pp_-i() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_--info() {
-	source ../../../../src/bash/functions/constants/output.sh
- 	assert_equals "$INFO_CHAR oO7 $INFO_CHAR" "$(output -m='oO7' --pp --info)"
+ 	assert_equals "$INFO_CHAR oO7 $INFO_CHAR" "$($output -m='oO7' --pp --info)"
 }
 
 #/ DESCRIPTION:
@@ -55,8 +55,7 @@ test_output__single_line__--pp_--info() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_-i() {
-	source ../../../../src/bash/functions/constants/output.sh
- 	assert_equals "$INFO_CHAR pP8 $INFO_CHAR" "$(output -m='pP8' --pre-post-fix -i)"
+ 	assert_equals "$INFO_CHAR pP8 $INFO_CHAR" "$($output -m='pP8' --pre-post-fix -i)"
 }
 
 #/ DESCRIPTION:
@@ -67,7 +66,6 @@ test_output__single_line__--pre-post-fix_-i() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_--info() {
-	source ../../../../src/bash/functions/constants/output.sh
- 	assert_equals "$INFO_CHAR aA9 $INFO_CHAR" "$(output -m='aA9' --pre-post-fix --info)"
+ 	assert_equals "$INFO_CHAR aA9 $INFO_CHAR" "$($output -m='aA9' --pre-post-fix --info)"
 }
 

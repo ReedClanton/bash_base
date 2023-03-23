@@ -3,24 +3,79 @@
  ######################
 ## Path Short Hand(s) ##
  ######################
-# Shell root.
-declare -x SHELL_ROOT=$HOME/shell
+# Shell Script Root #
+# Get shell script root for users running this in there local environment.
+if [[ -d "$HOME/shell" ]]; then
+	export SHELL_ROOT=$HOME/shell
+# Attempt to find shell script root when run from CI/CD runner or any other time that this isn't be sourced to setup
+# a user's environment.
+else
+	echo "Warning, shell scripts root directory wasn't found in $USER's home, now checking alternate locations..."
+	# Attempt to find root using $0.
+	local pathToZero=$(readlink -f '$0')
+	pathToZero=${pathToZero%/\$0}
+	if [[ -d "$pathToZero/shell" ]]; then
+		export SHELL_ROOT=$pathToZero/shell
+	elif [[ -d "$pathToZero/src/shell" ]]; then
+		export SHELL_ROOT=$pathToZero/src/shell
+	elif [[ -d "$pathToZero/../shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $pathToZero/../shell)
+	elif [[ -d "$pathToZero/../src/shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $pathToZero/../src/shell)
+	elif [[ -d "$pathToZero/../../shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $pathToZero/../../shell)
+	elif [[ -d "$pathToZero/../../src/shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $pathToZero/../../src/shell)
+	elif [[ -d "$pathToZero/../../../shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $pathToZero/../../../shell)
+	elif [[ -d "$pathToZero/../../../src/shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $pathToZero/../../../src/shell)
+	elif [[ -d "$pathToZero/../../../../shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $pathToZero/../../../../shell)
+	elif [[ -d "$pathToZero/../../../../src/shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $pathToZero/../../../../src/shell)
+	# Attempt to find root using $PWD.
+	elif [[ -d "$PWD/shell" ]]; then
+		export SHELL_ROOT=$PWD/shell
+	elif [[ -d "$PWD/src/shell" ]]; then
+		export SHELL_ROOT=$PWD/src/shell
+	elif [[ -d "$PWD/../shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $PWD/../shell)
+	elif [[ -d "$PWD/../src/shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $PWD/../src/shell)
+	elif [[ -d "$PWD/../../shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $PWD/../../shell)
+	elif [[ -d "$PWD/../../src/shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $PWD/../../src/shell)
+	elif [[ -d "$PWD/../../../shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $PWD/../../../shell)
+	elif [[ -d "$PWD/../../../src/shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $PWD/../../../src/shell)
+	elif [[ -d "$PWD/../../../../shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $PWD/../../../../shell)
+	elif [[ -d "$PWD/../../../../src/shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $PWD/../../../../src/shell)
+	else
+		echo "ERROR, couldn't find root of shell scripts."
+		exit 1
+	fi
+fi
 # Shell function(s) root.
-declare -x SHELL_FUNCTIONS=$SHELL_ROOT/functions
+export SHELL_FUNCTIONS=$SHELL_ROOT/functions
 # Shell function's constant(s).
-declare -x SHELL_FUNCTIONS_CONSTANTS=$SHELL_FUNCTIONS/constants
+export SHELL_FUNCTIONS_CONSTANTS=$SHELL_FUNCTIONS/constants
 
  ###########################
 ## Global Function(s)/Data ##
  ###########################
 ## Data ##
 # Includes variables relevant to all functions.
-source $SHELL_FUNCTIONS/variablesGlobal.sh
+. $SHELL_FUNCTIONS/variablesGlobal.sh
 
 ## Function(s) ##
 # Include output producing/formatting function(s) used by other function(s) in the same/child directories.
 #   Note: If location/name of this file changes, update all other *.sh files in the same directory.
-alias output=$SHELL_FUNCTIONS/output.sh
+alias output=$SHELL_FUNCTIONS/output/output.sh
 # Include shell option checking function used by other function(s) in the same/child directories.
 alias checkRequiredOpts=$SHELL_FUNCTIONS/checkRequiredOpts.sh
 # Include log function used by other function(s) in the same/child directories.
@@ -28,6 +83,8 @@ function log() {
 	$SHELL_FUNCTIONS/log.sh "${@}"
 }
 export -f log
+# Include function for returning name of current shell.
+alias shellName=$SHELL_FUNCTIONS/shellName.sh
 # Include function that backs up local home directory to "external" drive.
 alias backUp=$SHELL_FUNCTIONS/backUp.sh
 

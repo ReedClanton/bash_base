@@ -1,134 +1,23 @@
 #!/usr/bin/env sh
 
- #########################
-## Global(s)/Constant(s) ##
- #########################
+ #############
+## Import(s) ##
+ #############
+## Global(s) ##
+. $SHELL_FUNCTIONS/output/globals.sh
 ## Constant(s) ##
-source $SHELL_FUNCTIONS_CONSTANTS/output.sh
+. $SHELL_FUNCTIONS/output/constents.sh
+## Code ##
+alias createHeaderFooter=$SHELL_FUNCTIONS/output/util/createHeaderFooter.sh
 
  #####################
 ## Local Variable(s) ##
  #####################
-# Used to return strings from local function(s).
-rtTxt=''
+# NoOp
 
  ###############
 ## Function(s) ##
  ###############
-IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
-#/ DESCRIPTION:
-#/	Returns text intended to be used as a header or footer in the 'rtTxt' local
-#/	variable.
-#/
-#/ USAGE: createHeaderFooter [OPTIONS]... -l=<maxMsgLength>
-#/
-#/ NOTE(S):
-#/	- Method may not use the log function because this is used by that method.
-#/	- This method is in the same directory as output because a local variable is used by
-#/		this method to return a value to the output method when called by the output
-#/		method.
-#/
-#/ OPTION(S):
-#/	-c=<formattingCharacter>, --char=<formattingCharacter>
-#/		Sets character used to create header and footer.
-#/			- Note: Default value: $DEFAULT_CHAR.
-#/			- Note: Some special characters may require two to be given:
-#/				-c="55"  _> %
-#/			- Note: Some *other* special characters may not work at all (ex. back
-#/				slash).
-#/		(OPTIONAL)
-#/	-h, --help
-#/		Print this help message. Function will return code of '0'. No processing will be
-#/		done.
-#/		(OPTIONAL)
-#/	-l=<maxMsgLength>, --lineLength=<maxMsgLength>
-#/		Max number of characters in any line of message. Used to determine how long
-#/		header/footer should be.
-#/			- Note: Line length only includes characters in message.
-#/		(REQUIRED)
-#/	--prefix
-#/		Length of header/footer changes depending on if a prefix is being used.
-#/			- Note: Should *always* be given if header/footer is used with a prefix.
-#/		(REQUIRED/OPTIONAL)
-#/
-#/ RETURN CODE(S):
-#/	- 0:
-#/		Returned when:
-#/			- Help message is requested OR
-#/			- Processing is successful.
-#/	- 1:
-#/		TODO: Returned when required option(s) are not provided.
-#/	- 20:
-#/		Returned when:
-#/			- Provided option is invalid.
-#/
-#/ EXAMPLE(S):
-#/	createHeaderFooter --help
-#/	createHeaderFooter -l=96 --prefix -c='#'
-#/	createHeaderFooter -l=10 -c="@@"
-#/	createHeaderFooter -l=12 -c=!
-#/
-#/ TODO(S):
-#/	- Implement: Error checking to ensure requried options are provided.
-#/	- Return 1 when required arguments are not provided.
-#/	- Display this message when required argument(s) are not provided.
-#/	- Move this function to its own file.
-EOF
-function createHeaderFooter {
-	 ###############################
-	## Reset/Set Local Variable(s) ##
-	 ###############################
-	# Tracks header/footer text.
-	rtTxt=''
-	# Tracks character used for formatting.
-	fChar=$DEFAULT_CHAR
-	# Tracks desired total length of header/footer.
-	declare -i len=2
-
-	 #####################
-	## Process Option(s) ##
-	 #####################
-	for fullArg in "${@}"; do
-		# Tracks value of current option.
-		declare arg=${fullArg#*=}
-
-		# Determine what option user gave.
-		case $fullArg in
-			--prefix)
-				rtTxt+=' '
-				len+=1  ;;
-			-l=*|--lineLength=*)
-				len+=$arg  ;;
-			-c=*|--char=*)
-				# Track user desired formatting character(s).
-				fChar=$arg
-				# Update desired header/footer length to accommodate formatting character(s).
-				if [[ ${#fChar} -gt 1 ]]; then
-					len+=$(($((${#fChar}-1))*2))
-				fi  ;;
-			-h|--help)
-				echo "$CREATE_HEADER_FOOTER_DOC"
-				exit 0  ;;
-			*)
-				printf "$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR createHeaderFooter: Caller provided invalid option: '$fullArg', see doc:\n"
-				echo "$CREATE_HEADER_FOOTER_DOC"
-				exit 20  ;;
-		esac
-	done
-
-	## Build Header/Footer ##
-	while [[ ${#rtTxt} -lt $len ]]; do
-		# When near the end, given formatting character(s) may need to be split up.
-		if [[ $((${#rtTxt}+${#fChar})) -gt $len ]]; then
-			rtTxt+=${fChar:0:$(($len-${#rtTxt}))}
-		else
-			rtTxt+=$fChar
-		fi
-	done
-	# Add final part of header.
-	rtTxt+='\n'
-}
-
 IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/ DESCRIPTION:
 #/	Used to produce formatted output.
@@ -273,22 +162,24 @@ headerFooterTxt=''
 # Determines if message prefix and postfix should be used.
 prePostFix=false
 # Tracks message indent.
-declare -i indent=$DEFAULT_INDENT
+indent=$DEFAULT_INDENT
 # Tracks max allowed line length.
-declare -i maxAlwLineLen=$DEFAULT_LINE_LENGTH
+maxAlwLineLen=$DEFAULT_LINE_LENGTH
 # Tracks length of longest given line.
-declare -i maxGvnLineLen=0
+maxGvnLineLen=0
 # Used to track max length any line of message is allowed to be based on:
 #	- Max allowed line length.
 #	- Minus prefix length (if used).
 #	- Minus postfix length (if used).
-declare -i maxAlwMsgLen=0
+maxAlwMsgLen=0
 # Used to track each line of message.
-declare -a msg=()
+tmp=1
+msg=()
 # Contains final (formatted) message text.
 rtOutput=''
 # Prefix used to produce error logs.
-declare -r errPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR output:"
+errPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR output:"
+readonly errPrefix
 
  #####################
 ## Process Option(s) ##
@@ -296,7 +187,7 @@ declare -r errPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR output:"
 # Process option(s).
 for fullArg in "${@}"; do
 	# Tracks value of current option.
-	declare arg=${fullArg#*=}
+	arg=${fullArg#*=}
 	
 	# Determine what option user gave.
 	case $fullArg in
@@ -398,24 +289,25 @@ fi
 ## Format Given Message ##
  ########################
 ## Generate indentation text ##
-declare -r indentTxt=$(printf %${indent}s |tr " " " ")
+indentTxt=$(printf %${indent}s |tr " " " ")
+readonly indentTxt
 
 ## Split Long Lines ##
 # Determine if any lines given are long enough to require splitting.
 if [[ $maxGvnLineLen -gt $maxAlwMsgLen ]]; then
 	# Used to track current message line being processed.
-	declare -i i=0
+	i=0
 	# Used to track final line of message as total number of lines increases.
-	declare -i end=${#msg[*]}
+	end=${#msg[*]}
 	# Tracks length of new longest line.
-	declare -i newMaxMsgLen=0
+	newMaxMsgLen=0
 
 	# Loop through each line, breaking up long ones along the way.
 	while [ $i -lt $end ]; do
 		# Determine if current line requires splitting.
 		if [[ ${#msg[$i]} -gt $maxAlwMsgLen ]]; then
 			# Copy previous array elements in.
-			declare -a tmp=("${msg[@]:0:$i}")
+			tmp=("${msg[@]:0:$i}")
 			# Add first part of split line.
 			tmp+=("${msg[$i]:0:$maxAlwMsgLen}")
 			# Add last part of split line.
@@ -445,9 +337,9 @@ if $headerFooter; then
 	fi
 	# Save off header/footer.
 	if [[ ! -z $indentTxt ]]; then
-		headerFooterTxt="$indentTxt$rtTxt"
+		headerFooterTxt="$indentTxt$rtCreateHeaderFooter"
 	else
-		headerFooterTxt=$rtTxt
+		headerFooterTxt=$rtCreateHeaderFooter
 	fi
 fi
 

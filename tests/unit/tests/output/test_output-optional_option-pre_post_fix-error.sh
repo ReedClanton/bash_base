@@ -17,10 +17,12 @@
 #/ TODO(S):
 #/	- None
 setup_suite() {
-	# Allows tests to just call `output` rather than accessing the full path.
-	function output() {
-		../../../../src/bash/functions/output.sh "${@}"
-	}
+	# Ensure required environment variable(s) are set.
+	. ../../../../src/shell/shell_functions
+	# Short hand used to call function so full path doesn't have to be used each time.
+	output=$SHELL_FUNCTIONS/output/output.sh "${@}"
+	# Ensure required constants have been set.
+	. $SHELL_FUNCTIONS/output/constents.sh
 }
 
 #/ DESCRIPTION:
@@ -31,8 +33,7 @@ setup_suite() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_-e() {
-	source ../../../../src/bash/functions/constants/output.sh
- 	assert_equals "$ERROR_CHAR 7zZ $ERROR_CHAR" "$(output -m='7zZ' --pp -e)"
+ 	assert_equals "$ERROR_CHAR 7zZ $ERROR_CHAR" "$($output -m='7zZ' --pp -e)"
 }
 
 #/ DESCRIPTION:
@@ -43,8 +44,7 @@ test_output__single_line__--pp_-e() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pp_--error() {
-	source ../../../../src/bash/functions/constants/output.sh
- 	assert_equals "$ERROR_CHAR 8xX $ERROR_CHAR" "$(output -m='8xX' --pp --error)"
+ 	assert_equals "$ERROR_CHAR 8xX $ERROR_CHAR" "$($output -m='8xX' --pp --error)"
 }
 
 #/ DESCRIPTION:
@@ -55,8 +55,7 @@ test_output__single_line__--pp_--error() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_-e() {
-	source ../../../../src/bash/functions/constants/output.sh
- 	assert_equals "$ERROR_CHAR 9cC $ERROR_CHAR" "$(output -m='9cC' --pre-post-fix -e)"
+ 	assert_equals "$ERROR_CHAR 9cC $ERROR_CHAR" "$($output -m='9cC' --pre-post-fix -e)"
 }
 
 #/ DESCRIPTION:
@@ -67,7 +66,6 @@ test_output__single_line__--pre-post-fix_-e() {
 #/	- Mock out method call(s).
 #/	- Mock out constant(s).
 test_output__single_line__--pre-post-fix_--error() {
-	source ../../../../src/bash/functions/constants/output.sh
- 	assert_equals "$ERROR_CHAR 0vV $ERROR_CHAR" "$(output -m='0vV' --pre-post-fix --error)"
+ 	assert_equals "$ERROR_CHAR 0vV $ERROR_CHAR" "$($output -m='0vV' --pre-post-fix --error)"
 }
 

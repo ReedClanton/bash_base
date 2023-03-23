@@ -54,11 +54,16 @@ function functionName {
 	## Reset/Set Local Variable(s) ##
 	 ###############################
 	# Logging var(s).
-	declare traceLvl="-c=${FUNCNAME[0]}"
-	declare debugLvl="-d -c=${FUNCNAME[0]}"
-	declare infoLvl="-i -c=${FUNCNAME[0]}"
-	declare warnLvl="-w -c=${FUNCNAME[0]}"
-	declare errorLvl="-e -c=${FUNCNAME[0]}"
+	traceLvl="-c=${FUNCNAME[0]}"
+	readonly traceLvl
+	debugLvl="-d -c=${FUNCNAME[0]}"
+	readonly debugLvl
+	infoLvl="-i -c=${FUNCNAME[0]}"
+	readonly infoLvl
+	warnLvl="-w -c=${FUNCNAME[0]}"
+	readonly warnLvl
+	errorLvl="-e -c=${FUNCNAME[0]}"
+	readonly errorLvl
 	log $traceLvl -m="Local variable(s) reset."
 
 	 #####################
@@ -67,7 +72,7 @@ function functionName {
 	for fullArg in "${@}"; do
 		log $traceLvl -m="Processing option: '$fullArg'..."
 		# Tracks value of current option.
-		declare arg=${fullArg#*=}
+		arg=${fullArg#*=}
 
 		# Determine what option user gave.
 		case $fullArg in
@@ -86,7 +91,7 @@ function functionName {
 	 ###########################
 	log $traceLvl -m="Ensuring all required argument(s) were given..."
 	checkRequiredOpts "$FUNCTION_NAME_DOC" "-a=$varHoldingValOfRequiredArg"
-	declare rtVal=$?
+	rtVal=$?
 	if [[ $rtVal -ne 0 ]]; then
 		return $rtVal
 	fi
