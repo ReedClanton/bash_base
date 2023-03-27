@@ -35,6 +35,10 @@ else
 		export SHELL_ROOT=$(readlink -f $pathToZero/../../../../shell)
 	elif [[ -d "$pathToZero/../../../../src/shell" ]]; then
 		export SHELL_ROOT=$(readlink -f $pathToZero/../../../../src/shell)
+	elif [[ -d "$pathToZero/../../../../../shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $pathToZero/../../../../../shell)
+	elif [[ -d "$pathToZero/../../../../../src/shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $pathToZero/../../../../../src/shell)
 	# Attempt to find root using $PWD.
 	elif [[ -d "$PWD/shell" ]]; then
 		export SHELL_ROOT=$PWD/shell
