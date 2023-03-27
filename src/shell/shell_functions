@@ -14,6 +14,7 @@ else
 	# Attempt to find root using $0.
 	local pathToZero=$(readlink -f '$0')
 	pathToZero=${pathToZero%/\$0}
+	echo "pathToZero: '$pathToZero'"
 	if [[ -d "$pathToZero/shell" ]]; then
 		export SHELL_ROOT=$pathToZero/shell
 	elif [[ -d "$pathToZero/src/shell" ]]; then
