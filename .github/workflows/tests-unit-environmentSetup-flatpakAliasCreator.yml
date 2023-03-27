@@ -2,7 +2,7 @@ name: Unit Tests of environmentSetup() util function flatpakAliasCreator()
 run-name: ${{ github.actor }} is unit testing POSIX script flatpakAliasCreator()
 on: [push]
 jobs:
-  unit-test-output:
+  unit-test-flatpak-alias-creator:
     runs-on: ubuntu-20.04
     steps:
       - run: echo "Checking out branch ${{ github.ref }} from ${{ github.repository }} repo on ${{ runner.os }}..."
