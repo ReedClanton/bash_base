@@ -60,6 +60,10 @@ else
 		export SHELL_ROOT=$(readlink -f $PWD/../../../../shell)
 	elif [[ -d "$PWD/../../../../src/shell" ]]; then
 		export SHELL_ROOT=$(readlink -f $PWD/../../../../src/shell)
+	elif [[ -d "$PWD/../../../../../shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $PWD/../../../../../shell)
+	elif [[ -d "$PWD/../../../../../src/shell" ]]; then
+		export SHELL_ROOT=$(readlink -f $PWD/../../../../../src/shell)
 	else
 		echo "ERROR, couldn't find root of shell scripts."
 		exit 1
