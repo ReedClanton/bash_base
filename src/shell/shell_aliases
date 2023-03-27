@@ -5,6 +5,7 @@
  ##################
 alias src='source $HOME/.bashrc'
 alias ssh='ssh -X'
+alias txtEdit='xdg-open'
 
  #######################
 ## Development Tool(s) ##

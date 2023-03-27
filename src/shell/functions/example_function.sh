@@ -45,6 +45,11 @@ IFS='' read -r -d '' FUNCTION_NAME_DOC <<"EOF"
 #/	- TODO
 EOF
 function functionName {
+	# If the log function hasn't been sourced, do so now.
+	if [[ "$(type -t log)" = "" ]]; then
+		# TODO: Ensure all possible path(s) are checked.
+		. $HOME/shell/shell_functions
+	fi
 	log -i -c=${FUNCNAME[0]} --full-title -m="<titleTextHere>"
 
 	log -c=${FUNCNAME[0]} -m="Resetting local variable(s)..."
