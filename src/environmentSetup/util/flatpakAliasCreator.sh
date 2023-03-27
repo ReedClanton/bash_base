@@ -74,7 +74,6 @@ readonly warnLvl
 errorLvl="-e -c=$funcName"
 readonly errorLvl
 # Tracks user's home directory.
-# TODO: Change back to $HOME.
 usrHome=$HOME
 readonly usrHome
 # Location of flatpak alias file.
