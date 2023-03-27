@@ -22,8 +22,8 @@ setup_suite() {
 }
 
 #/ DESCRIPTION:
-#/	bash_unit isn't able to handle comparring the entire doc, so I just make
-#/	sure that I know the doc was returned.
+#/	The point of this test is to ensure that the function doc is returned, so
+#/	test just ensures the first line of the doc is returned.
 #/
 #/ TODO(S):
 #/	- Create another method that verifies the return value.
@@ -34,8 +34,8 @@ test__-h() {
 }
 
 #/ DESCRIPTION:
-#/	bash_unit isn't able to handle comparring the entire doc, so I just make
-#/	sure that I know the doc was returned.
+#/	The point of this test is to ensure that the function doc is returned, so
+#/	test just ensures the first line of the doc is returned.
 #/
 #/ TODO(S):
 #/	- Create another method that verifies the return value.
