@@ -19,7 +19,7 @@ setup_suite() {
 	# Mock out logging.
 	log() { :; }
 	export -f log
-	fake log :
+#	fake log :
 }
 
 #/ DESCRIPTION:
