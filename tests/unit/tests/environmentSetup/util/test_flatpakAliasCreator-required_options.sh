@@ -47,11 +47,6 @@ setup_suite() {
 #/ TODO(S):
 #/	- None
 test__-h__valid_return_code() {
-	# Mock out logging.
-#	fake log :
-	_log() { :; }
-	export -f _log
-	fake log _log
 	cmd="$flatpakAliasCreator -h"
 	unset stdOut errOut rtOut
 	eval "$( (eval $cmd) \
@@ -68,16 +63,18 @@ test__-h__valid_return_code() {
 #/
 #/ TODO(S):
 #/	- None
-#test__--help() {
-	# Mock out logging.
-#	fake log :
-#	_log() { :; }
-#	export -f _log
-#	fake log _log
-#	assert_equals \
-#		"#/" \
-#		$($flatpakAliasCreator --help)
-#}
+test__--help() {
+	cmd="$flatpakAliasCreator --help"
+	unset stdOut errOut rtOut
+	eval "$( (eval $cmd) \
+		2> >(errOut=$(cat); typeset -p errOut) \
+		 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
+	firstLine=`printf $stdOut | sed -n 1p`
+	echo "firstLine: '$firstLine'"
+	assert_equals \
+		"#/" \
+		$firstLine
+}
 
 #/ DESCRIPTION:
 #/	Ensure exit code is `0`.
