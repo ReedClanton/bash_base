@@ -58,7 +58,7 @@ IFS='' read -r -d '' FLATPAK_ALIAS_CREATOR_DOC <<"EOF"
 EOF
 funcName=flatpakAliasCreator
 
-log -c=$funcName -m="Resetting local variable(s)..."
+#log -c=$funcName -m="Resetting local variable(s)..."
  ###############################
 ## Reset/Set Local Variable(s) ##
  ###############################
@@ -74,20 +74,21 @@ readonly warnLvl
 errorLvl="-e -c=$funcName"
 readonly errorLvl
 # Tracks user's home directory.
-usrHome=$HOME
+# TODO: Revert to just $HOME>.
+usrHome=$HOME/envSetup
 readonly usrHome
 # Location of flatpak alias file.
 flatpakAliasFilePath=$usrHome/shell/shell_flatpak_aliases
 # Header added to top of flatpak aliases file.
 flatpakAliasTemplateTop="#!/usr/bin/env sh\n\n #####################\n## Flatpak Alias(es) ##\n #####################\n"
 readonly flatpakAliasTemplateTop
-log $traceLvl -m="Local variable(s) reset."
+#log $traceLvl -m="Local variable(s) reset."
 
  #####################
 ## Process Option(s) ##
  #####################
 for fullArg in "${@}"; do
-	log $traceLvl -m="Processing option: '$fullArg'..."
+#	log $traceLvl -m="Processing option: '$fullArg'..."
 	# Tracks value of current option.
 	arg=${fullArg#*=}
 
