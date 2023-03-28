@@ -69,7 +69,7 @@ test__--help() {
 	eval "$( (eval $cmd) \
 		2> >(errOut=$(cat); typeset -p errOut) \
 		 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
-	firstLine=`printf $stdOut | sed -n 1p`
+	firstLine=$(printf $stdOut | sed -n 1p)
 	echo "firstLine: '$firstLine'"
 	assert_equals \
 		"#/" \
