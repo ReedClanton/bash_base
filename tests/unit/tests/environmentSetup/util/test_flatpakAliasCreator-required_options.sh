@@ -17,8 +17,8 @@ setup_suite() {
 	# Short hand used to call function so full path doesn't have to be used each time.
 	flatpakAliasCreator=$(readlink -f $PWD/../../../../../src/environmentSetup/util/flatpakAliasCreator.sh) "${@}"
 	# Mock out logging.
-	log() { :; }
-	export -f log
+#	log() { :; }
+#	export -f log
 #	fake log :
 }
 
