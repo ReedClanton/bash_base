@@ -1,11 +1,18 @@
 #!/usr/bin/env sh
 
- ###########################################
-## Global(s)/Constant(s)/Local Variable(s) ##
- ###########################################
+ #########################
+## Global(s)/Constant(s) ##
+ #########################
+## Global(s) ##
+# NoOp
 ## Constant(s) ##
 # Includes constant(s) relevant to logger method.
 . $SHELL_FUNCTIONS_CONSTANTS/log.sh
+
+ #####################
+## Local Variable(s) ##
+ #####################
+# NoOp
 
  ###############
 ## Function(s) ##
