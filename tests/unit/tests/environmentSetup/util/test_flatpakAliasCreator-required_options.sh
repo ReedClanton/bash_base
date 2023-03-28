@@ -72,7 +72,7 @@ test__--help() {
 #	firstLine=$(printf $stdOut | head -1)
 #	echo "firstLine: '$firstLine'"
 #	echo "\"${stdOut%%%'#/'*}\""
-#	echo "'${stdOut:0:2}'"
+	echo "'${stdOut:0:2}'"
 	assert_equals \
 		"#/" \
 		${stdOut:0:2}
