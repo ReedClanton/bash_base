@@ -10,6 +10,9 @@ fi
 if [ -f $HOME/shell/shell_aliases ]; then
 	. $HOME/shell/shell_aliases
 fi
+if [ -f $HOME/shell/shell_flatpak_aliases ]; then
+	. $HOME/shell/shell_flatpak_aliases
+fi
 if [ -f $HOME/shell/shell_functions ]; then
 	. $HOME/shell/shell_functions
 fi

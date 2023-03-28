@@ -27,7 +27,9 @@ IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
 #/ USAGE: ./environmentSetup.sh [OPTIONS]...
 #/
 #/ NOTE(S):
-#/	- None
+#/	- Must be run (called) from the same directory as the script.
+#/	- File containing flatpak aliases is also created, however, if it fails,
+#/		this script won't revert other environment changes.
 #/
 #/ OPTION(S):
 #/	-h, --help
@@ -39,6 +41,8 @@ IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
 #/	- 0: Returned when:
 #/		- Help message is requested OR
 #/		- Processing is successful.
+#/	- 1: Returned when:
+#/		- Script needs to source file containing shell scripts, but can't find that file.
 #/	- 20: Returned when:
 #/		- Given option is invalid.
 #/	- 21: Returned when:
@@ -86,6 +90,8 @@ IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
 #/			will need to manually remove hidden shell file(s) from there home
 #/			and copy all file(s) and directory(ies) from the back up directory
 #/			to there home directory.
+#/	- 34: Returned when:
+#/		- Failed to create file of flatpak app aliases.
 #/
 #/ EXAMPLE(S):
 #/	./environmentSetup.sh
@@ -98,31 +104,42 @@ IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
 EOF
 # Ensure script is being run from the same location as it's located.
 if [[ "./$(basename $0)" == $0 ]]; then
-	# If the log function hasn't been sourced, do so now.
+	# If shell functions file hasn't been sourced, attempt to do so now.
 	if [[ "$(type -t log)" = "" ]]; then
-		. ./shell/shell_functions
+		shellRoot=../shell/shell_functions
+		if [[ -f "$shellRoot" ]]; then
+			. $shellRoot
+		else
+			echo "Failed to find file used to locate (source) shell scripts ($shellRoot)."
+			exit 1
+		fi
 	fi
 
-	log -m="Resetting local variable(s)..."
+	funcName=environmentSetup
+	log -c=$funcName -m="Resetting local variable(s)..."
 	 ###############################
 	## Reset/Set Local Variable(s) ##
 	 ###############################
 	# Logging var(s).
-	traceLvl="-t -c=environmentSetup"
+	traceLvl="-t -c=$funcName"
 	readonly traceLvl
-	debugLvl="-d -c=environmentSetup"
+	debugLvl="-d -c=$funcName"
 	readonly debugLvl
-	infoLvl="-i -c=environmentSetup"
+	infoLvl="-i -c=$funcName"
 	readonly infoLvl
-	warnLvl="-w -c=environmentSetup"
+	warnLvl="-w -c=$funcName"
 	readonly warnLvl
-	errorLvl="-e -c=environmentSetup"
+	errorLvl="-e -c=$funcName"
 	readonly errorLvl
 	# Tracks directory that file(s)/directory(ies) being replaced will be moved to.
 	BACK_UP_DIR="$PWD/$USER-homeBackUp-$(date +"%Y_%m_%d-%H_%M_%S")"
 	readonly BACK_UP_DIR
-	# List of users, specificly there UIDs, that script should be run as.
+	# List of users, specifically there UIDs, that script should be run as.
 	declare -ra INVALID_USERS="0 65534"
+	# User's home directory.
+	userHome=$HOME
+	# Tracks repo's root source directory.
+	repoSourceRoot=$(readlink -f $PWD/../)
 	log $traceLvl -m="Local variable(s) reset."
 
 	 #####################
@@ -147,7 +164,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 
 	# Ask user if the user that's currently running this script is the one they would like to setup.
 	log $infoLvl --line-title -m="The user that's running this script ($USER) is the one that will have there environment setup."
-	printf "Would you like to run environment setup for '$USER' (y or n): "
+	printf "Would you like to run environment setup for '$USER' (y/n): "
 	read userAnswer
 	if [[ "$userAnswer" = "y" ]]; then
 		# Ensure script is being run by a plausibly valid user.
@@ -155,11 +172,11 @@ if [[ "./$(basename $0)" == $0 ]]; then
 			# Ensure directory for backing up user's environment config doesn't already exist.
 			if [[ ! -d "$BACK_UP_DIR" ]]; then
 				# Determine name of current shell.
-				shellName=$($PWD/shell/functions/shellName.sh)
-				readonly shellName
+				shellNm=shellName
+				readonly shellNm
 				
 				# Ensure shell name was found.
-				if [[ "$SHELL" != "$shellName" && "$shellName" != "" ]]; then
+				if [[ "$SHELL" != "$shellNm" && "$shellNm" != "" ]]; then
 					log $debugLvl -m="Creating local directory for storing $USER's file(s) that are being replaced..."
 					
 					cmd="mkdir $BACK_UP_DIR"
@@ -168,12 +185,12 @@ if [[ "./$(basename $0)" == $0 ]]; then
 						2> >(errOut=$(cat); typeset -p errOut) \
 						 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
 				
-					# Ensure directory for storring user's current environment setup was created.
+					# Ensure directory for storing user's current environment setup was created.
 					if [[ $rtOut -eq 0 ]]; then
 						# Back up user's hidden shell file(s) if they exist.
-						if compgen -G "$HOME/.$shellName*" > /dev/null; then
-							log $debugLvl -m="Backing up '$HOME/.$shellName*' files to '$BACK_UP_DIR'..."
-							cmd="mv $HOME/.$shellName* $BACK_UP_DIR/"
+						if compgen -G "$userHome/.$shellNm*" > /dev/null; then
+							log $debugLvl -m="Backing up '$userHome/.$shellNm*' files to '$BACK_UP_DIR'..."
+							cmd="mv $userHome/.$shellNm* $BACK_UP_DIR/"
 							unset stdOut errOut rtOut
 							eval "$( (eval $cmd) \
 								2> >(errOut=$(cat); typeset -p errOut) \
@@ -186,9 +203,9 @@ if [[ "./$(basename $0)" == $0 ]]; then
 						# Ensure hidden shell file(s) were moved to the back up directory.
 						if [[ $rtOut -eq 0 ]]; then
 							# If a directory named shell exists it must be backed up because it'll be replaced by this script.
-							if [[ -d "$HOME/shell" ]]; then
-								log $debugLvl -m="Backing up shell directory '$HOME/shell' from $USER's home directory..."
-								cmd="mv $HOME/shell $BACK_UP_DIR/"
+							if [[ -d "$userHome/shell" ]]; then
+								log $debugLvl -m="Backing up shell directory '$userHome/shell' from $USER's home directory..."
+								cmd="mv $userHome/shell $BACK_UP_DIR/"
 								unset stdOut errOut rtOut
 								eval "$( (eval $cmd) \
 									2> >(errOut=$(cat); typeset -p errOut) \
@@ -200,10 +217,10 @@ if [[ "./$(basename $0)" == $0 ]]; then
 							
 							# Ensure move worked.
 							if [[ $rtOut -eq 0 ]]; then
-								log $debugLvl -m="Copying hidden shell setup file(s) from '$PWD/.shell*' file(s) to '$HOME/'..."
+								log $debugLvl -m="Copying hidden shell setup file(s) from '$repoSourceRoot/.shell*' file(s) to '$userHome/'..."
 								
-								for shellFilePath in $PWD/.shell*; do
-									newShellFilePath=$HOME/.$shellName${shellFilePath#$PWD/.shell}
+								for shellFilePath in $repoSourceRoot/.shell*; do
+									newShellFilePath=$userHome/.$shellNm${shellFilePath#$repoSourceRoot/.shell}
 									log $traceLvl -m="Copying '$shellFilePath' to '$newShellFilePath'..."
 									cmd="cp $shellFilePath $newShellFilePath"
 									unset stdOut errOut rtOut
@@ -219,31 +236,40 @@ if [[ "./$(basename $0)" == $0 ]]; then
 								
 								# Ensure hidden shell file(s) were moved.
 								if [[ $rtOut -eq 0 ]]; then
-									log $debugLvl -m="Copying '$PWD/shell' to '$HOME/'..."
-									cmd="cp -r $PWD/shell $HOME/shell"
+									log $debugLvl -m="Copying '$repoSourceRoot/shell' to '$userHome/'..."
+									cmd="cp -r $repoSourceRoot/shell $userHome/shell"
 									unset stdOut errOut rtOut
 									eval "$( (eval $cmd) \
 										2> >(errOut=$(cat); typeset -p errOut) \
 										 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
+									
 									# Ensure shell directory copy worked.
 									if [[ $rtOut -eq 0 ]]; then
-										log $infoLvl -m="Success!"
-										exit 0
+										# Create file that adds aliases for flatpak apps.
+										$PWD/util/flatpakAliasCreator.sh
+										if [[ $? -eq 0 ]]; then
+											log $debugLvl -m="flatpakAliasCreator() std out:" -m="$stdOut"
+											log $infoLvl -m="Success!"
+											exit 0
+										else
+											log $errorLvl -m="Failed to create file of flatpak app aliases. flatpakAliasCreaator() error output:" -m="$errOut"
+											exit 34
+										fi
 									else
 										log $errorLvl -m="Failed to copy directory with shell scripts to $USER's home."
 									fi
 									
 									# Remove shell directory that copy failed for.\
-									if [[ -d "$HOME/shell" ]]; then
-										log $debugLvl -m="Removing '$HOME/shell..."
-										cmd="rm -rf $HOME/shell"
+									if [[ -d "$userHome/shell" ]]; then
+										log $debugLvl -m="Removing '$userHome/shell..."
+										cmd="rm -rf $userHome/shell"
 										unset stdOut errOut rtOut
 										eval "$( (eval $cmd) \
 											2> >(errOut=$(cat); typeset -p errOut) \
 											 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
 										# Check if deletion worked.
 										if [[ $rtOut -ne 0 ]]; then
-											log $errorLvl -m="Failed to revert environment, you'll need to manually copy contents of '$BACK_UP_DIR' back to '$HOME'."
+											log $errorLvl -m="Failed to revert environment, you'll need to manually copy contents of '$BACK_UP_DIR' back to '$userHome'."
 											exit 32
 										fi
 									else
@@ -254,14 +280,14 @@ if [[ "./$(basename $0)" == $0 ]]; then
 									if [[ -d "$BACK_UP_DIR/shell" ]]; then
 										log $debugLvl -m="Copying 'shell' directory to $USER's home from back up copy..."
 										# Copy old shell directory back.
-										cmd="cp -r $BACK_UP_DIR/shell $HOME/"
+										cmd="cp -r $BACK_UP_DIR/shell $userHome/"
 										unset stdOut errOut rtOut
 										eval "$( (eval $cmd) \
 											2> >(errOut=$(cat); typeset -p errOut) \
 											 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
 										# Check if deletion worked.
 										if [[ $rtOut -ne 0 ]]; then
-											log $errorLvl -m="Failed to revert environment, you'll need to manually copy contents of '$BACK_UP_DIR' back to '$HOME'."
+											log $errorLvl -m="Failed to revert environment, you'll need to manually copy contents of '$BACK_UP_DIR' back to '$userHome'."
 											exit 33
 										fi
 									else
@@ -272,7 +298,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 								fi
 								
 								# Remove hidden file(s) that were copied to user's home.
-								cmd="rm $HOME/.$shellName*"
+								cmd="rm $userHome/.$shellNm*"
 								unset stdOut errOut rtOut
 								eval "$( (eval $cmd) \
 									2> >(errOut=$(cat); typeset -p errOut) \
@@ -287,7 +313,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 								if compgen -G "$BACK_UP_DIR/.*" > /dev/null; then
 									log $debugLvl -m="Copying hidden shell file(s) from back up to $USER's home..."
 									# Copy backed up files to user's home.
-									cmd="cp $BACK_UP_DIR/.* $HOME/"
+									cmd="cp $BACK_UP_DIR/.* $userHome/"
 									unset stdOut errOut rtOut
 									eval "$( (eval $cmd) \
 										2> >(errOut=$(cat); typeset -p errOut) \
@@ -301,36 +327,36 @@ if [[ "./$(basename $0)" == $0 ]]; then
 									log $warnLvl -m="Skipping copying of hidden shell file(s) because the back up doesn't contain any."
 								fi
 							else
-								log $errorLvl -m="Failed to back up (move) '$HOME/shell' to '$BACK_UP_DIR/'."
+								log $errorLvl -m="Failed to back up (move) '$userHome/shell' to '$BACK_UP_DIR/'."
 							fi
 							
 							# Attempt to move shell directory back to user's home.
 							if [[ -d "$BACK_UP_DIR/shell" ]]; then
-								cmd="cp -r $BACK_UP_DIR/shell $HOME/"
+								cmd="cp -r $BACK_UP_DIR/shell $userHome/"
 								unset stdOut errOut rtOut
 								eval "$( (eval $cmd) \
 									2> >(errOut=$(cat); typeset -p errOut) \
 									 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
 								# Check if deletion worked.
 								if [[ $rtOut -ne 0 ]]; then
-									log $errorLvl -m="Failed to revert to original shell directory, you'll need to manually copy contents of '$BACK_UP_DIR' back to '$HOME'."
+									log $errorLvl -m="Failed to revert to original shell directory, you'll need to manually copy contents of '$BACK_UP_DIR' back to '$userHome'."
 									exit 29
 								fi
 							fi
 						else
-							log $errorLvl -m="Failed to back up (move) '$HOME/.$shellName*' file(s) to '$BACK_UP_DIR'."
+							log $errorLvl -m="Failed to back up (move) '$userHome/.$shellNm*' file(s) to '$BACK_UP_DIR'."
 						fi
 						
 						# Ensure any file(s) that were moved from user's home are moved back.
-						if compgen -G "$BACK_UP_DIR/.$shellName*" > /dev/null; then
-							cmd="cp $BACK_UP_DIR/.* $HOME/"
+						if compgen -G "$BACK_UP_DIR/.$shellNm*" > /dev/null; then
+							cmd="cp $BACK_UP_DIR/.* $userHome/"
 							unset stdOut errOut rtOut
 							eval "$( (eval $cmd) \
 								2> >(errOut=$(cat); typeset -p errOut) \
 								 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
 							# Check if deletion worked.
 							if [[ $rtOut -ne 0 ]]; then
-								log $errorLvl -m="Failed to revert to original hidden shell file(s), you'll need to manually copy contents of '$BACK_UP_DIR/' back to '$HOME/'."
+								log $errorLvl -m="Failed to revert to original hidden shell file(s), you'll need to manually copy contents of '$BACK_UP_DIR/' back to '$userHome/'."
 								exit 28
 							fi
 						fi
@@ -342,7 +368,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 						exit 26
 					fi
 				else
-					log $errorLvl -m="Failed, couldn't determine shell name from \$SHELL ($SHELL)."
+					log $errorLvl -m="Failed, couldn't determine shell name."
 					exit 25
 				fi
 			else
