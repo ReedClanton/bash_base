@@ -72,6 +72,8 @@ test__--help() {
 #	firstLine=$(printf $stdOut | head -1)
 #	echo "firstLine: '$firstLine'"
 #	echo "\"${stdOut%%%'#/'*}\""
+	printf "errOut:\n'$errOut'\n"
+	printf "stdOut:\n'$stdOut'\n"
 	echo "'$stdOut'"
 	echo "'${stdOut:0:2}'"
 	assert_equals \
