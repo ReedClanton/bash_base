@@ -16,7 +16,8 @@
  ###############
 ## Function(s) ##
  ###############
-IFS='' read -r -d '' FLATPAK_ALIAS_CREATOR_DOC <<"EOF"
+#IFS='' read -r -d '' FLATPAK_ALIAS_CREATOR_DOC <<"EOF"
+FLATPAK_ALIAS_CREATOR_DOC="
 #/ DESCRIPTION:
 #/	Generates an alias for each flatpak app installed on system. Allows user to
 #/	set alias name. Aliases are written to a file in the user's home shell directory.
@@ -54,8 +55,8 @@ IFS='' read -r -d '' FLATPAK_ALIAS_CREATOR_DOC <<"EOF"
 #/	flatpakAliasCreator --help
 #/
 #/ TODO(S):
-#/	- NoOp
-EOF
+#/	- NoOp"
+#EOF
 funcName=flatpakAliasCreator
 
 #log -c=$funcName -m="Resetting local variable(s)..."

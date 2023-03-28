@@ -75,10 +75,10 @@ test__--help() {
 	printf "errOut:\n'$errOut'\n"
 	printf "stdOut:\n'$stdOut'\n"
 	echo "'$stdOut'"
-	echo "'${stdOut:0:2}'"
+	echo "'${stdOut:1:2}'"
 	assert_equals \
 		"#/" \
-		${stdOut:0:2}
+		${stdOut:1:2}
 }
 
 #/ DESCRIPTION:
