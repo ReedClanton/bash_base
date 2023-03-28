@@ -17,7 +17,7 @@ setup_suite() {
 	# Short hand used to call function so full path doesn't have to be used each time.
 	flatpakAliasCreator=$(readlink -f $PWD/../../../../../src/environmentSetup/util/flatpakAliasCreator.sh) "${@}"
 	# Mock out logging.
-	fake log :
+#	fake log :
 }
 
 #/ DESCRIPTION:
@@ -27,6 +27,8 @@ setup_suite() {
 #/ TODO(S):
 #/	- None
 test__-h() {
+	# Mock out logging.
+	fake log :
 	assert_equals \
 		"#/" \
 		$($flatpakAliasCreator -h)
@@ -38,6 +40,8 @@ test__-h() {
 #/ TODO(S):
 #/	- None
 test__-h__valid_return_code() {
+	# Mock out logging.
+	fake log :
 	cmd="$flatpakAliasCreator -h"
 	unset stdOut errOut rtOut
 	eval "$( (eval $cmd) \
@@ -53,6 +57,8 @@ test__-h__valid_return_code() {
 #/ TODO(S):
 #/	- None
 test__--help() {
+	# Mock out logging.
+	fake log :
 	assert_equals \
 		"#/" \
 		$($flatpakAliasCreator --help)
@@ -64,6 +70,8 @@ test__--help() {
 #/ TODO(S):
 #/	- None
 test__--help__valid_return_code() {
+	# Mock out logging.
+	fake log :
 	cmd="$flatpakAliasCreator --help"
 	unset stdOut errOut rtOut
 	eval "$( (eval $cmd) \
