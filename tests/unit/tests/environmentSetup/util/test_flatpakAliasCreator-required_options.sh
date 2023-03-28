@@ -28,7 +28,12 @@ setup_suite() {
 #/	- None
 test__-h() {
 	# Mock out logging.
-	fake log :
+#	fake log :
+	_log() {
+	  :
+	}
+	export -f _log
+	fake log _log
 	assert_equals \
 		"#/" \
 		$($flatpakAliasCreator -h)
@@ -41,7 +46,12 @@ test__-h() {
 #/	- None
 test__-h__valid_return_code() {
 	# Mock out logging.
-	fake log :
+#	fake log :
+	_log() {
+	  :
+	}
+	export -f _log
+	fake log _log
 	cmd="$flatpakAliasCreator -h"
 	unset stdOut errOut rtOut
 	eval "$( (eval $cmd) \
@@ -58,7 +68,12 @@ test__-h__valid_return_code() {
 #/	- None
 test__--help() {
 	# Mock out logging.
-	fake log :
+#	fake log :
+	_log() {
+	  :
+	}
+	export -f _log
+	fake log _log
 	assert_equals \
 		"#/" \
 		$($flatpakAliasCreator --help)
@@ -71,7 +86,12 @@ test__--help() {
 #/	- None
 test__--help__valid_return_code() {
 	# Mock out logging.
-	fake log :
+#	fake log :
+	_log() {
+	  :
+	}
+	export -f _log
+	fake log _log
 	cmd="$flatpakAliasCreator --help"
 	unset stdOut errOut rtOut
 	eval "$( (eval $cmd) \
