@@ -49,9 +49,7 @@ setup_suite() {
 test__-h__valid_return_code() {
 	# Mock out logging.
 #	fake log :
-#	_log() {
-#	  :
-#	}
+	log() { :; }
 	export -f log
 #	fake log _log
 	cmd="$flatpakAliasCreator -h"
