@@ -7,14 +7,13 @@
 # Get shell script root for users running this in there local environment.
 if [[ -d "$HOME/shell" ]]; then
 	export SHELL_ROOT=$HOME/shell
-# Attempt to find shell script root when run from CI/CD runner or any other time that this isn't be sourced to setup
-# a user's environment.
+# Attempt to find shell script root when run from CI/CD runner or any other
+# time that this isn't be sourced to setup a user's environment.
 else
 	echo "Warning, shell scripts root directory wasn't found in $USER's home, now checking alternate locations..."
 	# Attempt to find root using $0.
 	local pathToZero=$(readlink -f '$0')
 	pathToZero=${pathToZero%/\$0}
-	echo "pathToZero: '$pathToZero'"
 	if [[ -d "$pathToZero/shell" ]]; then
 		export SHELL_ROOT=$pathToZero/shell
 	elif [[ -d "$pathToZero/src/shell" ]]; then

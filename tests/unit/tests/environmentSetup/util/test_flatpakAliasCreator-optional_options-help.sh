@@ -17,9 +17,7 @@ setup_suite() {
 	# Short hand used to call function so full path doesn't have to be used each time.
 	flatpakAliasCreator=$(readlink -f $PWD/../../../../../src/environmentSetup/util/flatpakAliasCreator.sh) "${@}"
 	# Mock out logging.
-#	log() { :; }
-#	export -f log
-#	fake log :
+	fake log :
 }
 
 #/ DESCRIPTION:
@@ -28,18 +26,16 @@ setup_suite() {
 #/
 #/ TODO(S):
 #/	- None
-#test__-h() {
-	# Mock out logging.
-#	fake log :
-#	_log() {
-#	  :
-#	}
-#	export -f _log
-#	fake log _log
-#	assert_equals \
-#		"#/" \
-#		$($flatpakAliasCreator -h)
-#}
+test__-h() {
+	cmd="$flatpakAliasCreator -h"
+	unset stdOut errOut rtOut
+	eval "$( (eval $cmd) \
+		2> >(errOut=$(cat); typeset -p errOut) \
+		 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
+	assert_equals \
+		"#/" \
+		${stdOut:1:2}
+}
 
 #/ DESCRIPTION:
 #/	Ensure exit code is `0`.
@@ -52,8 +48,6 @@ test__-h__valid_return_code() {
 	eval "$( (eval $cmd) \
 		2> >(errOut=$(cat); typeset -p errOut) \
 		 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
-#	printf "stdOut:\n'$stdOut'\n"
-#	printf "errOut:\n'$errOut'\n"
 	assert_equals 0 $rtOut
 }
 
@@ -69,13 +63,6 @@ test__--help() {
 	eval "$( (eval $cmd) \
 		2> >(errOut=$(cat); typeset -p errOut) \
 		 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
-#	firstLine=$(printf $stdOut | head -1)
-#	echo "firstLine: '$firstLine'"
-#	echo "\"${stdOut%%%'#/'*}\""
-	printf "errOut:\n'$errOut'\n"
-	printf "stdOut:\n'$stdOut'\n"
-	echo "'$stdOut'"
-	echo "'${stdOut:1:2}'"
 	assert_equals \
 		"#/" \
 		${stdOut:1:2}
@@ -87,13 +74,6 @@ test__--help() {
 #/ TODO(S):
 #/	- None
 test__--help__valid_return_code() {
-	# Mock out logging.
-#	fake log :
-#	_log() {
-#	  :
-#	}
-#	export -f _log
-#	fake log _log
 	cmd="$flatpakAliasCreator --help"
 	unset stdOut errOut rtOut
 	eval "$( (eval $cmd) \
