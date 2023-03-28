@@ -52,7 +52,7 @@ test__-h__valid_return_code() {
 #	_log() {
 #	  :
 #	}
-#	export -f _log
+	export -f log
 #	fake log _log
 	cmd="$flatpakAliasCreator -h"
 	unset stdOut errOut rtOut
