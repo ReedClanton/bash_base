@@ -52,8 +52,8 @@ test__-h__valid_return_code() {
 	eval "$( (eval $cmd) \
 		2> >(errOut=$(cat); typeset -p errOut) \
 		 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
-	printf "stdOut:\n'$stdOut'\n"
-	printf "errOut:\n'$errOut'\n"
+#	printf "stdOut:\n'$stdOut'\n"
+#	printf "errOut:\n'$errOut'\n"
 	assert_equals 0 $rtOut
 }
 
@@ -69,11 +69,13 @@ test__--help() {
 	eval "$( (eval $cmd) \
 		2> >(errOut=$(cat); typeset -p errOut) \
 		 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
-	firstLine=$(printf $stdOut | head -1)
-	echo "firstLine: '$firstLine'"
+#	firstLine=$(printf $stdOut | head -1)
+#	echo "firstLine: '$firstLine'"
+#	echo "\"${stdOut%%%'#/'*}\""
+#	echo "'${stdOut:0:2}'"
 	assert_equals \
 		"#/" \
-		$firstLine
+		${stdOut:0:2}
 }
 
 #/ DESCRIPTION:
