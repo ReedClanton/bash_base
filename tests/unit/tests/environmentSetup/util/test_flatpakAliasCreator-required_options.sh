@@ -49,9 +49,9 @@ setup_suite() {
 test__-h__valid_return_code() {
 	# Mock out logging.
 #	fake log :
-	log() { :; }
-	export -f log
-#	fake log _log
+	_log() { :; }
+	export -f _log
+	fake log _log
 	cmd="$flatpakAliasCreator -h"
 	unset stdOut errOut rtOut
 	eval "$( (eval $cmd) \
