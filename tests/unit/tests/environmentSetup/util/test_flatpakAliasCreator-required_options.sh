@@ -59,6 +59,8 @@ test__-h__valid_return_code() {
 	eval "$( (eval $cmd) \
 		2> >(errOut=$(cat); typeset -p errOut) \
 		 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
+	printf "stdOut:\n'$stdOut'\n"
+	printf "errOut:\n'$errOut'\n"
 	assert_equals 0 $rtOut
 }
 
