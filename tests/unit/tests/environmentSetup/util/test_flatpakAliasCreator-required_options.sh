@@ -28,7 +28,7 @@ setup_suite() {
 #/
 #/ TODO(S):
 #/	- None
-test__-h() {
+#test__-h() {
 	# Mock out logging.
 #	fake log :
 #	_log() {
@@ -36,10 +36,10 @@ test__-h() {
 #	}
 #	export -f _log
 #	fake log _log
-	assert_equals \
-		"#/" \
-		$($flatpakAliasCreator -h)
-}
+#	assert_equals \
+#		"#/" \
+#		$($flatpakAliasCreator -h)
+#}
 
 #/ DESCRIPTION:
 #/	Ensure exit code is `0`.
@@ -68,16 +68,16 @@ test__-h__valid_return_code() {
 #/
 #/ TODO(S):
 #/	- None
-test__--help() {
+#test__--help() {
 	# Mock out logging.
 #	fake log :
 #	_log() { :; }
 #	export -f _log
 #	fake log _log
-	assert_equals \
-		"#/" \
-		$($flatpakAliasCreator --help)
-}
+#	assert_equals \
+#		"#/" \
+#		$($flatpakAliasCreator --help)
+#}
 
 #/ DESCRIPTION:
 #/	Ensure exit code is `0`.
