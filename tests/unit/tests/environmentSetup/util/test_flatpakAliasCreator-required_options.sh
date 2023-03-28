@@ -16,6 +16,8 @@ setup_suite() {
 	. $(readlink -f $PWD/../../../../../src/shell/shell_functions)
 	# Short hand used to call function so full path doesn't have to be used each time.
 	flatpakAliasCreator=$(readlink -f $PWD/../../../../../src/environmentSetup/util/flatpakAliasCreator.sh) "${@}"
+	# Mock out logging.
+	fake log :
 }
 
 #/ DESCRIPTION:
@@ -23,7 +25,7 @@ setup_suite() {
 #/	test just ensures the first line of the doc is returned.
 #/
 #/ TODO(S):
-#/	- Create another method that verifies the return value.
+#/	- None
 test__-h() {
 	assert_equals \
 		"#/" \
@@ -34,7 +36,7 @@ test__-h() {
 #/	Ensure exit code is `0`.
 #/
 #/ TODO(S):
-#/	- NoOp
+#/	- None
 test__-h__valid_return_code() {
 	cmd="$flatpakAliasCreator -h"
 	unset stdOut errOut rtOut
@@ -49,7 +51,7 @@ test__-h__valid_return_code() {
 #/	test just ensures the first line of the doc is returned.
 #/
 #/ TODO(S):
-#/	- Create another method that verifies the return value.
+#/	- None
 test__--help() {
 	assert_equals \
 		"#/" \
@@ -60,7 +62,7 @@ test__--help() {
 #/	Ensure exit code is `0`.
 #/
 #/ TODO(S):
-#/	- NoOp
+#/	- None
 test__--help__valid_return_code() {
 	cmd="$flatpakAliasCreator --help"
 	unset stdOut errOut rtOut
