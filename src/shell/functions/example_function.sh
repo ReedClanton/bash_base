@@ -33,7 +33,7 @@ IFS='' read -r -d '' FUNCTION_NAME_DOC <<"EOF"
 #/ 
 #/ RETURN CODE(S):
 #/	- 0: Returned when:
-#/		- Help message is requested.
+#/		- Help message is requested and produced.
 #/		- Processing is successful.
 #/	- 140: Returned when given option is invalid.
 #/

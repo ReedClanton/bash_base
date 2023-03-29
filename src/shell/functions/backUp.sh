@@ -44,7 +44,7 @@ IFS='' read -r -d '' BACKUP_DOC <<"EOF"
 #/ 
 #/ RETURN CODE(S):
 #/	- 0: Returned when:
-#/		- Help message is requested.
+#/		- Help message is requested and produced.
 #/		- Back up is successful.
 #/	- 140: Returned when given option is invalid.
 #/	- 203: Returned when rsync isn't installed/accessible.

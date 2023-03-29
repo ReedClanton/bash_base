@@ -55,7 +55,7 @@ IFS='' read -r -d '' CHECK_REQUIRED_OPTS_DOC <<"EOF"
 #/
 #/ RETURN CODE(S):
 #/	- 0: Returned when:
-#/		- Help message is requested.
+#/		- Help message is requested and produced.
 #/		- Processing is successful.
 #/	- 3: Returned when one or more of the options provided for error checking are invalid.
 #/	- 140: Returned when given option name is invalid.

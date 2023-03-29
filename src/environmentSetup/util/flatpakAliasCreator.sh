@@ -33,7 +33,7 @@ IFS='' read -r -d '' FLATPAK_ALIAS_CREATOR_DOC <<"EOF"
 #/ 
 #/ RETURN CODE(S):
 #/	- 0: Returned when:
-#/		- Help message is requested.
+#/		- Help message is requested and produced.
 #/		- Aliases are created and written to file.
 #/	- 140: Returned when given option name is invalid.
 #/	- 161: Returned when failed to create file for flatpak aliases.
