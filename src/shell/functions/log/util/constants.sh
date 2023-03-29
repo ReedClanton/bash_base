@@ -54,6 +54,6 @@ ALL=$TRACE
 readonly ALL
 export ALL
 # Determines shell function logging level.
-SHELL_LOG_LEVEL=$ALL
+SHELL_LOG_LEVEL=$INFO
 export SHELL_LOG_LEVEL
 
