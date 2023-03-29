@@ -64,7 +64,7 @@ for fullArg in "${@}"; do
 done
 
 # Determine name of current shell.
-declare shellName=${SHELL#/*/*/*/*/}
+shellName=${SHELL#/*/*/*/*/}
 if [[ "$SHELL" = "$shellName" ]]; then
 	shellName=${SHELL#/*/*/*/}
 	if [[ "$SHELL" = "$shellName" ]]; then

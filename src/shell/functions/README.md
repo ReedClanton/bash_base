@@ -78,7 +78,8 @@ Produces formatted logs to stdout.
 ### `log` Example Usage
 
 ```sh
-declare -r infoLvl="-i -c=example_script"
+infoLvl="-i -c=example_script"
+readonly infoLvl
 
 log $infoLvl -m="Requesting input from user..."
 printf "Enter number you'd like to count to: "

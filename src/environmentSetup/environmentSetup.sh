@@ -124,10 +124,8 @@ if [[ "./$(basename $0)" == $0 ]]; then
 	# Tracks directory that file(s)/directory(ies) being replaced will be moved to.
 	BACK_UP_DIR="$PWD/$USER-homeBackUp-$(date +"%Y_%m_%d-%H_%M_%S")"
 	readonly BACK_UP_DIR
-	# List of users, specifically there UIDs, that script should be run as.
-	declare -ra INVALID_USERS="0 65534"
 	# User's home directory.
-	userHome=$HOME
+	userHome=$HOME/envSetup
 	# Tracks repo's root source directory.
 	repoSourceRoot=$(readlink -f $PWD/../)
 	log $traceLvl -m="Local variable(s) reset."
@@ -158,7 +156,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 	read userAnswer
 	if [[ "$userAnswer" = "y" ]]; then
 		# Ensure script is being run by a plausibly valid user.
-		if ! [[ " ${INVALID_USERS[*]} " =~ " $EUID " ]]; then
+		if [[ $EUID -gt 499 ]]; then
 			# Ensure directory for backing up user's environment config doesn't already exist.
 			if [[ ! -d "$BACK_UP_DIR" ]]; then
 				# Determine name of current shell.

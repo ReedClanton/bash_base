@@ -3,7 +3,7 @@
  ##################
 ## System Tool(s) ##
  ##################
-alias src='source $HOME/.bashrc'
+alias src='. $HOME/.bashrc'
 alias ssh='ssh -X'
 alias txtEdit='xdg-open'
 
