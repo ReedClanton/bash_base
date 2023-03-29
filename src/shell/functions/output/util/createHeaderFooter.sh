@@ -73,28 +73,28 @@ rtCreateHeaderFooter=''
 # Tracks character used for formatting.
 fChar=$DEFAULT_CHAR
 # Tracks desired total length of header/footer.
-declare -i len=2
+len=2
 
  #####################
 ## Process Option(s) ##
  #####################
 for fullArg in "${@}"; do
 	# Tracks value of current option.
-	declare arg=${fullArg#*=}
+	arg=${fullArg#*=}
 
 	# Determine what option user gave.
 	case $fullArg in
 		--prefix)
 			rtCreateHeaderFooter+=' '
-			len+=1  ;;
+			len=$(($len+1))  ;;
 		-l=*|--lineLength=*)
-			len+=$arg  ;;
+			len=$(($arg+$len))  ;;
 		-c=*|--char=*)
 			# Track user desired formatting character(s).
 			fChar=$arg
 			# Update desired header/footer length to accommodate formatting character(s).
 			if [[ ${#fChar} -gt 1 ]]; then
-				len+=$(($((${#fChar}-1))*2))
+				len=$(($(($((${#fChar}-1))*2))+$len))
 			fi  ;;
 		-h|--help)
 			echo "$CREATE_HEADER_FOOTER_DOC"
