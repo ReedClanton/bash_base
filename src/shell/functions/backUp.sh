@@ -3,6 +3,8 @@
  #########################
 ## Global(s)/Constant(s) ##
  #########################
+## Global(s) ##
+# NoOp
 ## Constant(s) ##
 . $SHELL_FUNCTIONS_CONSTANTS/backUp.sh
 
@@ -41,13 +43,11 @@ IFS='' read -r -d '' BACKUP_DOC <<"EOF"
 #/		(OPTIONAL)
 #/ 
 #/ RETURN CODE(S):
-#/	- 0:
-#/		Returned when:
-#/			- Help message is requested OR
-#/			- Back up is successful.
-#/	- 20:
-#/		Returned when:
-#/			- Given option is invalid.
+#/	- 0: Returned when:
+#/		- Help message is requested.
+#/		- Back up is successful.
+#/	- 140: Returned when given option is invalid.
+#/	- 203: Returned when rsync isn't installed/accessible.
 #/ 
 #/ EXAMPLE(S):
 #/	backUp
@@ -62,6 +62,7 @@ IFS='' read -r -d '' BACKUP_DOC <<"EOF"
 #/	- Missing back up location should be handled.
 EOF
 log -c="backUp" -m="Resetting local variable(s)..."
+
  ###############################
 ## Reset/Set Local Variable(s) ##
  ###############################
@@ -104,7 +105,7 @@ for fullArg in "${@}"; do
 		*)
 			log $errLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
 			echo "$BACKUP_DOC"
-			exit 20  ;;
+			exit 140  ;;
 	esac
 done
 	
@@ -116,7 +117,7 @@ if [[ "$(command -v rsync)" != "" ]]; then
 	log $traceLvl -m="rsync is installed."
 else
 	log $errLvl -m="rsync isn't installed."
-	exit 21
+	exit 203
 fi
 
  ###############

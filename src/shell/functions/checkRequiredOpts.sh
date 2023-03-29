@@ -1,14 +1,27 @@
 #!/usr/bin/env sh
 
+ #########################
+## Global(s)/Constant(s) ##
+ #########################
+## Global(s) ##
+# NoOp
+## Constant(s) ##
+# NoOp
+
+ #####################
+## Local Variable(s) ##
+ #####################
+# NoOp
+
  ###############
 ## Function(s) ##
  ###############
 IFS='' read -r -d '' CHECK_REQUIRED_OPTS_DOC <<"EOF"
 #/ DESCRIPTION:
-#/	When given a message and any number of variable(s) (see '-a'), each variables will
-#/	be checked to ensure it has been set to something, If it has not been, a code of
-#/	'1' will be returned. If all given value(s) were set, a code of '0' will be
-#/	returned.
+#/	When given a message and any number of variable(s) (see '-a'), each
+#/	variables will be checked to ensure it has been set to something, If it has
+#/	not been, a code of '1' will be returned. If all given value(s) were set,
+#/	a code of '0' will be returned.
 #/
 #/ USAGE: checkRequiredOpts "<callingFunctionDoc>" [OPTIONS]...
 #/
@@ -41,17 +54,12 @@ IFS='' read -r -d '' CHECK_REQUIRED_OPTS_DOC <<"EOF"
 #/		(REQUIRED)
 #/
 #/ RETURN CODE(S):
-#/	- 0:
-#/		Returned when:
-#/			- Help message is requested OR
-#/			- Processing is successful.
-#/	- 1:
-#/		Returned when:
-#/			- Required argument(s) haven't been set.
-#/	- 20:
-#/		Returned when:
-#/			- Provided option is invalid OR
-#/			- No option is provided.
+#/	- 0: Returned when:
+#/		- Help message is requested.
+#/		- Processing is successful.
+#/	- 3: Returned when one or more of the options provided for error checking are invalid.
+#/	- 140: Returned when given option name is invalid.
+#/	- 152: Returned when required argument (doc) isn't provided.
 #/
 #/ EXAMPLE(S):
 #/	checkRequiredOpts --help
@@ -82,7 +90,7 @@ done
 if [[ -z $1 ]]; then
 	printf "# No option was provided, nothing to do, see doc bellow for usage... #\n"
 	echo "$CHECK_REQUIRED_OPTS_DOC"
-	exit 20
+	exit 152
 else
 	docString="$1"
 	set -- "${@:2}"
@@ -102,7 +110,7 @@ for fullArg in "${@}"; do
 			if [[ -z $arg ]]; then
 				printf "# Missing required argument(s), see doc bellow... #\n"
 				echo "$docString"
-				exit 1
+				exit 3
 			fi  ;;
 		-h|--help)
 			echo "$CHECK_REQUIRED_OPTS_DOC"
@@ -110,7 +118,9 @@ for fullArg in "${@}"; do
 		*)
 			printf "## Invalid given argument: '$fullArg', see doc: ##\n"
 			echo "$CHECK_REQUIRED_OPTS_DOC"
-			exit 20  ;;
+			exit 140  ;;
 	esac
 done
+
+exit 0
 

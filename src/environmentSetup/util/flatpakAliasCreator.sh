@@ -33,20 +33,15 @@ IFS='' read -r -d '' FLATPAK_ALIAS_CREATOR_DOC <<"EOF"
 #/ 
 #/ RETURN CODE(S):
 #/	- 0: Returned when:
-#/		- Help message is requested OR
+#/		- Help message is requested.
 #/		- Aliases are created and written to file.
-#/	- 20: Returned when:
-#/		- Given option is invalid.
-#/	- 21: Returned when:
-#/		- Failed to create file for flatpak aliases.
-#/	- 22: Returned when:
-#/		- Failed to write to flatpak aliases file. File removed.
-#/	- 23: Returned when:
-#/		- Failed to write to flatpak aliases file. File not removed because it
-#/			couldn't be accessed.
-#/	- 24: Returned when:
-#/		- Failed to write to flatpak aliases file and failed to remove file.
-#/			User must remove it manually.
+#/	- 140: Returned when given option name is invalid.
+#/	- 161: Returned when failed to create file for flatpak aliases.
+#/	- 161: Returned when failed to write to flatpak aliases file and file is then removed.
+#/	- 162: Returned when failed to write to flatpak aliases file and failed to
+#/			remove file. User must remove it manually.
+#/	- 164: Returned when failed to write to flatpak aliases file and failed to
+#/			remove it because it couldn't be accessed.
 #/
 #/ EXAMPLE(S):
 #/	flatpakAliasCreator
@@ -54,7 +49,7 @@ IFS='' read -r -d '' FLATPAK_ALIAS_CREATOR_DOC <<"EOF"
 #/	flatpakAliasCreator --help
 #/
 #/ TODO(S):
-#/	- NoOp
+#/	- None
 EOF
 funcName=flatpakAliasCreator
 
@@ -99,7 +94,7 @@ for fullArg in "${@}"; do
 		*)
 			log $errorLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
 			echo "$FLATPAK_ALIAS_CREATOR_DOC"
-			return 20  ;;
+			exit 140  ;;
 	esac
 done
 
@@ -163,17 +158,17 @@ if [[ $rtOut -eq 0 ]]; then
 				 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
 			if [[ $rtVal -ne 0 ]]; then
 				log $errorLvl -m="Failed to remove flatpak aliases file '$flatpakAliasFilePath'."
-				exit 24
+				exit 162
 			fi
 		else
 			log $warnLvl -m="Flatpak aliases file doesn't exist or can't be accessed, removal skipped."
-			exit 23
+			exit 164
 		fi
 		log $infoLvl -m="Removed flatpak aliases file."
-		exit 22		
+		exit 161
 	fi
 else
 	log $errorLvl -m="Failed to create file for flatpak aliases ($flatpakAliasFilePath)."
-	exit 21
+	exit 161
 fi
 

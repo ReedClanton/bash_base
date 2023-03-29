@@ -19,8 +19,8 @@
  ###############
 IFS='' read -r -d '' LOG_DOC <<"EOF"
 #/ DESCRIPTION:
-#/	Used to produce log messages. Current global log level, tracked by 'SHELL_LOG_LEVEL',
-#/	is used to determine if given message should be printed.
+#/	Used to produce log messages. Current global log level, tracked by
+#/	'SHELL_LOG_LEVEL', is used to determine if given message should be printed.
 #/
 #/ USAGE: log [OPTIONS]... -m="message text"...
 #/
@@ -29,8 +29,7 @@ IFS='' read -r -d '' LOG_DOC <<"EOF"
 #/
 #/ OPTION(S):
 #/	-h, --help
-#/		Print this help message. Function will return code of '0'. No processing will be
-#/		done.
+#/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
 #/	-c=<functionName>
 #/		Name of calling code (function).
@@ -38,89 +37,84 @@ IFS='' read -r -d '' LOG_DOC <<"EOF"
 #/		(OPTIONAL)
 #/	-m=<logMsg>, --msg=<logMsg>
 #/		Message user would like log produced of.
-#/			- Note: At least one of these is required. If multiple are given, each
-#/				will show up on a new line.
+#/			- Note: At least one of these is required. If multiple are given,
+#/				each will show up on a new line.
 #/		(REQUIRED)
 #/	--line-title
 #/		When given, resulting log text will include a prefix and postfix.
 #/			- Note: Shouldn't be combined with any other title option.
-#/			- Note: If no title option is given, then no prefix, postfis, header, or
-#/				footer will be included in the resulting log text.
+#/			- Note: If no title option is given, then no prefix, postfis,
+#/				header, or footer will be included in the resulting log text.
 #/		(OPTIONAL)
 #/	--full-title
-#/		When given, resulting log text will include a prefix, postfix, header, and
-#/		footer.
+#/		When given, resulting log text will include a prefix, postfix, header, and footer.
 #/			- Note: Shouldn't be combined with any other title option.
-#/			- Note: If no title option is given, then no prefix, postfis, header, or
-#/				footer will be included in the resulting log text.
+#/			- Note: If no title option is given, then no prefix, postfis,
+#/				header, or footer will be included in the resulting log text.
 #/		(OPTIONAL)
 #/	-t, --trace
-#/		When given, the default *trace* formatting character will be used by prefix,
-#/		postfix, header, and footer (if used). Providing this option will also cause a
-#/		log message with the given text to be printed to stdout *if* the shell log level
-#/		($SHELL_LOG_LEVEL) is equal to, or higher than, *trace*. This includes: trace,
-#/		debug, info, warn, and error.
+#/		When given, the default *trace* formatting character will be used by
+#/		prefix, postfix, header, and footer (if used). Providing this option
+#/		will also cause a log message with the given text to be printed to
+#/		stdout *if* the shell log level ($SHELL_LOG_LEVEL) is equal to, or
+#/		higher than, *trace*. This includes: trace,debug, info, warn, and error.
 #/			- Note: Shouldn't be combined with any other log level option.
-#/			- Note: If multiple loge level options are given in a single call, the
-#/				last one given will be used.
+#/			- Note: If multiple loge level options are given in a single call,
+#/				the last one given will be used.
 #/			- Note: When no log level option is provided, *trace* level is used.
 #/		(DEFAULT)
 #/	-d, --debug
-#/		When given, the default *debug* formatting character will be used by prefix,
-#/		postfix, header, and footer (if used). Providing this option will also cause a
-#/		log message with the given text to be printed to stdout *if* the shell log level
-#/		($SHELL_LOG_LEVEL) is equal to, or higher than, *debug*. This includes: debug,
-#/		info, warn, and error.
+#/		When given, the default *debug* formatting character will be used by
+#/		prefix, postfix, header, and footer (if used). Providing this option
+#/		will also cause a log message with the given text to be printed to
+#/		stdout *if* the shell log level ($SHELL_LOG_LEVEL) is equal to, or
+#/		higher than, *debug*. This includes: debug, info, warn, and error.
 #/			- Note: Shouldn't be combined with any other log level option.
-#/			- Note: If multiple loge level options are given in a single call, the
-#/				last one given will be used.
+#/			- Note: If multiple loge level options are given in a single call,
+#/				the last one given will be used.
 #/			- Note: When no log level option is provided, *trace* level is used.
 #/		(OPTIONAL)
 #/	-i, --info
-#/		When given, the default *info* formatting character will be used by prefix,
-#/		postfix, header, and footer (if used). Providing this option will also cause a
-#/		log message with the given text to be printed to stdout *if* the shell log level
-#/		($SHELL_LOG_LEVEL) is equal to, or higher than, *info*. This includes: info, warn,
-#/		and error.
+#/		When given, the default *info* formatting character will be used by
+#/		prefix, postfix, header, and footer (if used). Providing this option
+#/		will also cause a log message with the given text to be printed to
+#/		stdout *if* the shell log level ($SHELL_LOG_LEVEL) is equal to, or
+#/		higher than, *info*. This includes: info, warn, and error.
 #/			- Note: Shouldn't be combined with any other log level option.
-#/			- Note: If multiple loge level options are given in a single call, the
-#/				last one given will be used.
+#/			- Note: If multiple loge level options are given in a single call,
+#/				the last one given will be used.
 #/			- Note: When no log level option is provided, *trace* level is used.
 #/		(OPTIONAL)
 #/	-w, --warn
-#/		When given, the default *warn* formatting character will be used by prefix,
-#/		postfix, header, and footer (if used). Providing this option will also cause a
-#/		log message with the given text to be printed to stdout *if* the shell log level
-#/		($SHELL_LOG_LEVEL) is equal to, or higher than, *debug*. This includes: warn
-#/		and error.
+#/		When given, the default *warn* formatting character will be used by
+#/		prefix, postfix, header, and footer (if used). Providing this option
+#/		will also cause a log message with the given text to be printed to
+#/		stdout *if* the shell log level ($SHELL_LOG_LEVEL) is equal to, or
+#/		higher than, *debug*. This includes: warn and error.
 #/			- Note: Shouldn't be combined with any other log level option.
-#/			- Note: If multiple loge level options are given in a single call, the
-#/				last one given will be used.
+#/			- Note: If multiple loge level options are given in a single call,
+#/				the last one given will be used.
 #/			- Note: When no log level option is provided, *trace* level is used.
 #/		(OPTIONAL)
 #/	-e, --error
-#/		When given, the default *error* formatting character will be used by prefix,
-#/		postfix, header, and footer (if used). Providing this option will also cause a
-#/		log message with the given text to be printed to stdout *if* the shell log level
-#/		($SHELL_LOG_LEVEL) is equal to, or higher than, *error*. This includes: error.
+#/		When given, the default *error* formatting character will be used by
+#/		prefix, postfix, header, and footer (if used). Providing this option
+#/		will also cause a log message with the given text to be printed to
+#/		stdout *if* the shell log level($SHELL_LOG_LEVEL) is equal to, or
+#/		higher than, *error*. This includes: error.
 #/			- Note: Shouldn't be combined with any other log level option.
-#/			- Note: If multiple loge level options are given in a single call, the
-#/				last one given will be used.
+#/			- Note: If multiple loge level options are given in a single call,
+#/				the last one given will be used.
 #/			- Note: When no log level option is provided, *trace* level is used.
 #/		(OPTIONAL)
 #/
 #/ RETURN CODE(S):
-#/	- 0:
-#/		Returned when:
-#/			- Help message is requested OR
-#/			- Processing is successfull OR
+#/	- 0: Returned when:
+#/		- Help message is requested and produced.
+#/		- Processing is successful
 #/			- No arguments are provided.
-#/	- 1:
-#/		Returned when:
-#/			- Required argument(s) haven't been provided.
-#/	- 20:
-#/		Returned when:
-#/			- Provided option is invalid.
+#/	- 140: Returned when given option name is invalid.
+#/	- 142: Returned when a required option is not provided.
 #/
 #/ EXAMPLE(S):
 #/	log --help
@@ -189,7 +183,7 @@ for fullArg in "${@}"; do
 			printf "$pfix ERROR log:\t"
 			$SHELL_FUNCTIONS/output/output.sh --pp -m="Calling function provided invalid option: '$fullArg', see doc:"
 			echo "$LOG_DOC"
-			exit 20  ;;
+			exit 140  ;;
 	esac
 done
 
@@ -199,7 +193,7 @@ done
 $SHELL_FUNCTIONS/checkRequiredOpts.sh "$LOG_DOC" -a="${msg[@]}"
 rtVal=$?
 if [[ $rtVal -ne 0 ]]; then
-	exit $rtVal
+	exit 142
 fi
 
 # Determine if log message should be output.
@@ -240,4 +234,6 @@ if [[ $SHELL_LOG_LEVEL -ge $lvl ]]; then
 	# Output log.
 	printf "$msg"
 fi
+
+exit 0
 

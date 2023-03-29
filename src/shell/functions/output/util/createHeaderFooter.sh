@@ -11,21 +11,19 @@
  #####################
 ## Local Variable(s) ##
  #####################
-# Used to return strings from local function(s).
-rtTxt=''
+# NoOp
 
 IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/ DESCRIPTION:
-#/	Returns text intended to be used as a header or footer in the 'rtTxt' local
-#/	variable.
+#/	Returns text intended to be used as a header or footer in std out.
 #/
 #/ USAGE: createHeaderFooter [OPTIONS]... -l=<maxMsgLength>
 #/
 #/ NOTE(S):
 #/	- Method may not use the log function because this is used by that method.
-#/	- This method is in the same directory as output because a local variable is used by
-#/		this method to return a value to the output method when called by the output
-#/		method.
+#/	- This method is in the same directory as output because a local variable
+#/		is used by this method to return a value to the output method when
+#/		called by the output method.
 #/
 #/ OPTION(S):
 #/	-c=<formattingCharacter>, --char=<formattingCharacter>
@@ -33,16 +31,14 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/			- Note: Default value: $DEFAULT_CHAR.
 #/			- Note: Some special characters may require two to be given:
 #/				-c="55"  _> %
-#/			- Note: Some *other* special characters may not work at all (ex. back
-#/				slash).
+#/			- Note: Some *other* special characters may not work at all (ex. back slash).
 #/		(OPTIONAL)
 #/	-h, --help
-#/		Print this help message. Function will return code of '0'. No processing will be
-#/		done.
+#/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
 #/	-l=<maxMsgLength>, --lineLength=<maxMsgLength>
-#/		Max number of characters in any line of message. Used to determine how long
-#/		header/footer should be.
+#/		Max number of characters in any line of message. Used to determine how
+#/		long header/footer should be.
 #/			- Note: Line length only includes characters in message.
 #/		(REQUIRED)
 #/	--prefix
@@ -51,15 +47,11 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/		(REQUIRED/OPTIONAL)
 #/
 #/ RETURN CODE(S):
-#/	- 0:
-#/		Returned when:
-#/			- Help message is requested OR
-#/			- Processing is successful.
-#/	- 1:
-#/		TODO: Returned when required option(s) are not provided.
-#/	- 20:
-#/		Returned when:
-#/			- Provided option is invalid.
+#/	- 0: Returned when:
+#/		- Help message is requested and produced.
+#/		- Processing is successful.
+#/	- 140: Returned when given option name is invalid.
+#/	- 142: TODO: Returned when required option(s) are not provided.
 #/
 #/ EXAMPLE(S):
 #/	createHeaderFooter --help
@@ -73,57 +65,58 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/	- Display this message when required argument(s) are not provided.
 #/	- Move this function to its own file.
 EOF
-function createHeaderFooter {
-	 ###############################
-	## Reset/Set Local Variable(s) ##
-	 ###############################
-	# Tracks header/footer text.
-	rtTxt=''
-	# Tracks character used for formatting.
-	fChar=$DEFAULT_CHAR
-	# Tracks desired total length of header/footer.
-	declare -i len=2
+ ###############################
+## Reset/Set Local Variable(s) ##
+ ###############################
+# Tracks header/footer text.
+rtCreateHeaderFooter=''
+# Tracks character used for formatting.
+fChar=$DEFAULT_CHAR
+# Tracks desired total length of header/footer.
+declare -i len=2
 
-	 #####################
-	## Process Option(s) ##
-	 #####################
-	for fullArg in "${@}"; do
-		# Tracks value of current option.
-		declare arg=${fullArg#*=}
+ #####################
+## Process Option(s) ##
+ #####################
+for fullArg in "${@}"; do
+	# Tracks value of current option.
+	declare arg=${fullArg#*=}
 
-		# Determine what option user gave.
-		case $fullArg in
-			--prefix)
-				rtTxt+=' '
-				len+=1  ;;
-			-l=*|--lineLength=*)
-				len+=$arg  ;;
-			-c=*|--char=*)
-				# Track user desired formatting character(s).
-				fChar=$arg
-				# Update desired header/footer length to accommodate formatting character(s).
-				if [[ ${#fChar} -gt 1 ]]; then
-					len+=$(($((${#fChar}-1))*2))
-				fi  ;;
-			-h|--help)
-				echo "$CREATE_HEADER_FOOTER_DOC"
-				exit 0  ;;
-			*)
-				printf "$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR createHeaderFooter: Caller provided invalid option: '$fullArg', see doc:\n"
-				echo "$CREATE_HEADER_FOOTER_DOC"
-				exit 20  ;;
-		esac
-	done
+	# Determine what option user gave.
+	case $fullArg in
+		--prefix)
+			rtCreateHeaderFooter+=' '
+			len+=1  ;;
+		-l=*|--lineLength=*)
+			len+=$arg  ;;
+		-c=*|--char=*)
+			# Track user desired formatting character(s).
+			fChar=$arg
+			# Update desired header/footer length to accommodate formatting character(s).
+			if [[ ${#fChar} -gt 1 ]]; then
+				len+=$(($((${#fChar}-1))*2))
+			fi  ;;
+		-h|--help)
+			echo "$CREATE_HEADER_FOOTER_DOC"
+			exit 0  ;;
+		*)
+			printf "$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR createHeaderFooter: Caller provided invalid option: '$fullArg', see doc:\n"
+			echo "$CREATE_HEADER_FOOTER_DOC"
+			exit 140  ;;
+	esac
+done
 
-	## Build Header/Footer ##
-	while [[ ${#rtTxt} -lt $len ]]; do
-		# When near the end, given formatting character(s) may need to be split up.
-		if [[ $((${#rtTxt}+${#fChar})) -gt $len ]]; then
-			rtTxt+=${fChar:0:$(($len-${#rtTxt}))}
-		else
-			rtTxt+=$fChar
-		fi
-	done
-	# Add final part of header.
-	rtTxt+='\n'
-}
+## Build Header/Footer ##
+while [[ ${#rtCreateHeaderFooter} -lt $len ]]; do
+	# When near the end, given formatting character(s) may need to be split up.
+	if [[ $((${#rtCreateHeaderFooter}+${#fChar})) -gt $len ]]; then
+		rtCreateHeaderFooter+=${fChar:0:$(($len-${#rtCreateHeaderFooter}))}
+	else
+		rtCreateHeaderFooter+=$fChar
+	fi
+done
+# Add final part of header.
+rtCreateHeaderFooter+='\n'
+echo "$rtCreateHeaderFooter"
+exit 0
+
