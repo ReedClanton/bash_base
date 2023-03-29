@@ -39,59 +39,48 @@ IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
 #/ 
 #/ RETURN CODE(S):
 #/	- 0: Returned when:
-#/		- Help message is requested OR
-#/		- Processing is successful.
-#/	- 1: Returned when:
-#/		- Script needs to source file containing shell scripts, but can't find that file.
-#/	- 20: Returned when:
-#/		- Given option is invalid.
-#/	- 21: Returned when:
-#/		- Run from any directory other than the one the script is in.
-#/	- 22: Retruned when:
-#/		- User says they don't want to setup the current user's shell environment.
-#/	- 23: Returned when:
-#/		- User that's running this is one of a list of known system users
-#/			(i.e. not the user's normally account).
-#/	- 24: Returned when:
-#/		- Back up directory already exists. Shouldn't occur unless user runs script,
-#/			quickly stops it, then re-runs it.
-#/	- 25: Returned when:
-#/		- Failed to determine name of shell running in.
-#/	- 26: Returned when:
-#/		- Failed to create directory for backing up user's current shell
-#/			enviroment configuration file(s).
-#/	- 27: Returned when:
-#/		- Failed to configure user's shell environment, but was able to revert it.
-#/	- 28: Returned when:
+#/		- Help message is requested and produced.
+#/		- User's environment is configured.
+#/	- 3: Returned when:
+#/		- Failed to configure user's shell environment, but was able to revert
+#/			to original environment configuration.
+#/		- Failed to create file of flatpak aliases. You'll need to create alias
+#/			of flatpak apps yourself.
+#/	- 4: Returned when:
 #/		- Failed to configure user's shell environment and failed to revert to
-#/			original hidden shell files (*this is bad*).
-#/	- 29: Returned when:
+#/			original hidden shell file(s) (*this is bad*).
 #/		- Failed to configure user's shell environment and failed to revert to
 #/			original shell directory (*this is bad*).
-#/	- 30: Returned when:
-#/		- Failed to configure user's shell environment and failed to remove new
-#/			hidden shell file(s) from user's home directory. User will need to
-#/			manually remove shell files in there home and copy the hidden shell
-#/			file(s) from the back up directory to there home directory.
-#/	- 31: Returned when:
-#/		- Failed to configure user's shell environment and failed to copy
-#/			user's original hidden shell file(s) back to there home directory.
-#/			User will need to manually copy back up directory to there home
-#/			directory.
-#/	- 32: Returned when:
-#/		- Failed to configure user's shell environment and failed to remove new
-#/			shell directory from user's home directory. User will need to
-#/			manually remove shell directory from there home and copy all
-#/			file(s) and directory(ies) from the back up directory to there
-#/			home directory.
-#/	- 33: Returned when:
-#/		- Failed to configure user's shell environment and fialed to copy
-#/			user's original shell directory back to there home directory. User
-#/			will need to manually remove hidden shell file(s) from there home
-#/			and copy all file(s) and directory(ies) from the back up directory
-#/			to there home directory.
-#/	- 34: Returned when:
-#/		- Failed to create file of flatpak app aliases.
+#/	- 131: Returned when user provides a response that should lead to program exit.
+#/	- 140: Returned when given option name is invalid.
+#/	- 162: Returned when failed to configure user's shell environment and
+#/			failed to remove new hidden shell file(s) from user's home
+#/			directory. User will need to manually remove shell file(s) in
+#/			their home and copy the hidden shell file(s) from the back up
+#/			directory to there home directory.
+#/	- 166: Returned when failed to configure user's shell environment and
+#/			failed to copyuser's original hidden shell file(s) back to user's
+#/			home directory. User will need to manually copy file(s) from back
+#/			up directory to there home directory.
+#/	- 171: Returned when failed to create directory for backing up user's
+#/			current shell environment configuration file(s).
+#/	- 172: Returned when failed to configure user's shell environment and
+#/			failed to remove new shell directory from user's home directory.
+#/			User will need to manually remove shell directory from their home
+#/			directory and copy all file(s) and directory(ies) from the back up
+#/			directory to their home directory.
+#/	- 173: Returned when back up directory already exists.
+#/	- 175: Returned when failed to configure user's shell environment and
+#/			failed to copy user's original shell directory back to their home
+#/			directory. User will need to manually remove hidden shell file(s)
+#/			from their home and copy all file(s) and directory(ies) from the
+#/			back up directory to their home directory.
+#/	- 180: Returned when:
+#/		- Run from any directory other than the one this script is located in.
+#/	- 194: Returned when user that's running this is one of a list of known
+#/			system users (i.e. not the user's normal account).
+#/	- 202: Returned when can't find file that's sourced to ensure access to other shell script(s).
+#/	- 209: Returned when failed to determine name of shell running in.
 #/
 #/ EXAMPLE(S):
 #/	./environmentSetup.sh
@@ -101,6 +90,7 @@ IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
 #/ TODO(S):
 #/	- Rather than moving user's original files to the back up directory, copy them then remove them.
 #/	- Set a default answer and make user input checking more robust.
+#/	- Return 193 when calling user is root, 194 otherwise.
 EOF
 # Ensure script is being run from the same location as it's located.
 if [[ "./$(basename $0)" == $0 ]]; then
@@ -111,7 +101,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 			. $shellRoot
 		else
 			echo "Failed to find file used to locate (source) shell scripts ($shellRoot)."
-			exit 1
+			exit 202
 		fi
 	fi
 
@@ -158,7 +148,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 			*)
 				log $errorLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
 				echo "$ENVIRONMENT_SETUP_DOC"
-				return 20  ;;
+				exit 140  ;;
 		esac
 	done
 
@@ -253,7 +243,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 											exit 0
 										else
 											log $errorLvl -m="Failed to create file of flatpak app aliases. flatpakAliasCreaator() error output:" -m="$errOut"
-											exit 34
+											exit 3
 										fi
 									else
 										log $errorLvl -m="Failed to copy directory with shell scripts to $USER's home."
@@ -270,7 +260,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 										# Check if deletion worked.
 										if [[ $rtOut -ne 0 ]]; then
 											log $errorLvl -m="Failed to revert environment, you'll need to manually copy contents of '$BACK_UP_DIR' back to '$userHome'."
-											exit 32
+											exit 172
 										fi
 									else
 										log $infoLvl -m="Skipping removal of 'shell' directory from $USER's home because it doesn't exist."
@@ -288,7 +278,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 										# Check if deletion worked.
 										if [[ $rtOut -ne 0 ]]; then
 											log $errorLvl -m="Failed to revert environment, you'll need to manually copy contents of '$BACK_UP_DIR' back to '$userHome'."
-											exit 33
+											exit 175
 										fi
 									else
 										log $infoLvl -m="Skipping copying 'shell' directory from back up because the back up doesn't contain it."
@@ -306,7 +296,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 								# Stop copying files if a copy fails.
 								if [[ $rtOut -ne 0 ]]; then
 									log $errorLvl -m="Failed to move '$shellFilePath' to '$newShellFilePath'."
-									exit 30
+									exit 162
 								fi
 								
 								# Revert to original hidden shell file(s).
@@ -321,7 +311,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 									# Stop copying files if a copy fails.
 									if [[ $rtOut -ne 0 ]]; then
 										log $errorLvl -m="Failed to move hidden files from '$BACK_UP_DIR' back to $USER's home, you'll need to manually copy contents."
-										exit 31
+										exit 166
 									fi
 								else
 									log $warnLvl -m="Skipping copying of hidden shell file(s) because the back up doesn't contain any."
@@ -340,7 +330,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 								# Check if deletion worked.
 								if [[ $rtOut -ne 0 ]]; then
 									log $errorLvl -m="Failed to revert to original shell directory, you'll need to manually copy contents of '$BACK_UP_DIR' back to '$userHome'."
-									exit 29
+									exit 4
 								fi
 							fi
 						else
@@ -357,34 +347,35 @@ if [[ "./$(basename $0)" == $0 ]]; then
 							# Check if deletion worked.
 							if [[ $rtOut -ne 0 ]]; then
 								log $errorLvl -m="Failed to revert to original hidden shell file(s), you'll need to manually copy contents of '$BACK_UP_DIR/' back to '$userHome/'."
-								exit 28
+								exit 4
 							fi
 						fi
 						
 						log $infoLvl -m="Shell environment configuration reverted."
-						exit 27
+						exit 3
 					else
 						log $errorLvl -m="Failed to create directory for backing up $USER's data."
-						exit 26
+						exit 171
 					fi
 				else
 					log $errorLvl -m="Failed, couldn't determine shell name."
-					exit 25
+					exit 209
 				fi
 			else
 				log $errorLvl -m="Failed because back up directory '$BACK_UP_DIR' already exists."
-				exit 24
+				exit 173
 			fi
 		else
 			log $errorLvl -m="Failed, script must be run using your user, not '$USER'."
-			exit 23
+			# TODO: Return 193 when calling user is root, 194 otherwise.
+			exit 194
 		fi
 	else
 		log $errorLvl --line-title -m="Re-launch this as the user you'd like to configure the environment of."
-		exit 22
+		exit 131
 	fi
 else
 	log $errorLvl -m="Failed, script must be run from the same directory it's located in."
-	exit 21
+	exit 180
 fi
 

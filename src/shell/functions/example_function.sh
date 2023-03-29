@@ -27,16 +27,14 @@ IFS='' read -r -d '' FUNCTION_NAME_DOC <<"EOF"
 #/
 #/ OPTION(S):
 #/	-h, --help
-#/		Print this help message. Function will return code of '0'. No processing will be
-#/		done.
+#/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
 #/ 
 #/ RETURN CODE(S):
 #/	- 0: Returned when:
-#/		- Help message is requested OR
+#/		- Help message is requested and produced.
 #/		- Processing is successful.
-#/	- 20: Returned when:
-#/		- Given option is invalid.
+#/	- 140: Returned when given option is invalid.
 #/
 #/ EXAMPLE(S):
 #/	functionName --help
@@ -85,7 +83,7 @@ function functionName {
 			*)
 				log $errorLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
 				echo "$FUNCTION_NAME_DOC"
-				return 20  ;;
+				exit 140  ;;
 		esac
 	done
 

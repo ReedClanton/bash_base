@@ -35,14 +35,14 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/
 #/ OPTION(S):
 #/	-h, --help
-#/		Print this help message. Function will return code of '0'. No processing will be
-#/		done.
+#/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
 #/	-m=<msg>, --msg=<msg>
 #/		Message user would like formatted output produced of.
 #/			- Note: If multiple are given, each will show up on a new line.
-#/			- Note: If one line exceeds the set max line length, it will be broken up.
-#/				The est of the line will start with the same inditation.
+#/			- Note: If one line exceeds the set max line length, it will be
+#/				broken up. The est of the line will start with the same
+#/				inditation.
 #/			- Note: '\t' and '\n\ will be handled as the 'printf' function would.
 #/			- Note: At least one instance of this option must be provided.
 #/		(REQUIRED)
@@ -57,7 +57,7 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/			- Note: Redundant if -p.
 #/		(OPTIONAL)
 #/	-l=<maxLineLength>, --lineLength=<maxLineLength>
-#/		Sets max number of characters that may be included on a sinlge line.
+#/		Sets max number of characters that may be included on a single line.
 #/			- Note: Line length includes prefix and postfix if included.
 #/			- Note: Default value: 100.
 #/		(OPTIONAL)
@@ -69,68 +69,59 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/		Sets character used by header, footer, prefix, and postfix.
 #/			- Note: Default value: $DEFAULT_CHAR.
 #/			- Note: Some special characters may require two to be given (ex. -c="%%").
-#/			- Note: Some *other* special characters may not work at all (ex. back
-#/				slash).
+#/			- Note: Some *other* special characters may not work at all (ex. back slash).
 #/		(OPTIONAL)
 #/	--indent=<numSpacesToIndent>
-#/		Sets number of spaces formatted message, including prefix/postfix/header/footer
-#/		if used, should be indented.
+#/		Sets number of spaces formatted message, including
+#/		prefix/postfix/header/footer if used, should be indented.
 #/			- Note: Default value: $DEFAULT_INDENT.
 #/		(OPTIONAL)
 #/	-t, --trace
-#/		When given, *trace* formatting character ($TRACE_CHAR) is used as formatting
-#/		character.
-#/			- Note: If the formatting character isn't set, and no level is provided
-#/				(ex. debug, error), then the default formatting character
-#/				($DEFAULT_CHAR) is used.
+#/		When given, *trace* formatting character ($TRACE_CHAR) is used as formatting character.
+#/			- Note: If the formatting character isn't set, and no level is
+#/				provided (ex. debug, error), then the default formatting
+#/				character ($DEFAULT_CHAR) is used.
 #/		(OPTIONAL)
 #/	-d, --debug
-#/		When given, *debug* formatting character ($DEBUG_CHAR) is used as formatting
-#/		character.
-#/			- Note: If the formatting character isn't set, and no level is provided
-#/				(ex. debug, error), then the default formatting character
-#/				($DEFAULT_CHAR) is used.
+#/		When given, *debug* formatting character ($DEBUG_CHAR) is used as
+#/		formatting character.
+#/			- Note: If the formatting character isn't set, and no level is
+#/				provided (ex. debug, error), then the default formatting
+#/				character ($DEFAULT_CHAR) is used.
 #/		(OPTIONAL)
 #/	-i, --info
-#/		When given, *info* formatting character ($INFO_CHAR) is used as formatting
-#/		character.
-#/			- Note: If the formatting character isn't set, and no level is provided
-#/				(ex. debug, error), then the default formatting character
-#/				($DEFAULT_CHAR) is used.
+#/		When given, *info* formatting character ($INFO_CHAR) is used as
+#/		formatting character.
+#/			- Note: If the formatting character isn't set, and no level is
+#/				provided (ex. debug, error), then the default formatting
+#/				character ($DEFAULT_CHAR) is used.
 #/		(OPTIONAL)
 #/	-w, --warn
-#/		When given, *warn* formatting character ($WARN_CHAR) is used as formatting
-#/		character.
-#/			- Note: If the formatting character isn't set, and no level is provided
-#/				(ex. debug, error), then the default formatting character
-#/				($DEFAULT_CHAR) is used.
+#/		When given, *warn* formatting character ($WARN_CHAR) is used as
+#/		formatting character.
+#/			- Note: If the formatting character isn't set, and no level is
+#/				provided (ex. debug, error), then the default formatting
+#/				character ($DEFAULT_CHAR) is used.
 #/		(OPTIONAL)
 #/	-e, --error
-#/		When given, *error* formatting character ($ERROR_CHAR) is used as formatting
-#/		character.
-#/			- Note: If the formatting character isn't set, and no level is provided
-#/				(ex. debug, error), then the default formatting character
-#/				($DEFAULT_CHAR) is used.
+#/		When given, *error* formatting character ($ERROR_CHAR) is used as
+#/		formatting character.
+#/			- Note: If the formatting character isn't set, and no level is
+#/				provided (ex. debug, error), then the default formatting
+#/				character ($DEFAULT_CHAR) is used.
 #/		(OPTIONAL)
 #/
 #/ RETURN CODE(S):
-#/	- 0:
-#/		Returned when:
-#/			- Help message is requested OR
-#/			- Processing is successfull.
-#/	- 2:
-#/		Returned when:
-#/			- No message text is given.
-#/	- 3:
-#/		Returned when:
-#/			- Provided indent value is negative.
-#/	- 4:
-#/		Returned when:
-#/			- Provided max line length value is too small:
-#/				- Line length - prefix - postfix > 0.
-#/	- 20:
-#/		Returned when:
-#/			- Provided option is invalid.
+#/	- 0: Returned when:
+#/		- Help message is requested and produced.
+#/		- Processing is successful.
+#/	- 3: Returned when header/footer fails to be generated.
+#/	- 140: Returned when given option name is invalid.
+#/	- 141: Returned when:
+#/		- Provided indent value is negative.
+#/		- Provided max line length value is too small:
+#/			- Line length - prefix - postfix > 0.
+#/	- 142: Returned when a required option is not provided.
 #/
 #/ EXAMPLE(S):
 #/	output --help
@@ -144,10 +135,10 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/	output -m="line 1" -p --char="&&"
 #/
 #/ TODO(S):
-#/	- Implement: Dynamicly determine, based on last character of line being split up, if
-#/		a '-' is needed.
-#/	- Implement: Ability to append end of line that was too long to fit on one row to
-#/		the start of the next line.
+#/	- Implement: Dynamically determine, based on last character of line being
+#/		split up, if a '-' is needed.
+#/	- Implement: Ability to append end of line that was too long to fit on one
+#/		row to the start of the next line.
 #/	- Implement: Support for '%' as a formatting character.
 EOF
  ###############################
@@ -247,7 +238,7 @@ for fullArg in "${@}"; do
 		*)
 			printf "$errPrefix Calling function provided invalid option: '$fullArg', see doc:\n"
 			echo "$OUTPUT_DOC"
-			exit 20  ;;
+			exit 140  ;;
 	esac
 done
 
@@ -258,7 +249,7 @@ done
 if [[ -z "${msg[@]}" ]]; then
 	printf "$errPrefix Message text must be given, see doc:\n"
 	echo "$OUTPUT_DOC"
-	exit 2
+	exit 142
 fi
 
 ## Ensure Valid Indent Value Was Given ##
@@ -270,7 +261,7 @@ if [[ $indent -ge 0 ]]; then
 else
 	printf "$errPrefix Indentation value: '$indent' invalid. Must be non-negative, see doc:\n"
 	echo "$OUTPUT_DOC"
-	exit 3
+	exit 141
 fi
 # Remove prefix & postfix length from max message character(s) per line.
 if $prePostFix; then
@@ -282,7 +273,7 @@ fi
 if [[ $maxAlwMsgLen -lt 1 ]]; then
 	printf "$errPrefix Max line length of '$maxAlwLineLen' invalid because there's no room for message text. See Doc:\n"
 	echo "$OUTPUT_DOC"
-	exit 4
+	exit 141
 fi
 
  ########################
@@ -331,15 +322,26 @@ fi
 if $headerFooter; then
 	# Call function that creates header/footer.
 	if $prePostFix; then
-		createHeaderFooter --prefix -l=$maxGvnLineLen -c=$fChar
+		cmd="createHeaderFooter --prefix -l=$maxGvnLineLen -c=$fChar"
 	else
-		createHeaderFooter -l=$maxGvnLineLen -c=$fChar
+		cmd="createHeaderFooter -l=$maxGvnLineLen -c=$fChar"
 	fi
-	# Save off header/footer.
-	if [[ ! -z $indentTxt ]]; then
-		headerFooterTxt="$indentTxt$rtCreateHeaderFooter"
+	unset stdOut errOut rtOut
+	eval "$( (eval $cmd) \
+		2> >(errOut=$(cat); typeset -p errOut) \
+		 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
+		 
+	# Ensure header/footer was generated successfully.
+	if [[ $rtOut -eq 0 ]]; then
+		# Save off header/footer.
+		if [[ ! -z $indentTxt ]]; then
+			headerFooterTxt="$indentTxt$stdOut"
+		else
+			headerFooterTxt=$stdOut
+		fi
 	else
-		headerFooterTxt=$rtCreateHeaderFooter
+		printf "$errPrefix createHeaderFooter() failed to create header/footer text.\n"
+		exit 3
 	fi
 fi
 
