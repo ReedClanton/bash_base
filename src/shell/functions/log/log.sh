@@ -7,7 +7,7 @@
 # NoOp
 ## Constant(s) ##
 # Includes constant(s) relevant to logger method.
-. $SHELL_FUNCTIONS_CONSTANTS/log.sh
+. $SHELL_FUNCTIONS/log/util/constants.sh
 
  #####################
 ## Local Variable(s) ##
