@@ -6,7 +6,7 @@
 ## Global(s) ##
 # NoOp
 ## Constant(s) ##
-. $SHELL_FUNCTIONS_CONSTANTS/backUp.sh
+. $SHELL_FUNCTIONS/backUp/util/constants.sh
 
  #####################
 ## Local Variable(s) ##
