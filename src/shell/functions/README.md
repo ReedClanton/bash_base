@@ -53,31 +53,29 @@ Meaning of each return code:
 | `209`   | Any other environment issue.                                                                  |                                         |                                                            |
 | `255`   | POSIX Standard: `Exit status out of range`                                                    | `exit -1`                               | https://tldp.org/LDP/abs/html/exitcodes.html               |
 
-# POSIX Functions, Globals, and Constants
+# POSIX Functions
 
 TODO
 
-## POSIX Functions
+## `backUp`
 
-TODO
+Script that copies files and directories from user's home directory to another location.
 
-### `backUp`
+## `checkRequiredOpts`
 
-Bash script that copies files and directories from user's home directory to another location.
+Used by other scripts to ensure that all option(s) passed into it are valid (contain something).
+If that's not the case, then the calling scripts doc is produced to std out.
 
-### `checkRequiredOpts`
+## `output`
 
-TODO
+Used to add pre-fix, post-fix, headers, and/or footers to message text. Used by log()'s title
+options.
 
-### `output`
+## `log`
 
-TODO
+Produces formatted logs to stdout.
 
-### `log`
-
-Bash function that produces formatted logs to stdout.
-
-#### `log` Example Usage
+### `log` Example Usage
 
 ```sh
 declare -r infoLvl="-i -c=example_script"
@@ -91,11 +89,3 @@ for (( i=1; i<=$userVar; i++)); do
 	log $infoLvl -m="$i"
 done
 ```
-
-## POSIX Globals
-
-TODO
-
-## POSIX Constants
-
-TODO
