@@ -125,7 +125,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 	BACK_UP_DIR="$PWD/$USER-homeBackUp-$(date +"%Y_%m_%d-%H_%M_%S")"
 	readonly BACK_UP_DIR
 	# User's home directory.
-	userHome=$HOME/envSetup
+	userHome=$HOME
 	# Tracks repo's root source directory.
 	repoSourceRoot=$(readlink -f $PWD/../)
 	log $traceLvl -m="Local variable(s) reset."
