@@ -52,6 +52,9 @@ IFS='' read -r -d '' CHECK_REQUIRED_OPTS_DOC <<"EOF"
 #/				offending value be surrounded with excapted '" before and after
 #/				the value (i.e. "-a=\"<specialCaseVal>\"').
 #/		(REQUIRED)
+#/	-h, --help
+#/		Print this help message. Function will return code of '0'. No processing will be done.
+#/		(OPTIONAL)
 #/
 #/ RETURN CODE(S):
 #/	- 0: Returned when:

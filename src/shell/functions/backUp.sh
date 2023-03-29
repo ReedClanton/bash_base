@@ -33,8 +33,7 @@ IFS='' read -r -d '' BACKUP_DOC <<"EOF"
 #/  
 #/ OPTION(S):
 #/	-h, --help
-#/		Print this help message. Function will return code of '0'. No processing will be
-#/		done.
+#/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
 #/	-q, --quiet
 #/		Produces no output other than error level.

@@ -27,8 +27,7 @@ IFS='' read -r -d '' FUNCTION_NAME_DOC <<"EOF"
 #/
 #/ OPTION(S):
 #/	-h, --help
-#/		Print this help message. Function will return code of '0'. No processing will be
-#/		done.
+#/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
 #/ 
 #/ RETURN CODE(S):
