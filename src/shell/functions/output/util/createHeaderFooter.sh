@@ -1,12 +1,10 @@
-#!/usr/bin/env sh
-
  #########################
 ## Global(s)/Constant(s) ##
  #########################
 ## Global(s) ##
-. $SHELL_FUNCTIONS/output/globals.sh
+# NoOp
 ## Constant(s) ##
-. $SHELL_FUNCTIONS/output/constents.sh
+. $SHELL_FUNCTIONS/output/util/constents.sh
 
  #####################
 ## Local Variable(s) ##
@@ -36,9 +34,9 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/	-h, --help
 #/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
-#/	-l=<maxMsgLength>, --lineLength=<maxMsgLength>
+#/	-l=<maxMsgLength>, --line-length=<maxMsgLength>
 #/		Max number of characters in any line of message. Used to determine how
-#/		long header/footer should be.
+#/		long header/footer should be. Value must be a non-negative number.
 #/			- Note: Line length only includes characters in message.
 #/		(REQUIRED)
 #/	--prefix
@@ -51,6 +49,7 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/		- Help message is requested and produced.
 #/		- Processing is successful.
 #/	- 140: Returned when given option name is invalid.
+#/	- 141: Returned when given value of line length is invalid.
 #/	- 142: TODO: Returned when required option(s) are not provided.
 #/
 #/ EXAMPLE(S):
@@ -65,15 +64,22 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/	- Display this message when required argument(s) are not provided.
 #/	- Move this function to its own file.
 EOF
+
  ###############################
 ## Reset/Set Local Variable(s) ##
  ###############################
 # Tracks header/footer text.
-rtCreateHeaderFooter=''
+headerFooter=''
 # Tracks character used for formatting.
 fChar=$DEFAULT_CHAR
 # Tracks desired total length of header/footer.
 len=2
+# Error prefix added to error output messages.
+if [ "$(type -t date)" = "" ]; then
+	errPFix="ERROR createHeaderFooter():"
+else
+	errPFix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR createHeaderFooter():"
+fi
 
  #####################
 ## Process Option(s) ##
@@ -85,10 +91,17 @@ for fullArg in "${@}"; do
 	# Determine what option user gave.
 	case $fullArg in
 		--prefix)
-			rtCreateHeaderFooter+=' '
+			headerFooter+=' '
 			len=$(($len+1))  ;;
-		-l=*|--lineLength=*)
-			len=$(($arg+$len))  ;;
+		-l=*|--line-length=*)
+			# Ensure provided line length is valid.
+			if echo "$arg" | grep -qE "^[[:space:]]*(\+)?[[:digit:]]+[[:space:]]*$"; then
+				len=$(($arg+$len))
+			else
+				echo "$errPFix Line length must be a non-negative number, was '$arg', see doc:" >&2
+				echo "$CREATE_HEADER_FOOTER_DOC" >&2
+				exit 141
+			fi  ;;
 		-c=*|--char=*)
 			# Track user desired formatting character(s).
 			fChar=$arg
@@ -97,26 +110,26 @@ for fullArg in "${@}"; do
 				len=$(($(($((${#fChar}-1))*2))+$len))
 			fi  ;;
 		-h|--help)
-			echo "$CREATE_HEADER_FOOTER_DOC"
+			echo "$CREATE_HEADER_FOOTER_DOC" >&2
 			exit 0  ;;
 		*)
-			printf "$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR createHeaderFooter: Caller provided invalid option: '$fullArg', see doc:\n"
-			echo "$CREATE_HEADER_FOOTER_DOC"
+			echo "$errPFix Caller provided invalid option: '$fullArg', see doc:" >&2
+			echo "$CREATE_HEADER_FOOTER_DOC" >&2
 			exit 140  ;;
 	esac
 done
 
 ## Build Header/Footer ##
-while [[ ${#rtCreateHeaderFooter} -lt $len ]]; do
+while [[ ${#headerFooter} -lt $len ]]; do
 	# When near the end, given formatting character(s) may need to be split up.
-	if [[ $((${#rtCreateHeaderFooter}+${#fChar})) -gt $len ]]; then
-		rtCreateHeaderFooter+=${fChar:0:$(($len-${#rtCreateHeaderFooter}))}
+	if [[ $((${#headerFooter}+${#fChar})) -gt $len ]]; then
+		headerFooter+=${fChar:0:$(($len-${#headerFooter}))}
 	else
-		rtCreateHeaderFooter+=$fChar
+		headerFooter+=$fChar
 	fi
 done
 # Add final part of header.
-rtCreateHeaderFooter+='\n'
-echo "$rtCreateHeaderFooter"
+headerFooter+='\n'
+echo "$headerFooter"
 exit 0
 

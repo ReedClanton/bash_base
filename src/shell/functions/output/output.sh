@@ -4,9 +4,9 @@
 ## Import(s) ##
  #############
 ## Global(s) ##
-. $SHELL_FUNCTIONS/output/globals.sh
+# NoOp
 ## Constant(s) ##
-. $SHELL_FUNCTIONS/output/constents.sh
+. $SHELL_FUNCTIONS/output/util/constents.sh
 ## Code ##
 alias createHeaderFooter=$SHELL_FUNCTIONS/output/util/createHeaderFooter.sh
 
@@ -56,7 +56,7 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/		When given, message produced will include a prefix and postfix.
 #/			- Note: Redundant if -p.
 #/		(OPTIONAL)
-#/	-l=<maxLineLength>, --lineLength=<maxLineLength>
+#/	-l=<maxLineLength>, --line-length=<maxLineLength>
 #/		Sets max number of characters that may be included on a single line.
 #/			- Note: Line length includes prefix and postfix if included.
 #/			- Note: Default value: 100.
@@ -201,7 +201,7 @@ for fullArg in "${@}"; do
 			headerFooter=true  ;;
 		--indent=*)
 			indent=$arg  ;;
-		-l=*|--lineLength=*)
+		-l=*|--line-length=*)
 			maxAlwLineLen=$arg  ;;
 		-m=*|--msg=*)
 			# Determine if given line contains newline character.
