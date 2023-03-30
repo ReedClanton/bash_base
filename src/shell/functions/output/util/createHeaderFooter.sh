@@ -29,7 +29,7 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/			- Note: Default value: $DEFAULT_CHAR.
 #/			- Note: Some special characters may require two to be given:
 #/				-c="55"  _> %
-#/			- Note: Blank characters and special characters like new line or tab arn't allowed.
+#/			- Note: Blank characters and special characters like new line or tab aren't allowed.
 #/			- Note: Some *other* special characters may not work at all (ex. back slash).
 #/		(OPTIONAL)
 #/	-h, --help
@@ -116,7 +116,7 @@ for fullArg in "${@}"; do
 					len=$(($(($((${#fChar}-1))*2))+$len))  ;;
 			esac  ;;
 		-h|--help)
-			echo "$CREATE_HEADER_FOOTER_DOC" >&2
+			echo "$CREATE_HEADER_FOOTER_DOC"
 			exit 0  ;;
 		*)
 			echo "$errPFix Caller provided invalid option: '$fullArg', see doc:" >&2
