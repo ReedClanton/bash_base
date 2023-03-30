@@ -3,11 +3,11 @@ Describe "output(): util:" output:util
 		# Makes test easier to read and maintain.
 		createHeaderFooter=$PWD/src/shell/functions/output/util/createHeaderFooter.sh
 		
-		Describe "Required option(s):" option:required
+		Describe "Optional option(s):" option:optional
 			Describe "Line length:" option:lineLength
-				Describe "Input invalid:" optionInput:invalid
+				Describe "Input invalid:" lineLength:invalid
 					Describe "-l:" option:"-l"
-						It "Blank" optionInput:blank
+						It "Blank" lineLength:blank
 							When call $createHeaderFooter -l=""
 							The stdout should not be present
 							The stderr should include "DESCRIPTION:"
@@ -15,7 +15,7 @@ Describe "output(): util:" output:util
 						End
 					End
 					Describe "--line-length:" option:"--line-length"
-						It "Blank" optionInput:blank
+						It "Blank" lineLength:blank
 							When call $createHeaderFooter --line-length=""
 							The stdout should not be present
 							The stderr should include "DESCRIPTION:"
@@ -23,7 +23,7 @@ Describe "output(): util:" output:util
 						End
 					End
 					Describe "-l:" option:"-l"
-						It "Null" optionInput:null
+						It "Null" lineLength:null
 							When call $createHeaderFooter -l=
 							The stdout should not be present
 							The stderr should include "DESCRIPTION:"
@@ -31,7 +31,7 @@ Describe "output(): util:" output:util
 						End
 					End
 					Describe "--line-length:" option:"--line-length"
-						It "Null" optionInput:null
+						It "Null" lineLength:null
 							When call $createHeaderFooter --line-length=
 							The stdout should not be present
 							The stderr should include "DESCRIPTION:"
@@ -39,7 +39,7 @@ Describe "output(): util:" output:util
 						End
 					End
 					Describe "-l:" option:"-l"
-						It "Missing" optionInput:missing
+						It "Missing" lineLength:missing
 							When call $createHeaderFooter -l
 							The stdout should not be present
 							The stderr should include "DESCRIPTION:"
@@ -47,7 +47,7 @@ Describe "output(): util:" output:util
 						End
 					End
 					Describe "--line-length:" option:"--line-length"
-						It "Missing" optionInput:missing
+						It "Missing" lineLength:missing
 							When call $createHeaderFooter --line-length
 							The stdout should not be present
 							The stderr should include "DESCRIPTION:"
@@ -55,9 +55,9 @@ Describe "output(): util:" output:util
 						End
 					End
 				End
-				Describe "Input special character(s):" optionInput:specialChar
+				Describe "Input special character(s):" lineLength:specialChar
 					Describe "-l:" option:"-l"
-						It "'+'" optionInput:"+" optionInput:plus
+						It "'+'" lineLength:"+" lineLength:plus
 							When call $createHeaderFooter -l="+50"
 							The stderr should not be present
 							The lines of stdout should equal 1
@@ -66,7 +66,7 @@ Describe "output(): util:" output:util
 						End
 					End
 					Describe "--line-length:" option:"--line-length"
-						It "'+'" optionInput:"+" optionInput:plus
+						It "'+'" lineLength:"+" lineLength:plus
 							When call $createHeaderFooter --line-length="+50"
 							The stderr should not be present
 							The lines of stdout should equal 1
@@ -75,7 +75,7 @@ Describe "output(): util:" output:util
 						End
 					End
 					Describe "-l:" option:"-l"
-						It "' '" optionInput:" " optionInput:space
+						It "' '" lineLength:" " lineLength:space
 							When call $createHeaderFooter -l="          75              "
 							The stderr should not be present
 							The lines of stdout should equal 1
@@ -84,7 +84,7 @@ Describe "output(): util:" output:util
 						End
 					End
 					Describe "--line-length:" option:"--line-length"
-						It "' '" optionInput:" " optionInput:space
+						It "' '" lineLength:" " lineLength:space
 							When call $createHeaderFooter --line-length="          75              "
 							The stderr should not be present
 							The lines of stdout should equal 1
@@ -93,7 +93,7 @@ Describe "output(): util:" output:util
 						End
 					End
 					Describe "-l:" option:"-l"
-						It "' ' & '+'" optionInput:" +" optionInput:"+ " optionInput:spacePlus optionInput:plusSpace
+						It "' ' & '+'" lineLength:" +" lineLength:"+ " lineLength:spacePlus lineLength:plusSpace
 							When call $createHeaderFooter -l="          +100              "
 							The stderr should not be present
 							The lines of stdout should equal 1
@@ -102,7 +102,7 @@ Describe "output(): util:" output:util
 						End
 					End
 					Describe "--line-length:" option:"--line-length"
-						It "' ' & '+'" optionInput:" +" optionInput:"+ " optionInput:spacePlus optionInput:plusSpace
+						It "' ' & '+'" lineLength:" +" lineLength:"+ " lineLength:spacePlus lineLength:plusSpace
 							When call $createHeaderFooter --line-length="          +100              "
 							The stderr should not be present
 							The lines of stdout should equal 1
@@ -111,7 +111,7 @@ Describe "output(): util:" output:util
 						End
 					End
 				End
-				Describe "Bound:" bound optionInput:bound
+				Describe "Bound:" bound lineLength:bound
 					Describe "-l:" option:"-l"
 						It "Far bellow lower" bound:farBellowLower
 							When call $createHeaderFooter -l="-999999999"

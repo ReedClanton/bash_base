@@ -29,6 +29,7 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/			- Note: Default value: $DEFAULT_CHAR.
 #/			- Note: Some special characters may require two to be given:
 #/				-c="55"  _> %
+#/			- Note: Blank characters and special characters like new line or tab arn't allowed.
 #/			- Note: Some *other* special characters may not work at all (ex. back slash).
 #/		(OPTIONAL)
 #/	-h, --help
@@ -37,8 +38,9 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/	-l=<maxMsgLength>, --line-length=<maxMsgLength>
 #/		Max number of characters in any line of message. Used to determine how
 #/		long header/footer should be. Value must be a non-negative number.
-#/			- Note: Line length only includes characters in message.
-#/		(REQUIRED)
+#/			- Note: Default value: `0`.
+#/			- Note: This value should only include characters in message.
+#/		(OPTIONAL)
 #/	--prefix
 #/		Length of header/footer changes depending on if a prefix is being used.
 #/			- Note: Should *always* be given if header/footer is used with a prefix.
@@ -54,15 +56,13 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/
 #/ EXAMPLE(S):
 #/	createHeaderFooter --help
+#/	createHeaderFooter
 #/	createHeaderFooter -l=96 --prefix -c='#'
 #/	createHeaderFooter -l=10 -c="@@"
 #/	createHeaderFooter -l=12 -c=!
 #/
 #/ TODO(S):
-#/	- Implement: Error checking to ensure requried options are provided.
-#/	- Return 1 when required arguments are not provided.
-#/	- Display this message when required argument(s) are not provided.
-#/	- Move this function to its own file.
+#/	- None
 EOF
 
  ###############################
@@ -103,12 +103,18 @@ for fullArg in "${@}"; do
 				exit 141
 			fi  ;;
 		-c=*|--char=*)
-			# Track user desired formatting character(s).
-			fChar=$arg
-			# Update desired header/footer length to accommodate formatting character(s).
-			if [[ ${#fChar} -gt 1 ]]; then
-				len=$(($(($((${#fChar}-1))*2))+$len))
-			fi  ;;
+			# Ensure a valid value was provided.
+			case "$arg" in
+				*\\*|"")
+					echo "$errPFix Formatting character may not be blank or a special character (ex. new line, tab), was '$arg', see doc:" >&2
+					echo "$CREATE_HEADER_FOOTER_DOC" >&2
+					exit 141  ;;
+				*)
+					# Track user desired formatting character(s) and update desired
+					# header/footer length to accommodate formatting character(s).
+					fChar=$arg
+					len=$(($(($((${#fChar}-1))*2))+$len))  ;;
+			esac  ;;
 		-h|--help)
 			echo "$CREATE_HEADER_FOOTER_DOC" >&2
 			exit 0  ;;
