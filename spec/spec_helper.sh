@@ -3,11 +3,14 @@
 # Defining variables and functions here will affect all specfiles.
 # Change shell options inside a function may cause different behavior,
 # so it is better to set them here.
+
 ## Return Value(s) ##
 OPTION_NAME_INVALID_RT=140
 OPTION_VALUE_INVALID_RT=141
-# TODO: Comment.
-#alias grep=$(/usr/bin/grep)
+
+## Value Checking Function(s) ##
+isPositive() { [ $(($1)) -gt 0 ]; }
+isNotNegative() { [ $(($1)) -ge 0 ]; }
 
 # This callback function will be invoked only once before loading specfiles.
 spec_helper_precheck() {

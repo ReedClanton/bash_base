@@ -12,14 +12,14 @@ Describe "output(): util:" output:util
 					The output should equal " ##\n"
 					The status should be success
 				End
-				It "Two character formatting character" prefix:twoCharacter
+				It "Two character formatting character" prefix:twoCharacters
 					When call $createHeaderFooter --prefix -f="&!"
 					The stderr should not be present
 					The lines of stdout should equal 1
 					The output should equal " &!&!\n"
 					The status should be success
 				End
-				It "Many character formatting character" prefix:manyCharacter
+				It "Many character formatting character" prefix:manyCharacters
 					When call $createHeaderFooter --prefix -f="!$*@"
 					The stderr should not be present
 					The lines of stdout should equal 1
