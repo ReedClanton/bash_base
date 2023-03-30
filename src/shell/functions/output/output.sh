@@ -6,7 +6,7 @@
 ## Global(s) ##
 # NoOp
 ## Constant(s) ##
-. $SHELL_FUNCTIONS/output/util/constents.sh
+. $SHELL_FUNCTIONS/output/util/constants.sh
 ## Code ##
 alias createHeaderFooter=$SHELL_FUNCTIONS/output/util/createHeaderFooter.sh
 
@@ -322,15 +322,15 @@ fi
 if $headerFooter; then
 	# Call function that creates header/footer.
 	if $prePostFix; then
-		cmd="createHeaderFooter --prefix -l=$maxGvnLineLen -c=$fChar"
+		cmd="createHeaderFooter --prefix -l=$maxGvnLineLen -f='$fChar'"
 	else
-		cmd="createHeaderFooter -l=$maxGvnLineLen -c=$fChar"
+		cmd="createHeaderFooter -l=$maxGvnLineLen -f='$fChar'"
 	fi
 	unset stdOut errOut rtOut
 	eval "$( (eval $cmd) \
 		2> >(errOut=$(cat); typeset -p errOut) \
 		 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
-		 
+	
 	# Ensure header/footer was generated successfully.
 	if [[ $rtOut -eq 0 ]]; then
 		# Save off header/footer.

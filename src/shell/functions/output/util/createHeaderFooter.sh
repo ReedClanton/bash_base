@@ -4,7 +4,7 @@
 ## Global(s) ##
 # NoOp
 ## Constant(s) ##
-. $SHELL_FUNCTIONS/output/util/constents.sh
+. $SHELL_FUNCTIONS/output/util/constants.sh
 
  #####################
 ## Local Variable(s) ##
@@ -13,24 +13,22 @@
 
 IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/ DESCRIPTION:
-#/	Returns text intended to be used as a header or footer in std out.
+#/	Returns text intended to be used as a header or footer in stdout. Upon
+#/	failure, a non-zero code will be returned and output will be produced to
+#/	stderr.
 #/
-#/ USAGE: createHeaderFooter [OPTIONS]... -l=<maxMsgLength>
+#/ USAGE: createHeaderFooter [OPTIONS]...
 #/
 #/ NOTE(S):
 #/	- Method may not use the log function because this is used by that method.
-#/	- This method is in the same directory as output because a local variable
-#/		is used by this method to return a value to the output method when
-#/		called by the output method.
 #/
 #/ OPTION(S):
-#/	-c=<formattingCharacter>, --char=<formattingCharacter>
+#/	-f=<formattingCharacter>, --formatting-character=<formattingCharacter>
 #/		Sets character used to create header and footer.
 #/			- Note: Default value: $DEFAULT_CHAR.
-#/			- Note: Some special characters may require two to be given:
-#/				-c="55"  _> %
-#/			- Note: Blank characters and special characters like new line or tab aren't allowed.
-#/			- Note: Some *other* special characters may not work at all (ex. back slash).
+#/			- Note: Some special characters may require two to be given.
+#/			- Note: Some characters may require quotes (ex. `>`).
+#/			- Note: Given value may not include a back slash.
 #/		(OPTIONAL)
 #/	-h, --help
 #/		Print this help message. Function will return code of '0'. No processing will be done.
@@ -52,14 +50,13 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/		- Processing is successful.
 #/	- 140: Returned when given option name is invalid.
 #/	- 141: Returned when given value of line length is invalid.
-#/	- 142: TODO: Returned when required option(s) are not provided.
 #/
 #/ EXAMPLE(S):
 #/	createHeaderFooter --help
 #/	createHeaderFooter
-#/	createHeaderFooter -l=96 --prefix -c='#'
-#/	createHeaderFooter -l=10 -c="@@"
-#/	createHeaderFooter -l=12 -c=!
+#/	createHeaderFooter -l=96 --prefix -f='#'
+#/	createHeaderFooter -l=10 -f="@@"
+#/	createHeaderFooter -l=12 -f=!
 #/
 #/ TODO(S):
 #/	- None
@@ -102,7 +99,7 @@ for fullArg in "${@}"; do
 				echo "$CREATE_HEADER_FOOTER_DOC" >&2
 				exit 141
 			fi  ;;
-		-c=*|--char=*)
+		-f=*|--formatting-character=*)
 			# Ensure a valid value was provided.
 			case "$arg" in
 				*\\*|"")
@@ -134,8 +131,8 @@ while [[ ${#headerFooter} -lt $len ]]; do
 		headerFooter+=$fChar
 	fi
 done
-# Add final part of header.
-headerFooter+='\n'
-echo "$headerFooter"
+
+# Add new line and return.
+echo "$headerFooter\n"
 exit 0
 

@@ -32,10 +32,14 @@ These file(s) contain POSIX complient function(s). The `README.md` linked to abo
 
 These file(s) contain constants used by the POSIX functions in the parient directory. The `README.md` linked to above contains more info.
 
-### Tests
+### [Tests](spec/README.md)
 
 TODO
 
-#### [Unit Tests](spec/README.md)
+#### [Unit Tests](spec/unit/README.md)
 
 The `README.md` linked to above contains more info.
+
+#### [Functional Tests](spec/functional/README.md)
+
+TODO
