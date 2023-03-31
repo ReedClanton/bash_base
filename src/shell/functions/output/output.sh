@@ -1,5 +1,3 @@
-#!/usr/bin/env sh
-
  #############
 ## Import(s) ##
  #############
@@ -121,6 +119,7 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/		- Provided indent value is negative.
 #/		- Provided max line length value is too small:
 #/			- Line length - prefix - postfix > 0.
+#/		- No message text is provided.
 #/	- 142: Returned when a required option is not provided.
 #/
 #/ EXAMPLE(S):
@@ -141,6 +140,7 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/		row to the start of the next line.
 #/	- Implement: Support for '%' as a formatting character.
 EOF
+
  ###############################
 ## Reset/Set Local Variable(s) ##
  ###############################
@@ -169,8 +169,14 @@ msg=()
 # Contains final (formatted) message text.
 rtOutput=''
 # Prefix used to produce error logs.
-errPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR output:"
+if [ "$(type -t date)" = "" ]; then
+	errPrefix="ERROR output():"
+else
+	errPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR output():"
+fi
 readonly errPrefix
+# Used to track if caller provided a message option so correct return value may be provided.
+msgGiven=false
 
  #####################
 ## Process Option(s) ##
@@ -204,6 +210,7 @@ for fullArg in "${@}"; do
 		-l=*|--line-length=*)
 			maxAlwLineLen=$arg  ;;
 		-m=*|--msg=*)
+			msgGiven=true
 			# Determine if given line contains newline character.
 			if [[ $arg == *"\\n"* ]]; then
 				# Split line at new line character, then save each line.
@@ -236,8 +243,8 @@ for fullArg in "${@}"; do
 			# Use post/pre fix formatting.
 			prePostFix=true  ;;
 		*)
-			printf "$errPrefix Calling function provided invalid option: '$fullArg', see doc:\n"
-			echo "$OUTPUT_DOC"
+			echo "$errPrefix Calling function provided invalid option: '$fullArg', see doc:" >&2
+			echo "$OUTPUT_DOC" >&2
 			exit 140  ;;
 	esac
 done
@@ -245,11 +252,17 @@ done
  ###########################
 ## Error Check Argument(s) ##
  ###########################
+## Ensure Message Option was Provided ##
+if ! $msgGiven; then
+	echo "$errPrefix Message option must be provided, see doc:" >&2
+	echo "$OUTPUT_DOC" >&2
+	exit 142
+fi
 ## Ensure Message Text Was Provided ##
 if [[ -z "${msg[@]}" ]]; then
-	printf "$errPrefix Message text must be given, see doc:\n"
-	echo "$OUTPUT_DOC"
-	exit 142
+	echo "$errPrefix Message text must be given, see doc:" >&2
+	echo "$OUTPUT_DOC" >&2
+	exit 141
 fi
 
 ## Ensure Valid Indent Value Was Given ##
@@ -259,8 +272,8 @@ maxAlwMsgLen=$maxAlwLineLen
 if [[ $indent -ge 0 ]]; then
 	maxAlwMsgLen=$(($maxAlwMsgLen-$indent))
 else
-	printf "$errPrefix Indentation value: '$indent' invalid. Must be non-negative, see doc:\n"
-	echo "$OUTPUT_DOC"
+	echo "$errPrefix Indentation value: '$indent' invalid. Must be non-negative, see doc:" >&2
+	echo "$OUTPUT_DOC" >&2
 	exit 141
 fi
 # Remove prefix & postfix length from max message character(s) per line.
@@ -271,8 +284,8 @@ fi
 ## Verify Max Message Character(s) Per Line is Valid ##
 # Ensure there's enough room to include message character(s).
 if [[ $maxAlwMsgLen -lt 1 ]]; then
-	printf "$errPrefix Max line length of '$maxAlwLineLen' invalid because there's no room for message text. See Doc:\n"
-	echo "$OUTPUT_DOC"
+	echo "$errPrefix Max line length of '$maxAlwLineLen' invalid because there's no room for message text, see doc:" >&2
+	echo "$OUTPUT_DOC" >&2
 	exit 141
 fi
 
@@ -340,7 +353,7 @@ if $headerFooter; then
 			headerFooterTxt=$stdOut
 		fi
 	else
-		printf "$errPrefix createHeaderFooter() failed to create header/footer text.\n"
+		echo "$errPrefix createHeaderFooter() failed to create header/footer text." >&2
 		exit 3
 	fi
 fi
