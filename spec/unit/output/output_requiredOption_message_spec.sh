@@ -111,25 +111,24 @@ Describe "output():" output:output
 				End
 			End
 			Describe "Input tabs:" message:tabs
-				Todo "Not yet implemented."
-#				Describe "-m:" option:"-m"
-#					It "Sentence"
-#						When call $output -m="mes6sag3\t\tmes6sag3 mes6sag3 mes6sag3 mes6sag3 mes6sag3"
-#						The stderr should not be present
-#						The lines of stdout should equal 1
-#						The output should equal "mes6sag3     mes6sag3 mes6sag3 mes6sag3 mes6sag3 mes6sag3"
-#						The status should be success
-#					End
-#				End
-#				Describe "--msg:" option:"--msg"
-#					It "Sentence"
-#						When call $output --msg="mes6sag3\t\tmes6sag3 mes6sag3 mes6sag3 mes6sag3 mes6sag3"
-#						The stderr should not be present
-#						The lines of stdout should equal 1
-#						The output should equal "mes6sag3 mes6sag3 mes6sag3 mes6sag3 mes6sag3 mes6sag3"
-#						The status should be success
-#					End
-#				End
+				Describe "-m:" option:"-m"
+					It "Sentence"
+						When call $output -m="mes6sag3\t\tmes6sag3\t"
+						The stderr should not be present
+						The lines of stdout should equal 1
+						The stdout line 1 should equal "mes6sag3		mes6sag3	"
+						The status should be success
+					End
+				End
+				Describe "--msg:" option:"--msg"
+					It "Sentence"
+						When call $output --msg="\tmes6sag3\t\tmes6sag3"
+						The stderr should not be present
+						The lines of stdout should equal 1
+						The stdout line 1 should equal "	mes6sag3		mes6sag3"
+						The status should be success
+					End
+				End
 			End
 			Describe "Input invalid:" message:invalid
 				Describe "-m:" option:"-m"

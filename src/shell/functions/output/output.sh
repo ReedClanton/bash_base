@@ -120,7 +120,7 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/		- Provided max line length value is too small:
 #/			- Line length - prefix - postfix > 0.
 #/		- No message text is provided.
-#/	- 142: Returned when a required option is not provided.
+#/	- 142: Returned when the message text option is not provided.
 #/
 #/ EXAMPLE(S):
 #/	output --help
