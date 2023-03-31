@@ -1,12 +1,11 @@
-# Unit Testing
+# Testing
 
-## Unit Testing Goals
+The [`shellspec`](https://github.com/shellspec/shellspec#testing-shell-functions) library is use for testing this repo.
 
-Unit tests should:
+## Unit Test(s)
 
-- Test the smallest possible unit of code in a single way.
-- Ensure no code outside of the function under test, or file if not encapelated in a function, should be executed.
+For info regarding unit tests, including goals, standards, directory structure, when tests should be split up into diffrent files, etc. see the [unit test README.md](unit/README.md).
 
-## Organization
+## Functional Test(s)
 
-TODO
+TODO: Not implemented.
