@@ -31,13 +31,17 @@ Bellow is the unit test file naming convention:
 
 For example, `output_optionalOption_help_spec.sh` would contain unit tests of the `--help`/`-h` option for the `output()` function.
 
-## Tag Naming
+## Tag Naming Requirement(s)
 
-Tags should be inherited by at least one level. [See an example here](#test-structure-example).
+- The part of the tag name after the `:` **must** be the same as the title in cammle case with the first character in lower case.
+- The part of the tag before the `:` should be the same as the tag of its parent with the `:` removed and the first character of the right hand potion of the tag capitalized.
+- The top level tag **must** follow: `<userFacingFunctionName>:<nextLevelDown>`:
+    - Example:
+        - Top three level tags of a util function called `createHeaderFooter()` used by a user facing function called `output()` would be: `output:output`, `outputOutput:util`, & `outputOutputUtil:createHeaderFooter` respectivly.
 
-## Unit Test Structure & Rules
+[**See an example here**.](#test-structure-example)
 
-Requirement(s):
+## Unit Test Structure Requirement(s)
 
 - All levels (`It`, `Describe`, etc) **must** be named.
 - All levels, other than the bottom one, **must** have `:` as the last character in the name:
@@ -61,12 +65,12 @@ A test of `output()`'s `--help` option would look like this:
 
 ```
 Describe "output():" output:output
-	Describe "Optional option(s):" output:optionalOptions outputOptionalOptions optionalOptions
-		Describe "Help:" outputOptionalOptions:help optionalOptions:help
-			It "-h" outputOptionalOptions:"-h" help:"-h" outputOptions:"-h" option:"-h"
+	Describe "Optional option:" outputOutput:optionalOption
+		Describe "Help:" outputOutputOptionalOption:help
+			It "-h" outputOutputOptionalOptionsHelp:h
 				Todo: "Test here."
 			End
-			It "--help" outputOptionalOptions:"--help" help:"--help" outputOptions:"--help" option:"--help"
+			It "--help" outputOutputOptionalOptionsHelp:help
 				Todo: "Test here."
 			End
 		End
