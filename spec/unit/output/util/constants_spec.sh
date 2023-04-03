@@ -1,120 +1,114 @@
-Describe "output():" output:output
-	Describe "util:" outputOutput:util
-		Describe "constants:" outputOutputUtil:constants
+Describe "output():" output
+	Describe "util:" output:util
+		Describe "constants:" outputUtil:constants
 			# Makes test easier to read and maintain.
 			constants=$PWD/src/shell/functions/output/util/constants.sh
 			
-			Describe "Shell compatibility:" outputOutputUtilConstants:shellCompatibility
-				It "Source file" outputOutputUtilConstantsShellCompatibility:sourceFile
-					When call $constants
+			Describe "Shell compatibility:" outputUtilConstants:shellCompatibility
+				It "Source file" outputUtilConstantsShellCompatibility:sourceFile
+					When run source $constants
 					The stderr should not be present
 					The stdout should not be present
 					The status should be success
 				End
 			End
 			
-			Describe "Environment variable set:" outputOutputUtilConstants:environmentVariableSet
+			Describe "Environment variable set:" outputUtilConstants:environmentVariableSet
 				# Ensure constants set by file are incorporated into the test environment.
 				Include $constants
 				
-				Describe "DEFAULT_LINE_LENGTH:" outputOutputUtilConstantsEnvironmentVariableSet:defaultLineLength
-					It "Set" outputOutputUtilConstantsEnvironmentVariableSetDefaultLineLength:set
+				Describe "DEFAULT_LINE_LENGTH:" outputUtilConstantsEnvironmentVariableSet:defaultLineLength
+					It "Set" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:set
 						The value "$DEFAULT_LINE_LENGTH" should be present
 					End
-					It "Readonly" outputOutputUtilConstantsEnvironmentVariableSetDefaultLineLength:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:readonly
 						The variable DEFAULT_LINE_LENGTH should be readonly
 					End
-					It "Not exported" outputOutputUtilConstantsEnvironmentVariableSetDefaultLineLength:notExported
+					It "Not exported" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:notExported
 						The variable DEFAULT_LINE_LENGTH should not be exported
 					End
-					It "Is positive" outputOutputUtilConstantsEnvironmentVariableSetDefaultLineLength:isPositive
+					It "Is positive" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:isPositive
 						The value "$DEFAULT_LINE_LENGTH" should satisfy isPositive "$DEFAULT_LINE_LENGTH"
 					End
 				End
-				
-				Describe "DEFAULT_INDENT:" outputOutputUtilConstantsEnvironmentVariableSet:defaultIndent
-					It "Set" outputOutputUtilConstantsEnvironmentVariableSetDefaultIndent:set
+				Describe "DEFAULT_INDENT:" outputUtilConstantsEnvironmentVariableSet:defaultIndent
+					It "Set" outputUtilConstantsEnvironmentVariableSetDefaultIndent:set
 						The value "$DEFAULT_INDENT" should be present
 					End
-					It "Readonly" outputOutputUtilConstantsEnvironmentVariableSetDefaultIndent:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultIndent:readonly
 						The variable DEFAULT_INDENT should be readonly
 					End
-					It "Not exported" outputOutputUtilConstantsEnvironmentVariableSetDefaultIndent:notExported
+					It "Not exported" outputUtilConstantsEnvironmentVariableSetDefaultIndent:notExported
 						The variable DEFAULT_INDENT should not be exported
 					End
-					It "Is not negative" outputOutputUtilConstantsEnvironmentVariableSetDefaultIndent:isNotNegative
+					It "Is not negative" outputUtilConstantsEnvironmentVariableSetDefaultIndent:isNotNegative
 						The value "$DEFAULT_INDENT" should satisfy isNotNegative "$DEFAULT_INDENT"
 					End
 				End
-				
-				Describe "DEFAULT_CHAR:" outputOutputUtilConstantsEnvironmentVariableSet:defaultChar
-					It "Set" outputOutputUtilConstantsEnvironmentVariableSetDefaultChar:set
+				Describe "DEFAULT_CHAR:" outputUtilConstantsEnvironmentVariableSet:defaultChar
+					It "Set" outputUtilConstantsEnvironmentVariableSetDefaultChar:set
 						The value "$DEFAULT_CHAR" should be present
 					End
-					It "Readonly" outputOutputUtilConstantsEnvironmentVariableSetDefaultChar:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultChar:readonly
 						The variable DEFAULT_CHAR should be readonly
 					End
-					It "Not exported" outputOutputUtilConstantsEnvironmentVariableSetDefaultChar:notExported
+					It "Not exported" outputUtilConstantsEnvironmentVariableSetDefaultChar:notExported
 						The variable DEFAULT_CHAR should not be exported
 					End
 				End
 				
-				Describe "TRACE_CHAR:" outputOutputUtilConstantsEnvironmentVariableSet:traceChar
-					It "Set" outputOutputUtilConstantsEnvironmentVariableSetTraceChar:set
+				Describe "TRACE_CHAR:" outputUtilConstantsEnvironmentVariableSet:traceChar
+					It "Set" outputUtilConstantsEnvironmentVariableSetTraceChar:set
 						The value "$TRACE_CHAR" should be present
 					End
-					It "Readonly" outputOutputUtilConstantsEnvironmentVariableSetTraceChar:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetTraceChar:readonly
 						The variable TRACE_CHAR should be readonly
 					End
-					It "Not exported" outputOutputUtilConstantsEnvironmentVariableSetTraceChar:notExported
+					It "Not exported" outputUtilConstantsEnvironmentVariableSetTraceChar:notExported
 						The variable TRACE_CHAR should not be exported
 					End
 				End
-				
-				Describe "INFO_CHAR:" outputOutputUtilConstantsEnvironmentVariableSet:infoChar
-					It "Set" outputOutputUtilConstantsEnvironmentVariableSetInfoChar:set
+				Describe "INFO_CHAR:" outputUtilConstantsEnvironmentVariableSet:infoChar
+					It "Set" outputUtilConstantsEnvironmentVariableSetInfoChar:set
 						The value "$INFO_CHAR" should be present
 					End
-					It "Readonly" outputOutputUtilConstantsEnvironmentVariableSetInfoChar:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetInfoChar:readonly
 						The variable INFO_CHAR should be readonly
 					End
-					It "Not exported" outputOutputUtilConstantsEnvironmentVariableSetInfoChar:notExported
+					It "Not exported" outputUtilConstantsEnvironmentVariableSetInfoChar:notExported
 						The variable INFO_CHAR should not be exported
 					End
 				End
-				
-				Describe "DEBUG_CHAR:" outputOutputUtilConstantsEnvironmentVariableSet:debugChar
-					It "Set" outputOutputUtilConstantsEnvironmentVariableSetDebugChar:set
+				Describe "DEBUG_CHAR:" outputUtilConstantsEnvironmentVariableSet:debugChar
+					It "Set" outputUtilConstantsEnvironmentVariableSetDebugChar:set
 						The value "$DEBUG_CHAR" should be present
 					End
-					It "Readonly" outputOutputUtilConstantsEnvironmentVariableSetDebugChar:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetDebugChar:readonly
 						The variable DEBUG_CHAR should be readonly
 					End
-					It "Not exported" outputOutputUtilConstantsEnvironmentVariableSetDebugChar:notExported
+					It "Not exported" outputUtilConstantsEnvironmentVariableSetDebugChar:notExported
 						The variable DEBUG_CHAR should not be exported
 					End
 				End
-				
-				Describe "WARN_CHAR:" outputOutputUtilConstantsEnvironmentVariableSet:warnChar
-					It "Set" outputOutputUtilConstantsEnvironmentVariableSetWarnChar:set
+				Describe "WARN_CHAR:" outputUtilConstantsEnvironmentVariableSet:warnChar
+					It "Set" outputUtilConstantsEnvironmentVariableSetWarnChar:set
 						The value "$WARN_CHAR" should be present
 					End
-					It "Readonly" outputOutputUtilConstantsEnvironmentVariableSetWarnChar:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetWarnChar:readonly
 						The variable WARN_CHAR should be readonly
 					End
-					It "Not exported" outputOutputUtilConstantsEnvironmentVariableSetWarnChar:notExported
+					It "Not exported" outputUtilConstantsEnvironmentVariableSetWarnChar:notExported
 						The variable WARN_CHAR should not be exported
 					End
 				End
-				
-				Describe "ERROR_CHAR:" outputOutputUtilConstantsEnvironmentVariableSet:errorChar
-					It "Set" outputOutputUtilConstantsEnvironmentVariableSetErrorChar:set
+				Describe "ERROR_CHAR:" outputUtilConstantsEnvironmentVariableSet:errorChar
+					It "Set" outputUtilConstantsEnvironmentVariableSetErrorChar:set
 						The value "$ERROR_CHAR" should be present
 					End
-					It "Readonly" outputOutputUtilConstantsEnvironmentVariableSetErrorChar:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetErrorChar:readonly
 						The variable ERROR_CHAR should be readonly
 					End
-					It "Not exported" outputOutputUtilConstantsEnvironmentVariableSetErrorChar:notExported
+					It "Not exported" outputUtilConstantsEnvironmentVariableSetErrorChar:notExported
 						The variable ERROR_CHAR should not be exported
 					End
 				End

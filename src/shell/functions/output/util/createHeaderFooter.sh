@@ -1,10 +1,29 @@
+# Needed so unit tests can mock out sourced file(s).
+if [ "$(type -t inScriptSource)" = "" ]; then
+	inScriptSource() { . "${@}"; }
+fi
+
  #########################
 ## Global(s)/Constant(s) ##
  #########################
 ## Global(s) ##
 # NoOp
 ## Constant(s) ##
-. $SHELL_FUNCTIONS/output/util/constants.sh
+if [ -f $PWD/constants.sh ]; then
+	inScriptSource $PWD/constants.sh
+elif [ -f $PWD/src/shell/functions/output/util/constants.sh ]; then
+	inScriptSource $PWD/src/shell/functions/output/util/constants.sh
+elif [ "$SHELL_FUNCTIONS" != "" ]; then
+	if [ -f $SHELL_FUNCTIONS/output/util/constants.sh ]; then
+		inScriptSource $SHELL_FUNCTIONS/output/util/constants.sh
+	else
+		echo "ERROR createHeaderFooter(): Couldn't find output()'s constants file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		exit 202
+	fi
+else
+	echo "ERROR createHeaderFooter(): Couldn't find output()'s constants file from \$PWD ($PWD) and \$SHELL_FUNCTIONS isn't set." >&2
+	exit 202
+fi
 
  #####################
 ## Local Variable(s) ##
@@ -73,9 +92,9 @@ fChar=$DEFAULT_CHAR
 len=2
 # Error prefix added to error output messages.
 if [ "$(type -t date)" = "" ]; then
-	errPFix="ERROR createHeaderFooter():"
+	errPrefix="ERROR createHeaderFooter():"
 else
-	errPFix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR createHeaderFooter():"
+	errPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR createHeaderFooter():"
 fi
 
  #####################
@@ -95,7 +114,7 @@ for fullArg in "${@}"; do
 			if echo "$arg" | grep -qE "^[[:space:]]*(\+)?[[:digit:]]+[[:space:]]*$"; then
 				len=$(($arg+$len))
 			else
-				echo "$errPFix Line length must be a non-negative number, was '$arg', see doc:" >&2
+				echo "$errPrefix Line length must be a non-negative integer, was '$arg', see doc:" >&2
 				echo "$CREATE_HEADER_FOOTER_DOC" >&2
 				exit 141
 			fi  ;;
@@ -103,7 +122,7 @@ for fullArg in "${@}"; do
 			# Ensure a valid value was provided.
 			case "$arg" in
 				*\\*|"")
-					echo "$errPFix Formatting character may not be blank or a special character (ex. new line, tab), was '$arg', see doc:" >&2
+					echo "$errPrefix Formatting character may not be blank or a special character (ex. new line, tab), was '$arg', see doc:" >&2
 					echo "$CREATE_HEADER_FOOTER_DOC" >&2
 					exit 141  ;;
 				*)
@@ -116,7 +135,7 @@ for fullArg in "${@}"; do
 			echo "$CREATE_HEADER_FOOTER_DOC"
 			exit 0  ;;
 		*)
-			echo "$errPFix Caller provided invalid option: '$fullArg', see doc:" >&2
+			echo "$errPrefix Caller provided invalid option: '$fullArg', see doc:" >&2
 			echo "$CREATE_HEADER_FOOTER_DOC" >&2
 			exit 140  ;;
 	esac

@@ -1,16 +1,22 @@
 # shellcheck shell=sh
 
-# Defining variables and functions here will affect all specfiles.
-# Change shell options inside a function may cause different behavior,
-# so it is better to set them here.
+# For more information regarding shellspec's spec_helper file, see: https://github.com/shellspec/shellspec#spec_helper
 
-## Return Value(s) ##
+ ######################################
+## Global (Across All specfiles) Data ##
+ ######################################
+## Constant(s) ##
+# Return Value(s) #
 OPTION_NAME_INVALID_RT=140
 OPTION_VALUE_INVALID_RT=141
-
-## Value Checking Function(s) ##
+## Variable(s) ##
+# NoOp
+## Function(s) ##
+# Value Checking Function(s) #
 isPositive() { [ $(($1)) -gt 0 ]; }
 isNotNegative() { [ $(($1)) -ge 0 ]; }
+## Alias(es) ##
+# TODO: Move scriptSourceThis to here.
 
 # This callback function will be invoked only once before loading specfiles.
 spec_helper_precheck() {

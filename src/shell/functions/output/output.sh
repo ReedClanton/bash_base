@@ -1,12 +1,45 @@
+# Needed so unit tests can mock out sourced file(s).
+if [ "$(type -t inScriptSource)" = "" ]; then
+	inScriptSource() { . "${@}"; }
+fi
+
  #############
 ## Import(s) ##
  #############
 ## Global(s) ##
 # NoOp
 ## Constant(s) ##
-. $SHELL_FUNCTIONS/output/util/constants.sh
+if [ -f $PWD/util/constants.sh ]; then
+	inScriptSource $PWD/util/constants.sh
+elif [ -f $PWD/src/shell/functions/output/util/constants.sh ]; then
+	inScriptSource $PWD/src/shell/functions/output/util/constants.sh
+elif [ "$SHELL_FUNCTIONS" != "" ]; then
+	if [ -f $SHELL_FUNCTIONS/output/util/constants.sh ]; then
+		inScriptSource $SHELL_FUNCTIONS/output/util/constants.sh
+	else
+		echo "ERROR output(): Couldn't find output()'s constants file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		exit 202
+	fi
+else
+	echo "ERROR output(): Couldn't find output()'s constants file from \$PWD ($PWD) and \$SHELL_FUNCTIONS isn't set." >&2
+	exit 202
+fi
 ## Code ##
-alias createHeaderFooter=$SHELL_FUNCTIONS/output/util/createHeaderFooter.sh
+if [ -f $PWD/util/createHeaderFooter.sh ]; then
+	createHeaderFooter=$PWD/util/createHeaderFooter.sh
+elif [ -f $PWD/src/shell/functions/output/util/createHeaderFooter.sh ]; then
+	createHeaderFooter=$PWD/src/shell/functions/output/util/createHeaderFooter.sh
+elif [ "$SHELL_FUNCTIONS" != "" ]; then
+	if [ -f $SHELL_FUNCTIONS/output/util/createHeaderFooter.sh ]; then
+		createHeaderFooter=$SHELL_FUNCTIONS/output/util/createHeaderFooter.sh
+	else
+		echo "ERROR output(): Couldn't find output()'s createHeaderFooter() util function file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		exit 202
+	fi
+else
+	echo "ERROR output(): Couldn't find output()'s createHeaderFooter() util function file from \$PWD ($PWD) and \$SHELL_FUNCTIONS isn't set." >&2
+	exit 202
+fi
 
  #####################
 ## Local Variable(s) ##
@@ -63,10 +96,10 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/		When given, message produced will include a header and footer.
 #/			- Note: Redundant if -p given.
 #/		(OPTIONAL)
-#/	-c=<formattingCharacter>, --char=<formattingCharacter>
+#/	-f=<formattingCharacter>, --formatting-character=<formattingCharacter>
 #/		Sets character used by header, footer, prefix, and postfix.
 #/			- Note: Default value: $DEFAULT_CHAR.
-#/			- Note: Some special characters may require two to be given (ex. -c="%%").
+#/			- Note: Some special characters may require two to be given (ex. -f="%%").
 #/			- Note: Some *other* special characters may not work at all (ex. back slash).
 #/		(OPTIONAL)
 #/	--indent=<numSpacesToIndent>
@@ -130,8 +163,8 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/	output -m="line 1" -m="longline 2" -l=10 --pre-post-fix --header-footer
 #/	output -m="line 1" --pretty --error
 #/	output -m="line 1" -p -w
-#/	output -m="line 1" -p -c="^"
-#/	output -m="line 1" -p --char="&&"
+#/	output -m="line 1" -p -f="^"
+#/	output -m="line 1" -p --formatting-character="&&"
 #/
 #/ TODO(S):
 #/	- Implement: Dynamically determine, based on last character of line being
@@ -164,7 +197,6 @@ maxGvnLineLen=0
 #	- Minus postfix length (if used).
 maxAlwMsgLen=0
 # Used to track each line of message.
-tmp=1
 msg=()
 # Contains final (formatted) message text.
 rtOutput=''
@@ -191,8 +223,16 @@ for fullArg in "${@}"; do
 		-h|--help)
 			echo "$OUTPUT_DOC"
 			exit 0  ;;
-		-c=*|--char=*)
-			fChar=$arg  ;;
+		-f=*|--formatting-character=*)
+			# Ensure a valid value was provided.
+			case "$arg" in
+				*\\*|""|%)
+					echo "$errPrefix Formatting character may not be blank, a special character (ex. new line, tab), or '%', was '$arg'. See doc:" >&2
+					echo "$OUTPUT_DOC" >&2
+					exit 141  ;;
+				*)
+					fChar=$arg
+			esac  ;;
 		-t|--trace)
 			fChar=$TRACE_CHAR  ;;
 		-d|--debug)
@@ -206,9 +246,23 @@ for fullArg in "${@}"; do
 		--header-footer)
 			headerFooter=true  ;;
 		--indent=*)
-			indent=$arg  ;;
+			# Ensure provided indent value is valid.
+			if echo "$arg" | grep -qE "^[[:space:]]*(\+)?[[:digit:]]+[[:space:]]*$"; then
+				indent=$arg
+			else
+				echo "$errPrefix Indent must be a non-negative integer, was '$arg', see doc:" >&2
+				echo "$OUTPUT_DOC" >&2
+				exit 141
+			fi  ;;
 		-l=*|--line-length=*)
-			maxAlwLineLen=$arg  ;;
+			# Ensure provided line length is valid.
+			if echo "$arg" | grep -qE "^[[:space:]]*(\+)?[[:digit:]]+[[:space:]]*$"; then
+				maxAlwLineLen=$arg
+			else
+				echo "$errPrefix Line length must be a non-negative integer, was '$arg', see doc:" >&2
+				echo "$OUTPUT_DOC" >&2
+				exit 141
+			fi  ;;
 		-m=*|--msg=*)
 			msgGiven=true
 			# Determine if given line contains newline character.
@@ -252,41 +306,63 @@ done
  ###########################
 ## Error Check Argument(s) ##
  ###########################
-## Ensure Message Option was Provided ##
-if ! $msgGiven; then
+# Used to track max number of message character(s) that be exist on each line (accounts for pre/post fix).
+maxAlwMsgLen=$maxAlwLineLen
+
+## Ensure Message Text Option was Provided ##
+if $msgGiven; then
+	## Ensure Message Text was Provided ##
+	if [[ -n "${msg[@]}" ]]; then
+		## Error Check Indent Value ##
+		if [[ $indent -ge 0 ]]; then
+			
+			# Remove indent value from max message character(s) per line.
+			if [[ $indent -gt 0 ]]; then
+				maxAlwMsgLen=$(($maxAlwMsgLen-$indent))
+			fi
+			
+			# Remove prefix & postfix length from max message character(s) per line.
+			if $prePostFix; then
+				maxAlwMsgLen=$(($maxAlwMsgLen-$(($((${#fChar}+1))*2))))
+			fi
+			
+			## Verify Max Message Character(s) Per Line is Valid ##
+			if [[ $maxAlwMsgLen -lt 1 ]]; then
+				# Build helpful error message(s).
+				errMsg="$errPrefix Max line length is too short to contain '$indent' space(s) of indent"
+				
+				if $prePostFix; then
+					errMsg="$errMsg and the prefix character '$fChar'."
+				else
+					errMsg="$errMsg."
+				fi
+				echo $errMsg >&2
+				
+				errMsg="$errPrefix Try decreasing"
+				if [[ $(($indent)) -gt $(($DEFAULT_INDENT)) ]]; then
+					errMsg="$errMsg provided indent down from '$indent'."
+				else
+					errMsg="$errMsg default indent '$DEFAULT_INDENT' or passing in a smaller indent value."
+				fi
+				echo "$errMsg See doc:" >&2
+				
+				echo "$OUTPUT_DOC" >&2
+				exit 141
+			fi
+		else
+			echo "$errPrefix Indentation value: '$indent' invalid. Must be non-negative, see doc:" >&2
+			echo "$OUTPUT_DOC" >&2
+			exit 141
+		fi
+	else
+		echo "$errPrefix Message text must be given, see doc:" >&2
+		echo "$OUTPUT_DOC" >&2
+		exit 141
+	fi
+else
 	echo "$errPrefix Message option must be provided, see doc:" >&2
 	echo "$OUTPUT_DOC" >&2
 	exit 142
-fi
-## Ensure Message Text Was Provided ##
-if [[ -z "${msg[@]}" ]]; then
-	echo "$errPrefix Message text must be given, see doc:" >&2
-	echo "$OUTPUT_DOC" >&2
-	exit 141
-fi
-
-## Ensure Valid Indent Value Was Given ##
-# Used to track max number of message character(s) that be exist on each line (accounts for pre/post fix).
-maxAlwMsgLen=$maxAlwLineLen
-# Remove indent value from max message character(s) per line.
-if [[ $indent -ge 0 ]]; then
-	maxAlwMsgLen=$(($maxAlwMsgLen-$indent))
-else
-	echo "$errPrefix Indentation value: '$indent' invalid. Must be non-negative, see doc:" >&2
-	echo "$OUTPUT_DOC" >&2
-	exit 141
-fi
-# Remove prefix & postfix length from max message character(s) per line.
-if $prePostFix; then
-	maxAlwMsgLen=$(($maxAlwMsgLen-$(($((${#fChar}+1))*2))))
-fi
-
-## Verify Max Message Character(s) Per Line is Valid ##
-# Ensure there's enough room to include message character(s).
-if [[ $maxAlwMsgLen -lt 1 ]]; then
-	echo "$errPrefix Max line length of '$maxAlwLineLen' invalid because there's no room for message text, see doc:" >&2
-	echo "$OUTPUT_DOC" >&2
-	exit 141
 fi
 
  ########################
@@ -335,9 +411,9 @@ fi
 if $headerFooter; then
 	# Call function that creates header/footer.
 	if $prePostFix; then
-		cmd="createHeaderFooter --prefix -l=$maxGvnLineLen -f='$fChar'"
+		cmd="$createHeaderFooter --prefix -l=$maxGvnLineLen -f='$fChar'"
 	else
-		cmd="createHeaderFooter -l=$maxGvnLineLen -f='$fChar'"
+		cmd="$createHeaderFooter -l=$maxGvnLineLen -f='$fChar'"
 	fi
 	unset stdOut errOut rtOut
 	eval "$( (eval $cmd) \
@@ -353,7 +429,8 @@ if $headerFooter; then
 			headerFooterTxt=$stdOut
 		fi
 	else
-		echo "$errPrefix createHeaderFooter() failed to create header/footer text." >&2
+		echo "$errPrefix createHeaderFooter() failed to create header/footer text. stderr bellow:" >&2
+		echo "$errOut" >&2
 		exit 3
 	fi
 fi
