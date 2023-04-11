@@ -1,7 +1,7 @@
 ---
 name: Epic template
 about: Template for creating epics
-title: "[EPIC]"
+title: Epic | <title>
 labels: epic
 assignees: ''
 
@@ -21,8 +21,10 @@ assignees: ''
 
 ## Issues ##
 
-- [ ]  Issue one
-- [ ]  issue two
-- [ ]  issue three
+- [ ] #<issueId>
+
+## Blocked By ##
+
+- [ ] #<issueId>
 
 ## Acceptance criteria ##
