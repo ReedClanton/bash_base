@@ -14,7 +14,7 @@ Unit tests should:
 - **Environment changes** should **never break** tests:
     - For example, changing the value of a value in a constants file should only cause tests to fail when the new value is invalid.
 - **Functionality** changes **should** always **break** tests.
-- **Implementation** changes should **never break** tests.
+- **Implementation** changes should **not break** tests... ideally.
 
 ## Directory Structure
 
@@ -68,10 +68,10 @@ Describe "output():" output:output
 	Describe "Optional option:" outputOutput:optionalOption
 		Describe "Help:" outputOutputOptionalOption:help
 			It "-h" outputOutputOptionalOptionsHelp:h
-				Todo: "Test here."
+				Test here.
 			End
 			It "--help" outputOutputOptionalOptionsHelp:help
-				Todo: "Test here."
+				Test here.
 			End
 		End
 	End
