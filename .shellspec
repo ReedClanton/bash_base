@@ -3,7 +3,7 @@
 ## shellspec Default Option(s) ##
  ###############################
 # Create virtual environment around unit tests.
-# TODO: When I start creating functional tests I'll need change this so it only applies to unit tests.
+# TODO #35: When I start creating functional tests I'll need change this so it only applies to unit tests.
 --sandbox
 # Ensure spec helper file is present and used (https://github.com/shellspec/shellspec#spec_helper).
 --require spec_helper
