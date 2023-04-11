@@ -26,5 +26,3 @@ assignees: ''
 - [ ]  issue three
 
 ## Acceptance criteria ##
-
-## Proof ##
