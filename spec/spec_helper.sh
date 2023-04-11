@@ -7,8 +7,12 @@
  ######################################
 ## Constant(s) ##
 # Return Value(s) #
+CATCHALL_RT=1
+MINOR_EXECUTION_FAILURE_RT=3
 OPTION_NAME_INVALID_RT=140
 OPTION_VALUE_INVALID_RT=141
+OPTION_REQUIRED_NOT_PROVIDED_RT=142
+CODE_NOT_ACCESSIBLE_RT=202
 ## Variable(s) ##
 # NoOp
 ## Function(s) ##
@@ -16,7 +20,7 @@ OPTION_VALUE_INVALID_RT=141
 isPositive() { [ $(($1)) -gt 0 ]; }
 isNotNegative() { [ $(($1)) -ge 0 ]; }
 ## Alias(es) ##
-# TODO: Move scriptSourceThis to here.
+# NoOp
 
 # This callback function will be invoked only once before loading specfiles.
 spec_helper_precheck() {

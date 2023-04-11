@@ -9,6 +9,7 @@ I create symbolic links to a local clone of this repo in my local environment. T
 |:------------------------------ |:--------------------------------------------------------------  |:--------------------------------------- |
 | CUT                            | **C**ode **U**nder **T**est                                     |                                         |
 | `Describe`/`ExampleGroup`/`Context` |                                                            | [shellspec-Basic structure](https://github.com/shellspec/shellspec#basic-structure) |
+| DOD                            | Defenition Of Done                                              |                                         |
 | environment setup script       | Environment configuration script.                               | [environment setup script](src/environmentSetup/environmentSetup.sh) |
 | functions readme               | `README.md` covering **all** function(s).                       | [functions readme](src/shell/functions/README.md) |
 | {local} user shell environment | Files used by Unix based/derived systems to configure a user's environment (aliases, PATH, etc). |        |

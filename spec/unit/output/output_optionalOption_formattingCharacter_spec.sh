@@ -5,10 +5,12 @@ readonly DEFAULT_LINE_LENGTH
 readonly DEFAULT_INDENT
 
 Describe "output():" output:output
-	# Mock out sourcing of constants file.
+	# Mock out sourcing of util (constants, globals, helper functions, etc).
 	inScriptSource() { return 0; }
 	# Makes test easier to read and maintain.
 	output=$PWD/src/shell/functions/output/output.sh
+	# createHeaderFooter() shouldn't be called, but mock it out just in case.
+	createHeaderFooter() { return $CATCHALL_RT; }
 	
 	Describe "Optional option:" outputOutput:optionalOption
 		Describe "Formatting character:" outputOutputOptionalOption:formattingCharacter

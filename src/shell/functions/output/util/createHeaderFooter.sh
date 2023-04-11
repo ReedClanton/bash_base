@@ -1,35 +1,3 @@
-# Needed so unit tests can mock out sourced file(s).
-if [ "$(type -t inScriptSource)" = "" ]; then
-	inScriptSource() { . "${@}"; }
-fi
-
- #########################
-## Global(s)/Constant(s) ##
- #########################
-## Global(s) ##
-# NoOp
-## Constant(s) ##
-if [ -f $PWD/constants.sh ]; then
-	inScriptSource $PWD/constants.sh
-elif [ -f $PWD/src/shell/functions/output/util/constants.sh ]; then
-	inScriptSource $PWD/src/shell/functions/output/util/constants.sh
-elif [ "$SHELL_FUNCTIONS" != "" ]; then
-	if [ -f $SHELL_FUNCTIONS/output/util/constants.sh ]; then
-		inScriptSource $SHELL_FUNCTIONS/output/util/constants.sh
-	else
-		echo "ERROR createHeaderFooter(): Couldn't find output()'s constants file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
-		exit 202
-	fi
-else
-	echo "ERROR createHeaderFooter(): Couldn't find output()'s constants file from \$PWD ($PWD) and \$SHELL_FUNCTIONS isn't set." >&2
-	exit 202
-fi
-
- #####################
-## Local Variable(s) ##
- #####################
-# NoOp
-
 IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/ DESCRIPTION:
 #/	Returns text intended to be used as a header or footer in stdout. Upon
@@ -81,77 +49,100 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/	- None
 EOF
 
- ###############################
-## Reset/Set Local Variable(s) ##
- ###############################
-# Tracks header/footer text.
-headerFooter=''
-# Tracks character used for formatting.
-fChar=$DEFAULT_CHAR
-# Tracks desired total length of header/footer.
-len=2
-# Error prefix added to error output messages.
-if [ "$(type -t date)" = "" ]; then
-	errPrefix="ERROR createHeaderFooter():"
-else
-	errPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR createHeaderFooter():"
-fi
-
- #####################
-## Process Option(s) ##
- #####################
-for fullArg in "${@}"; do
-	# Tracks value of current option.
-	arg=${fullArg#*=}
-
-	# Determine what option user gave.
-	case $fullArg in
-		--prefix)
-			headerFooter+=' '
-			len=$(($len+1))  ;;
-		-l=*|--line-length=*)
-			# Ensure provided line length is valid.
-			if echo "$arg" | grep -qE "^[[:space:]]*(\+)?[[:digit:]]+[[:space:]]*$"; then
-				len=$(($arg+$len))
-			else
-				echo "$errPrefix Line length must be a non-negative integer, was '$arg', see doc:" >&2
-				echo "$CREATE_HEADER_FOOTER_DOC" >&2
-				exit 141
-			fi  ;;
-		-f=*|--formatting-character=*)
-			# Ensure a valid value was provided.
-			case "$arg" in
-				*\\*|"")
-					echo "$errPrefix Formatting character may not be blank or a special character (ex. new line, tab), was '$arg', see doc:" >&2
-					echo "$CREATE_HEADER_FOOTER_DOC" >&2
-					exit 141  ;;
-				*)
-					# Track user desired formatting character(s) and update desired
-					# header/footer length to accommodate formatting character(s).
-					fChar=$arg
-					len=$(($(($((${#fChar}-1))*2))+$len))  ;;
-			esac  ;;
-		-h|--help)
-			echo "$CREATE_HEADER_FOOTER_DOC"
-			exit 0  ;;
-		*)
-			echo "$errPrefix Caller provided invalid option: '$fullArg', see doc:" >&2
-			echo "$CREATE_HEADER_FOOTER_DOC" >&2
-			exit 140  ;;
-	esac
-done
-
-## Build Header/Footer ##
-while [[ ${#headerFooter} -lt $len ]]; do
-	# When near the end, given formatting character(s) may need to be split up.
-	if [[ $((${#headerFooter}+${#fChar})) -gt $len ]]; then
-		headerFooter+=${fChar:0:$(($len-${#headerFooter}))}
+createHeaderFooter() {
+	 ###############################
+	## Reset/Set Local Variable(s) ##
+	 ###############################
+	# Tracks header/footer text.
+	headerFooter=''
+	# Tracks character used for formatting.
+	fChar=$DEFAULT_CHAR
+	# Tracks length of formatting character.
+	fCharLen=${#fChar}
+	# Tracks desired total length of header/footer.
+	len=0
+	# Tracks if prefix is being used.
+	prefixUsed=false
+	# Error prefix added to error output messages.
+	if [ "$(type -t date)" = "" ]; then
+		createHeaderFooterLogPrefix="ERROR createHeaderFooter():"
 	else
-		headerFooter+=$fChar
+		createHeaderFooterLogPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR createHeaderFooter():"
 	fi
-done
+	readonly createHeaderFooterLogPrefix
 
-# Add new line and return.
-echo "$headerFooter\n"
-exit 0
+	 #####################
+	## Process Option(s) ##
+	 #####################
+	for fullArg in "${@}"; do
+		# Tracks value of current option.
+		arg=${fullArg#*=}
+
+		# Determine what option user gave.
+		case $fullArg in
+			--prefix)
+				headerFooter+=' '
+				prefixUsed=true
+				len=$(($len+3))  ;;
+			-l=*|--line-length=*)
+				# Strip space character(s) from argument.
+				arg=$(echo $arg | tr -d '[:space:]')
+				# Ensure provided line length is valid.
+				case "$arg" in
+					# TODO: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
+					[[:digit:]]|[[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]])
+						len=$(($arg+$len))  ;;
+					*)
+						echo "$createHeaderFooterLogPrefix Line length must be a non-negative integer, was '$arg', see doc:" >&2
+						echo "$CREATE_HEADER_FOOTER_DOC" >&2
+						exit 141  ;;
+				esac  ;;
+			-f=*|--formatting-character=*)
+				# Ensure a valid value was provided.
+				case "$arg" in
+					*\\*|"")
+						echo "$createHeaderFooterLogPrefix Formatting character may not be blank or a special character (ex. new line, tab), was '$arg', see doc:" >&2
+						echo "$CREATE_HEADER_FOOTER_DOC" >&2
+						exit 141  ;;
+					*)
+						# Track user desired formatting character(s) and update desired
+						# header/footer length to accommodate formatting character(s).
+						fChar=$arg
+						fCharLen=${#fChar}  ;;
+				esac  ;;
+			-h|--help)
+				echo "$CREATE_HEADER_FOOTER_DOC"
+				exit 0  ;;
+			*)
+				echo "$createHeaderFooterLogPrefix Caller provided invalid option: '$fullArg', see doc:" >&2
+				echo "$CREATE_HEADER_FOOTER_DOC" >&2
+				exit 140  ;;
+		esac
+	done
+
+	 ########################################
+	## Post Processing of Provided Value(s) ##
+	 ########################################
+	# Account for additional header/footer length required when a prefix is being used.
+	if $prefixUsed; then
+		len=$(($(($((${#fChar}-1))*2))+$len))
+	fi
+
+	 ##########################
+	## Generate Header/Footer ##
+	 ##########################
+	## Build Header/Footer ##
+	while [[ ${#headerFooter} -lt $len ]]; do
+		# When near the end, given formatting character(s) may need to be split up.
+		if [[ $((${#headerFooter}+$fCharLen)) -gt $len ]]; then
+			headerFooter+=${fChar:0:$(($len-${#headerFooter}))}
+		else
+			headerFooter+=$fChar
+		fi
+	done
+
+	# Add new line and return.
+	echo "$headerFooter\n"
+	exit 0
+}
 
