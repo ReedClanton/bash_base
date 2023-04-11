@@ -85,7 +85,7 @@ alias output=$SHELL_FUNCTIONS/output/output.sh
 alias checkRequiredOpts=$SHELL_FUNCTIONS/checkRequiredOpts.sh
 # Include log function used by other function(s) in the same/child directories.
 log() {
-	$SHELL_FUNCTIONS/log/log.sh "${@}"
+	$SHELL_FUNCTIONS/log/log.sh "$@"
 }
 export -f log
 # Include function for returning name of current shell.

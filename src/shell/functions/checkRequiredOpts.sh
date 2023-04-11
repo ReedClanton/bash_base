@@ -74,7 +74,7 @@ EOF
  ##########################################
 ## Special Case Processing of Help Option ##
  ##########################################
-for fullArg in "${@}"; do
+for fullArg in "$@"; do
 	# Tracks value of current option.
 	arg=${fullArg#*=}
 
@@ -102,7 +102,7 @@ fi
  #####################
 ## Process Option(s) ##
  #####################
-for fullArg in "${@}"; do
+for fullArg in "$@"; do
 	# Tracks value of current option.
 	arg=${fullArg#*=}
 

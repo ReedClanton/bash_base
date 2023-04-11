@@ -1,6 +1,6 @@
 # Needed so unit tests can mock out sourced file(s).
 if [ "$(type -t inScriptSource)" = "" ]; then
-	inScriptSource() { . "${@}"; }
+	inScriptSource() { . "$@"; }
 fi
 
  #############
@@ -191,7 +191,7 @@ msgGiven=false
 ## Process Option(s) ##
  #####################
 # Process option(s).
-for fullArg in "${@}"; do
+for fullArg in "$@"; do
 	# Tracks value of current option.
 	arg=${fullArg#*=}
 	
