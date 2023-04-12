@@ -5,14 +5,16 @@ jobs:
   unit-test-output-util-constants:
     runs-on: ubuntu-20.04
     steps:
-      - run: echo "Checking out branch ${{ github.ref }} from ${{ github.repository }} repo on ${{ runner.os }}..."
+      - run:  echo "Checking out branch ${{ github.ref }} from ${{ github.repository }} repo on ${{ runner.os }}..."
       - name: Check out repository code
         uses: actions/checkout@v3
       - name: Install shellspec
-        run: curl -fsSL https://git.io/shellspec | sh -s -- --yes
+        run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
+      - name: Install Kcov
+        run:  apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev
       - name: List installed shells
-        run: cat /etc/shells
+        run:  cat /etc/shells
       - name: Run unit tests
-        run: shellspec --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+        run:  shellspec --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
 #        run: shellspec --fail-fast --fail-no-examples --warning-as-failure --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh" --fail-low-coverage ./spec/unit/output/util/constants_*
 
