@@ -23,8 +23,8 @@ jobs:
         run:  shellspec -s /bin/sh --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
       - name: Running unit tests from a 'dash' shell...
         run:  shellspec -s /bin/dash --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
-#      - name: Run unit tests on BusyBox shell
+#      - name: Running unit tests from a 'busybox' shell...
 #        run:  shellspec -s /usr/bin/busybox --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
-#      - name: Run unit tests on zsh shell
-#        run:  shellspec -s /path/to/zsh --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+      - name: Running unit tests from a 'zsh' shell...
+        run:  shellspec -s /usr/bin/ksh --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
 
