@@ -14,6 +14,8 @@ jobs:
         run:  sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev
       - name: Install BusyBox shell
         run: sudo apt-get install busybox
+      - name: Check if BusyBox is installed
+        run:  busybox --help
       - name: List installed shells
         run:  cat /etc/shells
       - name: Run unit tests on bash shell with code coverage
