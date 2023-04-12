@@ -13,6 +13,8 @@ jobs:
 #        run:  sudo apt-get install ksh
       - name: Installing 'zsh' (shell)...
         run:  sudo apt install -y zsh
+      - name: zsh help
+        run:  zsh --help
       - name: Check active shell
         run:  zsh;echo "'$SHELL'"
       - name: Source constants file
