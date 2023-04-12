@@ -4,9 +4,7 @@
 
 The [environment setup script](src/environmentSetup/environmentSetup.sh) should be used when one wants to use this project as the fondation of their POSIX shell configration.
 
-TODO: Elaborate.
-
-**Note:** The ideal is for this project to be fully POSIX complient, however, as of the writting of this, it's not there yet.
+**Note:** The ideal is for this project to be fully POSIX complient, however, as of the writting of this, it's not there yet (or even close).
 
 ### Environment Configration Script Usage
 
