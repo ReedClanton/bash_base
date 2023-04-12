@@ -9,6 +9,8 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
       - run: cat /etc/shells
+      - run: [ "$(type -t curl)" = "" ] && echo "curl"
+      - run: [ "$(type -t wget)" = "" ] && echo "wget"
       - run: pwd
       - name: Run unit tests
         run: shellspec \
