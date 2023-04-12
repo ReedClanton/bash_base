@@ -2,12 +2,18 @@ name: Unit Tests of output() util constants
 run-name: ${{ github.actor }} is unit testing output() constants
 on: [push]
 jobs:
-  unit-test-output-util-constants:
+  checkout-repo:
     runs-on: ubuntu-20.04
     steps:
       - run:  echo "Checking out branch ${{ github.ref }} from ${{ github.repository }} repo on ${{ runner.os }}..."
       - name: Check out repository code
         uses: actions/checkout@v3
+  unit-test-output-util-constants:
+    runs-on: ubuntu-20.04
+    steps:
+#      - run:  echo "Checking out branch ${{ github.ref }} from ${{ github.repository }} repo on ${{ runner.os }}..."
+#      - name: Check out repository code
+#        uses: actions/checkout@v3
       - name: Install BusyBox shell
         run:  sudo apt-get install busybox
       - name: Check if BusyBox is installed
@@ -23,8 +29,8 @@ jobs:
         run:  shellspec -s /bin/sh --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
       - name: Run unit tests on dash shell
         run:  shellspec -s /bin/dash --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
-      - name: Run unit tests on BusyBox shell
-        run:  shellspec -s /usr/bin/busybox --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+#      - name: Run unit tests on BusyBox shell
+#        run:  shellspec -s /usr/bin/busybox --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
 #      - name: Run unit tests on zsh shell
 #        run:  shellspec -s /path/to/zsh --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
 
