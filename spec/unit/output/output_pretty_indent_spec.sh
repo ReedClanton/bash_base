@@ -73,7 +73,7 @@ Describe "output():" output:output
 					The status should be success
 				End
 				It "One indent" outputOutputOptionalOptionPrettyAndIndentTwoCharacterFormattingCharacter:oneIndent
-					createHeaderFooter() { echo " #######\n"; }
+					createHeaderFooter() { echo " #######\n" 2>&1; }
 					When run source $output -m=msg --pretty --indent=1
 					The stderr should not be present
 					The lines of stdout should equal 3
