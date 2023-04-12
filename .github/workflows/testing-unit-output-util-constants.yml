@@ -28,14 +28,14 @@ jobs:
         run:  touch ./spec/unit/tmp.sh
       - name: zsh test setup, add exec perm.
         run:  chmod +x ./spec/unit/tmp.sh
-      - name: zsh test setup, write to file
-        run:  sudo echo 'shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*' > ./spec/unit/tmp.sh
+#      - name: zsh test setup, write to file
+#        run:  sudo echo 'shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*' > ./spec/unit/tmp.sh
 #      - name: zsh test setup
 #        run:  touch ./spec/unit/tmp.sh; chmod +x ./spec/unit/tmp.sh; sudo echo "shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*" > ./spec/unit/tmp.sh
 #      - name: manual test
 #        run:  touch ./spec/unit/tmp.sh; chmod +x ./spec/unit/tmp.sh; sudo echo ". ./src/shell/functions/output/util/constants.sh; DEFAULT_LINE_LENGTH=99; echo $?; echo $SHELL" > ./spec/unit/tmp.sh
-      - name: manual test
-        run:  touch ./spec/unit/tmp.sh; chmod +x ./spec/unit/tmp.sh; sudo echo "echo $SHELL" > ./spec/unit/tmp.sh
+#      - name: manual test
+#        run:  touch ./spec/unit/tmp.sh; chmod +x ./spec/unit/tmp.sh; sudo echo "echo $SHELL" > ./spec/unit/tmp.sh
       - name: cat
         run:  cat ./spec/unit/tmp.sh
 #      - name: Running unit tests from a 'zsh' shell...
