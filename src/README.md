@@ -8,15 +8,15 @@ The [environment setup script](src/environmentSetup/environmentSetup.sh) should 
 
 ### Environment Configration Script Usage
 
-TODO
+TODO #46
 
 ## `.shellrc`
 
-TODO
+TODO #46
 
 ## `.shell_profile`
 
-TODO
+TODO #46
 
 ## POSIX Shell Function(s)
 
