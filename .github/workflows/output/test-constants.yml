@@ -9,6 +9,7 @@ jobs:
 			- name: Check out repository code
 			  uses: actions/checkout@v3
 			- run: cat /etc/shells
+			- run: pwd
 			- name: Run unit tests
 			  run: shellspec \
 			  	--fail-fast --fail-no-examples --warning-as-failure \
