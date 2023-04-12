@@ -18,7 +18,7 @@ readonly DEFAULT_CHAR
 TRACE_CHAR='.'
 readonly TRACE_CHAR
 # Info formatting character.
-INFO_CHAR=$DEFAULT_CHAR
+INFO_CHAR='#'
 readonly INFO_CHAR
 # Debug formatting character.
 DEBUG_CHAR='+'

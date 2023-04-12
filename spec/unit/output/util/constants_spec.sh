@@ -19,7 +19,7 @@ Describe "output():" output
 				BeforeAll 'sourceCut'
 				
 				Describe "DEFAULT_LINE_LENGTH:" outputUtilConstantsEnvironmentVariableSet:defaultLineLength
-					It "Set" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:set                         this
+					It "Set" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:set
 						The variable DEFAULT_LINE_LENGTH should be present
 					End
 					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:readonly               this
@@ -28,7 +28,7 @@ Describe "output():" output
 					It "Not exported" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:notExported
 						The variable DEFAULT_LINE_LENGTH should not be exported
 					End
-					It "Is positive" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:isPositive          this
+					It "Is positive" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:isPositive
 						The value "$DEFAULT_LINE_LENGTH" should satisfy isPositive "$DEFAULT_LINE_LENGTH"
 					End
 				End
