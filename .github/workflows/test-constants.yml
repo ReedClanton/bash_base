@@ -13,8 +13,5 @@ jobs:
       - name: List installed shells
         run: cat /etc/shells
       - name: Run unit tests
-        run: shellspec \
-          --fail-fast --fail-no-examples --warning-as-failure \
-          --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh" --fail-low-coverage \
-          ./spec/unit/output/util/constants_*
+        run: shellspec --fail-fast --fail-no-examples --warning-as-failure --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh" --fail-low-coverage ./spec/unit/output/util/constants_*
 
