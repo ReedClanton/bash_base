@@ -70,7 +70,7 @@ Describe "output():" output
 					End
 				End
 				Describe "INFO_CHAR:" outputUtilConstantsEnvironmentVariableSet:infoChar
-					It "Set" outputUtilConstantsEnvironmentVariableSetInfoChar:set                                  this
+					It "Set" outputUtilConstantsEnvironmentVariableSetInfoChar:set
 						The value "$INFO_CHAR" should be present
 					End
 					It "Readonly" outputUtilConstantsEnvironmentVariableSetInfoChar:readonly                        this
