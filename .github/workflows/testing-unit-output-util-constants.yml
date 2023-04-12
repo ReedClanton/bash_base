@@ -31,11 +31,15 @@ jobs:
       - name: zsh test setup, write to file
         run:  sudo echo 'shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*' > ./spec/unit/tmp.sh
 #      - name: zsh test setup
-#        run:  touch ./spec/unit/tmp.sh; chmod +x ./spec/unit/tmp.sh; sudo echo "shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*" | ./spec/unit/tmp.sh
+#        run:  touch ./spec/unit/tmp.sh; chmod +x ./spec/unit/tmp.sh; sudo echo "shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*" > ./spec/unit/tmp.sh
+      - name: manual test
+        run:  touch ./spec/unit/tmp.sh; chmod +x ./spec/unit/tmp.sh; sudo echo ". ./src/shell/functions/output/util/constants.sh; DEFAULT_LINE_LENGTH=99; echo "'$?'"" > ./spec/unit/tmp.sh
       - name: cat
         run:  cat ./spec/unit/tmp.sh
+#      - name: Running unit tests from a 'zsh' shell...
+#        run:  zsh -c -- "shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*"
       - name: Running unit tests from a 'zsh' shell...
-        run:  zsh -c -- "shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*"
+        run:  zsh -c -- "./spec/unit/tmp.sh"
 ##      - name: Installing 'BusyBox' (shell)...
 ##        run:  sudo apt-get install busybox
 ##      - name: Running unit tests from a 'busybox' shell...
