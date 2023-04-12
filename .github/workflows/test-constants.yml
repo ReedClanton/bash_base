@@ -16,6 +16,10 @@ jobs:
         run:  sudo apt-get install busybox
       - name: Checking location where BusyBox was installed
         run:  which busybox
+      - name: Check if BusyBox is installed
+        run:  busybox --help
+      - name: Check version of BusyBox that was installed
+        run:  busybox --version
       - name: List installed shells
         run:  cat /etc/shells
       - name: Run unit tests on bash shell with code coverage
