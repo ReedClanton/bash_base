@@ -20,16 +20,16 @@ Describe "output():" output
 				BeforeAll 'sourceCut'
 				
 				Describe "DEFAULT_LINE_LENGTH:" outputUtilConstantsEnvironmentVariableSet:defaultLineLength
-					It "Set" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:set
+					It "Set" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:set                         this
 						The variable DEFAULT_LINE_LENGTH should be present
 					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:readonly               this
 						The variable DEFAULT_LINE_LENGTH should be readonly
 					End
 					It "Not exported" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:notExported
 						The variable DEFAULT_LINE_LENGTH should not be exported
 					End
-					It "Is positive" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:isPositive
+					It "Is positive" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:isPositive          this
 						The value "$DEFAULT_LINE_LENGTH" should satisfy isPositive "$DEFAULT_LINE_LENGTH"
 					End
 				End
@@ -37,7 +37,7 @@ Describe "output():" output
 					It "Set" outputUtilConstantsEnvironmentVariableSetDefaultIndent:set
 						The value "$DEFAULT_INDENT" should be present
 					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultIndent:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultIndent:readonly                   this
 						The variable DEFAULT_INDENT should be readonly
 					End
 					It "Not exported" outputUtilConstantsEnvironmentVariableSetDefaultIndent:notExported
@@ -51,7 +51,7 @@ Describe "output():" output
 					It "Set" outputUtilConstantsEnvironmentVariableSetDefaultChar:set
 						The value "$DEFAULT_CHAR" should be present
 					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultChar:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultChar:readonly                     this
 						The variable DEFAULT_CHAR should be readonly
 					End
 					It "Not exported" outputUtilConstantsEnvironmentVariableSetDefaultChar:notExported
@@ -63,7 +63,7 @@ Describe "output():" output
 					It "Set" outputUtilConstantsEnvironmentVariableSetTraceChar:set
 						The value "$TRACE_CHAR" should be present
 					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetTraceChar:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetTraceChar:readonly                       this
 						The variable TRACE_CHAR should be readonly
 					End
 					It "Not exported" outputUtilConstantsEnvironmentVariableSetTraceChar:notExported
@@ -71,10 +71,10 @@ Describe "output():" output
 					End
 				End
 				Describe "INFO_CHAR:" outputUtilConstantsEnvironmentVariableSet:infoChar
-					It "Set" outputUtilConstantsEnvironmentVariableSetInfoChar:set
+					It "Set" outputUtilConstantsEnvironmentVariableSetInfoChar:set                                  this
 						The value "$INFO_CHAR" should be present
 					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetInfoChar:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetInfoChar:readonly                        this
 						The variable INFO_CHAR should be readonly
 					End
 					It "Not exported" outputUtilConstantsEnvironmentVariableSetInfoChar:notExported
@@ -85,7 +85,7 @@ Describe "output():" output
 					It "Set" outputUtilConstantsEnvironmentVariableSetDebugChar:set
 						The value "$DEBUG_CHAR" should be present
 					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetDebugChar:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetDebugChar:readonly                       this
 						The variable DEBUG_CHAR should be readonly
 					End
 					It "Not exported" outputUtilConstantsEnvironmentVariableSetDebugChar:notExported
@@ -96,7 +96,7 @@ Describe "output():" output
 					It "Set" outputUtilConstantsEnvironmentVariableSetWarnChar:set
 						The value "$WARN_CHAR" should be present
 					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetWarnChar:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetWarnChar:readonly                        this
 						The variable WARN_CHAR should be readonly
 					End
 					It "Not exported" outputUtilConstantsEnvironmentVariableSetWarnChar:notExported
@@ -107,7 +107,7 @@ Describe "output():" output
 					It "Set" outputUtilConstantsEnvironmentVariableSetErrorChar:set
 						The value "$ERROR_CHAR" should be present
 					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetErrorChar:readonly
+					It "Readonly" outputUtilConstantsEnvironmentVariableSetErrorChar:readonly                       this
 						The variable ERROR_CHAR should be readonly
 					End
 					It "Not exported" outputUtilConstantsEnvironmentVariableSetErrorChar:notExported
