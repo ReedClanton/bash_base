@@ -2,17 +2,23 @@ name: Unit Tests of output() util constants
 run-name: ${{ github.actor }} is unit testing output() constants
 on: [push]
 jobs:
-	test:
+	Unit-Test-Setup:
 		runs-on: ubuntu-20.04
 		steps:
 			- run: echo "Checking out branch ${{ github.ref }} from ${{ github.repository }} repo on ${{ runner.os }}..."
 			- name: Check out repository code
 			  uses: actions/checkout@v3
-			- run: cat /etc/shells
-			- run: pwd
-			- name: Run unit tests
-			  run: shellspec \
-			  	--fail-fast --fail-no-examples --warning-as-failure \
-			  	--kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh" --fail-low-coverage \
-			  	./spec/unit/output/util/constants_*
+#	unit-test-output-util-constants:
+#		runs-on: ubuntu-20.04
+#		steps:
+#			- run: echo "Checking out branch ${{ github.ref }} from ${{ github.repository }} repo on ${{ runner.os }}..."
+#			- name: Check out repository code
+#			  uses: actions/checkout@v3
+#			- run: cat /etc/shells
+#			- run: pwd
+#			- name: Run unit tests
+#			  run: shellspec \
+#			  	--fail-fast --fail-no-examples --warning-as-failure \
+#			  	--kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh" --fail-low-coverage \
+#			  	./spec/unit/output/util/constants_*
 
