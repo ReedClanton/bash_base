@@ -24,8 +24,12 @@ jobs:
 #        run:  shellspec -s /usr/bin/ksh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
       - name: Installing 'zsh' (shell)...
         run:  sudo apt install -y zsh
+      - name: Setup
+        run:  echo "shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*" | ./spec/unit/tmp.sh
+      - name: cat
+        run:  cat ./spec/unit/tmp.sh
       - name: Running unit tests from a 'zsh' shell...
-        run:  echo "shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*" | ./spec/unit/tmp.sh; zsh ./spec/unit/tmp.sh
+        run:  zsh ./spec/unit/tmp.sh
       - name: Manual test 1
         run:  zsh ./test.sh
 ##      - name: Installing 'BusyBox' (shell)...
