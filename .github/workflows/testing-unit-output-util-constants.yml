@@ -13,14 +13,12 @@ jobs:
 #        run:  sudo apt-get install ksh
       - name: Installing 'zsh' (shell)...
         run:  sudo apt install -y zsh
-      - name: zsh help
-        run:  zsh --help
-      - name: Manual test 1
-        run:  zsh ./test.sh
 ##      - name: Installing 'Kcov' (test coverage library)...
 ##        run:  sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev
       - name: Installing 'shellspec' (POSIX shell script testing tool)...
         run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
+      - name: Manual test 1
+        run:  zsh ./test.sh
 #      - name: Running unit tests from a 'bash' shell (with code coverage) from ${{ github.workspace }}...
 #        run:  shellspec -s /bin/bash --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
 ##        run: shellspec -s /bin/bash -p --fail-no-examples --warning-as-failure --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh --limits=99,100" --fail-low-coverage ./spec/unit/output/util/constants_*
