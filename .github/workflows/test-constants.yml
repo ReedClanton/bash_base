@@ -29,5 +29,6 @@ jobs:
 ##      - name: Running unit tests from a 'ksh' shell...
 ##        run:  shellspec -s /usr/bin/ksh --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
       - name: Running unit tests from a 'zsh' shell...
-        run:  shellspec -s /usr/bin/zsh --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+        run:  shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+#        run:  shellspec -s /usr/bin/zsh --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
 
