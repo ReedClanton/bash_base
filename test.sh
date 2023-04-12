@@ -1,4 +1,1 @@
-. ./src/shell/functions/output/util/constants.sh
-DEFAULT_LINE_LENGTH=99
-echo "'$?'"
-
+shellspec --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*

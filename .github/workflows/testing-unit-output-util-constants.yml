@@ -17,16 +17,6 @@ jobs:
         run:  zsh --help
       - name: Manual test 1
         run:  zsh ./test.sh
-      - name: Manual test 2
-        run:  zsh -- ./src/shell/functions/output/util/constants.sh;DEFAULT_LINE_LENGTH=99; echo "'$?'"
-      - name: Check active shell
-        run:  zsh;echo "'$SHELL'"
-      - name: Source constants file
-        run:  zsh;. ./src/shell/functions/output/util/constants.sh;echo "'$?'"
-      - name: Display DEFAULT_LINE_LENGTH
-        run:  zsh;. ./src/shell/functions/output/util/constants.sh;echo "'$DEFAULT_LINE_LENGTH'"
-      - name: Set DEFAULT_LINE_LENGTH
-        run:  zsh;. ./src/shell/functions/output/util/constants.sh;DEFAULT_LINE_LENGTH=99; echo "'$?'"
 ##      - name: Installing 'Kcov' (test coverage library)...
 ##        run:  sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev
       - name: Installing 'shellspec' (POSIX shell script testing tool)...
