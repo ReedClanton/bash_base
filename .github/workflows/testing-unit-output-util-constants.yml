@@ -16,9 +16,9 @@ jobs:
       - name: zsh help
         run:  zsh --help
       - name: Manual test 1
-        run:  zsh . ./src/shell/functions/output/util/constants.sh;DEFAULT_LINE_LENGTH=99; echo "'$?'"
+        run:  zsh ./test.sh
       - name: Manual test 2
-        run:  zsh -- ./test.sh
+        run:  zsh -- ./src/shell/functions/output/util/constants.sh;DEFAULT_LINE_LENGTH=99; echo "'$?'"
       - name: Check active shell
         run:  zsh;echo "'$SHELL'"
       - name: Source constants file
