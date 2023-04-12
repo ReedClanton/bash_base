@@ -16,7 +16,13 @@ jobs:
         run:  cat /etc/shells
       - name: Name of current shell
         run: echo $SHELL
-      - name: Run unit tests on bash
-        run: shellspec -s /bin/bash --fail-fast --fail-no-examples --warning-as-failure --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh" --fail-low-coverage ./spec/unit/output/util/constants_*
-#        run:  shellspec --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+      - name: Run unit tests on bash with code coverage
+        run:  shellspec -s /bin/bash --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+#        run: shellspec -s /bin/bash --fail-fast --fail-no-examples --warning-as-failure --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh" --fail-low-coverage ./spec/unit/output/util/constants_*
+      - name: Run unit tests on sh
+        run:  shellspec -s /bin/sh --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+      - name: Run unit tests on dash
+        run:  shellspec -s /bin/dash --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+#      - name: Run unit tests on zsh
+#        run:  shellspec -s /path/to/zsh --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
 
