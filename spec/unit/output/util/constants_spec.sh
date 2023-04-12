@@ -15,16 +15,11 @@ Describe "output():" output
 			
 			Describe "Environment variable set:" outputUtilConstants:environmentVariableSet
 				# Ensure constants set by file are incorporated into the test environment.
-#				Include $constants
-				# TODO: Comment.
 				sourceCut() { . $constants; }
 				BeforeAll 'sourceCut'
 				
 				Describe "DEFAULT_LINE_LENGTH:" outputUtilConstantsEnvironmentVariableSet:defaultLineLength
 					It "Set" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:set
-#						Pending "Fix it on zsh"
-#						When run source $constants
-						The value "$DEFAULT_LINE_LENGTH" should be present
 						The variable DEFAULT_LINE_LENGTH should be present
 					End
 					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:readonly
