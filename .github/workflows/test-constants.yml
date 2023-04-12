@@ -14,6 +14,8 @@ jobs:
         run:  sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev
       - name: List installed shells
         run:  cat /etc/shells
+      - name: Name of current shell
+        run: echo $SHELL
       - name: Run unit tests
         run: shellspec --fail-fast --fail-no-examples --warning-as-failure --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh" --fail-low-coverage ./spec/unit/output/util/constants_*
 #        run:  shellspec --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
