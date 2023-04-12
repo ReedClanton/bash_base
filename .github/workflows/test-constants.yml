@@ -9,7 +9,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
       - name: Install shellspec
-        run: yes | wget -q -O- https://git.io/shellspec | sh
+        run: yes | sudo wget -q -O- https://git.io/shellspec | sh
       - name: List installed shells
         run: cat /etc/shells
       - name: Run unit tests
