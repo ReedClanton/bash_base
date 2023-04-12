@@ -1,7 +1,8 @@
 # Shell Base
 
-TODO: Re-write this section.
-I create symbolic links to a local clone of this repo in my local environment. This repo provides almost all environment files I use on my machines. I provide no warranties.
+This project contains all shell configuration files needed to setup a POSIX compilent shell environment. It also includes shell functions that may be utalized by user created scripts (e.g. log).
+
+There's a script that uses this project's contents to setup a user's shell environment.
 
 ## Terminology
 
@@ -23,7 +24,7 @@ I create symbolic links to a local clone of this repo in my local environment. T
 
 ## Goal(s)
 
-TODO
+Make setting up a new POSIX complient shell environment as easy as possible and provided additional shell script functionality, like a logger.
 
 ## Setup
 
