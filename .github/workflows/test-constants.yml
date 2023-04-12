@@ -5,6 +5,9 @@ jobs:
   unit-test-output-util-constants:
     runs-on: ubuntu-20.04
     steps:
+      - run:  echo "Checking out branch ${{ github.ref }} from ${{ github.repository }} repo on ${{ runner.os }}..."
+      - name: Check out repository code
+        uses: actions/checkout@v3
       - name: GITHUB_ACTION
         run:  echo "'$GITHUB_ACTION'"
       - name: GITHUB_ACTION_PATH
@@ -85,9 +88,6 @@ jobs:
         run:  echo "'$RUNNER_TEMP'"
       - name: RUNNER_TOOL_CACHE
         run:  echo "'$RUNNER_TOOL_CACHE'"
-      - run:  echo "Checking out branch ${{ github.ref }} from ${{ github.repository }} repo on ${{ runner.os }}..."
-      - name: Check out repository code
-        uses: actions/checkout@v3
       - name: Install BusyBox shell
         run:  sudo apt-get install busybox
       - name: Check if BusyBox is installed
