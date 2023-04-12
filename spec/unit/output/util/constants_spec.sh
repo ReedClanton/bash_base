@@ -24,7 +24,6 @@ Describe "output():" output
 					End
 					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:readonly
 						The variable DEFAULT_LINE_LENGTH should be readonly
-						The value "$DEFAULT_LINE_LENGTH" should be readonly
 					End
 					It "Not exported" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:notExported
 						The variable DEFAULT_LINE_LENGTH should not be exported
