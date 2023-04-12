@@ -1,97 +1,14 @@
 name: Unit Tests of output() util constants
-run-name: ${{ github.actor }} is unit testing output() constants
+run-name: ${{ github.actor }} has triggered the running of unit tests of output()'s constants file because they initiated a ${{ github.event_name }}
 on: push
 jobs:
   unit-test-output-util-constants:
     runs-on: ubuntu-20.04
     steps:
-      - run:  echo "Checking out branch ${{ github.ref }} from ${{ github.repository }} repo on ${{ runner.os }}..."
-      - name: Check out repository code
+      - name: Job ${{ github.job }}, initiated by ${{ github.actor }} via a ${{ github.event_name }}, is checking out branch ${{ github.ref }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }}...
         uses: actions/checkout@v3
-      - name: GITHUB_ACTION
-        run:  echo "'$GITHUB_ACTION'"
-      - name: GITHUB_ACTION_PATH
-        run:  echo "'$GITHUB_ACTION_PATH'"
-      - name: GITHUB_ACTION_REPOSITORY
-        run:  echo "'$GITHUB_ACTION_REPOSITORY'"
-      - name: GITHUB_ACTIONS
-        run:  echo "'$GITHUB_ACTIONS'"
-      - name: GITHUB_ACTOR
-        run:  echo "'$GITHUB_ACTOR'"
-      - name: GITHUB_ACTOR_ID
-        run:  echo "'$GITHUB_ACTOR_ID'"
-      - name: GITHUB_API_URL
-        run:  echo "'$GITHUB_API_URL'"
-      - name: GITHUB_BASE_REF
-        run:  echo "'$GITHUB_BASE_REF'"
-      - name: GITHUB_ENV
-        run:  echo "'$GITHUB_ENV'"
-      - name: GITHUB_EVENT_NAME
-        run:  echo "'$GITHUB_EVENT_NAME'"
-      - name: GITHUB_EVENT_PATH
-        run:  echo "'$GITHUB_EVENT_PATH'"
-      - name: GITHUB_GRAPHQL_URL
-        run:  echo "'$GITHUB_GRAPHQL_URL'"
-      - name: GITHUB_HEAD_REF
-        run:  echo "'$GITHUB_HEAD_REF'"
-      - name: GITHUB_JOB
-        run:  echo "'$GITHUB_JOB'"
-      - name: GITHUB_PATH
-        run:  echo "'$GITHUB_PATH'"
-      - name: GITHUB_REF
-        run:  echo "'$GITHUB_REF'"
-      - name: GITHUB_REF_NAME
-        run:  echo "'$GITHUB_REF_NAME'"
-      - name: GITHUB_REF_PROTECTED
-        run:  echo "'$GITHUB_REF_PROTECTED'"
-      - name: GITHUB_REF_TYPE
-        run:  echo "'$GITHUB_REF_TYPE'"
-      - name: GITHUB_REPOSITORY
-        run:  echo "'$GITHUB_REPOSITORY'"
-      - name: GITHUB_REPOSITORY_ID
-        run:  echo "'$GITHUB_REPOSITORY_ID'"
-      - name: GITHUB_REPOSITORY_OWNER
-        run:  echo "'$GITHUB_REPOSITORY_OWNER'"
-      - name: GITHUB_REPOSITORY_OWNER_ID
-        run:  echo "'$GITHUB_REPOSITORY_OWNER_ID'"
-      - name: GITHUB_RETENTION_DAYS
-        run:  echo "'$GITHUB_RETENTION_DAYS'"
-      - name: GITHUB_RUN_ATTEMPT
-        run:  echo "'$GITHUB_RUN_ATTEMPT'"
-      - name: GITHUB_RUN_ID
-        run:  echo "'$GITHUB_RUN_ID'"
-      - name: GITHUB_RUN_NUMBER
-        run:  echo "'$GITHUB_RUN_NUMBER'"
-      - name: GITHUB_SERVER_URL
-        run:  echo "'$GITHUB_SERVER_URL'"
-      - name: GITHUB_SHA
-        run:  echo "'$GITHUB_SHA'"
-      - name: GITHUB_STEP_SUMMARY
-        run:  echo "'$GITHUB_STEP_SUMMARY'"
-      - name: GITHUB_WORKFLOW
-        run:  echo "'$GITHUB_WORKFLOW'"
-      - name: GITHUB_WORKFLOW_REF
-        run:  echo "'$GITHUB_WORKFLOW_REF'"
-      - name: GITHUB_WORKFLOW_SHA
-        run:  echo "'$GITHUB_WORKFLOW_SHA'"
-      - name: GITHUB_WORKSPACE
-        run:  echo "'$GITHUB_WORKSPACE'"
-      - name: RUNNER_ARCH
-        run:  echo "'$RUNNER_ARCH'"
-      - name: RUNNER_DEBUG
-        run:  echo "'$RUNNER_DEBUG'"
-      - name: RUNNER_NAME
-        run:  echo "'$RUNNER_NAME'"
-      - name: RUNNER_OS
-        run:  echo "'$RUNNER_OS'"
-      - name: RUNNER_TEMP
-        run:  echo "'$RUNNER_TEMP'"
-      - name: RUNNER_TOOL_CACHE
-        run:  echo "'$RUNNER_TOOL_CACHE'"
-      - name: Install BusyBox shell
+      - name: Job ${{ github.job }}, initiated by ${{ github.actor }} via a ${{ github.event_name }}, installing the 'BusyBox' shell
         run:  sudo apt-get install busybox
-      - name: Check if BusyBox is installed
-        run:  busybox --help
       - name: Install Kcov
         run:  sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev
       - name: Install shellspec
