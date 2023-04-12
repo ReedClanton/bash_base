@@ -227,7 +227,7 @@ for fullArg in "$@"; do
 			arg=$(echo $arg | tr -d '[:space:]')
 			# Ensure provided indent is valid.
 			case "$arg" in
-				# TODO: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
+				# TODO #45: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
 				[[:digit:]]|[[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]])
 					indent=$arg  ;;
 				*)
@@ -240,7 +240,7 @@ for fullArg in "$@"; do
 			arg=$(echo $arg | tr -d '[:space:]')
 			# Ensure provided value is valid.
 			case "$arg" in
-				# TODO: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
+				# TODO #45: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
 				[1-9]|[[:digit:]][[:digit:]]|[1-9][[:digit:]][[:digit:]]|[1-9][[:digit:]][[:digit:]][[:digit:]]|[1-9][[:digit:]][[:digit:]][[:digit:]][[:digit:]])
 					maxAlwLineLen=$arg  ;;
 				*)

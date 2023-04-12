@@ -89,7 +89,7 @@ createHeaderFooter() {
 				arg=$(echo $arg | tr -d '[:space:]')
 				# Ensure provided line length is valid.
 				case "$arg" in
-					# TODO: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
+					# TODO #45: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
 					[[:digit:]]|[[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]])
 						len=$(($arg+$len))  ;;
 					*)
