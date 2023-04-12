@@ -1,6 +1,6 @@
 # POSIX Shell Functions
 
-TODO
+This document contains all information that's generic to all shell functions as well as basic descriptions of what each script does. For more detailed information regarding usage of a script, either open the file that contains the script or, if you've already setup your environment, then in your terminal enter: `<scriptName> -h` or `<scriptName> --help`.
 
 ## Return Codes
 
@@ -60,8 +60,6 @@ Alternatively, enter `<funcationName> --help` for a document that describes how 
 
 # POSIX Functions
 
-TODO
-
 ## `backUp`
 
 Script that copies files and directories from user's home directory to another location.
@@ -98,4 +96,4 @@ options.
 
 ## `shellName`
 
-TODO
+Returns the name of the shell that called the script to `stdout`.
