@@ -1,4 +1,19 @@
+ ########
+## Code ##
+ ########
+## Environment Setup ##
 # Ensure backups of local user's bash file(s) aren't included.
 /src/environmentSetup/*-homeBackUp-*
-tmp.sh
+
+ ###########
+## Testing ##
+ ###########
 coverage/
+report/
+
+ #########
+## Other ##
+ #########
+# **Note**: You need to have an extreamlly compelling reason to add something here...
+tmp.sh
+
