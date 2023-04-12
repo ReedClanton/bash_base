@@ -14,9 +14,17 @@ jobs:
       - name: Installing 'zsh' (shell)...
         run:  sudo apt install -y zsh
       - name: zsh help
-        run: zsh --help
-      - name: Manual testing
-        run: zsh;. ./src/shell/functions/output/util/constants.sh;echo "'$DEFAULT_LINE_LENGTH'";DEFAULT_LINE_LENGTH=99; echo "'$?'"
+        run:  zsh --help
+      - name: Change active shell
+        run:  zsh
+      - name: Check active shell
+        run:  echo "'$SHELL'"
+      - name: Source constants file
+        run:  . ./src/shell/functions/output/util/constants.sh; echo "'$?'"
+      - name: Display DEFAULT_LINE_LENGTH
+        run:  echo "'$DEFAULT_LINE_LENGTH'"
+      - name: Set DEFAULT_LINE_LENGTH
+        run:  DEFAULT_LINE_LENGTH=99; echo "'$?'"
 ##      - name: Installing 'Kcov' (test coverage library)...
 ##        run:  sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev
       - name: Installing 'shellspec' (POSIX shell script testing tool)...
