@@ -18,17 +18,16 @@ jobs:
       - name: Installing 'shellspec' (POSIX shell script testing tool)...
         run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
 #      - name: Running unit tests from a 'bash' shell (with code coverage) from ${{ github.workspace }}...
-#        run:  shellspec -s /bin/bash --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
-##        run: shellspec -s /bin/bash --fail-fast --fail-no-examples --warning-as-failure --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh" --fail-low-coverage ./spec/unit/output/util/constants_*
+#        run:  shellspec -s /bin/bash --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+##        run: shellspec -s /bin/bash --fail-no-examples --warning-as-failure --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh" --fail-low-coverage ./spec/unit/output/util/constants_*
 #      - name: Running unit tests from an 'sh' shell...
-#        run:  shellspec -s /bin/sh --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+#        run:  shellspec -s /bin/sh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
 #      - name: Running unit tests from a 'dash' shell...
-#        run:  shellspec -s /bin/dash --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+#        run:  shellspec -s /bin/dash --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
 #      - name: Running unit tests from a 'busybox' shell...
-#        run:  shellspec -s /usr/bin/busybox --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+#        run:  shellspec -s /usr/bin/busybox --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
 ##      - name: Running unit tests from a 'ksh' shell...
-##        run:  shellspec -s /usr/bin/ksh --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
+##        run:  shellspec -s /usr/bin/ksh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
       - name: Running unit tests from a 'zsh' shell...
         run:  shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
-#        run:  shellspec -s /usr/bin/zsh --fail-fast --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
 
