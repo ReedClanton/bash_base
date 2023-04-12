@@ -2,8 +2,8 @@
 ## Text Formatting ##
  ###################
 # Default line length including formatting (ex. prefix & postfix).
-DEFAULT_LINE_LENGTH=100
-readonly DEFAULT_LINE_LENGTH
+readonly DEFAULT_LINE_LENGTH=100
+#readonly DEFAULT_LINE_LENGTH
 # Default number of spaces message text should be indented by.
 DEFAULT_INDENT=0
 readonly DEFAULT_INDENT
