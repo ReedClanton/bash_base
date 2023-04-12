@@ -25,7 +25,7 @@ jobs:
       - name: Installing 'zsh' (shell)...
         run:  sudo apt install -y zsh
       - name: Setup
-        run:  touch ./spec/unit/tmp.sh; echo "shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*" | ./spec/unit/tmp.sh
+        run:  touch ./spec/unit/tmp.sh; chmod +x ./spec/unit/tmp.sh; sudo echo "shellspec -s /usr/bin/zsh --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*" | ./spec/unit/tmp.sh
       - name: cat
         run:  cat ./spec/unit/tmp.sh
       - name: Running unit tests from a 'zsh' shell...
