@@ -15,8 +15,10 @@ jobs:
         run:  sudo apt install -y zsh
       - name: zsh help
         run:  zsh --help
-      - name: 
-        run:  zsh -c . ./src/shell/functions/output/util/constants.sh;DEFAULT_LINE_LENGTH=99; echo "'$?'"
+      - name: Manual test 1
+        run:  zsh . ./src/shell/functions/output/util/constants.sh;DEFAULT_LINE_LENGTH=99; echo "'$?'"
+      - name: Manual test 2
+        run:  zsh -- . ./src/shell/functions/output/util/constants.sh;DEFAULT_LINE_LENGTH=99; echo "'$?'"
       - name: Check active shell
         run:  zsh;echo "'$SHELL'"
       - name: Source constants file
