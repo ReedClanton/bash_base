@@ -2,7 +2,7 @@ Describe "output():" output
 	Describe "util:" output:util
 		Describe "constants:" outputUtil:constants
 			# Makes test easier to read and maintain.
-			constants=$PWD/src/shell/functions/output/util/constants.sh
+			constants=$PWD/src/shell/functions/output/util/constants
 			
 			Describe "Shell compatibility:" outputUtilConstants:shellCompatibility
 				It "Source file" outputUtilConstantsShellCompatibility:sourceFile
