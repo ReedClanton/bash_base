@@ -5,6 +5,7 @@
  ##################
 alias src='. $HOME/.bashrc'
 alias ssh='ssh -X'
+# TODO #44: Figure out how to make this always open the default text editor.
 alias txtEdit='xdg-open'
 
  #######################

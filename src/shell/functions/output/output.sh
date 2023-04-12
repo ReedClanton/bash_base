@@ -1,19 +1,26 @@
-#!/usr/bin/env sh
+# Needed so unit tests can mock out sourced file(s).
+if [ "$(type -t inScriptSource)" = "" ]; then
+	inScriptSource() { . "$@"; }
+fi
 
  #############
 ## Import(s) ##
  #############
-## Global(s) ##
-. $SHELL_FUNCTIONS/output/globals.sh
-## Constant(s) ##
-. $SHELL_FUNCTIONS/output/constents.sh
-## Code ##
-alias createHeaderFooter=$SHELL_FUNCTIONS/output/util/createHeaderFooter.sh
-
- #####################
-## Local Variable(s) ##
- #####################
-# NoOp
+if [ -f $PWD/util/main.sh ]; then
+	inScriptSource $PWD/util/main.sh
+elif [ -f $PWD/src/shell/functions/output/util/main.sh ]; then
+	inScriptSource $PWD/src/shell/functions/output/util/main.sh
+elif [ "$SHELL_FUNCTIONS" != "" ]; then
+	if [ -f $SHELL_FUNCTIONS/output/util/main.sh ]; then
+		inScriptSource $SHELL_FUNCTIONS/output/util/main.sh
+	else
+		echo "ERROR output(): Couldn't find 'main.sh' file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		exit 202
+	fi
+else
+	echo "ERROR output(): Couldn't find 'main.sh' file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+	exit 202
+fi
 
  ###############
 ## Function(s) ##
@@ -56,7 +63,7 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/		When given, message produced will include a prefix and postfix.
 #/			- Note: Redundant if -p.
 #/		(OPTIONAL)
-#/	-l=<maxLineLength>, --lineLength=<maxLineLength>
+#/	-l=<maxLineLength>, --line-length=<maxLineLength>
 #/		Sets max number of characters that may be included on a single line.
 #/			- Note: Line length includes prefix and postfix if included.
 #/			- Note: Default value: 100.
@@ -65,16 +72,17 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/		When given, message produced will include a header and footer.
 #/			- Note: Redundant if -p given.
 #/		(OPTIONAL)
-#/	-c=<formattingCharacter>, --char=<formattingCharacter>
+#/	-f=<formattingCharacter>, --formatting-character=<formattingCharacter>
 #/		Sets character used by header, footer, prefix, and postfix.
 #/			- Note: Default value: $DEFAULT_CHAR.
-#/			- Note: Some special characters may require two to be given (ex. -c="%%").
+#/			- Note: Some special characters may require two to be given (ex. -f="%%").
 #/			- Note: Some *other* special characters may not work at all (ex. back slash).
 #/		(OPTIONAL)
 #/	--indent=<numSpacesToIndent>
 #/		Sets number of spaces formatted message, including
 #/		prefix/postfix/header/footer if used, should be indented.
 #/			- Note: Default value: $DEFAULT_INDENT.
+#/			- Note: Must be a positive integer.
 #/		(OPTIONAL)
 #/	-t, --trace
 #/		When given, *trace* formatting character ($TRACE_CHAR) is used as formatting character.
@@ -121,7 +129,8 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/		- Provided indent value is negative.
 #/		- Provided max line length value is too small:
 #/			- Line length - prefix - postfix > 0.
-#/	- 142: Returned when a required option is not provided.
+#/		- No message text is provided.
+#/	- 142: Returned when the message text option is not provided.
 #/
 #/ EXAMPLE(S):
 #/	output --help
@@ -131,8 +140,8 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/	output -m="line 1" -m="longline 2" -l=10 --pre-post-fix --header-footer
 #/	output -m="line 1" --pretty --error
 #/	output -m="line 1" -p -w
-#/	output -m="line 1" -p -c="^"
-#/	output -m="line 1" -p --char="&&"
+#/	output -m="line 1" -p -f="^"
+#/	output -m="line 1" -p --formatting-character="&&"
 #/
 #/ TODO(S):
 #/	- Implement: Dynamically determine, based on last character of line being
@@ -141,6 +150,7 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/		row to the start of the next line.
 #/	- Implement: Support for '%' as a formatting character.
 EOF
+
  ###############################
 ## Reset/Set Local Variable(s) ##
  ###############################
@@ -164,19 +174,24 @@ maxGvnLineLen=0
 #	- Minus postfix length (if used).
 maxAlwMsgLen=0
 # Used to track each line of message.
-tmp=1
 msg=()
 # Contains final (formatted) message text.
 rtOutput=''
 # Prefix used to produce error logs.
-errPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR output:"
-readonly errPrefix
+if [ "$(type -t date)" = "" ]; then
+	outputLogPrefix="ERROR output():"
+else
+	outputLogPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR output():"
+fi
+readonly outputLogPrefix
+# Used to track if caller provided a message option so correct return value may be provided.
+msgGiven=false
 
  #####################
 ## Process Option(s) ##
  #####################
 # Process option(s).
-for fullArg in "${@}"; do
+for fullArg in "$@"; do
 	# Tracks value of current option.
 	arg=${fullArg#*=}
 	
@@ -185,8 +200,16 @@ for fullArg in "${@}"; do
 		-h|--help)
 			echo "$OUTPUT_DOC"
 			exit 0  ;;
-		-c=*|--char=*)
-			fChar=$arg  ;;
+		-f=*|--formatting-character=*)
+			# Ensure a valid value was provided.
+			case "$arg" in
+				*\\*|""|%)
+					echo "$outputLogPrefix Formatting character may not be blank, a special character (ex. new line, tab), or '%', was '$arg'. See doc:" >&2
+					echo "$OUTPUT_DOC" >&2
+					exit 141  ;;
+				*)
+					fChar=$arg  ;;
+			esac  ;;
 		-t|--trace)
 			fChar=$TRACE_CHAR  ;;
 		-d|--debug)
@@ -200,10 +223,33 @@ for fullArg in "${@}"; do
 		--header-footer)
 			headerFooter=true  ;;
 		--indent=*)
-			indent=$arg  ;;
-		-l=*|--lineLength=*)
-			maxAlwLineLen=$arg  ;;
+			# Strip space character(s) from argument.
+			arg=$(echo $arg | tr -d '[:space:]')
+			# Ensure provided indent is valid.
+			case "$arg" in
+				# TODO #45: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
+				[[:digit:]]|[[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]])
+					indent=$arg  ;;
+				*)
+					echo "$outputLogPrefix Indent must be a non-negative integer, was '$arg', see doc:" >&2
+					echo "$OUTPUT_DOC" >&2
+					exit 141  ;;
+			esac  ;;
+		-l=*|--line-length=*)
+			# Strip space character(s) from argument.
+			arg=$(echo $arg | tr -d '[:space:]')
+			# Ensure provided value is valid.
+			case "$arg" in
+				# TODO #45: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
+				[1-9]|[[:digit:]][[:digit:]]|[1-9][[:digit:]][[:digit:]]|[1-9][[:digit:]][[:digit:]][[:digit:]]|[1-9][[:digit:]][[:digit:]][[:digit:]][[:digit:]])
+					maxAlwLineLen=$arg  ;;
+				*)
+					echo "$outputLogPrefix Line length must be a positive integer, was '$arg', see doc:" >&2
+					echo "$OUTPUT_DOC" >&2
+					exit 141  ;;
+			esac  ;;
 		-m=*|--msg=*)
+			msgGiven=true
 			# Determine if given line contains newline character.
 			if [[ $arg == *"\\n"* ]]; then
 				# Split line at new line character, then save each line.
@@ -236,8 +282,8 @@ for fullArg in "${@}"; do
 			# Use post/pre fix formatting.
 			prePostFix=true  ;;
 		*)
-			printf "$errPrefix Calling function provided invalid option: '$fullArg', see doc:\n"
-			echo "$OUTPUT_DOC"
+			echo "$outputLogPrefix Calling function provided invalid option: '$fullArg', see doc:" >&2
+			echo "$OUTPUT_DOC" >&2
 			exit 140  ;;
 	esac
 done
@@ -245,35 +291,53 @@ done
  ###########################
 ## Error Check Argument(s) ##
  ###########################
-## Ensure Message Text Was Provided ##
-if [[ -z "${msg[@]}" ]]; then
-	printf "$errPrefix Message text must be given, see doc:\n"
-	echo "$OUTPUT_DOC"
-	exit 142
-fi
-
-## Ensure Valid Indent Value Was Given ##
 # Used to track max number of message character(s) that be exist on each line (accounts for pre/post fix).
 maxAlwMsgLen=$maxAlwLineLen
-# Remove indent value from max message character(s) per line.
-if [[ $indent -ge 0 ]]; then
-	maxAlwMsgLen=$(($maxAlwMsgLen-$indent))
-else
-	printf "$errPrefix Indentation value: '$indent' invalid. Must be non-negative, see doc:\n"
-	echo "$OUTPUT_DOC"
-	exit 141
-fi
-# Remove prefix & postfix length from max message character(s) per line.
-if $prePostFix; then
-	maxAlwMsgLen=$(($maxAlwMsgLen-$(($((${#fChar}+1))*2))))
-fi
 
-## Verify Max Message Character(s) Per Line is Valid ##
-# Ensure there's enough room to include message character(s).
-if [[ $maxAlwMsgLen -lt 1 ]]; then
-	printf "$errPrefix Max line length of '$maxAlwLineLen' invalid because there's no room for message text. See Doc:\n"
-	echo "$OUTPUT_DOC"
-	exit 141
+## Ensure Message Text Option was Provided ##
+if $msgGiven; then
+	## Ensure Message Text was Provided ##
+	if [[ -n "${msg[@]}" ]]; then
+		
+		# Remove indent value from max message character(s) per line.
+		if [[ $indent -gt 0 ]]; then
+			maxAlwMsgLen=$(($maxAlwMsgLen-$indent))
+		fi
+		
+		# Remove prefix & postfix length from max message character(s) per line.
+		if $prePostFix; then
+			maxAlwMsgLen=$(($maxAlwMsgLen-$(($((${#fChar}+1))*2))))
+		fi
+		
+		## Verify Max Message Character(s) Per Line is Valid ##
+		if [[ $maxAlwMsgLen -lt 1 ]]; then
+			# Build helpful error message(s).
+			errMsg="$outputLogPrefix Max line length ($maxAlwLineLen) is too short to contain '$indent' space(s) of indent"
+			if $prePostFix; then
+				errMsg="$errMsg and the prefix character '$fChar'."
+			else
+				errMsg="$errMsg."
+			fi
+			echo $errMsg >&2
+			
+			if [[ $(($DEFAULT_INDENT)) -ge $(($maxAlwLineLen)) ]]; then
+				echo "$outputLogPrefix Decrease default indent ($DEFAULT_INDENT) to bellow max allowed line length ($maxAlwLineLen)." >&2
+			elif [[ $(($indent)) -ge $(($maxAlwLineLen)) ]]; then
+				echo "$outputLogPrefix Decrease provided indent value ($indent) to bellow max allowed line length ($maxAlwLineLen)." >&2
+			fi
+			
+			echo "$OUTPUT_DOC" >&2
+			exit 141
+		fi
+	else
+		echo "$outputLogPrefix Message text must be given, see doc:" >&2
+		echo "$OUTPUT_DOC" >&2
+		exit 141
+	fi
+else
+	echo "$outputLogPrefix Message option must be provided, see doc:" >&2
+	echo "$OUTPUT_DOC" >&2
+	exit 142
 fi
 
  ########################
@@ -307,11 +371,11 @@ if [[ $maxGvnLineLen -gt $maxAlwMsgLen ]]; then
 			tmp+=("${msg[@]:$(($i+1))}")
 			msg=("${tmp[@]}")
 			# Line was split, so number of lines has increased.
-			end+=1
+			end=$(($end+1))
 		fi
 
 		# Mark current line's processing as complete.
-		i+=1
+		i=$(($i+1))
 	done
 	# Update longest given line.
 	maxGvnLineLen=$maxAlwMsgLen
@@ -322,15 +386,15 @@ fi
 if $headerFooter; then
 	# Call function that creates header/footer.
 	if $prePostFix; then
-		cmd="createHeaderFooter --prefix -l=$maxGvnLineLen -c=$fChar"
+		cmd="createHeaderFooter --prefix -l=$maxGvnLineLen -f='$fChar'"
 	else
-		cmd="createHeaderFooter -l=$maxGvnLineLen -c=$fChar"
+		cmd="createHeaderFooter -l=$maxGvnLineLen -f='$fChar'"
 	fi
 	unset stdOut errOut rtOut
 	eval "$( (eval $cmd) \
 		2> >(errOut=$(cat); typeset -p errOut) \
 		 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
-		 
+	
 	# Ensure header/footer was generated successfully.
 	if [[ $rtOut -eq 0 ]]; then
 		# Save off header/footer.
@@ -340,7 +404,8 @@ if $headerFooter; then
 			headerFooterTxt=$stdOut
 		fi
 	else
-		printf "$errPrefix createHeaderFooter() failed to create header/footer text.\n"
+		echo "$outputLogPrefix createHeaderFooter() failed to create header/footer text. stderr bellow:" >&2
+		echo "$errOut" >&2
 		exit 3
 	fi
 fi
@@ -350,37 +415,37 @@ fi
  #########################
 ## Header ##
 if $headerFooter; then
-	rtOutput+=$headerFooterTxt
+	rtOutput="$rtOutput$headerFooterTxt"
 fi
 
 ## Add Message, Prefix, & Postfix ##
 for ((i=0; i<${#msg[@]}; i++)); do
 	# Determine if prefix is needed.
 	if $prePostFix; then
-		rtOutput+="$indentTxt$fChar "
+		rtOutput="$rtOutput$indentTxt$fChar "
 	else
-		rtOutput+="$indentTxt"
+		rtOutput="$rtOutput$indentTxt"
 	fi
 
 	# Add current line of message.
-	rtOutput+="${msg[$i]}"
+	rtOutput="$rtOutput${msg[$i]}"
 
 	# Determine if postfix is needed.
 	if $prePostFix; then
 		# Add lines after message so postfix characters line up.
 		for ((j=${#msg[$i]}; j<$maxGvnLineLen; j++)); do
-			rtOutput+=' '
+			rtOutput="$rtOutput "
 		done
 		# Add postfix character.
-		rtOutput+=" $fChar\n"
+		rtOutput="$rtOutput $fChar\n"
 	else
-		rtOutput+="\n"
+		rtOutput="$rtOutput\n"
 	fi
 done
 
 ## Footer ##
 if $headerFooter; then
-	rtOutput+=$headerFooterTxt
+	rtOutput="$rtOutput$headerFooterTxt"
 fi
 
 ## Write Final Message ##

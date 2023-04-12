@@ -133,7 +133,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 	 #####################
 	## Process Option(s) ##
 	 #####################
-	for fullArg in "${@}"; do
+	for fullArg in "$@"; do
 		log $traceLvl -m="Processing option: '$fullArg'..."
 		# Tracks value of current option.
 		arg=${fullArg#*=}

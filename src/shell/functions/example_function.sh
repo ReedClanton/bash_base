@@ -70,7 +70,7 @@ function functionName {
 	 #####################
 	## Process Option(s) ##
 	 #####################
-	for fullArg in "${@}"; do
+	for fullArg in "$@"; do
 		log $traceLvl -m="Processing option: '$fullArg'..."
 		# Tracks value of current option.
 		arg=${fullArg#*=}

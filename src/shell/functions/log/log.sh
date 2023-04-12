@@ -145,7 +145,7 @@ msg=""
  #####################
 ## Process Option(s) ##
  #####################
-for fullArg in "${@}"; do
+for fullArg in "$@"; do
 	# Tracks value of current option.
 	arg=${fullArg#*=}
 

@@ -1,46 +1,31 @@
-#!/usr/bin/env sh
-
- #########################
-## Global(s)/Constant(s) ##
- #########################
-## Global(s) ##
-. $SHELL_FUNCTIONS/output/globals.sh
-## Constant(s) ##
-. $SHELL_FUNCTIONS/output/constents.sh
-
- #####################
-## Local Variable(s) ##
- #####################
-# NoOp
-
 IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/ DESCRIPTION:
-#/	Returns text intended to be used as a header or footer in std out.
+#/	Returns text intended to be used as a header or footer in stdout. Upon
+#/	failure, a non-zero code will be returned and output will be produced to
+#/	stderr.
 #/
-#/ USAGE: createHeaderFooter [OPTIONS]... -l=<maxMsgLength>
+#/ USAGE: createHeaderFooter [OPTIONS]...
 #/
 #/ NOTE(S):
 #/	- Method may not use the log function because this is used by that method.
-#/	- This method is in the same directory as output because a local variable
-#/		is used by this method to return a value to the output method when
-#/		called by the output method.
 #/
 #/ OPTION(S):
-#/	-c=<formattingCharacter>, --char=<formattingCharacter>
+#/	-f=<formattingCharacter>, --formatting-character=<formattingCharacter>
 #/		Sets character used to create header and footer.
 #/			- Note: Default value: $DEFAULT_CHAR.
-#/			- Note: Some special characters may require two to be given:
-#/				-c="55"  _> %
-#/			- Note: Some *other* special characters may not work at all (ex. back slash).
+#/			- Note: Some special characters may require two to be given.
+#/			- Note: Some characters may require quotes (ex. `>`).
+#/			- Note: Given value may not include a back slash.
 #/		(OPTIONAL)
 #/	-h, --help
 #/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
-#/	-l=<maxMsgLength>, --lineLength=<maxMsgLength>
+#/	-l=<maxMsgLength>, --line-length=<maxMsgLength>
 #/		Max number of characters in any line of message. Used to determine how
-#/		long header/footer should be.
-#/			- Note: Line length only includes characters in message.
-#/		(REQUIRED)
+#/		long header/footer should be. Value must be a non-negative number.
+#/			- Note: Default value: `0`.
+#/			- Note: This value should only include characters in message.
+#/		(OPTIONAL)
 #/	--prefix
 #/		Length of header/footer changes depending on if a prefix is being used.
 #/			- Note: Should *always* be given if header/footer is used with a prefix.
@@ -51,72 +36,113 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 #/		- Help message is requested and produced.
 #/		- Processing is successful.
 #/	- 140: Returned when given option name is invalid.
-#/	- 142: TODO: Returned when required option(s) are not provided.
+#/	- 141: Returned when given value of line length is invalid.
 #/
 #/ EXAMPLE(S):
 #/	createHeaderFooter --help
-#/	createHeaderFooter -l=96 --prefix -c='#'
-#/	createHeaderFooter -l=10 -c="@@"
-#/	createHeaderFooter -l=12 -c=!
+#/	createHeaderFooter
+#/	createHeaderFooter -l=96 --prefix -f='#'
+#/	createHeaderFooter -l=10 -f="@@"
+#/	createHeaderFooter -l=12 -f=!
 #/
 #/ TODO(S):
-#/	- Implement: Error checking to ensure requried options are provided.
-#/	- Return 1 when required arguments are not provided.
-#/	- Display this message when required argument(s) are not provided.
-#/	- Move this function to its own file.
+#/	- None
 EOF
- ###############################
-## Reset/Set Local Variable(s) ##
- ###############################
-# Tracks header/footer text.
-rtCreateHeaderFooter=''
-# Tracks character used for formatting.
-fChar=$DEFAULT_CHAR
-# Tracks desired total length of header/footer.
-len=2
 
- #####################
-## Process Option(s) ##
- #####################
-for fullArg in "${@}"; do
-	# Tracks value of current option.
-	arg=${fullArg#*=}
-
-	# Determine what option user gave.
-	case $fullArg in
-		--prefix)
-			rtCreateHeaderFooter+=' '
-			len=$(($len+1))  ;;
-		-l=*|--lineLength=*)
-			len=$(($arg+$len))  ;;
-		-c=*|--char=*)
-			# Track user desired formatting character(s).
-			fChar=$arg
-			# Update desired header/footer length to accommodate formatting character(s).
-			if [[ ${#fChar} -gt 1 ]]; then
-				len=$(($(($((${#fChar}-1))*2))+$len))
-			fi  ;;
-		-h|--help)
-			echo "$CREATE_HEADER_FOOTER_DOC"
-			exit 0  ;;
-		*)
-			printf "$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR createHeaderFooter: Caller provided invalid option: '$fullArg', see doc:\n"
-			echo "$CREATE_HEADER_FOOTER_DOC"
-			exit 140  ;;
-	esac
-done
-
-## Build Header/Footer ##
-while [[ ${#rtCreateHeaderFooter} -lt $len ]]; do
-	# When near the end, given formatting character(s) may need to be split up.
-	if [[ $((${#rtCreateHeaderFooter}+${#fChar})) -gt $len ]]; then
-		rtCreateHeaderFooter+=${fChar:0:$(($len-${#rtCreateHeaderFooter}))}
+createHeaderFooter() {
+	 ###############################
+	## Reset/Set Local Variable(s) ##
+	 ###############################
+	# Tracks header/footer text.
+	headerFooter=''
+	# Tracks character used for formatting.
+	fChar=$DEFAULT_CHAR
+	# Tracks length of formatting character.
+	fCharLen=${#fChar}
+	# Tracks desired total length of header/footer.
+	len=0
+	# Tracks if prefix is being used.
+	prefixUsed=false
+	# Error prefix added to error output messages.
+	if [ "$(type -t date)" = "" ]; then
+		createHeaderFooterLogPrefix="ERROR createHeaderFooter():"
 	else
-		rtCreateHeaderFooter+=$fChar
+		createHeaderFooterLogPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR createHeaderFooter():"
 	fi
-done
-# Add final part of header.
-rtCreateHeaderFooter+='\n'
-echo "$rtCreateHeaderFooter"
-exit 0
+	readonly createHeaderFooterLogPrefix
+
+	 #####################
+	## Process Option(s) ##
+	 #####################
+	for fullArg in "$@"; do
+		# Tracks value of current option.
+		arg=${fullArg#*=}
+
+		# Determine what option user gave.
+		case $fullArg in
+			--prefix)
+				headerFooter+=' '
+				prefixUsed=true
+				len=$(($len+3))  ;;
+			-l=*|--line-length=*)
+				# Strip space character(s) from argument.
+				arg=$(echo $arg | tr -d '[:space:]')
+				# Ensure provided line length is valid.
+				case "$arg" in
+					# TODO #45: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
+					[[:digit:]]|[[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]])
+						len=$(($arg+$len))  ;;
+					*)
+						echo "$createHeaderFooterLogPrefix Line length must be a non-negative integer, was '$arg', see doc:" >&2
+						echo "$CREATE_HEADER_FOOTER_DOC" >&2
+						exit 141  ;;
+				esac  ;;
+			-f=*|--formatting-character=*)
+				# Ensure a valid value was provided.
+				case "$arg" in
+					*\\*|"")
+						echo "$createHeaderFooterLogPrefix Formatting character may not be blank or a special character (ex. new line, tab), was '$arg', see doc:" >&2
+						echo "$CREATE_HEADER_FOOTER_DOC" >&2
+						exit 141  ;;
+					*)
+						# Track user desired formatting character(s) and update desired
+						# header/footer length to accommodate formatting character(s).
+						fChar=$arg
+						fCharLen=${#fChar}  ;;
+				esac  ;;
+			-h|--help)
+				echo "$CREATE_HEADER_FOOTER_DOC"
+				exit 0  ;;
+			*)
+				echo "$createHeaderFooterLogPrefix Caller provided invalid option: '$fullArg', see doc:" >&2
+				echo "$CREATE_HEADER_FOOTER_DOC" >&2
+				exit 140  ;;
+		esac
+	done
+
+	 ########################################
+	## Post Processing of Provided Value(s) ##
+	 ########################################
+	# Account for additional header/footer length required when a prefix is being used.
+	if $prefixUsed; then
+		len=$(($(($((${#fChar}-1))*2))+$len))
+	fi
+
+	 ##########################
+	## Generate Header/Footer ##
+	 ##########################
+	## Build Header/Footer ##
+	while [[ ${#headerFooter} -lt $len ]]; do
+		# When near the end, given formatting character(s) may need to be split up.
+		if [[ $((${#headerFooter}+$fCharLen)) -gt $len ]]; then
+			headerFooter+=${fChar:0:$(($len-${#headerFooter}))}
+		else
+			headerFooter+=$fChar
+		fi
+	done
+
+	# Add new line and return.
+	echo "$headerFooter\n"
+	exit 0
+}
 
