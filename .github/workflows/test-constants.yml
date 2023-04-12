@@ -16,7 +16,7 @@ jobs:
         run:  cat /etc/shells
       - name: Name of current shell
         run: echo $SHELL
-      - name: Run unit tests
-        run: shellspec --fail-fast --fail-no-examples --warning-as-failure --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh" --fail-low-coverage ./spec/unit/output/util/constants_*
+      - name: Run unit tests on bash
+        run: shellspec -s /bin/bash --fail-fast --fail-no-examples --warning-as-failure --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh" --fail-low-coverage ./spec/unit/output/util/constants_*
 #        run:  shellspec --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
 
