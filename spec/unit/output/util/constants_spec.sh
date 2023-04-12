@@ -2,8 +2,7 @@ Describe "output():" output
 	Describe "util:" output:util
 		Describe "constants:" outputUtil:constants
 			# Makes test easier to read and maintain.
-			# TODO: Choose a file extension for constants file.
-			constants=$PWD/src/shell/functions/output/util/constants
+			constants=$PWD/src/shell/functions/output/util/constants.sh
 			
 			Describe "Shell compatibility:" outputUtilConstants:shellCompatibility
 				It "Source file" outputUtilConstantsShellCompatibility:sourceFile
