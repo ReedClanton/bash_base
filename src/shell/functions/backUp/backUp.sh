@@ -83,7 +83,7 @@ backUpSourcePath=$DEFAULT_BACK_UP_SOURCE_PATH
 # Tracks path backup will be created at.
 backUpDestPath=$DEFAULT_BACK_UP_DEST_PATH
 # TODO: Comment.
-options="-rLtU --specials --safe-links --inplace --delete-excluded --include='/.bash*' --exclude='/.*' --exclude='/GDrive'"
+options="-rLtU --specials --safe-links --inplace --delete-excluded --include='/.bash*' --exclude='/.*' --exclude='/GDrive' --exclude='/Downloads/OS'"
 log $traceLvl -m="Local variable(s) reset."
 
  #####################
