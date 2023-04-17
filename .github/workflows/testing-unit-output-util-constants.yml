@@ -37,6 +37,6 @@ jobs:
       - name: Current location...
         run:  pwd
       - name: Running unit tests from a 'busybox' shell...
-        run:  busybox "/home/runner/.local/bin/shellspec -c /usr/bin/busybox --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*"
+        run:  busybox "/home/runner/.local/bin/shellspec -c /usr/bin/busybox --fail-no-examples --warning-as-failure /home/runner/work/shell_base/shell_base/spec/unit/output/util/constants_*"
 ##        run:  busybox -c "shellspec -s /usr/bin/busybox --fail-no-examples --warning-as-failure ./spec/unit/output/util/constants_*
 
