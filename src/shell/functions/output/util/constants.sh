@@ -29,3 +29,4 @@ readonly WARN_CHAR
 # Error formatting character.
 ERROR_CHAR='!'
 readonly ERROR_CHAR
+
