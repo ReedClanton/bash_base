@@ -1,19 +1,24 @@
 # For more information regarding shellspec options, see: https://github.com/shellspec/shellspec#command-options
- ###############################
+
+################################
 ## shellspec Default Option(s) ##
- ###############################
+################################
 # Create virtual environment around unit tests.
 # TODO #35: When I start creating functional tests I'll need change this so it only applies to unit tests.
 --sandbox
+
 # Ensure spec helper file is present and used (https://github.com/shellspec/shellspec#spec_helper).
 --require spec_helper
+
+# Fail when anything is not perfect.
 --fail-no-examples
 --warning-as-failure
 
 ## Default kcov (coverage) options
 # --kcov-options "--include-path=. --path-strip-level=1"
 # --kcov-options "--include-pattern=.sh"
-# --kcov-options "--exclude-pattern=/.shellspec,/spec/,/coverage/,/report/"
+--kcov-options "--exclude-pattern=main.sh"
+--fail-low-coverage
 
 ## Example: Include script "myprog" with no extension
 # --kcov-options "--include-pattern=.sh,myprog"
