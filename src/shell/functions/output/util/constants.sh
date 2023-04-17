@@ -1,6 +1,6 @@
- ###################
+####################
 ## Text Formatting ##
- ###################
+####################
 # Default line length including formatting (ex. prefix & postfix).
 DEFAULT_LINE_LENGTH=100
 readonly DEFAULT_LINE_LENGTH
@@ -8,9 +8,9 @@ readonly DEFAULT_LINE_LENGTH
 DEFAULT_INDENT=0
 readonly DEFAULT_INDENT
 
- #################################
+##################################
 ## Message Severity Character(s) ##
- #################################
+##################################
 # Default formatting character.
 DEFAULT_CHAR='#'
 readonly DEFAULT_CHAR
@@ -29,4 +29,3 @@ readonly WARN_CHAR
 # Error formatting character.
 ERROR_CHAR='!'
 readonly ERROR_CHAR
-

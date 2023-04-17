@@ -1,8 +1,8 @@
-name: Style Guide Check of output()'s createHeaderFooter() util function
-run-name: ${{ github.actor }} has triggered style guide check of output()'s createHeaderFooter() util function for the ${{ github.run_attempt }} time by initiating a ${{ github.event_name }}
+name: Style Guide Check of output()'s constants file
+run-name: ${{ github.actor }} has triggered style guide check of output()'s constants file for the ${{ github.run_attempt }} time by initiating a ${{ github.event_name }}
 on: push
 jobs:
-  style-guide-output-util-createHeaderFooter:
+  style-guide-output-util-constants:
     runs-on: ubuntu-20.04
     steps:
       - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
@@ -10,5 +10,5 @@ jobs:
       - name: Install Style Guide Checking Tool...
         run: sudo snap install shfmt
       - name: Running style guide check...
-        run:  shfmt --diff --case-indent --posix ./src/shell/functions/output/util/createHeaderFooter.sh
+        run:  shfmt --diff --case-indent --posix ./src/shell/functions/output/util/constants.sh
 
