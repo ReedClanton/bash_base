@@ -1,0 +1,14 @@
+name: Style Guide Check of output()'s createHeaderFooter() util function
+run-name: ${{ github.actor }} has triggered style guide check of unit tests of output()'s createHeaderFooter() util function for the ${{ github.run_attempt }} time by initiating a ${{ github.event_name }}
+on: push
+jobs:
+  unit-test-output-util-createHeaderFooter:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
+        uses: actions/checkout@v3
+      - name: Install Style Guide Checking Tool...
+        run: sudo apt-get install shfmt
+      - name: Running style guide check...
+        run:  shfmt --diff --case-indent --posix ./src/shell/functions/output/util/createHeaderFooter.sh
+

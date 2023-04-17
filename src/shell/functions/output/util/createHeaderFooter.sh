@@ -50,9 +50,9 @@ IFS='' read -r -d '' CREATE_HEADER_FOOTER_DOC <<"EOF"
 EOF
 
 createHeaderFooter() {
-	 ###############################
+	################################
 	## Reset/Set Local Variable(s) ##
-	 ###############################
+	################################
 	# Tracks header/footer text.
 	headerFooter=''
 	# Tracks character used for formatting.
@@ -71,9 +71,9 @@ createHeaderFooter() {
 	fi
 	readonly createHeaderFooterLogPrefix
 
-	 #####################
+	######################
 	## Process Option(s) ##
-	 #####################
+	######################
 	for fullArg in "$@"; do
 		# Tracks value of current option.
 		arg=${fullArg#*=}
@@ -83,59 +83,89 @@ createHeaderFooter() {
 			--prefix)
 				headerFooter+=' '
 				prefixUsed=true
-				len=$(($len+3))  ;;
-			-l=*|--line-length=*)
+				len=$(($len + 3))
+				;;
+			-l=* | --line-length=*)
 				# Strip space character(s) from argument.
 				arg=$(echo $arg | tr -d '[:space:]')
 				# Ensure provided line length is valid.
 				case "$arg" in
 					# TODO #45: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
-					[[:digit:]]|[[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]])
-						len=$(($arg+$len))  ;;
+					[[:digit:]] | [[:digit:]][[:digit:]] | [[:digit:]][[:digit:]][[:digit:]] | [[:digit:]][[:digit:]][[:digit:]][[:digit:]] | [[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]])
+						len=$(($arg + $len))
+						;;
 					*)
 						echo "$createHeaderFooterLogPrefix Line length must be a non-negative integer, was '$arg', see doc:" >&2
 						echo "$CREATE_HEADER_FOOTER_DOC" >&2
-						exit 141  ;;
-				esac  ;;
-			-f=*|--formatting-character=*)
+						exit 141
+						;;
+				esac
+				;;
+			-f=* | --formatting-character=*)
 				# Ensure a valid value was provided.
 				case "$arg" in
-					*\\*|"")
+					*\\* | "")
 						echo "$createHeaderFooterLogPrefix Formatting character may not be blank or a special character (ex. new line, tab), was '$arg', see doc:" >&2
 						echo "$CREATE_HEADER_FOOTER_DOC" >&2
-						exit 141  ;;
+						exit 141
+						;;
 					*)
 						# Track user desired formatting character(s) and update desired
 						# header/footer length to accommodate formatting character(s).
 						fChar=$arg
-						fCharLen=${#fChar}  ;;
-				esac  ;;
-			-h|--help)
+						fCharLen=${#fChar}
+						;;
+				esac
+				;;
+			-h | --help)
 				echo "$CREATE_HEADER_FOOTER_DOC"
-				exit 0  ;;
+				exit 0
+				;;
 			*)
 				echo "$createHeaderFooterLogPrefix Caller provided invalid option: '$fullArg', see doc:" >&2
 				echo "$CREATE_HEADER_FOOTER_DOC" >&2
-				exit 140  ;;
+				exit 140
+				;;
 		esac
 	done
 
-	 ########################################
+	#########################################
 	## Post Processing of Provided Value(s) ##
-	 ########################################
+	#########################################
 	# Account for additional header/footer length required when a prefix is being used.
 	if $prefixUsed; then
-		len=$(($(($((${#fChar}-1))*2))+$len))
+		len=$(($(($((${#fChar} - 1)) * 2)) + $len))
 	fi
 
-	 ##########################
+	###########################
 	## Generate Header/Footer ##
-	 ##########################
-	## Build Header/Footer ##
+	###########################
 	while [[ ${#headerFooter} -lt $len ]]; do
 		# When near the end, given formatting character(s) may need to be split up.
-		if [[ $((${#headerFooter}+$fCharLen)) -gt $len ]]; then
-			headerFooter+=${fChar:0:$(($len-${#headerFooter}))}
+		if [[ $((${#headerFooter} + $fCharLen)) -gt $len ]]; then
+			# Note: POSIX doesn't support slicing, so a loop must be used.
+			# Loop consumes variable.
+			tmp=$fChar
+			# Shortened formatting character.
+			# Resulting shortened formatting character(s).
+			shortFChar=""
+			i=0
+			while [ -n "$tmp" ]; do
+				# Check if another character can fit in the line.
+				if [ "$(($len - ${#headerFooter}))" = "$i" ]; then
+					break
+				fi
+				i=$(($i + 1))
+
+				# All but the first character of the string.
+				rest=${tmp#?}
+				# Append next character from formatting string to header/footer.
+				shortFChar="$shortFChar${tmp%"$rest"}"
+				# Track remaining formatting string character(s).
+				tmp=$rest
+			done
+
+			headerFooter+=$shortFChar
 		else
 			headerFooter+=$fChar
 		fi
@@ -145,4 +175,3 @@ createHeaderFooter() {
 	echo "$headerFooter\n"
 	exit 0
 }
-
