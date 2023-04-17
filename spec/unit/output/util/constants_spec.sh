@@ -13,104 +13,187 @@ Describe "output():" output
 				End
 			End
 			
-			Describe "Environment variable set:" outputUtilConstants:environmentVariableSet
-				# Ensure constants set by file are incorporated into the test environment.
-				sourceCut() { . $constants; }
-				BeforeAll 'sourceCut'
-				
-				Describe "DEFAULT_LINE_LENGTH:" outputUtilConstantsEnvironmentVariableSet:defaultLineLength
-					It "Set" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:set
-						The variable DEFAULT_LINE_LENGTH should be present
+			Describe "Environment variable:" outputUtilConstants:environmentVariable
+				Describe "DEFAULT_LINE_LENGTH:" outputUtilConstantsEnvironmentVariable:defaultLineLength
+					Describe
+						# Environment setup that works for most tests and shells.
+						sourceCut() { . $constants; }
+						BeforeAll 'sourceCut'
+						
+						It "Set" outputUtilConstantsEnvironmentVariableDefaultLineLength:set
+							The variable DEFAULT_LINE_LENGTH should be present
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableDefaultLineLength:notExported
+							The variable DEFAULT_LINE_LENGTH should not be exported
+						End
+						It "Is positive" outputUtilConstantsEnvironmentVariableDefaultLineLength:isPositive
+							The value "$DEFAULT_LINE_LENGTH" should satisfy isPositive "$DEFAULT_LINE_LENGTH"
+						End
 					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:readonly               this
-						The variable DEFAULT_LINE_LENGTH should be readonly
-					End
-					It "Not exported" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:notExported
-						The variable DEFAULT_LINE_LENGTH should not be exported
-					End
-					It "Is positive" outputUtilConstantsEnvironmentVariableSetDefaultLineLength:isPositive
-						The value "$DEFAULT_LINE_LENGTH" should satisfy isPositive "$DEFAULT_LINE_LENGTH"
-					End
-				End
-				Describe "DEFAULT_INDENT:" outputUtilConstantsEnvironmentVariableSet:defaultIndent
-					It "Set" outputUtilConstantsEnvironmentVariableSetDefaultIndent:set
-						The value "$DEFAULT_INDENT" should be present
-					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultIndent:readonly                   this
-						The variable DEFAULT_INDENT should be readonly
-					End
-					It "Not exported" outputUtilConstantsEnvironmentVariableSetDefaultIndent:notExported
-						The variable DEFAULT_INDENT should not be exported
-					End
-					It "Is not negative" outputUtilConstantsEnvironmentVariableSetDefaultIndent:isNotNegative
-						The value "$DEFAULT_INDENT" should satisfy isNotNegative "$DEFAULT_INDENT"
+					Describe
+						# No idea why, but some shells require `Include` for this test to pass...
+						Include $constants
+						
+						It "Readonly" outputUtilConstantsEnvironmentVariableDefaultLineLength:readonly
+							The variable DEFAULT_LINE_LENGTH should be readonly
+						End
 					End
 				End
-				Describe "DEFAULT_CHAR:" outputUtilConstantsEnvironmentVariableSet:defaultChar
-					It "Set" outputUtilConstantsEnvironmentVariableSetDefaultChar:set
-						The value "$DEFAULT_CHAR" should be present
+				Describe "DEFAULT_INDENT:" outputUtilConstantsEnvironmentVariable:defaultIndent
+					Describe
+						# Environment setup that works for most tests and shells.
+						sourceCut() { . $constants; }
+						BeforeAll 'sourceCut'
+						
+						It "Set" outputUtilConstantsEnvironmentVariableDefaultIndent:set
+							The value "$DEFAULT_INDENT" should be present
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableDefaultIndent:notExported
+							The variable DEFAULT_INDENT should not be exported
+						End
+						It "Is not negative" outputUtilConstantsEnvironmentVariableDefaultIndent:isNotNegative
+							The value "$DEFAULT_INDENT" should satisfy isNotNegative "$DEFAULT_INDENT"
+						End
 					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetDefaultChar:readonly                     this
-						The variable DEFAULT_CHAR should be readonly
-					End
-					It "Not exported" outputUtilConstantsEnvironmentVariableSetDefaultChar:notExported
-						The variable DEFAULT_CHAR should not be exported
-					End
-				End
-				
-				Describe "TRACE_CHAR:" outputUtilConstantsEnvironmentVariableSet:traceChar
-					It "Set" outputUtilConstantsEnvironmentVariableSetTraceChar:set
-						The value "$TRACE_CHAR" should be present
-					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetTraceChar:readonly                       this
-						The variable TRACE_CHAR should be readonly
-					End
-					It "Not exported" outputUtilConstantsEnvironmentVariableSetTraceChar:notExported
-						The variable TRACE_CHAR should not be exported
-					End
-				End
-				Describe "INFO_CHAR:" outputUtilConstantsEnvironmentVariableSet:infoChar
-					It "Set" outputUtilConstantsEnvironmentVariableSetInfoChar:set
-						The value "$INFO_CHAR" should be present
-					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetInfoChar:readonly                        this
-						The variable INFO_CHAR should be readonly
-					End
-					It "Not exported" outputUtilConstantsEnvironmentVariableSetInfoChar:notExported
-						The variable INFO_CHAR should not be exported
+					Describe
+						# No idea why, but some shells require `Include` for this test to pass...
+						Include $constants
+						
+						It "Readonly" outputUtilConstantsEnvironmentVariableDefaultIndent:readonly
+							The variable DEFAULT_INDENT should be readonly
+						End
 					End
 				End
-				Describe "DEBUG_CHAR:" outputUtilConstantsEnvironmentVariableSet:debugChar
-					It "Set" outputUtilConstantsEnvironmentVariableSetDebugChar:set
-						The value "$DEBUG_CHAR" should be present
+				Describe "DEFAULT_CHAR:" outputUtilConstantsEnvironmentVariable:defaultChar
+					Describe
+						# Environment setup that works for most tests and shells.
+						sourceCut() { . $constants; }
+						BeforeAll 'sourceCut'
+						
+						It "Set" outputUtilConstantsEnvironmentVariableDefaultChar:set
+							The value "$DEFAULT_CHAR" should be present
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableDefaultChar:notExported
+							The variable DEFAULT_CHAR should not be exported
+						End
 					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetDebugChar:readonly                       this
-						The variable DEBUG_CHAR should be readonly
-					End
-					It "Not exported" outputUtilConstantsEnvironmentVariableSetDebugChar:notExported
-						The variable DEBUG_CHAR should not be exported
+					Describe
+						# No idea why, but some shells require `Include` for this test to pass...
+						Include $constants
+						
+						It "Readonly" outputUtilConstantsEnvironmentVariableDefaultChar:readonly
+							The variable DEFAULT_CHAR should be readonly
+						End
 					End
 				End
-				Describe "WARN_CHAR:" outputUtilConstantsEnvironmentVariableSet:warnChar
-					It "Set" outputUtilConstantsEnvironmentVariableSetWarnChar:set
-						The value "$WARN_CHAR" should be present
+				Describe "TRACE_CHAR:" outputUtilConstantsEnvironmentVariable:traceChar
+					Describe
+						# Environment setup that works for most tests and shells.
+						sourceCut() { . $constants; }
+						BeforeAll 'sourceCut'
+						
+						It "Set" outputUtilConstantsEnvironmentVariableTraceChar:set
+							The value "$TRACE_CHAR" should be present
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableTraceChar:notExported
+							The variable TRACE_CHAR should not be exported
+						End
 					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetWarnChar:readonly                        this
-						The variable WARN_CHAR should be readonly
-					End
-					It "Not exported" outputUtilConstantsEnvironmentVariableSetWarnChar:notExported
-						The variable WARN_CHAR should not be exported
+					Describe
+						# No idea why, but some shells require `Include` for this test to pass...
+						Include $constants
+						
+						It "Readonly" outputUtilConstantsEnvironmentVariableTraceChar:readonly
+							The variable TRACE_CHAR should be readonly
+						End
 					End
 				End
-				Describe "ERROR_CHAR:" outputUtilConstantsEnvironmentVariableSet:errorChar
-					It "Set" outputUtilConstantsEnvironmentVariableSetErrorChar:set
-						The value "$ERROR_CHAR" should be present
+				Describe "INFO_CHAR:" outputUtilConstantsEnvironmentVariable:infoChar
+					Describe
+						# Environment setup that works for most tests and shells.
+						sourceCut() { . $constants; }
+						BeforeAll 'sourceCut'
+						
+						It "Set" outputUtilConstantsEnvironmentVariableInfoChar:set
+							The value "$INFO_CHAR" should be present
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableInfoChar:notExported
+							The variable INFO_CHAR should not be exported
+						End
 					End
-					It "Readonly" outputUtilConstantsEnvironmentVariableSetErrorChar:readonly                       this
-						The variable ERROR_CHAR should be readonly
+					Describe
+						# No idea why, but some shells require `Include` for this test to pass...
+						Include $constants
+						
+						It "Readonly" outputUtilConstantsEnvironmentVariableInfoChar:readonly
+							The variable INFO_CHAR should be readonly
+						End
 					End
-					It "Not exported" outputUtilConstantsEnvironmentVariableSetErrorChar:notExported
-						The variable ERROR_CHAR should not be exported
+				End
+				Describe "DEBUG_CHAR:" outputUtilConstantsEnvironmentVariable:debugChar
+					Describe
+						# Environment setup that works for most tests and shells.
+						sourceCut() { . $constants; }
+						BeforeAll 'sourceCut'
+						
+						It "Set" outputUtilConstantsEnvironmentVariableDebugChar:set
+							The value "$DEBUG_CHAR" should be present
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableDebugChar:notExported
+							The variable DEBUG_CHAR should not be exported
+						End
+					End
+					Describe
+						# No idea why, but some shells require `Include` for this test to pass...
+						Include $constants
+						
+						It "Readonly" outputUtilConstantsEnvironmentVariableDebugChar:readonly
+							The variable DEBUG_CHAR should be readonly
+						End
+					End
+				End
+				Describe "WARN_CHAR:" outputUtilConstantsEnvironmentVariable:warnChar
+					Describe
+						# Environment setup that works for most tests and shells.
+						sourceCut() { . $constants; }
+						BeforeAll 'sourceCut'
+						
+						It "Set" outputUtilConstantsEnvironmentVariableWarnChar:set
+							The value "$WARN_CHAR" should be present
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableWarnChar:notExported
+							The variable WARN_CHAR should not be exported
+						End
+					End
+					Describe
+						# No idea why, but some shells require `Include` for this test to pass...
+						Include $constants
+						
+						It "Readonly" outputUtilConstantsEnvironmentVariableWarnChar:readonly
+							The variable WARN_CHAR should be readonly
+						End
+					End
+				End
+				Describe "ERROR_CHAR:" outputUtilConstantsEnvironmentVariable:errorChar
+					Describe
+						# Environment setup that works for most tests and shells.
+						sourceCut() { . $constants; }
+						BeforeAll 'sourceCut'
+						
+						It "Set" outputUtilConstantsEnvironmentVariableErrorChar:set
+							The value "$ERROR_CHAR" should be present
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableErrorChar:notExported
+							The variable ERROR_CHAR should not be exported
+						End
+					End
+					Describe
+						# No idea why, but some shells require `Include` for this test to pass...
+						Include $constants
+						
+						It "Readonly" outputUtilConstantsEnvironmentVariableErrorChar:readonly
+							The variable ERROR_CHAR should be readonly
+						End
 					End
 				End
 			End
