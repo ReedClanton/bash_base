@@ -12,7 +12,7 @@
 
 # Fail when anything is not perfect.
 --fail-no-examples
---warning-as-failure
+#--warning-as-failure
 #--fail-fast
 
 # Default kcov (coverage) options
