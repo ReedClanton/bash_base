@@ -11,10 +11,8 @@ jobs:
         run:  sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev kcov
       - name: Installing 'shellspec' (POSIX shell script testing tool)...
         run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
-      - run:  echo $HOME
-      - run:  ls -ap $HOME/.local/bin
       - name: Running unit tests from a 'bash' shell (with code coverage) from ${{ github.workspace }}...
-        run:  shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/createHeaderFooter.sh --limits=96,100" ./spec/unit/output/util/createHeaderFooter_*
+        run:  $HOME/.local/bin/shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/createHeaderFooter.sh --limits=96,100" ./spec/unit/output/util/createHeaderFooter_*
 ##        run:  shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/createHeaderFooter.sh --limits=96,100" --fail-low-coverage ./spec/unit/output/util/createHeaderFooter_*
   unit-test-ubuntu-dash-output-util-createHeaderFooter:
     runs-on: ubuntu-20.04
@@ -24,7 +22,7 @@ jobs:
       - name: Installing 'shellspec' (POSIX shell script testing tool)...
         run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
       - name: Running unit tests from a 'dash' shell...
-        run:  shellspec --no-fail-fast -s /bin/dash ./spec/unit/output/util/createHeaderFooter_*
+        run:  $HOME/.local/bin/shellspec --no-fail-fast -s /bin/dash ./spec/unit/output/util/createHeaderFooter_*
   unit-test-ubuntu-ksh-output-util-createHeaderFooter:
     runs-on: ubuntu-20.04
     steps:
@@ -35,7 +33,7 @@ jobs:
       - name: Installing 'ksh' (shell)...
         run:  sudo apt-get install ksh
       - name: Running unit tests from a 'ksh' shell...
-        run:  shellspec --no-fail-fast -s /usr/bin/ksh ./spec/unit/output/util/createHeaderFooter_*
+        run:  $HOME/.local/bin/shellspec --no-fail-fast -s /usr/bin/ksh ./spec/unit/output/util/createHeaderFooter_*
 #  unit-test-ubuntu-ash-output-util-createHeaderFooter:
 #    runs-on: ubuntu-20.04
 #    steps:
@@ -46,7 +44,7 @@ jobs:
 #      - name: Installing 'BusyBox' (shell)...
 #        run:  sudo apt-get install busybox
 ##      - name: Running unit tests from a 'busybox' shell...
-##        run:  shellspec --no-fail-fast -s /usr/bin/busybox ./spec/unit/output/util/createHeaderFooter_*
+##        run:  $HOME/.local/bin/shellspec --no-fail-fast -s /usr/bin/busybox ./spec/unit/output/util/createHeaderFooter_*
   unit-test-macos-bash-output-util-createHeaderFooter:
     runs-on: macos-12
     steps:

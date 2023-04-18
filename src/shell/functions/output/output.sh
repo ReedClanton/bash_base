@@ -180,7 +180,7 @@ msg=()
 # Contains final (formatted) message text.
 rtOutput=''
 # Prefix used to produce error logs.
-if [ "$(type -t date)" = "" ]; then
+if [ "$(command -v date)" = "" ]; then
 	outputLogPrefix="ERROR output():"
 else
 	outputLogPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR output():"
