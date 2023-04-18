@@ -65,12 +65,14 @@ createHeaderFooter() {
 	# Tracks if prefix is being used.
 	prefixUsed=false
 	# Error prefix added to error output messages.
-	if [ "$(command -v date)" = "" ]; then
-		createHeaderFooterLogPrefix="ERROR createHeaderFooter():"
+	createHeaderFooterLogPrefix="ERROR createHeaderFooter():"
+	if command -v date >/dev/null; then
+		alias date=$(command -v date)
+		createHeaderFooterLogPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') $createHeaderFooterLogPrefix"
 	else
-		createHeaderFooterLogPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR createHeaderFooter():"
+		# Failed to find date equivalent.
+		alias date=:
 	fi
-	local -r createHeaderFooterLogPrefix
 
 	######################
 	## Process Option(s) ##
