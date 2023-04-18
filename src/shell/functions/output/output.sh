@@ -25,7 +25,8 @@ fi
 ################
 ## Function(s) ##
 ################
-OUTPUT_DOC=$(cat <<"EOF"
+OUTPUT_DOC=$(
+	cat <<"EOF"
 #/ DESCRIPTION:
 #/	Used to produce formatted output.
 #/		- Example 1:

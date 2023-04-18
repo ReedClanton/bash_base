@@ -1,4 +1,5 @@
-CREATE_HEADER_FOOTER_DOC=$(cat <<"EOF"
+CREATE_HEADER_FOOTER_DOC=$(
+	cat <<"EOF"
 #/ DESCRIPTION:
 #/	Returns text intended to be used as a header or footer in stdout. Upon
 #/	failure, a non-zero code will be returned and output will be produced to
