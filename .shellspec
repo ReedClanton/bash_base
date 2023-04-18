@@ -16,6 +16,6 @@
 --fail-fast
 
 # Default kcov (coverage) options
-# --kcov-options "--exclude-pattern=main.sh"
+--kcov-options "--exclude-pattern=main.sh"
 # --fail-low-coverage
 
