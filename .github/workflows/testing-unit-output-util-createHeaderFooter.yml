@@ -42,11 +42,10 @@ jobs:
       - name: Installing 'shellspec' (POSIX shell script testing tool)...
         run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
       - run:  sudo ls -ap /
-      - run:  sudo ls -ap /home/
-#      - run:  sudo ls -ap /home/runner/
-#      - run:  sudo ls -ap /home/Users/
-#      - run:  sudo ls -ap /home/
-      - run:  sudo pwd
+      - run:  sudo ls -ap /Users/
+      - run:  sudo ls -ap /Users/runner/
+      - run:  sudo ls -ap /Users/runner/work
+      - run:  pwd
       - name: Running unit tests from a 'zsh' shell...
         run:  shellspec --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
 #  unit-test-ash-output-util-createHeaderFooter:
