@@ -75,8 +75,6 @@ jobs:
       - run:  man type
       - run:  man zsh
       - run:  zsh -c "man type"
-      - run:  whence –v type
-      - run:  type --help
       - name: Running unit tests from a 'zsh' shell...
         run:  $HOME/.local/bin/shellspec -s /bin/zsh --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
 
