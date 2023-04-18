@@ -22,7 +22,9 @@ CODE_NOT_ACCESSIBLE_RT=202
 isPositive() { [ $(($1)) -gt 0 ]; }
 isNotNegative() { [ $(($1)) -ge 0 ]; }
 # Mocking System Commands #
+# Most code uses the 'cat' command to copy method doc to a variable, so it's mocked here.
 cat() { input=""; read input; echo $input; }
+
 ## Alias(es) ##
 # NoOp
 

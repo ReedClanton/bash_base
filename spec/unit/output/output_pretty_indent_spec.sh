@@ -125,7 +125,7 @@ Describe "output():" output:output
 					createHeaderFooter() { return 0; }
 					When run source $output -m=m --msg=s -m=g --pretty --indent=90
 					The stdout should not be present
-					The stderr should include "DESCRIPTION:"
+					The stderr should include "ERROR"
 					The status should equal $OPTION_VALUE_INVALID_RT
 				End
 			End

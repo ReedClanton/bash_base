@@ -3,9 +3,9 @@ if [ "$(type -t inScriptSource)" = "" ]; then
 	inScriptSource() { . "$@"; }
 fi
 
- #############
+##############
 ## Import(s) ##
- #############
+##############
 if [ -f $PWD/util/main.sh ]; then
 	inScriptSource $PWD/util/main.sh
 elif [ -f $PWD/src/shell/functions/output/util/main.sh ]; then
@@ -22,10 +22,10 @@ else
 	exit 202
 fi
 
- ###############
+################
 ## Function(s) ##
- ###############
-IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
+################
+OUTPUT_DOC=$(cat <<"EOF"
 #/ DESCRIPTION:
 #/	Used to produce formatted output.
 #/		- Example 1:
@@ -150,10 +150,11 @@ IFS='' read -r -d '' OUTPUT_DOC <<"EOF"
 #/		row to the start of the next line.
 #/	- Implement: Support for '%' as a formatting character.
 EOF
+)
 
- ###############################
+################################
 ## Reset/Set Local Variable(s) ##
- ###############################
+################################
 # Tracks character used for formatting.
 fChar=$DEFAULT_CHAR
 # Determines if message header and footer should be used.
@@ -187,14 +188,14 @@ readonly outputLogPrefix
 # Used to track if caller provided a message option so correct return value may be provided.
 msgGiven=false
 
- #####################
+######################
 ## Process Option(s) ##
- #####################
+######################
 # Process option(s).
 for fullArg in "$@"; do
 	# Tracks value of current option.
 	arg=${fullArg#*=}
-	
+
 	# Determine what option user gave.
 	case $fullArg in
 		-h|--help)
@@ -288,9 +289,9 @@ for fullArg in "$@"; do
 	esac
 done
 
- ###########################
+############################
 ## Error Check Argument(s) ##
- ###########################
+############################
 # Used to track max number of message character(s) that be exist on each line (accounts for pre/post fix).
 maxAlwMsgLen=$maxAlwLineLen
 
@@ -298,17 +299,17 @@ maxAlwMsgLen=$maxAlwLineLen
 if $msgGiven; then
 	## Ensure Message Text was Provided ##
 	if [[ -n "${msg[@]}" ]]; then
-		
+
 		# Remove indent value from max message character(s) per line.
 		if [[ $indent -gt 0 ]]; then
 			maxAlwMsgLen=$(($maxAlwMsgLen-$indent))
 		fi
-		
+
 		# Remove prefix & postfix length from max message character(s) per line.
 		if $prePostFix; then
 			maxAlwMsgLen=$(($maxAlwMsgLen-$(($((${#fChar}+1))*2))))
 		fi
-		
+
 		## Verify Max Message Character(s) Per Line is Valid ##
 		if [[ $maxAlwMsgLen -lt 1 ]]; then
 			# Build helpful error message(s).
@@ -319,13 +320,13 @@ if $msgGiven; then
 				errMsg="$errMsg."
 			fi
 			echo $errMsg >&2
-			
+
 			if [[ $(($DEFAULT_INDENT)) -ge $(($maxAlwLineLen)) ]]; then
 				echo "$outputLogPrefix Decrease default indent ($DEFAULT_INDENT) to bellow max allowed line length ($maxAlwLineLen)." >&2
 			elif [[ $(($indent)) -ge $(($maxAlwLineLen)) ]]; then
 				echo "$outputLogPrefix Decrease provided indent value ($indent) to bellow max allowed line length ($maxAlwLineLen)." >&2
 			fi
-			
+
 			echo "$OUTPUT_DOC" >&2
 			exit 141
 		fi
@@ -340,9 +341,9 @@ else
 	exit 142
 fi
 
- ########################
+#########################
 ## Format Given Message ##
- ########################
+#########################
 ## Generate indentation text ##
 indentTxt=$(printf %${indent}s |tr " " " ")
 readonly indentTxt
@@ -394,7 +395,7 @@ if $headerFooter; then
 	eval "$( (eval $cmd) \
 		2> >(errOut=$(cat); typeset -p errOut) \
 		 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
-	
+
 	# Ensure header/footer was generated successfully.
 	if [[ $rtOut -eq 0 ]]; then
 		# Save off header/footer.
@@ -410,9 +411,9 @@ if $headerFooter; then
 	fi
 fi
 
- #########################
+##########################
 ## Produce Final Message ##
- #########################
+##########################
 ## Header ##
 if $headerFooter; then
 	rtOutput="$rtOutput$headerFooterTxt"
@@ -451,4 +452,3 @@ fi
 ## Write Final Message ##
 printf "$rtOutput"
 exit 0
-

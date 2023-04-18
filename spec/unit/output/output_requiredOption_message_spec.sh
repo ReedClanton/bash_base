@@ -136,26 +136,26 @@ Describe "output():" output:output
 				It "None" outputOutputrequiredOptionMessageInputInvalid:none
 					When run source $output
 					The stdout should not be present
-					The stderr should include "DESCRIPTION:"
+					The stderr should include "ERROR"
 					The status should equal $OPTION_REQUIRED_NOT_PROVIDED_RT
 				End
 				Describe "-m:" outputOutputrequiredOptionMessageInputInvalid:m
 					It "Blank" outputOutputrequiredOptionMessageInputInvalidM:blank
 						When run source $output -m=""
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Null" outputOutputrequiredOptionMessageInputInvalidM:null
 						When run source $output -m=
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Missing" outputOutputrequiredOptionMessageInputInvalidM:missing
 						When run source $output -m
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_NAME_INVALID_RT
 					End
 				End
@@ -163,19 +163,19 @@ Describe "output():" output:output
 					It "Blank" outputOutputrequiredOptionMessageInputInvalidMsg:blank
 						When run source $output --msg=""
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Null" outputOutputrequiredOptionMessageInputInvalidMsg:null
 						When run source $output --msg=
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Missing" outputOutputrequiredOptionMessageInputInvalidMsg:missing
 						When run source $output --msg
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_NAME_INVALID_RT
 					End
 				End

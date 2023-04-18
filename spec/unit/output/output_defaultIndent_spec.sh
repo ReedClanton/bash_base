@@ -56,13 +56,13 @@ Describe "output():" output:output
 			It "No prefix" outputOutputDefaultIndentLongerThanAllowedLineLength:noPrefix
 				When run source $output -m=m
 				The stdout should not be present
-				The stderr should include "DESCRIPTION:"
+				The stderr should include "ERROR"
 				The status should equal $OPTION_VALUE_INVALID_RT
 			End
 			It "With prefix" outputOutputDefaultIndentLongerThanAllowedLineLength:withPrefix
 				When run source $output -m=m --pp
 				The stdout should not be present
-				The stderr should include "DESCRIPTION:"
+				The stderr should include "ERROR"
 				The status should equal $OPTION_VALUE_INVALID_RT
 			End
 		End

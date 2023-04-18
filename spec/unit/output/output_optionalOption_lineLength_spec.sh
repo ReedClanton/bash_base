@@ -21,31 +21,31 @@ Describe "output():" output:output
 					It "Blank" outputOutputOptionalOptionLineLengthInputInvalidL:blank
 						When run source $output -m=m -l=""
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Null" outputOutputOptionalOptionLineLengthInputInvalidL:null
 						When run source $output -m=m -l=
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Missing" outputOutputOptionalOptionLineLengthInputInvalidL:missing
 						When run source $output -m=m -l
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_NAME_INVALID_RT
 					End
 					It "Float" outputOutputOptionalOptionLineLengthInputInvalidL:float
 						When run source $output -m=m -l="1.1"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "'+'" outputOutputOptionalOptionLineLengthInputInvalidL:plus
 						When run source $output -m=m -l="+50"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 				End
@@ -53,31 +53,31 @@ Describe "output():" output:output
 					It "Blank" outputOutputOptionalOptionLineLengthInputInvalidLineLength:blank
 						When run source $output -m=m --line-length=""
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Null" outputOutputOptionalOptionLineLengthInputInvalidLineLength:null
 						When run source $output -m=m --line-length=
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Missing" outputOutputOptionalOptionLineLengthInputInvalidLineLength:missing
 						When run source $output -m=m --line-length
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_NAME_INVALID_RT
 					End
 					It "Float" outputOutputOptionalOptionLineLengthInputInvalidLineLength:float
 						When run source $output -m=m --line-length="1.1"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "'+'" outputOutputOptionalOptionLineLengthInputInvalidLineLength:plus
 						When run source $output -m=m --line-length="+50"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 				End
@@ -147,19 +147,19 @@ Describe "output():" output:output
 					It "Far bellow lower" outputOutputOptionalOptionLineLengthBoundL:farBellowLower
 						When run source $output -m=m -l="-999999999"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Bellow lower" outputOutputOptionalOptionLineLengthBoundL:bellowLower
 						When run source $output -m=m -l="-1"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "At lower" outputOutputOptionalOptionLineLengthBoundL:atLower
 						When run source $output -m=m -l=0
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Above lower" outputOutputOptionalOptionLineLengthBoundL:aboveLower
@@ -188,19 +188,19 @@ Describe "output():" output:output
 					It "Far bellow lower" outputOutputOptionalOptionLineLengthBoundLineLength:farBellowLower
 						When run source $output -m=m --line-length="-999999999"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Bellow lower" outputOutputOptionalOptionLineLengthBoundLineLength:bellowLower
 						When run source $output -m=m --line-length="-1"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "At lower" outputOutputOptionalOptionLineLengthBoundLineLength:atLower
 						When run source $output -m=m --line-length=0
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Above lower" outputOutputOptionalOptionLineLengthBoundLineLength:aboveLower

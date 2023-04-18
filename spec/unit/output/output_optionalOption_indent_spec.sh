@@ -19,25 +19,25 @@ Describe "output():" output:output
 					It "Blank" outputOutputOptionalOptionIndentInputInvalidIndent:blank
 						When run source $output -m="m" --indent=""
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Null" outputOutputOptionalOptionIndentInputInvalidIndent:null
 						When run source $output -m="m" --indent=
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Missing" outputOutputOptionalOptionIndentInputInvalidIndent:missing
 						When run source $output -m="m" --indent
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_NAME_INVALID_RT
 					End
 					It "Float" outputOutputOptionalOptionIndentInputInvalidIndent:float
 						When run source $output -m="m" --indent="1.1"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 				End
@@ -47,13 +47,13 @@ Describe "output():" output:output
 					It "Far bellow lower" outputOutputOptionalOptionIndentBoundIndent:farBellowLower
 						When run source $output -m="m" --indent="-999999999"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Bellow lower" outputOutputOptionalOptionIndentBoundIndent:bellowLower
 						When run source $output -m="m" --indent="-1"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "At lower" outputOutputOptionalOptionIndentBoundIndent:atLower
@@ -95,13 +95,13 @@ Describe "output():" output:output
 						It "Above upper" outputOutputOptionalOptionIndentBoundIndentSingleCharacterMessage:aboveUpper
 							When run source $output -m="m" --indent=10
 							The stdout should not be present
-							The stderr should include "DESCRIPTION:"
+							The stderr should include "ERROR"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Far above upper" outputOutputOptionalOptionIndentBoundIndentSingleCharacterMessage:farAboveUpper
 							When run source $output -m="m" --indent=999
 							The stdout should not be present
-							The stderr should include "DESCRIPTION:"
+							The stderr should include "ERROR"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 					End
@@ -140,13 +140,13 @@ Describe "output():" output:output
 						It "Above upper" outputOutputOptionalOptionIndentBoundIndentMultipleCharacterMessage:aboveUpper
 							When run source $output -m="msg" --indent=10
 							The stdout should not be present
-							The stderr should include "DESCRIPTION:"
+							The stderr should include "ERROR"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Far above upper" outputOutputOptionalOptionIndentBoundIndentMultipleCharacterMessage:farAboveUpper
 							When run source $output -m="msg" --indent=999
 							The stdout should not be present
-							The stderr should include "DESCRIPTION:"
+							The stderr should include "ERROR"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 					End

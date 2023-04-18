@@ -19,19 +19,19 @@ Describe "output():" output:output
 					It "Blank" outputOutputOptionalOptionFormattingCharacterInputInvalidF:blank
 						When run source $output -m=m -f=""
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Null" outputOutputOptionalOptionFormattingCharacterInputInvalidF:null
 						When run source $output -m=m -f=
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Missing" outputOutputOptionalOptionFormattingCharacterInputInvalidF:missing
 						When run source $output -m=m -f
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_NAME_INVALID_RT
 					End
 				End
@@ -39,19 +39,19 @@ Describe "output():" output:output
 					It "Blank" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidFormattingCharacter:blank
 						When run source $output -m=m --formatting-character=""
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Null" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidFormattingCharacter:null
 						When run source $output -m=m --formatting-character=
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Missing" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidFormattingCharacter:missing
 						When run source $output -m=m --formatting-character
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_NAME_INVALID_RT
 					End
 				End
@@ -61,19 +61,19 @@ Describe "output():" output:output
 					It "'\n'" outputOutputOptionalOptionFormattingCharacterInputInvalidCharacterF:newLine
 						When run source $output -m=m -f="\n"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "'\\'" outputOutputOptionalOptionFormattingCharacterInputInvalidCharacterF:backSlash
 						When run source $output -m=m -f="\\"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "'%'" outputOutputOptionalOptionFormattingCharacterInputInvalidCharacterF:percent
 						When run source $output -m=m -f="%"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 				End
@@ -81,19 +81,19 @@ Describe "output():" output:output
 					It "'\n'" outputOutputOptionalOptionFormattingCharacterInputInvalidCharacterFormattingCharacter:newLine
 						When run source $output -m=m --formatting-character="\n"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "'\\'" outputOutputOptionalOptionFormattingCharacterInputInvalidCharacterFormattingCharacter:bachSlash
 						When run source $output -m=m --formatting-character="\\"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "'%'" outputOutputOptionalOptionFormattingCharacterInputInvalidCharacterFormattingCharacter:percent
 						When run source $output -m=m --formatting-character="%"
 						The stdout should not be present
-						The stderr should include "DESCRIPTION:"
+						The stderr should include "ERROR"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 				End
