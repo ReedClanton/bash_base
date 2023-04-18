@@ -11,7 +11,7 @@
 --require spec_helper
 
 # Fail when anything is not perfect.
-# --fail-no-examples
+--fail-no-examples
 # --warning-as-failure
 # --fail-fast
 
