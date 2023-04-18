@@ -11,11 +11,11 @@
 --require spec_helper
 
 # Fail when anything is not perfect.
-#--fail-no-examples
-#--warning-as-failure
-#--fail-fast
+# --fail-no-examples
+# --warning-as-failure
+# --fail-fast
 
 # Default kcov (coverage) options
-#--kcov-options "--exclude-pattern=main.sh"
-#--fail-low-coverage
+# --kcov-options "--exclude-pattern=main.sh"
+# --fail-low-coverage
 
