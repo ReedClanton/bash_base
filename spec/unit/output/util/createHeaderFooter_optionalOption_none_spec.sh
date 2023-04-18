@@ -5,8 +5,6 @@ readonly DEFAULT_CHAR
 Describe "output():" output
 	Describe "util:" output:util
 		Describe "createHeaderFooter():" outputUtil:createHeaderFooter
-			# Mock out 'cat' so it returns stdin.
-			cat() { input=""; read input; echo $input; }
 			# Source CUT function file so function may be called directly.
 			sourceCut() { . $PWD/src/shell/functions/output/util/createHeaderFooter.sh; }
 			BeforeAll 'sourceCut'

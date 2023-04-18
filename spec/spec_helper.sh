@@ -2,9 +2,9 @@
 
 # For more information regarding shellspec's spec_helper file, see: https://github.com/shellspec/shellspec#spec_helper
 
- ######################################
+#######################################
 ## Global (Across All specfiles) Data ##
- ######################################
+#######################################
 ## Constant(s) ##
 # Return Value(s) #
 CATCHALL_RT=1
@@ -13,12 +13,16 @@ OPTION_NAME_INVALID_RT=140
 OPTION_VALUE_INVALID_RT=141
 OPTION_REQUIRED_NOT_PROVIDED_RT=142
 CODE_NOT_ACCESSIBLE_RT=202
+
 ## Variable(s) ##
 # NoOp
+
 ## Function(s) ##
 # Value Checking Function(s) #
 isPositive() { [ $(($1)) -gt 0 ]; }
 isNotNegative() { [ $(($1)) -ge 0 ]; }
+# Mocking System Commands #
+cat() { input=""; read input; echo $input; }
 ## Alias(es) ##
 # NoOp
 
