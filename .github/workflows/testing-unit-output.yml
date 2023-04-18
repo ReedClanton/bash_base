@@ -12,7 +12,7 @@ jobs:
       - name: Installing 'shellspec' (POSIX shell script testing tool)...
         run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
       - name: Running unit tests from a 'bash' shell (with code coverage) from ${{ github.workspace }}...
-        run:  shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/output.sh --limits=83,100" ./spec/unit/output/output_*
+        run:  $HOME/.local/bin/shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/output.sh --limits=83,100" ./spec/unit/output/output_*
 ##        run:  shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/output.sh --limits=83,100" --fail-low-coverage ./spec/unit/output/output_*
   unit-test-ubuntu-dash-output:
     runs-on: ubuntu-20.04
@@ -22,7 +22,7 @@ jobs:
       - name: Installing 'shellspec' (POSIX shell script testing tool)...
         run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
       - name: Running unit tests from a 'dash' shell...
-        run:  shellspec --no-fail-fast -s /bin/dash ./spec/unit/output/output_*
+        run:  $HOME/.local/bin/shellspec --no-fail-fast -s /bin/dash ./spec/unit/output/output_*
   unit-test-ubuntu-zsh-output:
     runs-on: ubuntu-20.04
     steps:
@@ -33,7 +33,7 @@ jobs:
       - name: Installing 'zsh' (shell)...
         run:  sudo apt install -y zsh
       - name: Running unit tests from a 'zsh' shell...
-        run:  shellspec --no-fail-fast -s /bin/zsh ./spec/unit/output/output_*
+        run:  $HOME/.local/bin/shellspec --no-fail-fast -s /bin/zsh ./spec/unit/output/output_*
   unit-test-ubuntu-ksh-output:
     runs-on: ubuntu-20.04
     steps:
@@ -44,7 +44,7 @@ jobs:
       - name: Installing 'ksh' (shell)...
         run:  sudo apt-get install ksh
       - name: Running unit tests from a 'ksh' shell...
-        run:  shellspec --no-fail-fast -s /bin/ksh ./spec/unit/output/output_*
+        run:  $HOME/.local/bin/shellspec --no-fail-fast -s /bin/ksh ./spec/unit/output/output_*
 #  unit-test-ubuntu-ash-output:
 #    runs-on: ubuntu-20.04
 #    steps:
@@ -55,7 +55,7 @@ jobs:
 #      - name: Installing 'BusyBox' (shell)...
 #        run:  sudo apt-get install busybox
 ##      - name: Running unit tests from a 'busybox' shell...
-##        run:  shellspec --no-fail-fast -s /bin/busybox ./spec/unit/output/output_*
+##        run:  $HOME/.local/bin/shellspec --no-fail-fast -s /bin/busybox ./spec/unit/output/output_*
   unit-test-macos-bash-output:
     runs-on: macos-12
     steps:

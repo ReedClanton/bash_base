@@ -13,7 +13,7 @@ jobs:
         run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
       - name: Running unit tests from a 'bash' shell (with code coverage) from ${{ github.workspace }}...
         run:  $HOME/.local/bin/shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/createHeaderFooter.sh --limits=96,100" ./spec/unit/output/util/createHeaderFooter_*
-##        run:  shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/createHeaderFooter.sh --limits=96,100" --fail-low-coverage ./spec/unit/output/util/createHeaderFooter_*
+##        run:  $HOME/.local/bin/shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/createHeaderFooter.sh --limits=96,100" --fail-low-coverage ./spec/unit/output/util/createHeaderFooter_*
   unit-test-ubuntu-dash-output-util-createHeaderFooter:
     runs-on: ubuntu-20.04
     steps:
