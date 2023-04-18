@@ -52,8 +52,9 @@ jobs:
       - run:  ps -p $$
       - run:  echo $SHELL
       - run:  cat /etc/shells
+      - run:  echo $HOME
       - name: Running unit tests from a 'zsh' shell...
-        run:  shellspec -s /bin/zsh --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
+        run:  /Users/runner/.local/bin/shellspec -s /bin/zsh --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
 #  unit-test-ash-output-util-createHeaderFooter:
 #    runs-on: ubuntu-20.04
 #    steps:
