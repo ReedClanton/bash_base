@@ -57,17 +57,17 @@ jobs:
       - run:  cat /etc/shells
       - name: Running unit tests from a 'bash' shell...
         run:  $HOME/.local/bin/shellspec -s /bin/bash --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
-#  unit-test-macos-dash-output-util-createHeaderFooter:
-#    runs-on: macos-12
-#    steps:
-#      - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
-#        uses: actions/checkout@v3
-#      - name: Installing 'shellspec' (POSIX shell script testing tool)...
-#        run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
-#      - run:  cat /etc/shells
-#      - run:  echo $HOME
-##      - name: Running unit tests from a 'dash' shell...
-##        run:  $HOME/.local/bin/shellspec -s /bin/dash --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
+  unit-test-macos-dash-output-util-createHeaderFooter:
+    runs-on: macos-12
+    steps:
+      - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
+        uses: actions/checkout@v3
+      - name: Installing 'shellspec' (POSIX shell script testing tool)...
+        run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
+      - run:  cat /etc/shells
+      - run:  echo $HOME
+      - name: Running unit tests from a 'dash' shell...
+        run:  $HOME/.local/bin/shellspec -s /bin/dash --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
   unit-test-macos-zsh-output-util-createHeaderFooter:
     runs-on: macos-12
     steps:
