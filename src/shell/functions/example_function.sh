@@ -16,7 +16,7 @@
  ###############
 ## Function(s) ##
  ###############
-IFS='' read -r -d '' FUNCTION_NAME_DOC <<"EOF"
+FUNCTION_NAME_DOC=$(cat <<"EOF"
 #/ DESCRIPTION:
 #/	TODO
 #/
@@ -42,6 +42,7 @@ IFS='' read -r -d '' FUNCTION_NAME_DOC <<"EOF"
 #/ TODO(S):
 #/	- TODO
 EOF
+)
 function functionName {
 	# If the log function hasn't been sourced, do so now.
 	if [[ "$(type -t log)" = "" ]]; then
@@ -51,9 +52,9 @@ function functionName {
 	log -i -c=${FUNCNAME[0]} --full-title -m="<titleTextHere>"
 
 	log -c=${FUNCNAME[0]} -m="Resetting local variable(s)..."
-	 ###############################
+	################################
 	## Reset/Set Local Variable(s) ##
-	 ###############################
+	################################
 	# Logging var(s).
 	traceLvl="-c=${FUNCNAME[0]}"
 	readonly traceLvl
@@ -67,9 +68,9 @@ function functionName {
 	readonly errorLvl
 	log $traceLvl -m="Local variable(s) reset."
 
-	 #####################
+	######################
 	## Process Option(s) ##
-	 #####################
+	######################
 	for fullArg in "$@"; do
 		log $traceLvl -m="Processing option: '$fullArg'..."
 		# Tracks value of current option.
@@ -87,9 +88,9 @@ function functionName {
 		esac
 	done
 
-	 ###########################
-	## Error Check Argument(s) ##
-	 ###########################
+	#########################
+	## Error Check Input(s) ##
+	#########################
 	log $traceLvl -m="Ensuring all required argument(s) were given..."
 	checkRequiredOpts "$FUNCTION_NAME_DOC" "-a=$varHoldingValOfRequiredArg"
 	rtVal=$?
@@ -97,10 +98,10 @@ function functionName {
 		return $rtVal
 	fi
 	log $debugLvl -m="All required argument(s) were given."
-	
-	 #####################
+
+	######################
 	## Next Section Name ##
-	 #####################
+	######################
 	
 }
 

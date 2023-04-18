@@ -24,7 +24,8 @@ isNotNegative() { [ $(($1)) -ge 0 ]; }
 # Mocking System Commands #
 # Most code uses the 'cat' command to copy method doc to a variable, so it's mocked here.
 cat() { input=""; read input; echo $input; }
-
+# Used to skip tests that shellspec can't run due to not handling that shell correctly.
+isNotBash() { ! [ "${0#*"bash"}" != "$0" ]; }
 ## Alias(es) ##
 # NoOp
 

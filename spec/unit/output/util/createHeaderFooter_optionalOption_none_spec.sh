@@ -12,10 +12,9 @@ Describe "output():" output
 			Describe "Optional option:" outputUtilCreateHeaderFooter:optionalOption
 				It "None" outputUtilCreateHeaderFooterOptionalOption:none outputUtilCreateHeaderFooterOptionalOptionNone
 					When run createHeaderFooter
-					The stderr should not be present
-					The lines of stdout should equal 1
-					The stdout line 1 should equal "\n"
-					The status should be success
+					The stdout should not be present
+					The stderr should include "DESCRIPTION:"
+					The status should equal $OPTION_REQUIRED_NOT_PROVIDED_RT
 				End
 			End
 		End
