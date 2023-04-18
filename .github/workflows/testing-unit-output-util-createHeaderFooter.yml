@@ -41,8 +41,12 @@ jobs:
         uses: actions/checkout@v3
       - name: Installing 'shellspec' (POSIX shell script testing tool)...
         run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
-#      - name: Installing 'zsh' (shell)...
-#        run:  sudo apt install -y zsh
+      - run:  sudo ls -ap /
+      - run:  sudo ls -ap /home/
+      - run:  sudo ls -ap /home/runner/
+#      - run:  sudo ls -ap /home/
+#      - run:  sudo ls -ap /home/
+#      - run:  sudo ls -ap /home/
       - name: Running unit tests from a 'zsh' shell...
         run:  shellspec --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
 #  unit-test-ash-output-util-createHeaderFooter:
