@@ -44,7 +44,7 @@ jobs:
       - run:  sudo ls -ap /
       - run:  sudo ls -ap /home/
 #      - run:  sudo ls -ap /home/runner/
-      - run:  sudo ls -ap /home/Users/
+#      - run:  sudo ls -ap /home/Users/
 #      - run:  sudo ls -ap /home/
       - run:  sudo pwd
       - name: Running unit tests from a 'zsh' shell...
