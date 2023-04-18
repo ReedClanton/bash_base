@@ -70,7 +70,7 @@ createHeaderFooter() {
 	else
 		createHeaderFooterLogPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR createHeaderFooter():"
 	fi
-	readonly createHeaderFooterLogPrefix
+#	readonly createHeaderFooterLogPrefix
 
 	######################
 	## Process Option(s) ##
