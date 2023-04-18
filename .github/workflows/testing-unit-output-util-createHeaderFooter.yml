@@ -11,6 +11,8 @@ jobs:
         run:  sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev kcov
       - name: Installing 'shellspec' (POSIX shell script testing tool)...
         run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
+      - name: Wait a bit so shellspec is found...
+        run:  sleep 1
       - name: Running unit tests from a 'bash' shell (with code coverage) from ${{ github.workspace }}...
         run:  shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/createHeaderFooter.sh --limits=96,100" ./spec/unit/output/util/createHeaderFooter_*
 ##        run:  shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/createHeaderFooter.sh --limits=96,100" --fail-low-coverage ./spec/unit/output/util/createHeaderFooter_*
@@ -79,6 +81,8 @@ jobs:
       - run:  pwd
       - run:  cat /etc/shells
       - run:  echo $HOME
+      - run:  man type
+      - run:  type --help
       - name: Running unit tests from a 'zsh' shell...
         run:  $HOME/.local/bin/shellspec -s /bin/zsh --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
 
