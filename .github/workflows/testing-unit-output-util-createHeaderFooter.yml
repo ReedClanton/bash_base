@@ -46,7 +46,7 @@ jobs:
       - run:  sudo ls -ap /home/runner/
 #      - run:  sudo ls -ap /home/
 #      - run:  sudo ls -ap /home/
-#      - run:  sudo ls -ap /home/
+      - run:  sudo pwd
       - name: Running unit tests from a 'zsh' shell...
         run:  shellspec --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
 #  unit-test-ash-output-util-createHeaderFooter:
