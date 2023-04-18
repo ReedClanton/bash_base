@@ -2,7 +2,7 @@ name: Unit Test output()'s createHeaderFooter() util function
 run-name: ${{ github.actor }} has triggered the running of unit tests of output()'s createHeaderFooter() util function for the ${{ github.run_attempt }} time by initiating a ${{ github.event_name }}
 on: push
 jobs:
-  unit-test-bash-output-util-createHeaderFooter:
+  unit-test-ubuntu-bash-output-util-createHeaderFooter:
     runs-on: ubuntu-20.04
     steps:
       - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
@@ -14,16 +14,16 @@ jobs:
       - name: Running unit tests from a 'bash' shell (with code coverage) from ${{ github.workspace }}...
         run:  shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/createHeaderFooter.sh --limits=96,100" ./spec/unit/output/util/createHeaderFooter_*
 ##        run:  shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/createHeaderFooter.sh --limits=96,100" --fail-low-coverage ./spec/unit/output/util/createHeaderFooter_*
-#  unit-test-dash-output-util-createHeaderFooter:
-#    runs-on: ubuntu-20.04
-#    steps:
-#      - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
-#        uses: actions/checkout@v3
-#      - name: Installing 'shellspec' (POSIX shell script testing tool)...
-#        run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
-##      - name: Running unit tests from a 'dash' shell...
-##        run:  shellspec --no-fail-fast -s /bin/dash ./spec/unit/output/util/createHeaderFooter_*
-  unit-test-ksh-output-util-createHeaderFooter:
+  unit-test-ubuntu-dash-output-util-createHeaderFooter:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
+        uses: actions/checkout@v3
+      - name: Installing 'shellspec' (POSIX shell script testing tool)...
+        run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
+      - name: Running unit tests from a 'dash' shell...
+        run:  shellspec --no-fail-fast -s /bin/dash ./spec/unit/output/util/createHeaderFooter_*
+  unit-test-ubuntu-ksh-output-util-createHeaderFooter:
     runs-on: ubuntu-20.04
     steps:
       - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
@@ -34,7 +34,18 @@ jobs:
         run:  sudo apt-get install ksh
       - name: Running unit tests from a 'ksh' shell...
         run:  shellspec --no-fail-fast -s /usr/bin/ksh ./spec/unit/output/util/createHeaderFooter_*
-  unit-test-zsh-output-util-createHeaderFooter:
+  unit-test-ubuntu-ash-output-util-createHeaderFooter:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
+        uses: actions/checkout@v3
+      - name: Installing 'shellspec' (POSIX shell script testing tool)...
+        run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
+      - name: Installing 'BusyBox' (shell)...
+        run:  sudo apt-get install busybox
+      - name: Running unit tests from a 'busybox' shell...
+        run:  shellspec --no-fail-fast -s /usr/bin/busybox ./spec/unit/output/util/createHeaderFooter_*
+  unit-test-macos-bash-output-util-createHeaderFooter:
     runs-on: macos-12
     steps:
       - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
@@ -44,21 +55,39 @@ jobs:
       - run:  pwd
       - run:  cat /etc/shells
       - run:  echo $HOME
-#      - name: Running unit tests from a 'zsh' shell...
-#        run:  $HOME/.local/bin/shellspec -s /bin/zsh --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
-      - name: Running unit tests from a 'tcsh' shell...
-        run:  $HOME/.local/bin/shellspec -s /bin/tcsh --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
+      - name: Running unit tests from a 'bash' shell...
+        run:  $HOME/.local/bin/shellspec -s /bin/bash --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
+  unit-test-macos-dash-output-util-createHeaderFooter:
+    runs-on: macos-12
+    steps:
+      - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
+        uses: actions/checkout@v3
+      - name: Installing 'shellspec' (POSIX shell script testing tool)...
+        run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
+      - run:  pwd
+      - run:  cat /etc/shells
+      - run:  echo $HOME
       - name: Running unit tests from a 'dash' shell...
         run:  $HOME/.local/bin/shellspec -s /bin/dash --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
-#  unit-test-ash-output-util-createHeaderFooter:
-#    runs-on: ubuntu-20.04
-#    steps:
-#      - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
-#        uses: actions/checkout@v3
-#      - name: Installing 'shellspec' (POSIX shell script testing tool)...
-#        run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
-##      - name: Installing 'BusyBox' (shell)...
-##        run:  sudo apt-get install busybox
-##      - name: Running unit tests from a 'busybox' shell...
-##        run:  shellspec --no-fail-fast -s /usr/bin/busybox ./spec/unit/output/util/createHeaderFooter_*
+  unit-test-macos-ksh-output-util-createHeaderFooter:
+    runs-on: macos-12
+    steps:
+      - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
+        uses: actions/checkout@v3
+      - name: Installing 'shellspec' (POSIX shell script testing tool)...
+        run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
+      - name: Running unit tests from a 'ksh' shell...
+        run:  $HOME/.local/bin/shellspec -s /bin/ksh --no-fail-fast -s /usr/bin/ksh ./spec/unit/output/util/createHeaderFooter_*
+  unit-test-macos-zsh-output-util-createHeaderFooter:
+    runs-on: macos-12
+    steps:
+      - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
+        uses: actions/checkout@v3
+      - name: Installing 'shellspec' (POSIX shell script testing tool)...
+        run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
+      - run:  pwd
+      - run:  cat /etc/shells
+      - run:  echo $HOME
+      - name: Running unit tests from a 'zsh' shell...
+        run:  $HOME/.local/bin/shellspec -s /bin/zsh --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
 
