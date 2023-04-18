@@ -66,7 +66,7 @@ jobs:
 ##        run:  sudo apt-get install busybox
 ##      - name: Running unit tests from a 'busybox' shell...
 ##        run:  busybox -c "shellspec --no-fail-fast -s /usr/bin/busybox ./spec/unit/output/util/constants_*
-  unit-test-macos-bash-output-util-createHeaderFooter:
+  unit-test-macos-bash-output-util-constants:
     runs-on: macos-12
     steps:
       - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
@@ -93,5 +93,5 @@ jobs:
       - name: Installing 'shellspec' (POSIX shell script testing tool)...
         run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
       - name: Running unit tests from a 'zsh' shell...
-        run:  $HOME/.local/bin/shellspec -s /bin/zsh --no-fail-fast ./spec/unit/output/util/createHeaderFooter_*
+        run:  $HOME/.local/bin/shellspec -s /bin/zsh --no-fail-fast ./spec/unit/output/util/constants_*
 
