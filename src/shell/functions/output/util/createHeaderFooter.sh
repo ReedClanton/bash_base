@@ -64,12 +64,6 @@ createHeaderFooter() {
 	# Tracks if prefix is being used.
 	prefixUsed=false
 	# Error prefix added to error output messages.
-#	if [ echo $0 = "bash" ]; then
-#		alias type=$(type -t)
-#	elif [ echo $0 = "ksh" ]; then
-#		alias type=$(whence)
-#	elif [ echo $0 = "csh" ]; then
-#		alias type=$(which)
 	if [ "$(command -v date)" = "" ]; then
 		createHeaderFooterLogPrefix="ERROR createHeaderFooter():"
 	else
@@ -132,7 +126,7 @@ createHeaderFooter() {
 				;;
 		esac
 	done
-	
+
 	#########################
 	## Error Check Input(s) ##
 	#########################
@@ -188,4 +182,3 @@ createHeaderFooter() {
 	echo "${headerFooter}\n"
 	exit 0
 }
-#createHeaderFooter $@

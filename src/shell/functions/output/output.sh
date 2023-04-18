@@ -229,7 +229,7 @@ for fullArg in "$@"; do
 			# Ensure provided indent is valid.
 			case "$arg" in
 				# TODO #45: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
-				[[:digit:]]|[[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]]|[[:digit:]][[:digit:]][[:digit:]][[:digit:]][[:digit:]])
+				[0-9]|[0-9][0-9]|[0-9][0-9][0-9]|[0-9][0-9][0-9][0-9]|[0-9][0-9][0-9][0-9][0-9])
 					indent=$arg  ;;
 				*)
 					echo "$outputLogPrefix Indent must be a non-negative integer, was '$arg', see doc:" >&2
@@ -242,7 +242,7 @@ for fullArg in "$@"; do
 			# Ensure provided value is valid.
 			case "$arg" in
 				# TODO #45: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
-				[1-9]|[[:digit:]][[:digit:]]|[1-9][[:digit:]][[:digit:]]|[1-9][[:digit:]][[:digit:]][[:digit:]]|[1-9][[:digit:]][[:digit:]][[:digit:]][[:digit:]])
+				[1-9]|[0-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9])
 					maxAlwLineLen=$arg  ;;
 				*)
 					echo "$outputLogPrefix Line length must be a positive integer, was '$arg', see doc:" >&2
@@ -256,20 +256,20 @@ for fullArg in "$@"; do
 				# Split line at new line character, then save each line.
 				delm='\n'
 				input=$arg$delm
-				while [[ $input ]]; do
+				while [ "$input" ]; do
 					# Track current line and update for next.
 					line="${input%%"$delm"*}"
 					input=${input#*"$delm"}
 					# Save current part of split line.
 					msg+=( "$line" )
 					# Track length of longest given line.
-					if [[ ${#line} -gt $maxGvnLineLen ]]; then
+					if [ ${#line} -gt $maxGvnLineLen ]; then
 						maxGvnLineLen=${#line}
 					fi
 				done
 			else
 				# Track length of longest given line.
-				if [[ ${#arg} -gt $maxGvnLineLen ]]; then
+				if [ ${#arg} -gt $maxGvnLineLen ]; then
 					maxGvnLineLen=${#arg}
 				fi
 				# Track current given line.
@@ -301,7 +301,7 @@ if $msgGiven; then
 	if [[ -n "${msg[@]}" ]]; then
 
 		# Remove indent value from max message character(s) per line.
-		if [[ $indent -gt 0 ]]; then
+		if [ $indent -gt 0 ]; then
 			maxAlwMsgLen=$(($maxAlwMsgLen-$indent))
 		fi
 
@@ -311,7 +311,7 @@ if $msgGiven; then
 		fi
 
 		## Verify Max Message Character(s) Per Line is Valid ##
-		if [[ $maxAlwMsgLen -lt 1 ]]; then
+		if [ $maxAlwMsgLen -lt 1 ]; then
 			# Build helpful error message(s).
 			errMsg="$outputLogPrefix Max line length ($maxAlwLineLen) is too short to contain '$indent' space(s) of indent"
 			if $prePostFix; then
@@ -321,9 +321,9 @@ if $msgGiven; then
 			fi
 			echo $errMsg >&2
 
-			if [[ $(($DEFAULT_INDENT)) -ge $(($maxAlwLineLen)) ]]; then
+			if [ $(($DEFAULT_INDENT)) -ge $(($maxAlwLineLen)) ]; then
 				echo "$outputLogPrefix Decrease default indent ($DEFAULT_INDENT) to bellow max allowed line length ($maxAlwLineLen)." >&2
-			elif [[ $(($indent)) -ge $(($maxAlwLineLen)) ]]; then
+			elif [ $(($indent)) -ge $(($maxAlwLineLen)) ]; then
 				echo "$outputLogPrefix Decrease provided indent value ($indent) to bellow max allowed line length ($maxAlwLineLen)." >&2
 			fi
 
@@ -350,7 +350,7 @@ readonly indentTxt
 
 ## Split Long Lines ##
 # Determine if any lines given are long enough to require splitting.
-if [[ $maxGvnLineLen -gt $maxAlwMsgLen ]]; then
+if [ $maxGvnLineLen -gt $maxAlwMsgLen ]; then
 	# Used to track current message line being processed.
 	i=0
 	# Used to track final line of message as total number of lines increases.
@@ -361,7 +361,7 @@ if [[ $maxGvnLineLen -gt $maxAlwMsgLen ]]; then
 	# Loop through each line, breaking up long ones along the way.
 	while [ $i -lt $end ]; do
 		# Determine if current line requires splitting.
-		if [[ ${#msg[$i]} -gt $maxAlwMsgLen ]]; then
+		if [ ${#msg[$i]} -gt $maxAlwMsgLen ]; then
 			# Copy previous array elements in.
 			tmp=("${msg[@]:0:$i}")
 			# Add first part of split line.
@@ -397,7 +397,7 @@ if $headerFooter; then
 		 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
 
 	# Ensure header/footer was generated successfully.
-	if [[ $rtOut -eq 0 ]]; then
+	if [ $rtOut -eq 0 ]; then
 		# Save off header/footer.
 		if [[ ! -z $indentTxt ]]; then
 			headerFooterTxt="$indentTxt$stdOut"

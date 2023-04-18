@@ -26,6 +26,8 @@ isNotNegative() { [ $(($1)) -ge 0 ]; }
 cat() { input=""; read input; echo $input; }
 # Used to skip tests that shellspec can't run due to not handling that shell correctly.
 isNotBash() { ! [ "${0#*"bash"}" != "$0" ]; }
+# Used to mock out sourcing of util (constants, globals, helper functions, etc).
+inScriptSource() { return 0; }
 ## Alias(es) ##
 # NoOp
 

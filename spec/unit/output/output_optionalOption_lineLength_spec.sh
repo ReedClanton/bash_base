@@ -7,8 +7,6 @@ readonly DEFAULT_INDENT
 readonly DEFAULT_CHAR
 
 Describe "output():" output:output
-	# Mock out sourcing of util (constants, globals, helper functions, etc).
-	inScriptSource() { return 0; }
 	# Makes test easier to read and maintain.
 	output=$PWD/src/shell/functions/output/output.sh
 	# createHeaderFooter() shouldn't be called, but mock it out just in case.
