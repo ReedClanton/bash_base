@@ -23,6 +23,17 @@ jobs:
         run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
       - name: Running unit tests from a 'dash' shell...
         run:  shellspec --no-fail-fast -s /bin/dash ./spec/unit/output/util/createHeaderFooter_*
+  unit-test-ubuntu-zsh-output-util-createHeaderFooter:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checking out ${{ github.ref_type }} ${{ github.ref_name }} from ${{ github.repository_owner }}'s ${{ github.repository }} repo on ${{ runner.os }} because ${{ github.actor }} initiated a ${{ github.event_name }}...
+        uses: actions/checkout@v3
+      - name: Installing 'shellspec' (POSIX shell script testing tool)...
+        run:  curl -fsSL https://git.io/shellspec | sh -s -- --yes
+      - name: Installing 'zsh' (shell)...
+        run:  sudo apt-get install zsh
+      - name: Running unit tests from a 'zsh' shell...
+        run:  shellspec --no-fail-fast -s /bin/zsh ./spec/unit/output/util/createHeaderFooter_*
   unit-test-ubuntu-ksh-output-util-createHeaderFooter:
     runs-on: ubuntu-20.04
     steps:
@@ -33,7 +44,7 @@ jobs:
       - name: Installing 'ksh' (shell)...
         run:  sudo apt-get install ksh
       - name: Running unit tests from a 'ksh' shell...
-        run:  shellspec --no-fail-fast -s /usr/bin/ksh ./spec/unit/output/util/createHeaderFooter_*
+        run:  shellspec --no-fail-fast -s /bin/ksh ./spec/unit/output/util/createHeaderFooter_*
 #  unit-test-ubuntu-ash-output-util-createHeaderFooter:
 #    runs-on: ubuntu-20.04
 #    steps:
@@ -44,7 +55,7 @@ jobs:
 #      - name: Installing 'BusyBox' (shell)...
 #        run:  sudo apt-get install busybox
 ##      - name: Running unit tests from a 'busybox' shell...
-##        run:  shellspec --no-fail-fast -s /usr/bin/busybox ./spec/unit/output/util/createHeaderFooter_*
+##        run:  shellspec --no-fail-fast -s /bin/busybox ./spec/unit/output/util/createHeaderFooter_*
   unit-test-macos-bash-output-util-createHeaderFooter:
     runs-on: macos-12
     steps:
