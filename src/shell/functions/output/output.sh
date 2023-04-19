@@ -179,13 +179,28 @@ maxAlwMsgLen=0
 msg=()
 # Contains final (formatted) message text.
 rtOutput=''
-# Prefix used to produce error logs.
-if [ "$(command -v date)" = "" ]; then
-	outputLogPrefix="ERROR output():"
-else
-	outputLogPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') ERROR output():"
+# Tracks if prefix is being used.
+prefixUsed=false
+# Determine current shell's readonly command.
+useReadonly=true
+if command -v readonly >/dev/null; then
+	alias readonly=$(command -v readonly)
+	# Ensure readonly functions (doesn't on some shells [zsh]).
+	readonlyTest="readonlyTest"
+	readonly readonlyTest
+	if [ "$readonlyTest" = "" ]; then
+		unalias readonly
+		useReadonly=false
+	fi
 fi
-readonly outputLogPrefix
+# Error prefix added to error output messages.
+outputLogPrefix="ERROR output():"
+if command -v date >/dev/null; then
+	outputLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $outputLogPrefix"
+fi
+if $useReadonly; then
+	readonly outputLogPrefix
+fi
 # Used to track if caller provided a message option so correct return value may be provided.
 msgGiven=false
 
@@ -201,29 +216,39 @@ for fullArg in "$@"; do
 	case $fullArg in
 		-h|--help)
 			echo "$OUTPUT_DOC"
-			exit 0  ;;
+			exit 0
+			;;
 		-f=*|--formatting-character=*)
 			# Ensure a valid value was provided.
 			case "$arg" in
 				*\\*|""|%)
 					echo "$outputLogPrefix Formatting character may not be blank, a special character (ex. new line, tab), or '%', was '$arg'. See doc:" >&2
 					echo "$OUTPUT_DOC" >&2
-					exit 141  ;;
+					exit 141
+					;;
 				*)
-					fChar=$arg  ;;
-			esac  ;;
+					fChar=$arg
+					;;
+			esac
+			;;
 		-t|--trace)
-			fChar=$TRACE_CHAR  ;;
+			fChar=$TRACE_CHAR
+			;;
 		-d|--debug)
-			fChar=$DEBUG_CHAR  ;;
+			fChar=$DEBUG_CHAR
+			;;
 		-i|--info)
-			fChar=$INFO_CHAR  ;;
+			fChar=$INFO_CHAR
+			;;
 		-w|--warn)
-			fChar=$WARN_CHAR  ;;
+			fChar=$WARN_CHAR
+			;;
 		-e|--error)
-			fChar=$ERROR_CHAR  ;;
+			fChar=$ERROR_CHAR
+			;;
 		--header-footer)
-			headerFooter=true  ;;
+			headerFooter=true
+			;;
 		--indent=*)
 			# Strip space character(s) from argument.
 			arg=$(echo $arg | tr -d '[:space:]')
@@ -231,12 +256,15 @@ for fullArg in "$@"; do
 			case "$arg" in
 				# TODO #45: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
 				[0-9]|[0-9][0-9]|[0-9][0-9][0-9]|[0-9][0-9][0-9][0-9]|[0-9][0-9][0-9][0-9][0-9])
-					indent=$arg  ;;
+					indent=$arg
+					;;
 				*)
 					echo "$outputLogPrefix Indent must be a non-negative integer, was '$arg', see doc:" >&2
 					echo "$OUTPUT_DOC" >&2
-					exit 141  ;;
-			esac  ;;
+					exit 141
+					;;
+			esac
+			;;
 		-l=*|--line-length=*)
 			# Strip space character(s) from argument.
 			arg=$(echo $arg | tr -d '[:space:]')
@@ -244,12 +272,15 @@ for fullArg in "$@"; do
 			case "$arg" in
 				# TODO #45: Figure out how to remove this hard coded line length digit limit. Then update tests to verify it.
 				[1-9]|[0-9][0-9]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-9][0-9][0-9][0-9][0-9])
-					maxAlwLineLen=$arg  ;;
+					maxAlwLineLen=$arg
+					;;
 				*)
 					echo "$outputLogPrefix Line length must be a positive integer, was '$arg', see doc:" >&2
 					echo "$OUTPUT_DOC" >&2
-					exit 141  ;;
-			esac  ;;
+					exit 141
+					;;
+			esac
+			;;
 		-m=*|--msg=*)
 			msgGiven=true
 			# Determine if given line contains newline character.
@@ -275,18 +306,22 @@ for fullArg in "$@"; do
 				fi
 				# Track current given line.
 				msg+=( "$arg" )
-			fi  ;;
+			fi
+			;;
 		-p|--pretty)
 			# Use all formatting.
 			headerFooter=true
-			prePostFix=true  ;;
+			prePostFix=true
+			;;
 		--pp|--pre-post-fix)
 			# Use post/pre fix formatting.
-			prePostFix=true  ;;
+			prePostFix=true
+			;;
 		*)
 			echo "$outputLogPrefix Calling function provided invalid option: '$fullArg', see doc:" >&2
 			echo "$OUTPUT_DOC" >&2
-			exit 140  ;;
+			exit 140
+			;;
 	esac
 done
 
@@ -347,7 +382,9 @@ fi
 #########################
 ## Generate indentation text ##
 indentTxt=$(printf %${indent}s |tr " " " ")
-readonly indentTxt
+if $useReadonly; then
+	readonly indentTxt
+fi
 
 ## Split Long Lines ##
 # Determine if any lines given are long enough to require splitting.
@@ -452,4 +489,3 @@ fi
 
 ## Write Final Message ##
 printf "$rtOutput"
-exit 0
