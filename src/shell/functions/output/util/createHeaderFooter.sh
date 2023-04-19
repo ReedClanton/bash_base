@@ -64,14 +64,25 @@ createHeaderFooter() {
 	len=0
 	# Tracks if prefix is being used.
 	prefixUsed=false
+	# Determine current shell's readonly command.
+	useReadonly=true
+	if command -v readonly >/dev/null; then
+		alias readonly=$(command -v readonly)
+		# Ensure readonly functions (doesn't on some shells [zsh]).
+		readonlyTest="readonlyTest"
+		readonly readonlyTest
+		if [ "$readonlyTest" = "" ]; then
+			unalias readonly
+			useReadonly=false
+		fi
+	fi
 	# Error prefix added to error output messages.
 	createHeaderFooterLogPrefix="ERROR createHeaderFooter():"
 	if command -v date >/dev/null; then
-		alias date=$(command -v date)
-		createHeaderFooterLogPrefix="$(date +'%Y/%m/%d %H:%M:%S %Z') $createHeaderFooterLogPrefix"
-	else
-		# Failed to find date equivalent.
-		alias date=:
+		createHeaderFooterLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $createHeaderFooterLogPrefix"
+	fi
+	if $useReadonly; then
+		readonly createHeaderFooterLogPrefix
 	fi
 
 	######################
