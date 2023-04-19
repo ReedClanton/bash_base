@@ -1,8 +1,6 @@
-#!/usr/bin/env sh
-
- #############################
+##############################
 ## Source Global Definitions ##
- #############################
+##############################
 shellName=$($HOME/shell/functions/shellName.sh)
 if compgen -G "/etc/${shellName}rc" > /dev/null; then
 	. /etc/${shellName}rc
@@ -17,9 +15,9 @@ if [ -f $HOME/shell/shell_functions ]; then
 	. $HOME/shell/shell_functions
 fi
 
- #####################
+######################
 ## Environment Setup ##
- #####################
+######################
 ## History Setting(s) ##
 # Total number of entries in history file.
 HISTSIZE=5000
@@ -44,9 +42,8 @@ bind "set show-all-if-ambiguous on"
 
 unset rc
 
- ##########
+###########
 ## Backup ##
- ##########
+###########
 # Back up home directory each time any terminal is opened.
 backUp
-

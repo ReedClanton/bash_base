@@ -1,22 +1,22 @@
 #!/usr/bin/env sh
 
- #########################
+##########################
 ## Global(s)/Constant(s) ##
- #########################
+##########################
 ## Global(s) ##
 # NoOp
 ## Constant(s) ##
 # Includes constant(s) relevant to logger method.
 . $SHELL_FUNCTIONS/log/util/constants.sh
 
- #####################
+######################
 ## Local Variable(s) ##
- #####################
+######################
 # NoOp
 
- ###############
+################
 ## Function(s) ##
- ###############
+################
 IFS='' read -r -d '' LOG_DOC <<"EOF"
 #/ DESCRIPTION:
 #/	Used to produce log messages. Current global log level, tracked by
@@ -126,9 +126,9 @@ IFS='' read -r -d '' LOG_DOC <<"EOF"
 #/	- Flush out documentation of return code(s).
 #/	- Check if I can use any sort of font formatting (ex. bold) in method description as printed by --help.
 EOF
- ###############################
+################################
 ## Reset/Set Local Variable(s) ##
- ###############################
+################################
 # Tracks given log level.
 lvl=$TRACE
 # Tracks name of given log level.
@@ -142,9 +142,9 @@ pfix="$(date +"%Y/%m/%d %H:%M:%S %Z")"
 # Used to build final output message.
 msg=""
 
- #####################
+######################
 ## Process Option(s) ##
- #####################
+######################
 for fullArg in "$@"; do
 	# Tracks value of current option.
 	arg=${fullArg#*=}
@@ -152,45 +152,56 @@ for fullArg in "$@"; do
 	# Determine what option user gave.
 	case $fullArg in
 		-c=*)
-			caller=$arg  ;;
-		-t|--trace)  ;;
+			caller=$arg
+			;;
+		-t|--trace)
+			;;
 		-d|--debug)
 			lvl=$DEBUG
-			lvlNm=DEBUG  ;;
+			lvlNm=DEBUG
+			;;
 		-i|--info)
 			lvl=$INFO
-			lvlNm=INFO  ;;
+			lvlNm=INFO
+			;;
 		-w|--warn)
 			lvl=$WARN
-			lvlNm="WARN "  ;;
+			lvlNm="WARN "
+			;;
 		-e|--error)
 			lvl=$ERROR
-			lvlNm=ERROR  ;;
+			lvlNm=ERROR
+			;;
 		-h|--help)
 			echo "$LOG_DOC"
-			exit 0  ;;
+			exit 0
+			;;
 		-m=*|--msg=*)
 			if [[ -z $msg ]]; then
 				msg=$arg
 			else
 				msg+="\n$arg"
-			fi  ;;
+			fi
+			;;
 		--full-title)
-			title=$FULL_TITLE  ;;
+			title=$FULL_TITLE
+			;;
 		--line-title)
-			title=$LINE_TITLE  ;;
+			title=$LINE_TITLE
+			;;
 		*)
 			printf "$pfix ERROR log:\t"
 			$SHELL_FUNCTIONS/output/output.sh --pp -m="Calling function provided invalid option: '$fullArg', see doc:"
 			echo "$LOG_DOC"
-			exit 140  ;;
+			exit 140
+			;;
 	esac
 done
 
- ###########################
+############################
 ## Error Check Argument(s) ##
- ###########################
-$SHELL_FUNCTIONS/checkRequiredOpts.sh "$LOG_DOC" -a="${msg[@]}"
+############################
+$SHELL_FUNCTIONS/util/checkRequiredOpts.sh "$LOG_DOC" -a="${msg[@]}"
 rtVal=$?
 if [[ $rtVal -ne 0 ]]; then
 	exit 142
@@ -236,4 +247,3 @@ if [[ $SHELL_LOG_LEVEL -ge $lvl ]]; then
 fi
 
 exit 0
-

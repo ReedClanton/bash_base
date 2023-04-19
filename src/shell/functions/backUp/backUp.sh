@@ -1,21 +1,21 @@
 #!/usr/bin/env sh
 
- #########################
+##########################
 ## Global(s)/Constant(s) ##
- #########################
+##########################
 ## Global(s) ##
 # NoOp
 ## Constant(s) ##
 . $SHELL_FUNCTIONS/backUp/util/constants.sh
 
- #####################
+######################
 ## Local Variable(s) ##
- #####################
+######################
 # NoOp
 
- ###############
+################
 ## Function(s) ##
- ###############
+################
 IFS='' read -r -d '' BACKUP_DOC <<"EOF"
 #/ DESCRIPTION:
 #/	Backs up $DEFAULT_BACK_UP_SOURCE_PATH to $DEFAULT_BACK_UP_DEST_PATH.
@@ -62,9 +62,9 @@ IFS='' read -r -d '' BACKUP_DOC <<"EOF"
 EOF
 log -c="backUp" -m="Resetting local variable(s)..."
 
- ###############################
+################################
 ## Reset/Set Local Variable(s) ##
- ###############################
+################################
 # Logging var(s).
 traceLvl="-c=backUp"
 readonly traceLvl
@@ -86,9 +86,9 @@ backUpDestPath=$DEFAULT_BACK_UP_DEST_PATH
 options="-rLtU --specials --safe-links --inplace --delete-excluded --include='/.bash*' --exclude='/.*' --exclude='/GDrive' --exclude='/Downloads/OS'"
 log $traceLvl -m="Local variable(s) reset."
 
- #####################
+######################
 ## Process Option(s) ##
- #####################
+######################
 for fullArg in "$@"; do
 	log $traceLvl -m="Processing option: '$fullArg'..."
 	# Tracks value of current option.
@@ -98,19 +98,21 @@ for fullArg in "$@"; do
 	case $fullArg in
 		-h|--help)
 			echo "$BACKUP_DOC"
-			exit 0  ;;
+			exit 0
+			;;
 		-q|--quiet)
 			log $warnLvl -m="-q/--quiet not implemented yet"  ;;
 		*)
 			log $errLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
 			echo "$BACKUP_DOC"
-			exit 140  ;;
+			exit 140
+			;;
 	esac
 done
 	
- ##############################
+###############################
 ## Error Checking Environment ##
- ##############################
+###############################
 log $traceLvl -m="Ensuring rsync is installed..."
 if [[ "$(command -v rsync)" != "" ]]; then
 	log $traceLvl -m="rsync is installed."
@@ -119,9 +121,9 @@ else
 	exit 203
 fi
 
- ###############
+################
 ## Run Back Up ##
- ###############
+################
 log $infoLvl -m="Running back up..."
 cmd="rsync $options $backUpSourcePath $backUpDestPath"
 readonly cmd
@@ -138,5 +140,4 @@ if [[ $rtOut -ne 0 ]]; then
 #	log $traceLvl -m="$stdOut"
 fi
 
-exit $rtOut
-
+exit $rtOu

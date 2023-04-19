@@ -1,21 +1,21 @@
 #!/usr/bin/env sh
 
- #########################
+##########################
 ## Global(s)/Constant(s) ##
- #########################
+##########################
 ## Global(s) ##
 # NoOp
 ## Constant(s) ##
 # NoOp
 
- #####################
+######################
 ## Local Variable(s) ##
- #####################
+######################
 # NoOp
 
- ###############
+################
 ## Function(s) ##
- ###############
+################
 IFS='' read -r -d '' FLATPAK_ALIAS_CREATOR_DOC <<"EOF"
 #/ DESCRIPTION:
 #/	Generates an alias for each flatpak app installed on system. Allows user to
@@ -54,9 +54,9 @@ EOF
 funcName=flatpakAliasCreator
 
 log -c=$funcName -m="Resetting local variable(s)..."
- ###############################
+################################
 ## Reset/Set Local Variable(s) ##
- ###############################
+################################
 # Logging var(s).
 traceLvl="-c=$funcName"
 readonly traceLvl
@@ -78,9 +78,9 @@ flatpakAliasTemplateTop="#!/usr/bin/env sh\n\n #####################\n## Flatpak
 readonly flatpakAliasTemplateTop
 log $traceLvl -m="Local variable(s) reset."
 
- #####################
+######################
 ## Process Option(s) ##
- #####################
+######################
 for fullArg in "$@"; do
 	log $traceLvl -m="Processing option: '$fullArg'..."
 	# Tracks value of current option.
@@ -90,17 +90,19 @@ for fullArg in "$@"; do
 	case $fullArg in
 		-h|--help)
 			echo "$FLATPAK_ALIAS_CREATOR_DOC"
-			exit 0  ;;
+			exit 0
+			;;
 		*)
 			log $errorLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
 			echo "$FLATPAK_ALIAS_CREATOR_DOC"
-			exit 140  ;;
+			exit 140
+			;;
 	esac
 done
 
- ############################################
+#############################################
 ## Creation & Setup of Flatpak Aliases File ##
- ############################################
+#############################################
 log $debugLvl -m="Creation & setup of flatpak alias file in '$flatpakAliasFilePath'..."
 ## Creation ##
 cmd="touch $flatpakAliasFilePath"
@@ -120,7 +122,7 @@ if [[ $rtOut -eq 0 ]]; then
 		fullFlatpakAppName=${flatpakPath#/var/lib/flatpak/app/}
 		flatpakAppName=${fullFlatpakAppName##*.}
 		flatpakAppName="$(tr '[:upper:]' '[:lower:]' <<< ${flatpakAppName:0:1})${flatpakAppName:1}"
-		
+
 		# Ask user what alias name they want to use.
 		printf "Generate alias of flatpak app '$fullFlatpakAppName' named '$flatpakAppName' (Y/skip/<aliasName>): "
 		read usrInput
@@ -129,14 +131,14 @@ if [[ $rtOut -eq 0 ]]; then
 			if [[ "$usrInput" != "Y" && "$usrInput" != "y" && "$usrInput" != "" ]]; then
 				flatpakAppName=$usrInput
 			fi
-			
+
 			log $infoLvl -m="Generating alias of flatpak app '$fullFlatpakAppName' with name '$flatpakAppName'..."
 			aliases="${aliases}alias $flatpakAppName=\"flatpak run $fullFlatpakAppName\"\n"
 		else
 			log $infoLvl -m="Skipped alias creation for '$fullFlatpakAppName'."
 		fi
 	done
-	
+
 	# Write flatpak aliases file.
 	cmd="printf '$aliases\n' >$flatpakAliasFilePath 2>&1"
 	unset stdOut errOut rtOut
@@ -171,4 +173,3 @@ else
 	log $errorLvl -m="Failed to create file for flatpak aliases ($flatpakAliasFilePath)."
 	exit 161
 fi
-
