@@ -6,19 +6,20 @@ fi
 ##############
 ## Import(s) ##
 ##############
+funcName="output"
 if [ -f $PWD/util/main.sh ]; then
 	inScriptSource $PWD/util/main.sh
-elif [ -f $PWD/src/shell/functions/output/util/main.sh ]; then
-	inScriptSource $PWD/src/shell/functions/output/util/main.sh
+elif [ -f $PWD/src/shell/functions/$funcName/util/main.sh ]; then
+	inScriptSource $PWD/src/shell/functions/$funcName/util/main.sh
 elif [ "$SHELL_FUNCTIONS" != "" ]; then
-	if [ -f $SHELL_FUNCTIONS/output/util/main.sh ]; then
-		inScriptSource $SHELL_FUNCTIONS/output/util/main.sh
+	if [ -f $SHELL_FUNCTIONS/$funcName/util/main.sh ]; then
+		inScriptSource $SHELL_FUNCTIONS/$funcName/util/main.sh
 	else
-		echo "ERROR output(): Couldn't find 'main.sh' file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		echo "ERROR $funcName(): Couldn't find 'main.sh' file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
 		exit 202
 	fi
 else
-	echo "ERROR output(): Couldn't find 'main.sh' file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+	echo "ERROR $funcName(): Couldn't find 'main.sh' file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
 	exit 202
 fi
 
@@ -284,29 +285,32 @@ for fullArg in "$@"; do
 		-m=*|--msg=*)
 			msgGiven=true
 			# Determine if given line contains newline character.
-			if [[ $arg == *"\\n"* ]]; then
-				# Split line at new line character, then save each line.
-				delm='\n'
-				input=$arg$delm
-				while [ "$input" ]; do
-					# Track current line and update for next.
-					line="${input%%"$delm"*}"
-					input=${input#*"$delm"}
-					# Save current part of split line.
-					msg+=( "$line" )
+			case "$arg" in
+				*\\n*)
+					# Split line at new line character, then save each line.
+					delm='\n'
+					input=$arg$delm
+					while [ "$input" ]; do
+						# Track current line and update for next.
+						line="${input%%"$delm"*}"
+						input=${input#*"$delm"}
+						# Save current part of split line.
+						msg+=( "$line" )
+						# Track length of longest given line.
+						if [ ${#line} -gt $maxGvnLineLen ]; then
+							maxGvnLineLen=${#line}
+						fi
+					done
+					;;
+				*)
 					# Track length of longest given line.
-					if [ ${#line} -gt $maxGvnLineLen ]; then
-						maxGvnLineLen=${#line}
+					if [ ${#arg} -gt $maxGvnLineLen ]; then
+						maxGvnLineLen=${#arg}
 					fi
-				done
-			else
-				# Track length of longest given line.
-				if [ ${#arg} -gt $maxGvnLineLen ]; then
-					maxGvnLineLen=${#arg}
-				fi
-				# Track current given line.
-				msg+=( "$arg" )
-			fi
+					# Track current given line.
+					msg+=( "$arg" )
+					;;
+			esac
 			;;
 		-p|--pretty)
 			# Use all formatting.
