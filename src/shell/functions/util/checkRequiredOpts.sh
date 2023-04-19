@@ -1,22 +1,7 @@
 #!/usr/bin/env sh
 
-##########################
-## Global(s)/Constant(s) ##
-##########################
-## Global(s) ##
-# NoOp
-## Constant(s) ##
-# NoOp
-
-######################
-## Local Variable(s) ##
-######################
-# NoOp
-
-################
-## Function(s) ##
-################
-IFS='' read -r -d '' CHECK_REQUIRED_OPTS_DOC <<"EOF"
+CHECK_REQUIRED_OPTS_DOC=$(
+	cat <<"EOF"
 #/ DESCRIPTION:
 #/	When given a message and any number of variable(s) (see '-a'), each
 #/	variables will be checked to ensure it has been set to something, If it has
@@ -71,6 +56,7 @@ IFS='' read -r -d '' CHECK_REQUIRED_OPTS_DOC <<"EOF"
 #/ TODO(S):
 #/	- None.
 EOF
+)
 ###########################################
 ## Special Case Processing of Help Option ##
 ###########################################

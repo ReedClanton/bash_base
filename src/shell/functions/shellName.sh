@@ -1,22 +1,7 @@
 #!/usr/bin/env sh
 
-##########################
-## Global(s)/Constant(s) ##
-##########################
-## Global(s) ##
-# NoOp
-## Constant(s) ##
-# NoOp
-
-######################
-## Local Variable(s) ##
-######################
-# NoOp
-
-################
-## Function(s) ##
-################
-IFS='' read -r -d '' SHELL_NAME_DOC <<"EOF"
+SHELL_NAME_DOC=$(
+	cat <<"EOF"
 #/ DESCRIPTION:
 #/	Produces the name of shell that this code is running under to stdOut.
 #/ 
@@ -44,6 +29,7 @@ IFS='' read -r -d '' SHELL_NAME_DOC <<"EOF"
 #/ TODO(S):
 #/	- None
 EOF
+)
 ######################
 ## Process Option(s) ##
 ######################
@@ -85,6 +71,6 @@ if [[ "$SHELL" != "$shellName" && "$shellName" != "" ]]; then
 	printf "$shellName"
 	exit 0
 else
-	printf "Failed, couldn't determine shell name from \$SHELL ($SHELL).\n"
+	printf "Failed, couldn't determine shell name from SHELL ($SHELL).\n"
 	exit 3
 fi
