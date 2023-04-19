@@ -1,23 +1,35 @@
 #!/usr/bin/env sh
 
-##########################
-## Global(s)/Constant(s) ##
-##########################
-## Global(s) ##
-# NoOp
-## Constant(s) ##
-# Includes constant(s) relevant to logger method.
-. $SHELL_FUNCTIONS/log/util/constants.sh
+# Needed so unit tests can mock out sourced file(s).
+if [ "$(type -t inScriptSource)" = "" ]; then
+	inScriptSource() { . "$@"; }
+fi
 
-######################
-## Local Variable(s) ##
-######################
-# NoOp
+##############
+## Import(s) ##
+##############
+funcName="log"
+if [ -f $PWD/util/main.sh ]; then
+	inScriptSource $PWD/util/main.sh
+elif [ -f $PWD/src/shell/functions/$funcName/util/main.sh ]; then
+	inScriptSource $PWD/src/shell/functions/$funcName/util/main.sh
+elif [ "$SHELL_FUNCTIONS" != "" ]; then
+	if [ -f $SHELL_FUNCTIONS/$funcName/util/main.sh ]; then
+		inScriptSource $SHELL_FUNCTIONS/$funcName/util/main.sh
+	else
+		echo "ERROR $funcName(): Couldn't find 'main.sh' file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		exit 202
+	fi
+else
+	echo "ERROR $funcName(): Couldn't find 'main.sh' file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+	exit 202
+fi
 
 ################
 ## Function(s) ##
 ################
-IFS='' read -r -d '' LOG_DOC <<"EOF"
+LOG_DOC=$(
+	cat <<"EOF"
 #/ DESCRIPTION:
 #/	Used to produce log messages. Current global log level, tracked by
 #/	'SHELL_LOG_LEVEL', is used to determine if given message should be printed.
@@ -126,6 +138,7 @@ IFS='' read -r -d '' LOG_DOC <<"EOF"
 #/	- Flush out documentation of return code(s).
 #/	- Check if I can use any sort of font formatting (ex. bold) in method description as printed by --help.
 EOF
+)
 ################################
 ## Reset/Set Local Variable(s) ##
 ################################

@@ -1,22 +1,35 @@
 #!/usr/bin/env sh
 
-##########################
-## Global(s)/Constant(s) ##
-##########################
-## Global(s) ##
-# NoOp
-## Constant(s) ##
-. $SHELL_FUNCTIONS/backUp/util/constants.sh
+# Needed so unit tests can mock out sourced file(s).
+if [ "$(type -t inScriptSource)" = "" ]; then
+	inScriptSource() { . "$@"; }
+fi
 
-######################
-## Local Variable(s) ##
-######################
-# NoOp
+##############
+## Import(s) ##
+##############
+funcName="backUp"
+if [ -f $PWD/util/main.sh ]; then
+	inScriptSource $PWD/util/main.sh
+elif [ -f $PWD/src/shell/functions/$funcName/util/main.sh ]; then
+	inScriptSource $PWD/src/shell/functions/$funcName/util/main.sh
+elif [ "$SHELL_FUNCTIONS" != "" ]; then
+	if [ -f $SHELL_FUNCTIONS/$funcName/util/main.sh ]; then
+		inScriptSource $SHELL_FUNCTIONS/$funcName/util/main.sh
+	else
+		echo "ERROR $funcName(): Couldn't find 'main.sh' file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		exit 202
+	fi
+else
+	echo "ERROR $funcName(): Couldn't find 'main.sh' file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+	exit 202
+fi
 
 ################
 ## Function(s) ##
 ################
-IFS='' read -r -d '' BACKUP_DOC <<"EOF"
+BACKUP_DOC=$(
+	cat <<"EOF"
 #/ DESCRIPTION:
 #/	Backs up $DEFAULT_BACK_UP_SOURCE_PATH to $DEFAULT_BACK_UP_DEST_PATH.
 #/	Back ups are stored in a folder named for the day the back up was done.
@@ -60,6 +73,7 @@ IFS='' read -r -d '' BACKUP_DOC <<"EOF"
 #/	- Fill out doc.
 #/	- Missing back up location should be handled.
 EOF
+)
 log -c="backUp" -m="Resetting local variable(s)..."
 
 ################################
@@ -114,7 +128,7 @@ done
 ## Error Checking Environment ##
 ###############################
 log $traceLvl -m="Ensuring rsync is installed..."
-if [[ "$(command -v rsync)" != "" ]]; then
+if command -v rsync >/dev/null; then
 	log $traceLvl -m="rsync is installed."
 else
 	log $errLvl -m="rsync isn't installed."
@@ -126,7 +140,6 @@ fi
 ################
 log $infoLvl -m="Running back up..."
 cmd="rsync $options $backUpSourcePath $backUpDestPath"
-readonly cmd
 unset stdOut errOut rtOut
 eval "$( (eval $cmd) \
 	2> >(errOut=$(cat); typeset -p errOut) \
@@ -140,4 +153,4 @@ if [[ $rtOut -ne 0 ]]; then
 #	log $traceLvl -m="$stdOut"
 fi
 
-exit $rtOu
+exit $rtOut
