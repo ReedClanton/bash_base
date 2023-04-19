@@ -1,21 +1,21 @@
 #!/usr/bin/env sh
 
- #########################
+##########################
 ## Global(s)/Constant(s) ##
- #########################
+##########################
 ## Global(s) ##
 # NoOp
 ## Constant(s) ##
 # NoOp
 
- #####################
+######################
 ## Local Variable(s) ##
- #####################
+######################
 # NoOp
 
- ###############
+################
 ## Function(s) ##
- ###############
+################
 FUNCTION_NAME_DOC=$(cat <<"EOF"
 #/ DESCRIPTION:
 #/	TODO
@@ -43,13 +43,29 @@ FUNCTION_NAME_DOC=$(cat <<"EOF"
 #/	- TODO
 EOF
 )
+
 function functionName {
 	# If the log function hasn't been sourced, do so now.
-	if [[ "$(type -t log)" = "" ]]; then
+	if [[ "$(command -v log)" = "" ]]; then
 		# TODO: Ensure all possible path(s) are checked.
 		. $HOME/shell/shell_functions
 	fi
 	log -i -c=${FUNCNAME[0]} --full-title -m="<titleTextHere>"
+
+	log -c=${FUNCNAME[0]} -m="Command setup..."
+	# Determine current shell's readonly command.
+	useReadonly=true
+	if command -v readonly >/dev/null; then
+		alias readonly=$(command -v readonly)
+		# Ensure readonly functions (doesn't on some shells [zsh]).
+		readonlyTest="readonlyTest"
+		readonly readonlyTest
+		if [ "$readonlyTest" = "" ]; then
+			unalias readonly
+			useReadonly=false
+		fi
+	fi
+	log -c=${FUNCNAME[0]} -m="Commands setup."
 
 	log -c=${FUNCNAME[0]} -m="Resetting local variable(s)..."
 	################################
@@ -57,15 +73,25 @@ function functionName {
 	################################
 	# Logging var(s).
 	traceLvl="-c=${FUNCNAME[0]}"
-	readonly traceLvl
+	if $useReadonly; then
+		readonly traceLvl
+	fi
 	debugLvl="-d -c=${FUNCNAME[0]}"
-	readonly debugLvl
+	if $useReadonly; then
+		readonly debugLvl
+	fi
 	infoLvl="-i -c=${FUNCNAME[0]}"
-	readonly infoLvl
+	if $useReadonly; then
+		readonly infoLvl
+	fi
 	warnLvl="-w -c=${FUNCNAME[0]}"
-	readonly warnLvl
+	if $useReadonly; then
+		readonly warnLvl
+	fi
 	errorLvl="-e -c=${FUNCNAME[0]}"
-	readonly errorLvl
+	if $useReadonly; then
+		readonly errorLvl
+	fi
 	log $traceLvl -m="Local variable(s) reset."
 
 	######################
@@ -80,11 +106,13 @@ function functionName {
 		case $fullArg in
 			-h|--help)
 				echo "$FUNCTION_NAME_DOC"
-				exit 0  ;;
+				exit 0
+				;;
 			*)
 				log $errorLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
 				echo "$FUNCTION_NAME_DOC"
-				exit 140  ;;
+				exit 140
+				;;
 		esac
 	done
 
