@@ -1,22 +1,35 @@
 #!/usr/bin/env sh
 
-##########################
-## Global(s)/Constant(s) ##
-##########################
-## Global(s) ##
-# NoOp
-## Constant(s) ##
-# NoOp
+# Needed so unit tests can mock out sourced file(s).
+if [ "$(type -t inScriptSource)" = "" ]; then
+	inScriptSource() { . "$@"; }
+fi
 
-######################
-## Local Variable(s) ##
-######################
-# NoOp
+##############
+## Import(s) ##
+##############
+funcName="functionName"
+if [ -f $PWD/util/main.sh ]; then
+	inScriptSource $PWD/util/main.sh
+elif [ -f $PWD/src/shell/functions/$funcName/util/main.sh ]; then
+	inScriptSource $PWD/src/shell/functions/$funcName/util/main.sh
+elif [ "$SHELL_FUNCTIONS" != "" ]; then
+	if [ -f $SHELL_FUNCTIONS/$funcName/util/main.sh ]; then
+		inScriptSource $SHELL_FUNCTIONS/$funcName/util/main.sh
+	else
+		echo "ERROR $funcName(): Couldn't find 'main.sh' file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		exit 202
+	fi
+else
+	echo "ERROR $funcName(): Couldn't find 'main.sh' file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+	exit 202
+fi
 
 ################
 ## Function(s) ##
 ################
-FUNCTION_NAME_DOC=$(cat <<"EOF"
+FUNCTION_NAME_DOC=$(
+	cat <<"EOF"
 #/ DESCRIPTION:
 #/	TODO
 #/
@@ -46,7 +59,7 @@ EOF
 
 function functionName {
 	# If the log function hasn't been sourced, do so now.
-	if [[ "$(command -v log)" = "" ]]; then
+	if command -v log >/dev/null; then
 		# TODO: Ensure all possible path(s) are checked.
 		. $HOME/shell/shell_functions
 	fi
