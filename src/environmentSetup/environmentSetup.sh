@@ -1,22 +1,7 @@
 #!/usr/bin/env sh
 
-##########################
-## Global(s)/Constant(s) ##
-##########################
-## Global(s) ##
-# NoOp
-## Constant(s) ##
-# NoOp
-
-######################
-## Local Variable(s) ##
-######################
-# NoOp
-
-################
-## Function(s) ##
-################
-IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
+ENVIRONMENT_SETUP_DOC=$(
+	cat <<"EOF"
 #/ DESCRIPTION:
 #/	Copies shell scripts and environent configuration files,
 #/	like `~/.<yourShellName>rc`, to the home directory of the user that runs
@@ -92,6 +77,7 @@ IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
 #/	- Set a default answer and make user input checking more robust.
 #/	- Return 193 when calling user is root, 194 otherwise.
 EOF
+)
 # Ensure script is being run from the same location as it's located.
 if [[ "./$(basename $0)" == $0 ]]; then
 	# If shell functions file hasn't been sourced, attempt to do so now.
