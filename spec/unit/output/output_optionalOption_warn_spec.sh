@@ -7,8 +7,6 @@ readonly DEFAULT_INDENT
 readonly WARN_CHAR
 
 Describe "output():" output:output
-	# Mock out sourcing of constants file.
-	inScriptSource() { return 0; }
 	# Makes test easier to read and maintain.
 	output=$PWD/src/shell/functions/output/output.sh
 	

@@ -57,32 +57,17 @@ createHeaderFooter() {
 	## Reset/Set Local Variable(s) ##
 	################################
 	# Tracks header/footer text.
-	headerFooter=''
+	headerFooter=""
 	# Tracks character used for formatting.
 	fChar=$DEFAULT_CHAR
 	# Tracks desired total length of header/footer.
 	len=0
 	# Tracks if prefix is being used.
 	prefixUsed=false
-	# Determine current shell's readonly command.
-	useReadonly=true
-	if command -v readonly >/dev/null; then
-		alias readonly=$(command -v readonly)
-		# Ensure readonly functions (doesn't on some shells [zsh]).
-		readonlyTest="readonlyTest"
-		readonly readonlyTest
-		if [ "$readonlyTest" = "" ]; then
-			unalias readonly
-			useReadonly=false
-		fi
-	fi
 	# Error prefix added to error output messages.
 	createHeaderFooterLogPrefix="ERROR createHeaderFooter():"
 	if command -v date >/dev/null; then
 		createHeaderFooterLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $createHeaderFooterLogPrefix"
-	fi
-	if $useReadonly; then
-		readonly createHeaderFooterLogPrefix
 	fi
 
 	######################
@@ -109,7 +94,7 @@ createHeaderFooter() {
 						len=$(($arg + $len))
 						;;
 					*)
-						echo "$createHeaderFooterLogPrefix Line length must be a non-negative integer, was '$arg', see doc:" >&2
+						echo "$createHeaderFooterLogPrefix Line length must be a positive integer, was '$arg', see doc:" >&2
 						echo "$CREATE_HEADER_FOOTER_DOC" >&2
 						exit 141
 						;;
@@ -181,18 +166,18 @@ createHeaderFooter() {
 				# All but the first character of the string.
 				rest=${tmp#?}
 				# Append next character from formatting string to header/footer.
-				shortFChar="$shortFChar${tmp%"$rest"}"
+				shortFChar=$shortFChar${tmp%"$rest"}
 				# Track remaining formatting string character(s).
 				tmp=$rest
 			done
 
-			headerFooter="$headerFooter$shortFChar"
+			headerFooter=$headerFooter$shortFChar
 		else
-			headerFooter="$headerFooter$fChar"
+			headerFooter=$headerFooter$fChar
 		fi
 	done
 
 	# Add new line and return.
-	echo "${headerFooter}\n"
+	echo "$headerFooter\n"
 	exit 0
 }
