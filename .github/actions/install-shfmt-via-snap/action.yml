@@ -1,5 +1,5 @@
-name: Install shellspec
-description: Installs shellspec (testing tool) onto runner.
+name: Install shfmt via snap
+description: Installs shfmt (style checker) onto runner.
 runs:
   using: 'composite'
   steps:
