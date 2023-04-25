@@ -1,0 +1,9 @@
+name: Install shellspec
+description: Installs shellspec (testing tool) onto runner.
+runs:
+  using: 'composite'
+  steps:
+    - name:  Install Style Guide Checking Tool...
+      shell: bash
+      run:   sudo snap install shfmt
+
