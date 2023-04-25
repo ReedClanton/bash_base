@@ -13,8 +13,3 @@ runs:
       shell: bash
       run:   sudo apt-get install ksh
 
-
-#    - name:  Installing 'ksh' (shell)...
-#      shell: bash
-#      run:   sudo apt-get install ksh
-
