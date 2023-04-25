@@ -279,11 +279,13 @@ output() {
 				# was, then the correct error message and return value will be provided.
 				msgGiven=true
 				# Every message option provided results in at least one line of output. Then save off provided message.
-				arg=$arg$delm; msg=$msg$arg
+				arg=$arg$delm
+				msg=$msg$arg
 				# Update longest provided line (if needed).
 				while [ "$arg" ]; do
 					# Split out current loop's line from the rest.
-					line=${arg%%"$delm"*}; arg=${arg#*"$delm"}
+					line=${arg%%"$delm"*}
+					arg=${arg#*"$delm"}
 					# Track length of longest given line.
 					if [ ${#line} -gt $maxGvnLineLen ]; then
 						maxGvnLineLen=${#line}
@@ -402,7 +404,7 @@ output() {
 	## Format Given Message ##
 	#########################
 	## Generate indentation text ##
-	indentTxt=$(printf %${indent}s |tr " " " ")
+	indentTxt=$(printf %${indent}s | tr " " " ")
 
 	## Split Long Lines ##
 	# Determine if any lines given are long enough to require splitting.
@@ -412,7 +414,8 @@ output() {
 		# Break up lines of provided message if they're too long.
 		while [ "$msg" ]; do
 			# Split out current loop's line from the rest.
-			line=${msg%%"$delm"*}; msg=${msg#*"$delm"}
+			line=${msg%%"$delm"*}
+			msg=${msg#*"$delm"}
 			# Break line up if needed.
 			while [ ${#line} -gt $maxAlwMsgLen ]; do
 				# Append portion of current line that's within line length limit.
@@ -442,7 +445,8 @@ output() {
 			cmd="createHeaderFooter -l=$maxGvnLineLen -f='$fChar'"
 		fi
 		unset stdOut stdErr stdRt
-		stdOut=$(eval "$cmd" 2>|stdErr.txt); stdRt=$?
+		stdOut=$(eval "$cmd" 2>|stdErr.txt)
+		stdRt=$?
 		# Save off stderr and remove temporary file used to store it.
 		stdErr=$(cat stdErr.txt)
 		rm ./stdErr.txt
@@ -473,7 +477,8 @@ output() {
 	## Add Message, Prefix, & Postfix ##
 	while [ "$msg" ]; do
 		# Split out current loop's line from the rest.
-		line=${msg%%"$delm"*}; msg=${msg#*"$delm"}
+		line=${msg%%"$delm"*}
+		msg=${msg#*"$delm"}
 
 		# Determine if prefix is needed.
 		rtOutput=$rtOutput$indentTxt
