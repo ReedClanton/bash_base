@@ -28,13 +28,7 @@ runs:
       shell: bash
       run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
     - name:  Installing 'shellspec' (try 5)...
-      id:    shellspecInstallTry5
       if:    steps.shellspecInstallTry4.outcome == 'failure'
-      continue-on-error: true
-      shell: bash
-      run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
-    - name:  Installing 'shellspec' (try 6)...
-      if:    steps.shellspecInstallTry5.outcome == 'failure'
       shell: bash
       run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
 

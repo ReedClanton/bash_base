@@ -3,7 +3,19 @@ description: Installs shfmt (style checker) onto runner.
 runs:
   using: 'composite'
   steps:
-    - name:  Install Style Guide Checking Tool...
+    - name:  Install 'shfmt' (style checking tool)...
+      id:    shfmtInstallTry1
+      continue-on-error: true
       shell: bash
       run:   sudo snap install shfmt
+    - name:  Install 'shfmt' (try 2)...
+      if:    steps.shfmtInstallTry1.outcome == 'failure'
+      shell: bash
+      run:   sudo snap install shfmt
+
+
+
+#    - name:  Install 'shfmt' (style checking tool)...
+#      shell: bash
+#      run:   sudo snap install shfmt
 
