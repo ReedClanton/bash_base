@@ -1,0 +1,10 @@
+name: Install shellspec
+
+description: Installs shellspec onto runner
+
+runs:
+  using: 'composite'
+  steps:
+    - name:  Installing 'shellspec' (POSIX shell script testing tool)...
+      shell: bash
+      run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
