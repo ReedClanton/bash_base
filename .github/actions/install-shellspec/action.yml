@@ -10,7 +10,7 @@ runs:
         retry_on: error
         timeout_seconds: 2
         shell: bash
-        run: curl -fsSL https://git.io/shellspec | sh -s -- --yes
+        command: curl -fsSL https://git.io/shellspec | sh -s -- --yes
 # You can specify the shell commands you want to retry here
 #command: |
 #	echo 'some command that would potentially fail'	
