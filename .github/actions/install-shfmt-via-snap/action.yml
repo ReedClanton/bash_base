@@ -13,9 +13,3 @@ runs:
       shell: bash
       run:   sudo snap install shfmt
 
-
-
-#    - name:  Install 'shfmt' (style checking tool)...
-#      shell: bash
-#      run:   sudo snap install shfmt
-
