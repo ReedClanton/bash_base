@@ -1,6 +1,7 @@
 name: Style Guide Check of output()'s createHeaderFooter() util function
+description: Run style guide check on output()'s util function createHeaderFooter().
 run-name: ${{ github.actor }} has triggered style guide check of output()'s createHeaderFooter() util function for the ${{ github.run_attempt }} time by initiating a ${{ github.event_name }}
-on: push
+on: [push, workflow_dispatch]
 jobs:
   style-guide-output-util-createHeaderFooter:
     runs-on: ubuntu-20.04
