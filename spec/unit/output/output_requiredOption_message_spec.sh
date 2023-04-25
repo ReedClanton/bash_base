@@ -1,5 +1,5 @@
 # Setup required environment variable(s).
-% DEFAULT_LINE_LENGTH:100
+% DEFAULT_LINE_LENGTH:60
 readonly DEFAULT_LINE_LENGTH
 % DEFAULT_INDENT:0
 readonly DEFAULT_INDENT

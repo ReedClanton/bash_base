@@ -1,5 +1,5 @@
 # Setup required environment variable(s).
-% DEFAULT_LINE_LENGTH:100
+% DEFAULT_LINE_LENGTH:10
 readonly DEFAULT_LINE_LENGTH
 
 Describe "Output:" output
