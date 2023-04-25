@@ -1,8 +1,8 @@
-# Set constant(s) use here so configuration changes won't cause tests to fail.
+# Setup required environment variable(s).
 % DEFAULT_CHAR:'#'
 readonly DEFAULT_CHAR
 
-Describe "output():" output
+Describe "Output:" output
 	Describe "util:" output:util
 		Describe "createHeaderFooter():" outputUtil:createHeaderFooter
 			# Source CUT function file so function may be called directly.

@@ -178,6 +178,5 @@ createHeaderFooter() {
 	done
 
 	# Add new line and return.
-	echo "$headerFooter\n"
-	exit 0
+	echo "$headerFooter"
 }

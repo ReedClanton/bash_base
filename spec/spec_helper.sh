@@ -12,6 +12,7 @@ MINOR_EXECUTION_FAILURE_RT=3
 OPTION_NAME_INVALID_RT=140
 OPTION_VALUE_INVALID_RT=141
 OPTION_REQUIRED_NOT_PROVIDED_RT=142
+ENV_VAR_BAD_VALUE_RT=200
 CODE_NOT_ACCESSIBLE_RT=202
 
 ## Variable(s) ##
@@ -24,8 +25,6 @@ isNotNegative() { [ $(($1)) -ge 0 ]; }
 # Mocking System Commands #
 # Most code uses the 'cat' command to copy method doc to a variable, so it's mocked here.
 cat() { input=""; read input; echo $input; }
-# Used to skip tests that shellspec can't run due to not handling that shell correctly.
-isNotBash() { ! [ "${0#*"bash"}" != "$0" ]; }
 # Used to mock out sourcing of util (constants, globals, helper functions, etc).
 inScriptSource() { return 0; }
 ## Alias(es) ##

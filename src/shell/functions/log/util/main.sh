@@ -25,7 +25,23 @@ else
 	exit 202
 fi
 ## Code ##
-# NoOp
+if ! command -v output >/dev/null; then
+	if [ -f $PWD/../../output/output.sh ]; then
+		. $PWD/../../output/output.sh
+	elif [ -f $PWD/src/shell/functions/output/output.sh ]; then
+		. $PWD/src/shell/functions/output/output.sh
+	elif [ "$SHELL_FUNCTIONS" != "" ]; then
+		if [ -f $SHELL_FUNCTIONS/output/output.sh ]; then
+			. $SHELL_FUNCTIONS/output/output.sh
+		else
+			echo "ERROR $funcName(): output() wasn't already defined and couldn't be found from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+			exit 202
+		fi
+	else
+		echo "ERROR $funcName(): output() wasn't already defined and couldn't be found from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+		exit 202
+	fi
+fi
 
 ######################
 ## Local Variable(s) ##
