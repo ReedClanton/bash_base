@@ -1,0 +1,9 @@
+name: Install ksh shell via apt-get package manager
+description: Installs ksh shell onto runner.
+runs:
+  using: 'composite'
+  steps:
+    - name:  Installing 'ksh' (shell)...
+      shell: bash
+      run:   sudo apt-get install ksh
+
