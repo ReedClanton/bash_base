@@ -8,13 +8,13 @@ runs:
       continue-on-error: true
       shell: bash
       run:   sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev kcov
-    - name:  Installing 'Kcov' (retry 1)...
+    - name:  Installing 'Kcov' (try 2)...
       id:    kcovInstallTry2
       if:    steps.kcovInstallTry1.outcome == 'failure'
       continue-on-error: true
       shell: bash
       run:   sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev kcov
-    - name:  Installing 'Kcov' (retry 2)...
+    - name:  Installing 'Kcov' (try 3)...
       if:    steps.kcovInstallTry2.outcome == 'failure'
       shell: bash
       run:   sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev kcov

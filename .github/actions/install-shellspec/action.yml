@@ -4,37 +4,37 @@ runs:
   using: 'composite'
   steps:
     - name:  Installing 'shellspec' (POSIX shell script testing tool)...
-      id:    shellspecInstall
+      id:    shellspecInstallTry1
       continue-on-error: true
       shell: bash
       run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
     # shellspec's server doesn't reliably work, so retry when it fails.
-    - name:  Installing 'shellspec' (retry 1)...
-      id:    shellspecInstallRetry1
-      if:    steps.shellspecInstall.outcome == 'failure'
+    - name:  Installing 'shellspec' (try 2)...
+      id:    shellspecInstallTry2
+      if:    steps.shellspecInstallTry1.outcome == 'failure'
       continue-on-error: true
       shell: bash
       run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
-    - name:  Installing 'shellspec' (retry 2)...
-      id:    shellspecInstallRetry2
-      if:    steps.shellspecInstallRetry1.outcome == 'failure'
+    - name:  Installing 'shellspec' (try 3)...
+      id:    shellspecInstallTry3
+      if:    steps.shellspecInstallTry2.outcome == 'failure'
       continue-on-error: true
       shell: bash
       run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
-    - name:  Installing 'shellspec' (retry 3)...
-      id:    shellspecInstallRetry3
-      if:    steps.shellspecInstallRetry2.outcome == 'failure'
+    - name:  Installing 'shellspec' (try 4)...
+      id:    shellspecInstallTry4
+      if:    steps.shellspecInstallTry3.outcome == 'failure'
       continue-on-error: true
       shell: bash
       run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
-    - name:  Installing 'shellspec' (retry 4)...
-      id:    shellspecInstallRetry4
-      if:    steps.shellspecInstallRetry3.outcome == 'failure'
+    - name:  Installing 'shellspec' (try 5)...
+      id:    shellspecInstallTry5
+      if:    steps.shellspecInstallTry4.outcome == 'failure'
       continue-on-error: true
       shell: bash
       run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
-    - name:  Installing 'shellspec' (final retry)...
-      if:    steps.shellspecInstallRetry4.outcome == 'failure'
+    - name:  Installing 'shellspec' (try 6)...
+      if:    steps.shellspecInstallTry5.outcome == 'failure'
       shell: bash
       run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
 
