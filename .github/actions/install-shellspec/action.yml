@@ -8,23 +8,7 @@ runs:
       with:
         max_attempts: 3
         retry_on: error
-        timeout_seconds: 2
+        timeout_seconds: 5
         shell: bash
         command: curl -fsSL https://git.io/shellspec | sh -s -- --yes
-# You can specify the shell commands you want to retry here
-#command: |
-#	echo 'some command that would potentially fail'	
-
-#    - name: Installing 'shellspec' (POSIX shell script testing tool)...
-#      id: shellspecInstall
-#      continue-on-error: true
-#      shell: bash
-#      run: curl -fsSL https://git.io/shellspec | sh -s -- --yes
-# shellspec's server doesn't reliably work, so retry when it fails.
-#    - name: Installing 'shellspec' (retry)...
-#      id:    shellspecInstallRetry
-#      if: steps.shellspecInstall.outcome == 'failure'
-#      continue-on-error: true
-#      shell: bash
-#      run: curl -fsSL https://git.io/shellspec | sh -s -- --yes
 
