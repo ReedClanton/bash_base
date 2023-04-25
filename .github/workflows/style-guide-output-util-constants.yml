@@ -1,5 +1,4 @@
 name: Style Guide Check of output()'s constants file
-description: Run style guide check on output()'s constants file.
 run-name: ${{ github.actor }} has triggered style guide check of output()'s constants file for the ${{ github.run_attempt }} time by initiating a ${{ github.event_name }}
 on: [push, workflow_dispatch]
 jobs:

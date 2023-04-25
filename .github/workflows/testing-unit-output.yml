@@ -1,5 +1,4 @@
 name: Unit Test output()
-description: Run all unit tests of output() on all supported shells once on Linux and once on MacOS.
 run-name: ${{ github.actor }} has triggered the running of unit tests of output() for the ${{ github.run_attempt }} time by initiating a ${{ github.event_name }}
 on: [push, workflow_dispatch]
 jobs:

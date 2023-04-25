@@ -1,5 +1,4 @@
 name: Unit Test output()'s createHeaderFooter() util function
-description: Run all unit tests of output()'s util function createHeaderFooter() on all supported shells once on Linux and once on MacOS.
 run-name: ${{ github.actor }} has triggered the running of unit tests of output()'s createHeaderFooter() util function for the ${{ github.run_attempt }} time by initiating a ${{ github.event_name }}
 on: [push, workflow_dispatch]
 jobs:

@@ -1,5 +1,4 @@
 name: Style Guide Check of output()
-description: Run style guide check on output().
 run-name: ${{ github.actor }} has triggered style guide check of output() for the ${{ github.run_attempt }} time by initiating a ${{ github.event_name }}
 on: [push, workflow_dispatch]
 jobs:
