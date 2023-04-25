@@ -6,7 +6,7 @@ runs:
     - name: Installing 'shellspec' (POSIX shell script testing tool)...
       uses: nick-fields/retry@v2.8.3
       with:
-        max_attempts: 3
+        max_attempts: 5
         retry_on: error
         timeout_seconds: 5
         shell: bash
