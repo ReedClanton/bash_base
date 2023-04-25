@@ -13,8 +13,3 @@ runs:
       shell: bash
       run:   sudo apt install -y zsh
 
-
-#    - name:  Installing 'zsh' (shell)...
-#      shell: bash
-#      run:   sudo apt install -y zsh
-
