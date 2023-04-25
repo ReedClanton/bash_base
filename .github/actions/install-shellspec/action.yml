@@ -4,6 +4,15 @@ runs:
   using: 'composite'
   steps:
     - name:  Installing 'shellspec' (POSIX shell script testing tool)...
+      id:    shellspec-install
+      continue-on-error: true
+      shell: bash
+      run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
+	# shellspec's server doesn't reliably work, so retry when it fails.
+    - name:  Installing 'shellspec' (retry)...
+      id:    shellspec-install-retry
+      if:    steps.shellspec-install.outcome == 'failure'
+      continue-on-error: true
       shell: bash
       run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
 
