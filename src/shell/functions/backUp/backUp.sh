@@ -96,7 +96,7 @@ backUpDir=$DEFAULT_BACK_UP_DEST_DIR
 backUpSourcePath=$DEFAULT_BACK_UP_SOURCE_PATH
 # Tracks path backup will be created at.
 backUpDestPath=$DEFAULT_BACK_UP_DEST_PATH
-# TODO: Comment.
+# TODO #22: rsync options are hard coded for now.
 options="-rLtU --specials --safe-links --inplace --delete-excluded --include='/.bash*' --exclude='/.*' --exclude='/GDrive' --exclude='/Downloads/OS'"
 log $traceLvl -m="Local variable(s) reset."
 
