@@ -31,7 +31,7 @@ Describe "output():" output
 						End
 					End
 					Describe
-						# No idea why, but some shells require `Include` for this test to pass...
+						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
 						Include $constants
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableDefaultLineLength:readonly
@@ -56,7 +56,7 @@ Describe "output():" output
 						End
 					End
 					Describe
-						# No idea why, but some shells require `Include` for this test to pass...
+						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
 						Include $constants
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableDefaultIndent:readonly
@@ -78,7 +78,7 @@ Describe "output():" output
 						End
 					End
 					Describe
-						# No idea why, but some shells require `Include` for this test to pass...
+						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
 						Include $constants
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableDefaultChar:readonly
@@ -100,7 +100,7 @@ Describe "output():" output
 						End
 					End
 					Describe
-						# No idea why, but some shells require `Include` for this test to pass...
+						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
 						Include $constants
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableTraceChar:readonly
@@ -122,7 +122,7 @@ Describe "output():" output
 						End
 					End
 					Describe
-						# No idea why, but some shells require `Include` for this test to pass...
+						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
 						Include $constants
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableInfoChar:readonly
@@ -144,7 +144,7 @@ Describe "output():" output
 						End
 					End
 					Describe
-						# No idea why, but some shells require `Include` for this test to pass...
+						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
 						Include $constants
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableDebugChar:readonly
@@ -166,7 +166,7 @@ Describe "output():" output
 						End
 					End
 					Describe
-						# No idea why, but some shells require `Include` for this test to pass...
+						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
 						Include $constants
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableWarnChar:readonly
@@ -188,7 +188,7 @@ Describe "output():" output
 						End
 					End
 					Describe
-						# No idea why, but some shells require `Include` for this test to pass...
+						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
 						Include $constants
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableErrorChar:readonly
