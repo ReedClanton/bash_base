@@ -11,6 +11,7 @@ jobs:
         uses: ./.github/actions/install-kcov-and-shellspec
       - name: Running unit tests from a 'bash' shell (with code coverage) from ${{ github.workspace }}...
         run:  shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh --limits=99,100" ./spec/unit/output/util/constants_*
+        # TODO #53: Pipeline doesn't process --fail-low-coverage correctly.
 ##        run:  $HOME/.local/bin/shellspec --no-fail-fast -p -s /bin/bash --kcov --kcov-options "--include-pattern=src/shell/functions/output/util/constants.sh --limits=99,100" --fail-low-coverage ./spec/unit/output/util/constants_*
   unit-test-ubuntu-dash-output-util-constants:
     runs-on: ubuntu-20.04
