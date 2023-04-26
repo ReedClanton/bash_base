@@ -1,6 +1,6 @@
-Describe "output():" output
-	Describe "util:" output:util
-		Describe "constants:" outputUtil:constants
+Describe "Output:" output
+	Describe "Util:" output:util
+		Describe "Constants:" outputUtil:constants
 			# Makes test easier to read and maintain.
 			constants=$PWD/src/shell/functions/output/util/constants.sh
 			
@@ -23,9 +23,6 @@ Describe "output():" output
 						It "Set" outputUtilConstantsEnvironmentVariableDefaultLineLength:set
 							The variable DEFAULT_LINE_LENGTH should be present
 						End
-						It "Not exported" outputUtilConstantsEnvironmentVariableDefaultLineLength:notExported
-							The variable DEFAULT_LINE_LENGTH should not be exported
-						End
 						It "Is positive" outputUtilConstantsEnvironmentVariableDefaultLineLength:isPositive
 							The value "$DEFAULT_LINE_LENGTH" should satisfy isPositive "$DEFAULT_LINE_LENGTH"
 						End
@@ -36,6 +33,9 @@ Describe "output():" output
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableDefaultLineLength:readonly
 							The variable DEFAULT_LINE_LENGTH should be readonly
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableDefaultLineLength:notExported
+							The variable DEFAULT_LINE_LENGTH should not be exported
 						End
 					End
 				End
@@ -48,9 +48,6 @@ Describe "output():" output
 						It "Set" outputUtilConstantsEnvironmentVariableDefaultIndent:set
 							The value "$DEFAULT_INDENT" should be present
 						End
-						It "Not exported" outputUtilConstantsEnvironmentVariableDefaultIndent:notExported
-							The variable DEFAULT_INDENT should not be exported
-						End
 						It "Is not negative" outputUtilConstantsEnvironmentVariableDefaultIndent:isNotNegative
 							The value "$DEFAULT_INDENT" should satisfy isNotNegative "$DEFAULT_INDENT"
 						End
@@ -61,6 +58,9 @@ Describe "output():" output
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableDefaultIndent:readonly
 							The variable DEFAULT_INDENT should be readonly
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableDefaultIndent:notExported
+							The variable DEFAULT_INDENT should not be exported
 						End
 					End
 				End
@@ -73,9 +73,6 @@ Describe "output():" output
 						It "Set" outputUtilConstantsEnvironmentVariableDefaultChar:set
 							The value "$DEFAULT_CHAR" should be present
 						End
-						It "Not exported" outputUtilConstantsEnvironmentVariableDefaultChar:notExported
-							The variable DEFAULT_CHAR should not be exported
-						End
 					End
 					Describe
 						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
@@ -83,6 +80,9 @@ Describe "output():" output
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableDefaultChar:readonly
 							The variable DEFAULT_CHAR should be readonly
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableDefaultChar:notExported
+							The variable DEFAULT_CHAR should not be exported
 						End
 					End
 				End
@@ -95,9 +95,6 @@ Describe "output():" output
 						It "Set" outputUtilConstantsEnvironmentVariableTraceChar:set
 							The value "$TRACE_CHAR" should be present
 						End
-						It "Not exported" outputUtilConstantsEnvironmentVariableTraceChar:notExported
-							The variable TRACE_CHAR should not be exported
-						End
 					End
 					Describe
 						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
@@ -105,6 +102,9 @@ Describe "output():" output
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableTraceChar:readonly
 							The variable TRACE_CHAR should be readonly
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableTraceChar:notExported
+							The variable TRACE_CHAR should not be exported
 						End
 					End
 				End
@@ -117,9 +117,6 @@ Describe "output():" output
 						It "Set" outputUtilConstantsEnvironmentVariableInfoChar:set
 							The value "$INFO_CHAR" should be present
 						End
-						It "Not exported" outputUtilConstantsEnvironmentVariableInfoChar:notExported
-							The variable INFO_CHAR should not be exported
-						End
 					End
 					Describe
 						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
@@ -127,6 +124,9 @@ Describe "output():" output
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableInfoChar:readonly
 							The variable INFO_CHAR should be readonly
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableInfoChar:notExported
+							The variable INFO_CHAR should not be exported
 						End
 					End
 				End
@@ -139,9 +139,6 @@ Describe "output():" output
 						It "Set" outputUtilConstantsEnvironmentVariableDebugChar:set
 							The value "$DEBUG_CHAR" should be present
 						End
-						It "Not exported" outputUtilConstantsEnvironmentVariableDebugChar:notExported
-							The variable DEBUG_CHAR should not be exported
-						End
 					End
 					Describe
 						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
@@ -149,6 +146,9 @@ Describe "output():" output
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableDebugChar:readonly
 							The variable DEBUG_CHAR should be readonly
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableDebugChar:notExported
+							The variable DEBUG_CHAR should not be exported
 						End
 					End
 				End
@@ -161,9 +161,6 @@ Describe "output():" output
 						It "Set" outputUtilConstantsEnvironmentVariableWarnChar:set
 							The value "$WARN_CHAR" should be present
 						End
-						It "Not exported" outputUtilConstantsEnvironmentVariableWarnChar:notExported
-							The variable WARN_CHAR should not be exported
-						End
 					End
 					Describe
 						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
@@ -171,6 +168,9 @@ Describe "output():" output
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableWarnChar:readonly
 							The variable WARN_CHAR should be readonly
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableWarnChar:notExported
+							The variable WARN_CHAR should not be exported
 						End
 					End
 				End
@@ -183,9 +183,6 @@ Describe "output():" output
 						It "Set" outputUtilConstantsEnvironmentVariableErrorChar:set
 							The value "$ERROR_CHAR" should be present
 						End
-						It "Not exported" outputUtilConstantsEnvironmentVariableErrorChar:notExported
-							The variable ERROR_CHAR should not be exported
-						End
 					End
 					Describe
 						# No idea why, but some shells require `Include` for this test to pass (like zsh)...
@@ -193,6 +190,9 @@ Describe "output():" output
 						
 						It "Readonly" outputUtilConstantsEnvironmentVariableErrorChar:readonly
 							The variable ERROR_CHAR should be readonly
+						End
+						It "Not exported" outputUtilConstantsEnvironmentVariableErrorChar:notExported
+							The variable ERROR_CHAR should not be exported
 						End
 					End
 				End

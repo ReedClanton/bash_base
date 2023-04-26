@@ -7,9 +7,9 @@ readonly DEFAULT_INDENT
 Describe "Output:" output
 	Describe "output():" output:output
 		# Track path to file that contains CUT.
-		outputPath=$PWD/src/shell/functions/output/output.sh
+		cutPath=$PWD/src/shell/functions/output/output.sh
 		# Source CUT function file so function may be called directly.
-		sourceCut() { . $outputPath; }
+		sourceCut() { . $cutPath; }
 		BeforeAll 'sourceCut'
 		
 		Describe "Optional option:" outputOutput:optionalOption
@@ -33,7 +33,7 @@ Describe "Output:" output
 					End
 					It "Many character formatting character" outputOutputOptionalOptionPrefixAndPostfixPp:manyCharacterFormattingCharacter
 						DEFAULT_CHAR='!#*@'
-						When run output -m=m --pp -f="!#*@"
+						When run output -m=m --pp
 						The stderr should not be present
 						The lines of stdout should equal 1
 						The stdout line 1 should equal "!#*@ m !#*@"
@@ -41,7 +41,7 @@ Describe "Output:" output
 					End
 					It "Many character formatting character, message broken up" outputOutputOptionalOptionPrefixAndPostfixPp:manyCharacterFormattingCharacterMessageBrokenUp
 						DEFAULT_CHAR='!#*@'
-						When run output -m=msg --pp -f="!#*@"
+						When run output -m=msg --pp
 						The stderr should not be present
 						The lines of stdout should equal 3
 						The stdout line 1 should equal "!#*@ m !#*@"
@@ -51,7 +51,7 @@ Describe "Output:" output
 					End
 					It "Formatting character too long for line" outputOutputOptionalOptionPrefixAndPostfixPp:formattingCharacterTooLongForLine
 						DEFAULT_CHAR='!#*@>'
-						When run output -m=m --pre-post-fix
+						When run output -m=m --pp
 						The stdout should not be present
 						The stderr should include "ERROR"
 						The status should equal $ENV_VAR_BAD_VALUE_RT
@@ -84,7 +84,7 @@ Describe "Output:" output
 					End
 					It "Many character formatting character, message broken up" outputOutputOptionalOptionPrefixAndPostfixPrePostFix:manyCharacterFormattingCharacterMessageBrokenUp
 						DEFAULT_CHAR='!#*@'
-						When run output --msg=msg --pp -f="!#*@"
+						When run output --msg=msg --pre-post-fix
 						The stderr should not be present
 						The lines of stdout should equal 3
 						The stdout line 1 should equal "!#*@ m !#*@"

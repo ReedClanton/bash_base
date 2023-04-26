@@ -1,5 +1,5 @@
-Describe "output():" output
-	Describe "util:" output:util
+Describe "Output:" output
+	Describe "Util:" output:util
 		Describe "createHeaderFooter():" outputUtil:createHeaderFooter
 			# Source CUT function file so function may be called directly.
 			sourceCut() { . $PWD/src/shell/functions/output/util/createHeaderFooter.sh; }

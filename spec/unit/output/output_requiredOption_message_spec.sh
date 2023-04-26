@@ -7,30 +7,30 @@ readonly DEFAULT_INDENT
 Describe "Output:" output
 	Describe "output():" output:output
 		# Track path to file that contains CUT.
-		outputPath=$PWD/src/shell/functions/output/output.sh
+		cutPath=$PWD/src/shell/functions/output/output.sh
 		# Source CUT function file so function may be called directly.
-		sourceCut() { . $outputPath; }
+		sourceCut() { . $cutPath; }
 		BeforeAll 'sourceCut'
 		
 		Describe "Required option:" outputOutput:requiredOption
-			Describe "Message:" outputOutputrequiredOption:message
-				Describe "Input single line:" outputOutputrequiredOptionMessage:inputSingleLine
-					Describe "-m:" outputOutputrequiredOptionMessageInputSingleLine:m
-						It "Alphanumeric" outputOutputrequiredOptionMessageInputSingleLineM:alphanumeric
+			Describe "Message:" outputOutputRequiredOption:message
+				Describe "Input single line:" outputOutputRequiredOptionMessage:inputSingleLine
+					Describe "-m:" outputOutputRequiredOptionMessageInputSingleLine:m
+						It "Alphanumeric" outputOutputRequiredOptionMessageInputSingleLineM:alphanumeric
 							When run output -m="mes6sag3"
 							The stderr should not be present
 							The lines of stdout should equal 1
 							The stdout line 1 should equal "mes6sag3"
 							The status should be success
 						End
-						It "Sentence" outputOutputrequiredOptionMessageInputSingleLineM:sentence
+						It "Sentence" outputOutputRequiredOptionMessageInputSingleLineM:sentence
 							When run output -m="mes6sag3 mes6sag3 mes6sag3 mes6sag3 mes6sag3 mes6sag3"
 							The stderr should not be present
 							The lines of stdout should equal 1
 							The stdout line 1 should equal "mes6sag3 mes6sag3 mes6sag3 mes6sag3 mes6sag3 mes6sag3"
 							The status should be success
 						End
-						It "Blank" outputOutputrequiredOptionMessageInputSingleLineM:blank
+						It "Blank" outputOutputRequiredOptionMessageInputSingleLineM:blank
 							When run output -m=""
 							The stderr should not be present
 							The stdout line 1 should be blank
@@ -38,7 +38,7 @@ Describe "Output:" output
 							Skip "until I figure out how to get shellspec to see blank lines (CUT works, test doesn't)."
 							The lines of stdout should equal 1
 						End
-						It "Null" outputOutputrequiredOptionMessageInputSingleLineM:null
+						It "Null" outputOutputRequiredOptionMessageInputSingleLineM:null
 							When run output -m=
 							The stderr should not be present
 							The stdout line 1 should be blank
@@ -47,22 +47,22 @@ Describe "Output:" output
 							The lines of stdout should equal 1
 						End
 					End
-					Describe "--msg:" outputOutputrequiredOptionMessageInputSingleLine:msg
-						It "Alphanumeric" outputOutputrequiredOptionMessageInputSingleLineMsg:alphanumeric
+					Describe "--msg:" outputOutputRequiredOptionMessageInputSingleLine:msg
+						It "Alphanumeric" outputOutputRequiredOptionMessageInputSingleLineMsg:alphanumeric
 							When run output --msg="mes6sag3"
 							The stderr should not be present
 							The lines of stdout should equal 1
 							The stdout line 1 should equal "mes6sag3"
 							The status should be success
 						End
-						It "Sentence" outputOutputrequiredOptionMessageInputSingleLineMsg:sentence
+						It "Sentence" outputOutputRequiredOptionMessageInputSingleLineMsg:sentence
 							When run output --msg="mes6sag3 mes6sag3 mes6sag3 mes6sag3 mes6sag3 mes6sag3"
 							The stderr should not be present
 							The lines of stdout should equal 1
 							The stdout line 1 should equal "mes6sag3 mes6sag3 mes6sag3 mes6sag3 mes6sag3 mes6sag3"
 							The status should be success
 						End
-						It "Blank" outputOutputrequiredOptionMessageInputSingleLineMsg:blank
+						It "Blank" outputOutputRequiredOptionMessageInputSingleLineMsg:blank
 							When run output --msg=""
 							The stderr should not be present
 							The stdout line 1 should be blank
@@ -70,7 +70,7 @@ Describe "Output:" output
 							Skip "until I figure out how to get shellspec to see blank lines (CUT works, test doesn't)."
 							The lines of stdout should equal 1
 						End
-						It "Null" outputOutputrequiredOptionMessageInputSingleLineMsg:null
+						It "Null" outputOutputRequiredOptionMessageInputSingleLineMsg:null
 							When run output --msg=
 							The stderr should not be present
 							The stdout line 1 should be blank
@@ -80,9 +80,9 @@ Describe "Output:" output
 						End
 					End
 				End
-				Describe "Input multiple lines, single message:" outputOutputrequiredOptionMessage:inputMultipleLinesSingleMessage
-					Describe "-m:" outputOutputrequiredOptionMessageInputMultipleLinesSingleMessage:m
-						It "Sentence" outputOutputrequiredOptionMessageInputMultipleLinesSingleMessageM:sentence
+				Describe "Input multiple lines, single message:" outputOutputRequiredOptionMessage:inputMultipleLinesSingleMessage
+					Describe "-m:" outputOutputRequiredOptionMessageInputMultipleLinesSingleMessage:m
+						It "Sentence" outputOutputRequiredOptionMessageInputMultipleLinesSingleMessageM:sentence
 							When run output -m="mes6sag1 mes6sag1 mes6sag1\nmes6sag2 mes6sag2 mes6sag2"
 							The stderr should not be present
 							The lines of stdout should equal 2
@@ -90,7 +90,7 @@ Describe "Output:" output
 							The stdout line 2 should equal "mes6sag2 mes6sag2 mes6sag2"
 							The status should be success
 						End
-						It "Blank" outputOutputrequiredOptionMessageInputMultipleLinesSingleMessageM:blank
+						It "Blank" outputOutputRequiredOptionMessageInputMultipleLinesSingleMessageM:blank
 							When run output -m="\n\n\n"
 							The stderr should not be present
 							The stdout line 1 should be blank
@@ -102,8 +102,8 @@ Describe "Output:" output
 							The lines of stdout should equal 4
 						End
 					End
-					Describe "--msg:" outputOutputrequiredOptionMessageInputMultipleLinesSingleMessage:msg
-						It "Sentence" outputOutputrequiredOptionMessageInputMultipleLinesSingleMessageMsg:sentence
+					Describe "--msg:" outputOutputRequiredOptionMessageInputMultipleLinesSingleMessage:msg
+						It "Sentence" outputOutputRequiredOptionMessageInputMultipleLinesSingleMessageMsg:sentence
 							When run output --msg="mes6sag1 mes6sag1 mes6sag1\nmes6sag2 mes6sag2 mes6sag2"
 							The stderr should not be present
 							The lines of stdout should equal 2
@@ -111,7 +111,7 @@ Describe "Output:" output
 							The stdout line 2 should equal "mes6sag2 mes6sag2 mes6sag2"
 							The status should be success
 						End
-						It "Blank" outputOutputrequiredOptionMessageInputMultipleLinesSingleMessageMsg:blank
+						It "Blank" outputOutputRequiredOptionMessageInputMultipleLinesSingleMessageMsg:blank
 							When run output --msg="\n\n\n\n"
 							The stderr should not be present
 							The stdout line 1 should be blank
@@ -125,9 +125,9 @@ Describe "Output:" output
 						End
 					End
 				End
-				Describe "Input multiple lines, multiple messages:" outputOutputrequiredOptionMessage:inputMultipleLinesMultipleMessages
-					Describe "-m:" outputOutputrequiredOptionMessageInputMultipleLinesMultipleMessagesm
-						It "One line per message" outputOutputrequiredOptionMessageInputMultipleLinesMultipleMessagesM:oneLinePerMessage
+				Describe "Input multiple lines, multiple messages:" outputOutputRequiredOptionMessage:inputMultipleLinesMultipleMessages
+					Describe "-m:" outputOutputRequiredOptionMessageInputMultipleLinesMultipleMessages:m
+						It "One line per message" outputOutputRequiredOptionMessageInputMultipleLinesMultipleMessagesM:oneLinePerMessage
 							When run output -m="mes6sag3 mes6sag3" -m="mes6sag3 mes6sag3 mes6sag3 mes6sag3"
 							The stderr should not be present
 							The lines of stdout should equal 2
@@ -135,7 +135,7 @@ Describe "Output:" output
 							The stdout line 2 should equal "mes6sag3 mes6sag3 mes6sag3 mes6sag3"
 							The status should be success
 						End
-						It "Multiple lines per message" outputOutputrequiredOptionMessageInputMultipleLinesMultipleMessagesM:multipleLinesPerMessage
+						It "Multiple lines per message" outputOutputRequiredOptionMessageInputMultipleLinesMultipleMessagesM:multipleLinesPerMessage
 							When run output -m="mes6sag3\nmes6sag3" -m="mes6sag3\nmes6sag3 mes6sag3 mes6sag3"
 							The stderr should not be present
 							The lines of stdout should equal 4
@@ -145,7 +145,7 @@ Describe "Output:" output
 							The stdout line 4 should equal "mes6sag3 mes6sag3 mes6sag3"
 							The status should be success
 						End
-						It "Blank" outputOutputrequiredOptionMessageInputMultipleLinesMultipleMessagesM:blank
+						It "Blank" outputOutputRequiredOptionMessageInputMultipleLinesMultipleMessagesM:blank
 							When run output -m="\n\n" -m="\n\n\n\n\n"
 							The stderr should not be present
 							The stdout line 1 should be blank
@@ -158,7 +158,7 @@ Describe "Output:" output
 							Skip "until I figure out how to get shellspec to see blank lines (CUT works, test doesn't)."
 							The lines of stdout should equal 6
 						End
-						It "Null" outputOutputrequiredOptionMessageInputMultipleLinesMultipleMessagesM:null
+						It "Null" outputOutputRequiredOptionMessageInputMultipleLinesMultipleMessagesM:null
 							When run output -m= -m= -m= -m= -m= -m= -m=
 							The stderr should not be present
 							The stdout line 1 should be blank
@@ -173,8 +173,8 @@ Describe "Output:" output
 							The lines of stdout should equal 7
 						End
 					End
-					Describe "--msg:" outputOutputrequiredOptionMessageInputMultipleLinesMultipleMessages:msg
-						It "One line per message" outputOutputrequiredOptionMessageInputMultipleLinesMultipleMessagesMsg:oneLinePerMessage
+					Describe "--msg:" outputOutputRequiredOptionMessageInputMultipleLinesMultipleMessages:msg
+						It "One line per message" outputOutputRequiredOptionMessageInputMultipleLinesMultipleMessagesMsg:oneLinePerMessage
 							When run output --msg="mes6sag3 mes6sag3" --msg="mes6sag3 mes6sag3 mes6sag3 mes6sag3"
 							The stderr should not be present
 							The lines of stdout should equal 2
@@ -182,7 +182,7 @@ Describe "Output:" output
 							The stdout line 2 should equal "mes6sag3 mes6sag3 mes6sag3 mes6sag3"
 							The status should be success
 						End
-						It "Multiple lines per message" outputOutputrequiredOptionMessageInputMultipleLinesMultipleMessagesMsg:multipleLinesPerMessage
+						It "Multiple lines per message" outputOutputRequiredOptionMessageInputMultipleLinesMultipleMessagesMsg:multipleLinesPerMessage
 							When run output --msg="mes6sag3\nmes6sag3" --msg="mes6sag3\nmes6sag3 mes6sag3 mes6sag3"
 							The stderr should not be present
 							The lines of stdout should equal 4
@@ -192,7 +192,7 @@ Describe "Output:" output
 							The stdout line 4 should equal "mes6sag3 mes6sag3 mes6sag3"
 							The status should be success
 						End
-						It "Blank" outputOutputrequiredOptionMessageInputMultipleLinesMultipleMessagesMsg:blank
+						It "Blank" outputOutputRequiredOptionMessageInputMultipleLinesMultipleMessagesMsg:blank
 							When run output --msg="\n\n" --msg="\n\n\n" --msg=""
 							The stderr should not be present
 							The stdout line 1 should be blank
@@ -207,7 +207,7 @@ Describe "Output:" output
 							Skip "until I figure out how to get shellspec to see blank lines (CUT works, test doesn't)."
 							The lines of stdout should equal 8
 						End
-						It "Null" outputOutputrequiredOptionMessageInputMultipleLinesMultipleMessagesMsg:null
+						It "Null" outputOutputRequiredOptionMessageInputMultipleLinesMultipleMessagesMsg:null
 							When run output --msg= --msg= --msg= --msg= --msg= --msg= --msg= --msg= --msg=
 							The stderr should not be present
 							The stdout line 1 should be blank
@@ -224,16 +224,16 @@ Describe "Output:" output
 						End
 					End
 				End
-				Describe "Input tabs:" outputOutputrequiredOptionMessage:inputTabs
-					Describe "-m:" outputOutputrequiredOptionMessageInputTabs:m
-						It "Sentence" outputOutputrequiredOptionMessageInputTabsM:sentence
+				Describe "Input tabs:" outputOutputRequiredOptionMessage:inputTabs
+					Describe "-m:" outputOutputRequiredOptionMessageInputTabs:m
+						It "Sentence" outputOutputRequiredOptionMessageInputTabsM:sentence
 							When run output -m="mes6sag3\t\tmes6sag3\t"
 							The stderr should not be present
 							The lines of stdout should equal 1
 							The stdout line 1 should equal "mes6sag3		mes6sag3	"
 							The status should be success
 						End
-						It "Tab" outputOutputrequiredOptionMessageInputTabsM:tab
+						It "Tab" outputOutputRequiredOptionMessageInputTabsM:tab
 							When run output -m="\t"
 							The stderr should not be present
 							The lines of stdout should equal 1
@@ -241,15 +241,15 @@ Describe "Output:" output
 							The status should be success
 						End
 					End
-					Describe "--msg:" outputOutputrequiredOptionMessageInputTabs:msg
-						It "Sentence" outputOutputrequiredOptionMessageInputTabsMsg:sentence
+					Describe "--msg:" outputOutputRequiredOptionMessageInputTabs:msg
+						It "Sentence" outputOutputRequiredOptionMessageInputTabsMsg:sentence
 							When run output --msg="\tmes6sag3\t\tmes6sag3"
 							The stderr should not be present
 							The lines of stdout should equal 1
 							The stdout line 1 should equal "	mes6sag3		mes6sag3"
 							The status should be success
 						End
-						It "Tab" outputOutputrequiredOptionMessageInputTabsMsg:tab
+						It "Tab" outputOutputRequiredOptionMessageInputTabsMsg:tab
 							When run output --msg="\t\t\t"
 							The stderr should not be present
 							The lines of stdout should equal 1

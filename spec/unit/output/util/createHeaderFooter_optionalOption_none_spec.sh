@@ -3,7 +3,7 @@
 readonly DEFAULT_CHAR
 
 Describe "Output:" output
-	Describe "util:" output:util
+	Describe "Util:" output:util
 		Describe "createHeaderFooter():" outputUtil:createHeaderFooter
 			# Source CUT function file so function may be called directly.
 			sourceCut() { . $PWD/src/shell/functions/output/util/createHeaderFooter.sh; }

@@ -7,9 +7,9 @@ readonly DEFAULT_INDENT
 Describe "Output:" output
 	Describe "output():" output:output
 		# Track path to file that contains CUT.
-		outputPath=$PWD/src/shell/functions/output/output.sh
+		cutPath=$PWD/src/shell/functions/output/output.sh
 		# Source CUT function file so function may be called directly.
-		sourceCut() { . $outputPath; }
+		sourceCut() { . $cutPath; }
 		BeforeAll 'sourceCut'
 		
 		Describe "Option mix:" outputOutput:optionMix

@@ -7,30 +7,30 @@ readonly DEFAULT_INDENT
 Describe "Output:" output
 	Describe "output():" output:output
 		# Track path to file that contains CUT.
-		outputPath=$PWD/src/shell/functions/output/output.sh
+		cutPath=$PWD/src/shell/functions/output/output.sh
 		# Source CUT function file so function may be called directly.
-		sourceCut() { . $outputPath; }
+		sourceCut() { . $cutPath; }
 		BeforeAll 'sourceCut'
 		
 		Describe "Required option:" outputOutput:requiredOption
-			Describe "Message:" outputOutputrequiredOption:message
-				Describe "Input invalid:" outputOutputrequiredOptionMessage:inputInvalid
-					It "None" outputOutputrequiredOptionMessageInputInvalid:none
+			Describe "Message:" outputOutputRequiredOption:message
+				Describe "Input invalid:" outputOutputRequiredOptionMessage:inputInvalid
+					It "None" outputOutputRequiredOptionMessageInputInvalid:none
 						When run output
 						The stdout should not be present
 						The stderr should include "ERROR"
 						The status should equal $OPTION_REQUIRED_NOT_PROVIDED_RT
 					End
-					Describe "-m:" outputOutputrequiredOptionMessageInputInvalid:m
-						It "Missing" outputOutputrequiredOptionMessageInputInvalidM:missing
+					Describe "-m:" outputOutputRequiredOptionMessageInputInvalid:m
+						It "Missing" outputOutputRequiredOptionMessageInputInvalidM:missing
 							When run output -m
 							The stdout should not be present
 							The stderr should include "ERROR"
 							The status should equal $OPTION_NAME_INVALID_RT
 						End
 					End
-					Describe "--msg:" outputOutputrequiredOptionMessageInputInvalid:msg
-						It "Missing" outputOutputrequiredOptionMessageInputInvalidMsg:missing
+					Describe "--msg:" outputOutputRequiredOptionMessageInputInvalid:msg
+						It "Missing" outputOutputRequiredOptionMessageInputInvalidMsg:missing
 							When run output --msg
 							The stdout should not be present
 							The stderr should include "ERROR"
