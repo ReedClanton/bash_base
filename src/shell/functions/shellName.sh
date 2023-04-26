@@ -1,22 +1,7 @@
 #!/usr/bin/env sh
 
- #########################
-## Global(s)/Constant(s) ##
- #########################
-## Global(s) ##
-# NoOp
-## Constant(s) ##
-# NoOp
-
- #####################
-## Local Variable(s) ##
- #####################
-# NoOp
-
- ###############
-## Function(s) ##
- ###############
-IFS='' read -r -d '' SHELL_NAME_DOC <<"EOF"
+SHELL_NAME_DOC=$(
+	cat <<"EOF"
 #/ DESCRIPTION:
 #/	Produces the name of shell that this code is running under to stdOut.
 #/ 
@@ -44,9 +29,10 @@ IFS='' read -r -d '' SHELL_NAME_DOC <<"EOF"
 #/ TODO(S):
 #/	- None
 EOF
- #####################
+)
+######################
 ## Process Option(s) ##
- #####################
+######################
 for fullArg in "$@"; do
 	# Tracks value of current option.
 	arg=${fullArg#*=}
@@ -55,11 +41,13 @@ for fullArg in "$@"; do
 	case $fullArg in
 		-h|--help)
 			echo "$SHELL_NAME_DOC"
-			exit 0  ;;
+			exit 0
+			;;
 		*)
 			echo "Invalid given argument: '$fullArg', see doc:"
 			echo "$SHELL_NAME_DOC"
-			exit 140  ;;
+			exit 140
+			;;
 	esac
 done
 
@@ -83,7 +71,6 @@ if [[ "$SHELL" != "$shellName" && "$shellName" != "" ]]; then
 	printf "$shellName"
 	exit 0
 else
-	printf "Failed, couldn't determine shell name from \$SHELL ($SHELL).\n"
+	printf "Failed, couldn't determine shell name from SHELL ($SHELL).\n"
 	exit 3
 fi
-

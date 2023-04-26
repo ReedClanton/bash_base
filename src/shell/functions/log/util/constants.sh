@@ -1,8 +1,6 @@
-#!/usr/bin/env sh
-
- #####################
+######################
 ## Output Formatting ##
- #####################
+######################
 # Indicates that text shouldn't be formatted as a title.
 NO_TITLE=0
 readonly NO_TITLE
@@ -22,9 +20,9 @@ LINE_TITLE=2
 readonly LINE_TITLE
 export LINE_TITLE
 
- #########################
+##########################
 ## Shell Function Logging ##
- #########################
+##########################
 # Indicates no logs should be produced.
 NONE=0
 readonly NONE
@@ -56,4 +54,3 @@ export ALL
 # Determines shell function logging level.
 SHELL_LOG_LEVEL=$INFO
 export SHELL_LOG_LEVEL
-

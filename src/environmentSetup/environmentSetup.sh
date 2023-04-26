@@ -1,22 +1,7 @@
 #!/usr/bin/env sh
 
- #########################
-## Global(s)/Constant(s) ##
- #########################
-## Global(s) ##
-# NoOp
-## Constant(s) ##
-# NoOp
-
- #####################
-## Local Variable(s) ##
- #####################
-# NoOp
-
- ###############
-## Function(s) ##
- ###############
-IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
+ENVIRONMENT_SETUP_DOC=$(
+	cat <<"EOF"
 #/ DESCRIPTION:
 #/	Copies shell scripts and environent configuration files,
 #/	like `~/.<yourShellName>rc`, to the home directory of the user that runs
@@ -92,10 +77,11 @@ IFS='' read -r -d '' ENVIRONMENT_SETUP_DOC <<"EOF"
 #/	- Set a default answer and make user input checking more robust.
 #/	- Return 193 when calling user is root, 194 otherwise.
 EOF
+)
 # Ensure script is being run from the same location as it's located.
 if [[ "./$(basename $0)" == $0 ]]; then
 	# If shell functions file hasn't been sourced, attempt to do so now.
-	if [[ "$(type -t log)" = "" ]]; then
+	if ! command -v log >/dev/null; then
 		shellRoot=../shell/shell_functions
 		if [[ -f "$shellRoot" ]]; then
 			. $shellRoot
@@ -107,9 +93,9 @@ if [[ "./$(basename $0)" == $0 ]]; then
 
 	funcName=environmentSetup
 	log -c=$funcName -m="Resetting local variable(s)..."
-	 ###############################
+	################################
 	## Reset/Set Local Variable(s) ##
-	 ###############################
+	################################
 	# Logging var(s).
 	traceLvl="-t -c=$funcName"
 	readonly traceLvl
@@ -130,9 +116,9 @@ if [[ "./$(basename $0)" == $0 ]]; then
 	repoSourceRoot=$(readlink -f $PWD/../)
 	log $traceLvl -m="Local variable(s) reset."
 
-	 #####################
+	######################
 	## Process Option(s) ##
-	 #####################
+	######################
 	for fullArg in "$@"; do
 		log $traceLvl -m="Processing option: '$fullArg'..."
 		# Tracks value of current option.
@@ -142,11 +128,13 @@ if [[ "./$(basename $0)" == $0 ]]; then
 		case $fullArg in
 			-h|--help)
 				echo "$ENVIRONMENT_SETUP_DOC"
-				exit 0  ;;
+				exit 0
+				;;
 			*)
 				log $errorLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
 				echo "$ENVIRONMENT_SETUP_DOC"
-				exit 140  ;;
+				exit 140
+				;;
 		esac
 	done
 
@@ -162,17 +150,17 @@ if [[ "./$(basename $0)" == $0 ]]; then
 				# Determine name of current shell.
 				shellNm=shellName
 				readonly shellNm
-				
+
 				# Ensure shell name was found.
 				if [[ "$SHELL" != "$shellNm" && "$shellNm" != "" ]]; then
 					log $debugLvl -m="Creating local directory for storing $USER's file(s) that are being replaced..."
-					
+
 					cmd="mkdir $BACK_UP_DIR"
 					unset stdOut errOut rtOut
 					eval "$( (eval $cmd) \
 						2> >(errOut=$(cat); typeset -p errOut) \
 						 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
-				
+
 					# Ensure directory for storing user's current environment setup was created.
 					if [[ $rtOut -eq 0 ]]; then
 						# Back up user's hidden shell file(s) if they exist.
@@ -187,7 +175,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 							log $infoLvl -m="No hidden shell file(s) to back up, skipping."
 							rtOut=0
 						fi
-						
+
 						# Ensure hidden shell file(s) were moved to the back up directory.
 						if [[ $rtOut -eq 0 ]]; then
 							# If a directory named shell exists it must be backed up because it'll be replaced by this script.
@@ -202,11 +190,11 @@ if [[ "./$(basename $0)" == $0 ]]; then
 								log $infoLvl -m="No directory named 'shell' found in $USER's home, back up skipped."
 								rtOut=0
 							fi
-							
+
 							# Ensure move worked.
 							if [[ $rtOut -eq 0 ]]; then
 								log $debugLvl -m="Copying hidden shell setup file(s) from '$repoSourceRoot/.shell*' file(s) to '$userHome/'..."
-								
+
 								for shellFilePath in $repoSourceRoot/.shell*; do
 									newShellFilePath=$userHome/.$shellNm${shellFilePath#$repoSourceRoot/.shell}
 									log $traceLvl -m="Copying '$shellFilePath' to '$newShellFilePath'..."
@@ -221,7 +209,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 										break
 									fi
 								done
-								
+
 								# Ensure hidden shell file(s) were moved.
 								if [[ $rtOut -eq 0 ]]; then
 									log $debugLvl -m="Copying '$repoSourceRoot/shell' to '$userHome/'..."
@@ -230,7 +218,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 									eval "$( (eval $cmd) \
 										2> >(errOut=$(cat); typeset -p errOut) \
 										 > >(stdOut=$(cat); typeset -p stdOut); rtOut=$?; typeset -p rtOut )"
-									
+
 									# Ensure shell directory copy worked.
 									if [[ $rtOut -eq 0 ]]; then
 										# Create file that adds aliases for flatpak apps.
@@ -246,7 +234,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 									else
 										log $errorLvl -m="Failed to copy directory with shell scripts to $USER's home."
 									fi
-									
+
 									# Remove shell directory that copy failed for.\
 									if [[ -d "$userHome/shell" ]]; then
 										log $debugLvl -m="Removing '$userHome/shell..."
@@ -284,7 +272,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 								else
 									log $errorLvl -m="Failed to move hidden shell file(s) to $USER's home."
 								fi
-								
+
 								# Remove hidden file(s) that were copied to user's home.
 								cmd="rm $userHome/.$shellNm*"
 								unset stdOut errOut rtOut
@@ -296,7 +284,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 									log $errorLvl -m="Failed to move '$shellFilePath' to '$newShellFilePath'."
 									exit 162
 								fi
-								
+
 								# Revert to original hidden shell file(s).
 								if compgen -G "$BACK_UP_DIR/.*" > /dev/null; then
 									log $debugLvl -m="Copying hidden shell file(s) from back up to $USER's home..."
@@ -317,7 +305,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 							else
 								log $errorLvl -m="Failed to back up (move) '$userHome/shell' to '$BACK_UP_DIR/'."
 							fi
-							
+
 							# Attempt to move shell directory back to user's home.
 							if [[ -d "$BACK_UP_DIR/shell" ]]; then
 								cmd="cp -r $BACK_UP_DIR/shell $userHome/"
@@ -334,7 +322,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 						else
 							log $errorLvl -m="Failed to back up (move) '$userHome/.$shellNm*' file(s) to '$BACK_UP_DIR'."
 						fi
-						
+
 						# Ensure any file(s) that were moved from user's home are moved back.
 						if compgen -G "$BACK_UP_DIR/.$shellNm*" > /dev/null; then
 							cmd="cp $BACK_UP_DIR/.* $userHome/"
@@ -348,7 +336,7 @@ if [[ "./$(basename $0)" == $0 ]]; then
 								exit 4
 							fi
 						fi
-						
+
 						log $infoLvl -m="Shell environment configuration reverted."
 						exit 3
 					else
@@ -376,4 +364,3 @@ else
 	log $errorLvl -m="Failed, script must be run from the same directory it's located in."
 	exit 180
 fi
-

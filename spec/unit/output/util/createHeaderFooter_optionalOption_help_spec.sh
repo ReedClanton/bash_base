@@ -1,4 +1,4 @@
-Describe "output():" output
+Describe "Output:" output
 	Describe "util:" output:util
 		Describe "createHeaderFooter():" outputUtil:createHeaderFooter
 			# Source CUT function file so function may be called directly.

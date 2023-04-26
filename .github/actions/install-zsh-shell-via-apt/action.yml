@@ -1,0 +1,15 @@
+name: Install zsh shell via apt package manager
+description: Installs zsh shell onto runner.
+runs:
+  using: 'composite'
+  steps:
+    - name:  Installing 'zsh' (shell)...
+      id:    zshInstallTry1
+      continue-on-error: true
+      shell: bash
+      run:   sudo apt install -y zsh
+    - name:  Installing 'zsh' (try 2)...
+      if:    steps.zshInstallTry1.outcome == 'failure'
+      shell: bash
+      run:   sudo apt install -y zsh
+

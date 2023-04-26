@@ -1,0 +1,17 @@
+name: Install Kcov and shellspec
+description: Installs Kcov (test coverage tool) and shellspec (testing tool) onto runner.
+runs:
+  using: 'composite'
+  steps:
+    - name:  Installing 'Kcov' (test coverage tool)...
+      id:    kcovInstallTry1
+      continue-on-error: true
+      shell: bash
+      run:   sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev kcov
+    - name:  Installing 'Kcov' (try 2)...
+      if:    steps.kcovInstallTry1.outcome == 'failure'
+      shell: bash
+      run:   sudo apt-get install binutils-dev libssl-dev libcurl4-openssl-dev zlib1g-dev libdw-dev libiberty-dev kcov
+    - name:  Installing 'shellspec' (POSIX shell script testing tool)...
+      uses:  ./.github/actions/install-shellspec
+

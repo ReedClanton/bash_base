@@ -60,7 +60,7 @@ Alternatively, enter `<funcationName> --help` for a document that describes how 
 
 # POSIX Functions
 
-## `backUp`
+## [`backUp`](backUp/README.md)
 
 Script that copies files and directories from user's home directory to another location.
 
@@ -69,7 +69,7 @@ Script that copies files and directories from user's home directory to another l
 Used by other scripts to ensure that all option(s) passed into it are valid (contain something).
 If that's not the case, then the calling scripts doc is produced to std out.
 
-## `log`
+## [`log`](log/README.md)
 
 Produces formatted logs to stdout.
 
@@ -89,7 +89,7 @@ for (( i=1; i<=$userVar; i++)); do
 done
 ```
 
-## `output`
+## [`output`](output/README.md)
 
 Used to add pre-fix, post-fix, headers, and/or footers to message text. Used by log()'s title
 options.

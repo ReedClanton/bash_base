@@ -1,0 +1,34 @@
+name: Install shellspec
+description: Installs shellspec (testing tool) onto runner.
+runs:
+  using: 'composite'
+  steps:
+    - name:  Installing 'shellspec' (POSIX shell script testing tool)...
+      id:    shellspecInstallTry1
+      continue-on-error: true
+      shell: bash
+      run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
+    # shellspec's server doesn't reliably work, so retry when it fails.
+    - name:  Installing 'shellspec' (try 2)...
+      id:    shellspecInstallTry2
+      if:    steps.shellspecInstallTry1.outcome == 'failure'
+      continue-on-error: true
+      shell: bash
+      run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
+    - name:  Installing 'shellspec' (try 3)...
+      id:    shellspecInstallTry3
+      if:    steps.shellspecInstallTry2.outcome == 'failure'
+      continue-on-error: true
+      shell: bash
+      run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
+    - name:  Installing 'shellspec' (try 4)...
+      id:    shellspecInstallTry4
+      if:    steps.shellspecInstallTry3.outcome == 'failure'
+      continue-on-error: true
+      shell: bash
+      run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
+    - name:  Installing 'shellspec' (try 5)...
+      if:    steps.shellspecInstallTry4.outcome == 'failure'
+      shell: bash
+      run:   curl -fsSL https://git.io/shellspec | sh -s -- --yes
+

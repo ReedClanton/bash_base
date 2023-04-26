@@ -1,22 +1,35 @@
 #!/usr/bin/env sh
 
- #########################
-## Global(s)/Constant(s) ##
- #########################
-## Global(s) ##
-# NoOp
-## Constant(s) ##
-. $SHELL_FUNCTIONS/backUp/util/constants.sh
+# Needed so unit tests can mock out sourced file(s).
+if ! command -v inScriptSource >/dev/null; then
+	inScriptSource() { . "$@"; }
+fi
 
- #####################
-## Local Variable(s) ##
- #####################
-# NoOp
+##############
+## Import(s) ##
+##############
+funcName="backUp"
+if [ -f $PWD/util/main.sh ]; then
+	inScriptSource $PWD/util/main.sh
+elif [ -f $PWD/src/shell/functions/$funcName/util/main.sh ]; then
+	inScriptSource $PWD/src/shell/functions/$funcName/util/main.sh
+elif [ "$SHELL_FUNCTIONS" != "" ]; then
+	if [ -f $SHELL_FUNCTIONS/$funcName/util/main.sh ]; then
+		inScriptSource $SHELL_FUNCTIONS/$funcName/util/main.sh
+	else
+		echo "ERROR $funcName(): Couldn't find 'main.sh' file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		exit 202
+	fi
+else
+	echo "ERROR $funcName(): Couldn't find 'main.sh' file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+	exit 202
+fi
 
- ###############
+################
 ## Function(s) ##
- ###############
-IFS='' read -r -d '' BACKUP_DOC <<"EOF"
+################
+BACKUP_DOC=$(
+	cat <<"EOF"
 #/ DESCRIPTION:
 #/	Backs up $DEFAULT_BACK_UP_SOURCE_PATH to $DEFAULT_BACK_UP_DEST_PATH.
 #/	Back ups are stored in a folder named for the day the back up was done.
@@ -60,11 +73,12 @@ IFS='' read -r -d '' BACKUP_DOC <<"EOF"
 #/	- Fill out doc.
 #/	- Missing back up location should be handled.
 EOF
+)
 log -c="backUp" -m="Resetting local variable(s)..."
 
- ###############################
+################################
 ## Reset/Set Local Variable(s) ##
- ###############################
+################################
 # Logging var(s).
 traceLvl="-c=backUp"
 readonly traceLvl
@@ -82,13 +96,13 @@ backUpDir=$DEFAULT_BACK_UP_DEST_DIR
 backUpSourcePath=$DEFAULT_BACK_UP_SOURCE_PATH
 # Tracks path backup will be created at.
 backUpDestPath=$DEFAULT_BACK_UP_DEST_PATH
-# TODO: Comment.
-options="-rLtU --specials --safe-links --inplace --delete-excluded --include='/.bash*' --exclude='/.*' --exclude='/GDrive'"
+# TODO #22: rsync options are hard coded for now.
+options="-rLtU --specials --safe-links --inplace --delete-excluded --include='/.bash*' --exclude='/.*' --exclude='/GDrive' --exclude='/Downloads/OS'"
 log $traceLvl -m="Local variable(s) reset."
 
- #####################
+######################
 ## Process Option(s) ##
- #####################
+######################
 for fullArg in "$@"; do
 	log $traceLvl -m="Processing option: '$fullArg'..."
 	# Tracks value of current option.
@@ -98,33 +112,34 @@ for fullArg in "$@"; do
 	case $fullArg in
 		-h|--help)
 			echo "$BACKUP_DOC"
-			exit 0  ;;
+			exit 0
+			;;
 		-q|--quiet)
 			log $warnLvl -m="-q/--quiet not implemented yet"  ;;
 		*)
 			log $errLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
 			echo "$BACKUP_DOC"
-			exit 140  ;;
+			exit 140
+			;;
 	esac
 done
 	
- ##############################
+###############################
 ## Error Checking Environment ##
- ##############################
+###############################
 log $traceLvl -m="Ensuring rsync is installed..."
-if [[ "$(command -v rsync)" != "" ]]; then
+if command -v rsync >/dev/null; then
 	log $traceLvl -m="rsync is installed."
 else
 	log $errLvl -m="rsync isn't installed."
 	exit 203
 fi
 
- ###############
+################
 ## Run Back Up ##
- ###############
+################
 log $infoLvl -m="Running back up..."
 cmd="rsync $options $backUpSourcePath $backUpDestPath"
-readonly cmd
 unset stdOut errOut rtOut
 eval "$( (eval $cmd) \
 	2> >(errOut=$(cat); typeset -p errOut) \
@@ -139,4 +154,3 @@ if [[ $rtOut -ne 0 ]]; then
 fi
 
 exit $rtOut
-

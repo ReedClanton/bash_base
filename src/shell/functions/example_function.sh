@@ -1,22 +1,35 @@
 #!/usr/bin/env sh
 
- #########################
-## Global(s)/Constant(s) ##
- #########################
-## Global(s) ##
-# NoOp
-## Constant(s) ##
-# NoOp
+# Needed so unit tests can mock out sourced file(s).
+if ! command -v inScriptSource >/dev/null; then
+	inScriptSource() { . "$@"; }
+fi
 
- #####################
-## Local Variable(s) ##
- #####################
-# NoOp
+##############
+## Import(s) ##
+##############
+funcName="functionName"
+if [ -f $PWD/util/main.sh ]; then
+	inScriptSource $PWD/util/main.sh
+elif [ -f $PWD/src/shell/functions/$funcName/util/main.sh ]; then
+	inScriptSource $PWD/src/shell/functions/$funcName/util/main.sh
+elif [ "$SHELL_FUNCTIONS" != "" ]; then
+	if [ -f $SHELL_FUNCTIONS/$funcName/util/main.sh ]; then
+		inScriptSource $SHELL_FUNCTIONS/$funcName/util/main.sh
+	else
+		echo "ERROR $funcName(): Couldn't find 'main.sh' file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		exit 202
+	fi
+else
+	echo "ERROR $funcName(): Couldn't find 'main.sh' file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+	exit 202
+fi
 
- ###############
+################
 ## Function(s) ##
- ###############
-IFS='' read -r -d '' FUNCTION_NAME_DOC <<"EOF"
+################
+FUNCTION_NAME_DOC=$(
+	cat <<"EOF"
 #/ DESCRIPTION:
 #/	TODO
 #/
@@ -42,34 +55,61 @@ IFS='' read -r -d '' FUNCTION_NAME_DOC <<"EOF"
 #/ TODO(S):
 #/	- TODO
 EOF
-function functionName {
+)
+
+functionName {
 	# If the log function hasn't been sourced, do so now.
-	if [[ "$(type -t log)" = "" ]]; then
+	if command -v log >/dev/null; then
 		# TODO: Ensure all possible path(s) are checked.
 		. $HOME/shell/shell_functions
 	fi
 	log -i -c=${FUNCNAME[0]} --full-title -m="<titleTextHere>"
 
+	log -c=${FUNCNAME[0]} -m="Command setup..."
+	# Determine current shell's readonly command.
+	useReadonly=true
+	if command -v readonly >/dev/null; then
+		alias readonly=$(command -v readonly)
+		# Ensure readonly functions (doesn't on some shells [zsh]).
+		readonlyTest="readonlyTest"
+		readonly readonlyTest
+		if [ "$readonlyTest" = "" ]; then
+			unalias readonly
+			useReadonly=false
+		fi
+	fi
+	log -c=${FUNCNAME[0]} -m="Commands setup."
+
 	log -c=${FUNCNAME[0]} -m="Resetting local variable(s)..."
-	 ###############################
+	################################
 	## Reset/Set Local Variable(s) ##
-	 ###############################
+	################################
 	# Logging var(s).
 	traceLvl="-c=${FUNCNAME[0]}"
-	readonly traceLvl
+	if $useReadonly; then
+		readonly traceLvl
+	fi
 	debugLvl="-d -c=${FUNCNAME[0]}"
-	readonly debugLvl
+	if $useReadonly; then
+		readonly debugLvl
+	fi
 	infoLvl="-i -c=${FUNCNAME[0]}"
-	readonly infoLvl
+	if $useReadonly; then
+		readonly infoLvl
+	fi
 	warnLvl="-w -c=${FUNCNAME[0]}"
-	readonly warnLvl
+	if $useReadonly; then
+		readonly warnLvl
+	fi
 	errorLvl="-e -c=${FUNCNAME[0]}"
-	readonly errorLvl
+	if $useReadonly; then
+		readonly errorLvl
+	fi
 	log $traceLvl -m="Local variable(s) reset."
 
-	 #####################
+	######################
 	## Process Option(s) ##
-	 #####################
+	######################
 	for fullArg in "$@"; do
 		log $traceLvl -m="Processing option: '$fullArg'..."
 		# Tracks value of current option.
@@ -79,17 +119,19 @@ function functionName {
 		case $fullArg in
 			-h|--help)
 				echo "$FUNCTION_NAME_DOC"
-				exit 0  ;;
+				return 0
+				;;
 			*)
 				log $errorLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
 				echo "$FUNCTION_NAME_DOC"
-				exit 140  ;;
+				return 140
+				;;
 		esac
 	done
 
-	 ###########################
-	## Error Check Argument(s) ##
-	 ###########################
+	#########################
+	## Error Check Input(s) ##
+	#########################
 	log $traceLvl -m="Ensuring all required argument(s) were given..."
 	checkRequiredOpts "$FUNCTION_NAME_DOC" "-a=$varHoldingValOfRequiredArg"
 	rtVal=$?
@@ -97,10 +139,10 @@ function functionName {
 		return $rtVal
 	fi
 	log $debugLvl -m="All required argument(s) were given."
-	
-	 #####################
+
+	######################
 	## Next Section Name ##
-	 #####################
+	######################
 	
 }
 
