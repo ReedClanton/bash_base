@@ -81,7 +81,7 @@ EOF
 # Ensure script is being run from the same location as it's located.
 if [[ "./$(basename $0)" == $0 ]]; then
 	# If shell functions file hasn't been sourced, attempt to do so now.
-	if [[ "$(type -t log)" = "" ]]; then
+	if ! command -v log >/dev/null; then
 		shellRoot=../shell/shell_functions
 		if [[ -f "$shellRoot" ]]; then
 			. $shellRoot

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # Needed so unit tests can mock out sourced file(s).
-if [ "$(type -t inScriptSource)" = "" ]; then
+if ! command -v inScriptSource >/dev/null; then
 	inScriptSource() { . "$@"; }
 fi
 

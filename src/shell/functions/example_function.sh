@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # Needed so unit tests can mock out sourced file(s).
-if [ "$(type -t inScriptSource)" = "" ]; then
+if ! command -v inScriptSource >/dev/null; then
 	inScriptSource() { . "$@"; }
 fi
 
@@ -57,7 +57,7 @@ FUNCTION_NAME_DOC=$(
 EOF
 )
 
-function functionName {
+functionName {
 	# If the log function hasn't been sourced, do so now.
 	if command -v log >/dev/null; then
 		# TODO: Ensure all possible path(s) are checked.
@@ -119,12 +119,12 @@ function functionName {
 		case $fullArg in
 			-h|--help)
 				echo "$FUNCTION_NAME_DOC"
-				exit 0
+				return 0
 				;;
 			*)
 				log $errorLvl --full-title -m="Invalid given argument: '$fullArg', see doc:"
 				echo "$FUNCTION_NAME_DOC"
-				exit 140
+				return 140
 				;;
 		esac
 	done
