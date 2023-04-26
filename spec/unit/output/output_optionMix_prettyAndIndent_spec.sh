@@ -78,7 +78,7 @@ Describe "Output:" output
 						The status should be success
 					End
 					It "One indent" outputOutputOptionalOptionPrettyAndIndentTwoCharacterFormattingCharacter:oneIndent
-						createHeaderFooter() { echo " #######" 2>&1; }
+						createHeaderFooter() { echo " #######"; }
 						cat() { createHeaderFooter; }
 						When run output -m=msg --pretty --indent=1
 						The stderr should not be present
