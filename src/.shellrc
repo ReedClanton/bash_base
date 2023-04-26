@@ -1,7 +1,7 @@
 ##############################
 ## Source Global Definitions ##
 ##############################
-# TODO: Make this not shit.
+# TODO #54: Make this not shit.
 shellName=$($HOME/shell/functions/shellName.sh)
 if compgen -G "/etc/${shellName}rc" > /dev/null; then
 	. /etc/${shellName}rc
