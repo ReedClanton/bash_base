@@ -3,6 +3,14 @@
 readonly NO_TITLE
 % LINE_TITLE:2
 readonly LINE_TITLE
+% ERROR:1
+readonly ERROR
+% WARN:2
+readonly WARN
+% INFO:3
+readonly INFO
+% DEBUG:4
+readonly DEBUG
 % TRACE:5
 readonly TRACE
 % SHELL_LOG_LEVEL:$TRACE
