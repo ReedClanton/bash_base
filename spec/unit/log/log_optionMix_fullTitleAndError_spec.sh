@@ -66,7 +66,7 @@ Describe "Log:" log
 					The stdout line 4 should equal " ###"
 					The status should be success
 				End
-				It "-w" logLogUtilOptionMixFullTitleAndError:e
+				It "-e" logLogUtilOptionMixFullTitleAndError:e
 					When run log -m=m --full-title -e
 					The stderr should not be present
 					The lines of stdout should equal 4

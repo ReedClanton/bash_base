@@ -10,7 +10,7 @@ Describe "Output:" output
 			It "Not defined" outputOutputMockDate:notDefined
 				When run output -f
 				The stdout should not be present
-				The stderr line 1 should start with "ERROR"
+				The stderr line 1 should start with "ERROR output():	"
 				The status should equal $OPTION_NAME_INVALID_RT
 			End
 			It "Defined" outputOutputMockDate:defined

@@ -139,7 +139,6 @@ LOG_DOC=$(
 #/	log --error --line_title -m="line1" -m="line2"
 #/
 #/ TODO(S):
-#/	- Flush out documentation of return code(s).
 #/	- Check if I can use any sort of font formatting (ex. bold) in method description as printed by --help.
 EOF
 )

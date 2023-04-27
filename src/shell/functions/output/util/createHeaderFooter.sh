@@ -96,7 +96,7 @@ createHeaderFooter() {
 					*)
 						echo "$createHeaderFooterLogPrefix Line length must be a positive integer, was '$arg', see doc:" >&2
 						echo "$CREATE_HEADER_FOOTER_DOC" >&2
-						exit 141
+						return 141
 						;;
 				esac
 				;;
@@ -106,7 +106,7 @@ createHeaderFooter() {
 					*\\* | "")
 						echo "$createHeaderFooterLogPrefix Formatting character may not be blank or a special character (ex. new line, tab), was '$arg', see doc:" >&2
 						echo "$CREATE_HEADER_FOOTER_DOC" >&2
-						exit 141
+						return 141
 						;;
 					*)
 						# Track user desired formatting character(s).
@@ -116,12 +116,12 @@ createHeaderFooter() {
 				;;
 			-h | --help)
 				echo "$CREATE_HEADER_FOOTER_DOC"
-				exit 0
+				return 0
 				;;
 			*)
 				echo "$createHeaderFooterLogPrefix Caller provided invalid option: '$fullArg', see doc:" >&2
 				echo "$CREATE_HEADER_FOOTER_DOC" >&2
-				exit 140
+				return 140
 				;;
 		esac
 	done
@@ -132,7 +132,7 @@ createHeaderFooter() {
 	if [ $len -le 0 ]; then
 		echo "$createHeaderFooterLogPrefix Line length must be provided, see doc:" >&2
 		echo "$CREATE_HEADER_FOOTER_DOC" >&2
-		exit 142
+		return 142
 	fi
 
 	#########################################

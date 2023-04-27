@@ -18,14 +18,14 @@ Describe "Output:" output
 					It "None" outputOutputRequiredOptionMessageInputInvalid:none
 						When run output
 						The stdout should not be present
-						The stderr should include "ERROR"
+						The stderr should start with "ERROR output():	"
 						The status should equal $OPTION_REQUIRED_NOT_PROVIDED_RT
 					End
 					Describe "-m:" outputOutputRequiredOptionMessageInputInvalid:m
 						It "Missing" outputOutputRequiredOptionMessageInputInvalidM:missing
 							When run output -m
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_NAME_INVALID_RT
 						End
 					End
@@ -33,7 +33,7 @@ Describe "Output:" output
 						It "Missing" outputOutputRequiredOptionMessageInputInvalidMsg:missing
 							When run output --msg
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_NAME_INVALID_RT
 						End
 					End

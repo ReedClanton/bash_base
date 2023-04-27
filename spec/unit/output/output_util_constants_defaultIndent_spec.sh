@@ -62,7 +62,7 @@ Describe "Output:" output
 				It "With prefix" outputOutputDefaultIndentAlmostLongerThanAllowedLineLength:withPrefix
 					When run output -m=m --pp
 					The stdout should not be present
-					The stderr should include "ERROR"
+					The stderr should start with "ERROR output():	"
 					The status should equal $ENV_VAR_BAD_VALUE_RT
 				End
 			End
@@ -72,13 +72,13 @@ Describe "Output:" output
 				It "No prefix" outputOutputDefaultIndentLongerThanAllowedLineLength:noPrefix
 					When run output -m=m
 					The stdout should not be present
-					The stderr should include "ERROR"
+					The stderr should start with "ERROR output():	"
 					The status should equal $ENV_VAR_BAD_VALUE_RT
 				End
 				It "With prefix" outputOutputDefaultIndentLongerThanAllowedLineLength:withPrefix
 					When run output -m=m --pp
 					The stdout should not be present
-					The stderr should include "ERROR"
+					The stderr should start with "ERROR output():	"
 					The status should equal $ENV_VAR_BAD_VALUE_RT
 				End
 			End

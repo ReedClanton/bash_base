@@ -135,7 +135,10 @@ OUTPUT_DOC=$(
 #/		- Provided max line length value is too small:
 #/			- Line length - prefix - postfix > 0.
 #/	- 142: Returned when the message text option is not provided.
-#/	- 200: TODO
+#/	- 200: Returned when an environment variable has been set to an invalid valid, for example:
+#/		- Max line length insaficent (not enought room on line for message text) and:
+#/			- `DEFAULT_INDENT` is set to something greater than `0` or,
+#/			- 'DEFAULT_LINE_LENGTH` is smaller than provided max line length.
 #/
 #/ EXAMPLE(S):
 #/	output --help

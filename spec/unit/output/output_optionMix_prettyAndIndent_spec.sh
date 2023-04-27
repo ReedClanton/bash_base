@@ -13,7 +13,7 @@ Describe "Output:" output
 		BeforeAll 'sourceCut'
 		
 		Describe "Optional option:" outputOutput:optionalOption
-			Describe "--pretty and --indent:" outputOutputOptionalOption:pAndIndent
+			Describe "--pretty and --indent:" outputOutputOptionalOption:prettyAndIndent
 				Describe "Single character formatting character:" outputOutputOptionalOptionPrettyAndIndent:singleCharacterFormattingCharacter
 					DEFAULT_CHAR='#'
 					
@@ -135,7 +135,7 @@ Describe "Output:" output
 						cat() { createHeaderFooter; }
 						When run output -m=m --msg=s -m=g --pretty --indent=40
 						The stdout should not be present
-						The stderr should include "ERROR"
+						The stderr should start with "ERROR output():	"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 				End

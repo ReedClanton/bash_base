@@ -53,7 +53,7 @@ Describe "Output:" output
 						DEFAULT_CHAR='!#*@>'
 						When run output -m=m --pp
 						The stdout should not be present
-						The stderr should include "ERROR"
+						The stderr should start with "ERROR output():	"
 						The status should equal $ENV_VAR_BAD_VALUE_RT
 					End
 				End
@@ -96,7 +96,7 @@ Describe "Output:" output
 						DEFAULT_CHAR='!#*@>'
 						When run output --msg=m --pre-post-fix
 						The stdout should not be present
-						The stderr should include "ERROR"
+						The stderr should start with "ERROR output():	"
 						The status should equal $ENV_VAR_BAD_VALUE_RT
 					End
 				End

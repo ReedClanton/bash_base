@@ -22,36 +22,38 @@ Describe "Log:" log
 		checkRequiredOpts() { :; }
 		
 		Describe "Optional option:" logLog:optionalOption
-			Describe "Full title:" logLogOptionalOption:fullTitle
-				Describe "--full-title:" logLogOptionalOptionFullTitle:fullTitle
-					It "Single message line" logLogOptionalOptionFullTitleFullTitleSingleCharacterFormattingCharacter:singleMessageLine
-						output() { echo " $DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR"; echo "$DEFAULT_CHAR m $DEFAULT_CHAR"; echo " $DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR"; }
-						When run log -m=m --full-title
-						The stderr should not be present
-						The lines of stdout should equal 4
-						The stdout line 1 should equal "TRACE:	"
-						The stdout line 2 should equal " ###"
-						The stdout line 3 should equal "# m #"
-						The stdout line 4 should equal " ###"
-						The status should be success
-					End
-					It "Multiline message" logLogOptionalOptionFullTitleFullTitleSingleCharacterFormattingCharacter:multilineMessage
-						output() {
-							echo " $DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR"
-							echo "$DEFAULT_CHAR ms   $DEFAULT_CHAR"
-							echo "$DEFAULT_CHAR msg2 $DEFAULT_CHAR"
-							echo " $DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR"
-						}
-						When run log -m=ms -m=msg2 --full-title
-						The stderr should not be present
-						The lines of stdout should equal 5
-						The stdout line 1 should equal "TRACE:	"
-						The stdout line 2 should equal " ######"
-						The stdout line 3 should equal "# ms   #"
-						The stdout line 4 should equal "# msg2 #"
-						The stdout line 5 should equal " ######"
-						The status should be success
-					End
+			Describe "--full-title:" logLogOptionalOption:fullTitle
+				It "Single message line" logLogOptionalOptionFullTitleSingleCharacterFormattingCharacter:singleMessageLine
+					output() {
+						echo " $DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR"
+						echo "$DEFAULT_CHAR m $DEFAULT_CHAR"
+						echo " $DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR"
+					}
+					When run log -m=m --full-title
+					The stderr should not be present
+					The lines of stdout should equal 4
+					The stdout line 1 should equal "TRACE:	"
+					The stdout line 2 should equal " ###"
+					The stdout line 3 should equal "# m #"
+					The stdout line 4 should equal " ###"
+					The status should be success
+				End
+				It "Multiline message" logLogOptionalOptionFullTitleSingleCharacterFormattingCharacter:multilineMessage
+					output() {
+						echo " $DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR"
+						echo "$DEFAULT_CHAR ms   $DEFAULT_CHAR"
+						echo "$DEFAULT_CHAR msg2 $DEFAULT_CHAR"
+						echo " $DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR$DEFAULT_CHAR"
+					}
+					When run log -m=ms -m=msg2 --full-title
+					The stderr should not be present
+					The lines of stdout should equal 5
+					The stdout line 1 should equal "TRACE:	"
+					The stdout line 2 should equal " ######"
+					The stdout line 3 should equal "# ms   #"
+					The stdout line 4 should equal "# msg2 #"
+					The stdout line 5 should equal " ######"
+					The status should be success
 				End
 			End
 		End

@@ -81,19 +81,19 @@ Describe "Output:" output
 						It "Far bellow lower" outputOutputOptionalOptionLineLengthBoundL:farBellowLower
 							When run output -m=m -l="-999999999"
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Bellow lower" outputOutputOptionalOptionLineLengthBoundL:bellowLower
 							When run output -m=m -l="-1"
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "At lower" outputOutputOptionalOptionLineLengthBoundL:atLower
 							When run output -m=m -l=0
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Above lower" outputOutputOptionalOptionLineLengthBoundL:aboveLower
@@ -122,19 +122,19 @@ Describe "Output:" output
 						It "Far bellow lower" outputOutputOptionalOptionLineLengthBoundLineLength:farBellowLower
 							When run output -m=m --line-length="-999999999"
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Bellow lower" outputOutputOptionalOptionLineLengthBoundLineLength:bellowLower
 							When run output -m=m --line-length="-1"
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "At lower" outputOutputOptionalOptionLineLengthBoundLineLength:atLower
 							When run output -m=m --line-length=0
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Above lower" outputOutputOptionalOptionLineLengthBoundLineLength:aboveLower

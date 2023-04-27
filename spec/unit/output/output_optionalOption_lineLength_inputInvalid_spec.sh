@@ -13,31 +13,31 @@ Describe "Output:" output
 						It "Blank" outputOutputOptionalOptionLineLengthInputInvalidL:blank
 							When run output -m=m -l=""
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Null" outputOutputOptionalOptionLineLengthInputInvalidL:null
 							When run output -m=m -l=
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Missing" outputOutputOptionalOptionLineLengthInputInvalidL:missing
 							When run output -m=m -l
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_NAME_INVALID_RT
 						End
 						It "Float" outputOutputOptionalOptionLineLengthInputInvalidL:float
 							When run output -m=m -l="1.1"
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "'+'" outputOutputOptionalOptionLineLengthInputInvalidL:plus
 							When run output -m=m -l="+50"
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 					End
@@ -45,31 +45,31 @@ Describe "Output:" output
 						It "Blank" outputOutputOptionalOptionLineLengthInputInvalidLineLength:blank
 							When run output -m=m --line-length=""
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Null" outputOutputOptionalOptionLineLengthInputInvalidLineLength:null
 							When run output -m=m --line-length=
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Missing" outputOutputOptionalOptionLineLengthInputInvalidLineLength:missing
 							When run output -m=m --line-length
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_NAME_INVALID_RT
 						End
 						It "Float" outputOutputOptionalOptionLineLengthInputInvalidLineLength:float
 							When run output -m=m --line-length="1.1"
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "'+'" outputOutputOptionalOptionLineLengthInputInvalidLineLength:plus
 							When run output -m=m --line-length="+50"
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr should start with "ERROR output():	"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 					End
