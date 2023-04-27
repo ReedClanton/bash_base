@@ -13,6 +13,8 @@ if [ -f $PWD/constants.sh ]; then
 	. $PWD/constants.sh
 elif [ -f $PWD/src/shell/functions/$funcName/util/constants.sh ]; then
 	. $PWD/src/shell/functions/$funcName/util/constants.sh
+elif [ -f $HOME/shell/functions/$funcName/util/constants.sh ]; then
+	. $HOME/shell/functions/$funcName/util/constants.sh
 elif [ "$SHELL_FUNCTIONS" != "" ]; then
 	if [ -f $SHELL_FUNCTIONS/$funcName/util/constants.sh ]; then
 		. $SHELL_FUNCTIONS/$funcName/util/constants.sh
@@ -29,6 +31,8 @@ if [ -f $PWD/createHeaderFooter.sh ]; then
 	. $PWD/createHeaderFooter.sh
 elif [ -f $PWD/src/shell/functions/$funcName/util/createHeaderFooter.sh ]; then
 	. $PWD/src/shell/functions/$funcName/util/createHeaderFooter.sh
+elif [ -f $HOME/shell/functions/$funcName/util/createHeaderFooter.sh ]; then
+	. $HOME/shell/functions/$funcName/util/createHeaderFooter.sh
 elif [ "$SHELL_FUNCTIONS" != "" ]; then
 	if [ -f $SHELL_FUNCTIONS/$funcName/util/createHeaderFooter.sh ]; then
 		. $SHELL_FUNCTIONS/$funcName/util/createHeaderFooter.sh

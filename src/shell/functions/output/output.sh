@@ -11,6 +11,8 @@ if [ -f $PWD/util/main.sh ]; then
 	inScriptSource $PWD/util/main.sh
 elif [ -f $PWD/src/shell/functions/$funcName/util/main.sh ]; then
 	inScriptSource $PWD/src/shell/functions/$funcName/util/main.sh
+elif [ -f $HOME/shell/functions/$funcName/util/main.sh ]; then
+	inScriptSource $HOME/shell/functions/$funcName/util/main.sh
 elif [ "$SHELL_FUNCTIONS" != "" ]; then
 	if [ -f $SHELL_FUNCTIONS/$funcName/util/main.sh ]; then
 		inScriptSource $SHELL_FUNCTIONS/$funcName/util/main.sh
@@ -133,6 +135,7 @@ OUTPUT_DOC=$(
 #/		- Provided max line length value is too small:
 #/			- Line length - prefix - postfix > 0.
 #/	- 142: Returned when the message text option is not provided.
+#/	- 200: TODO
 #/
 #/ EXAMPLE(S):
 #/	output --help
@@ -188,7 +191,7 @@ output() {
 	# Tracks if prefix is being used.
 	prefixUsed=false
 	# Error prefix added to error output messages.
-	outputLogPrefix="ERROR output():"
+	outputLogPrefix="ERROR output():\t"
 	if command -v date >/dev/null; then
 		outputLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $outputLogPrefix"
 	fi

@@ -13,6 +13,8 @@ if [ -f $PWD/util/main.sh ]; then
 	inScriptSource $PWD/util/main.sh
 elif [ -f $PWD/src/shell/functions/$funcName/util/main.sh ]; then
 	inScriptSource $PWD/src/shell/functions/$funcName/util/main.sh
+elif [ -f $HOME/shell/functions/$funcName/util/main.sh ]; then
+	inScriptSource $HOME/shell/functions/$funcName/util/main.sh
 elif [ "$SHELL_FUNCTIONS" != "" ]; then
 	if [ -f $SHELL_FUNCTIONS/$funcName/util/main.sh ]; then
 		inScriptSource $SHELL_FUNCTIONS/$funcName/util/main.sh
