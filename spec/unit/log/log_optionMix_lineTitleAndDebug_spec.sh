@@ -1,6 +1,8 @@
 # Setup required environment variable(s).
 % NO_TITLE:0
 readonly NO_TITLE
+% FULL_TITLE:1
+readonly FULL_TITLE
 % LINE_TITLE:2
 readonly LINE_TITLE
 % ERROR:1
