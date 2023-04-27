@@ -22,6 +22,8 @@ CODE_NOT_ACCESSIBLE_RT=202
 # Value Checking Function(s) #
 isPositive() { [ $(($1)) -gt 0 ]; }
 isNotNegative() { [ $(($1)) -ge 0 ]; }
+isGreaterThan() { [ $1 -gt $2 ]; }
+isInclusivelyBetween() { [ $1 -le $2 ] && [ $2 -le $3 ]; }
 # Mocking System Commands #
 # Most code uses the 'cat' command to copy method doc to a variable, so it's mocked here.
 cat() { input=""; read input; echo $input; }

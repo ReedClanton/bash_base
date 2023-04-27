@@ -7,17 +7,17 @@ readonly DEFAULT_INDENT
 Describe "Output:" output
 	Describe "output():" output:output
 		# Track path to file that contains CUT.
-		outputPath=$PWD/src/shell/functions/output/output.sh
+		cutPath=$PWD/src/shell/functions/output/output.sh
 		# Source CUT function file so function may be called directly.
-		sourceCut() { . $outputPath; }
+		sourceCut() { . $cutPath; }
 		BeforeAll 'sourceCut'
 		
 		Describe "Option mix:" outputOutput:optionMix
-			Describe "--header-footer and --pp:" outputOutputOptionMix:headerFooterAndPp
-				Describe "Single character formatting character:" outputOutputOptionMixHeaderFooterAndPp:singleCharacterFormattingCharacter
+			Describe "--header-footer and postfix and prefix:" outputOutputOptionMix:headerFooterAndPreFixAndPostFix
+				Describe "Single character formatting character:" outputOutputOptionMixHeaderFooterAndPreFixAndPostFix:singleCharacterFormattingCharacter
 					DEFAULT_CHAR='#'
 					
-					It "Message length one" outputOutputOptionMixHeaderFooterAndPpSingleCharacterFormattingCharacter:messageLengthOne
+					It "Message length one" outputOutputOptionMixHeaderFooterAndPreFixAndPostFixSingleCharacterFormattingCharacter:messageLengthOne
 						createHeaderFooter() { echo " ###"; }
 						cat() { createHeaderFooter; }
 						When run output -m=m --header-footer --pp
@@ -28,10 +28,10 @@ Describe "Output:" output
 						The stdout line 3 should equal " ###"
 						The status should be success
 					End
-					It "Message length two" outputOutputOptionMixHeaderFooterAndPpSingleCharacterFormattingCharacter:messageLengthTwo
+					It "Message length two" outputOutputOptionMixHeaderFooterAndPreFixAndPostFixSingleCharacterFormattingCharacter:messageLengthTwo
 						createHeaderFooter() { echo " ####"; }
 						cat() { createHeaderFooter; }
-						When run output -m=ms --header-footer --pp
+						When run output -m=ms --header-footer --pre-post-fix
 						The stderr should not be present
 						The lines of stdout should equal 3
 						The stdout line 1 should equal " ####"
@@ -40,10 +40,10 @@ Describe "Output:" output
 						The status should be success
 					End
 				End
-				Describe "Two character formatting character:" outputOutputOptionMixHeaderFooterAndPp:twoCharacterFormattingCharacter
+				Describe "Two character formatting character:" outputOutputOptionMixHeaderFooterAndPreFixAndPostFix:twoCharacterFormattingCharacter
 					DEFAULT_CHAR='&!'
 					
-					It "Message length one" outputOutputOptionMixHeaderFooterAndPpSingleCharacterFormattingCharacter:messageLengthOne
+					It "Message length one" outputOutputOptionMixHeaderFooterAndPreFixAndPostFixTwoCharacterFormattingCharacter:messageLengthOne
 						createHeaderFooter() { echo " &!&!&"; }
 						cat() { createHeaderFooter; }
 						When run output -m=m --header-footer --pp
@@ -54,10 +54,10 @@ Describe "Output:" output
 						The stdout line 3 should equal " &!&!&"
 						The status should be success
 					End
-					It "Message length two" outputOutputOptionMixHeaderFooterAndPpSingleCharacterFormattingCharacter:messageLengthTwo
+					It "Message length two" outputOutputOptionMixHeaderFooterAndPreFixAndPostFixTwoCharacterFormattingCharacter:messageLengthTwo
 						createHeaderFooter() { echo " &!&!&!"; }
 						cat() { createHeaderFooter; }
-						When run output -m=ms --header-footer --pp
+						When run output -m=ms --header-footer --pre-post-fix
 						The stderr should not be present
 						The lines of stdout should equal 3
 						The stdout line 1 should equal " &!&!&!"
@@ -65,7 +65,7 @@ Describe "Output:" output
 						The stdout line 3 should equal " &!&!&!"
 						The status should be success
 					End
-					It "Message length two" outputOutputOptionMixHeaderFooterAndPpSingleCharacterFormattingCharacter:messageLengthThree
+					It "Message length two" outputOutputOptionMixHeaderFooterAndPreFixAndPostFixTwoCharacterFormattingCharacter:messageLengthThree
 						createHeaderFooter() { echo " &!&!&!&"; }
 						cat() { createHeaderFooter; }
 						When run output -m=msg --header-footer --pp
@@ -77,13 +77,13 @@ Describe "Output:" output
 						The status should be success
 					End
 				End
-				Describe "Many character formatting character:" outputOutputOptionMixHeaderFooterAndPp:manyCharacterFormattingCharacter
+				Describe "Many character formatting character:" outputOutputOptionMixHeaderFooterAndPreFixAndPostFix:manyCharacterFormattingCharacter
 					DEFAULT_CHAR='!#*@'
 					
-					It "Message length one" outputOutputOptionMixHeaderFooterAndPpSingleCharacterFormattingCharacter:messageLengthOne
+					It "Message length one" outputOutputOptionMixHeaderFooterAndPreFixAndPostFixManyCharacterFormattingCharacter:messageLengthOne
 						createHeaderFooter() { echo " !#*@!#*@!"; }
 						cat() { createHeaderFooter; }
-						When run output -m=m --header-footer --pp
+						When run output -m=m --header-footer --pre-post-fix
 						The stderr should not be present
 						The lines of stdout should equal 3
 						The stdout line 1 should equal " !#*@!#*@!"
@@ -91,7 +91,7 @@ Describe "Output:" output
 						The stdout line 3 should equal " !#*@!#*@!"
 						The status should be success
 					End
-					It "Message length two" outputOutputOptionMixHeaderFooterAndPpSingleCharacterFormattingCharacter:messageLengthTwo
+					It "Message length two" outputOutputOptionMixHeaderFooterAndPreFixAndPostFixManyCharacterFormattingCharacter:messageLengthTwo
 						createHeaderFooter() { echo " !#*@!#*@!#"; }
 						cat() { createHeaderFooter; }
 						When run output -m=ms --header-footer --pp
@@ -102,10 +102,10 @@ Describe "Output:" output
 						The stdout line 3 should equal " !#*@!#*@!#"
 						The status should be success
 					End
-					It "Message length three" outputOutputOptionMixHeaderFooterAndPpSingleCharacterFormattingCharacter:messageLengthThree
+					It "Message length three" outputOutputOptionMixHeaderFooterAndPreFixAndPostFixManyCharacterFormattingCharacter:messageLengthThree
 						createHeaderFooter() { echo " !#*@!#*@!#*"; }
 						cat() { createHeaderFooter; }
-						When run output -m=msg --header-footer --pp
+						When run output -m=msg --header-footer --pre-post-fix
 						The stderr should not be present
 						The lines of stdout should equal 3
 						The stdout line 1 should equal " !#*@!#*@!#*"
@@ -113,7 +113,7 @@ Describe "Output:" output
 						The stdout line 3 should equal " !#*@!#*@!#*"
 						The status should be success
 					End
-					It "Message length four" outputOutputOptionMixHeaderFooterAndPpSingleCharacterFormattingCharacter:messageLengthFour
+					It "Message length four" outputOutputOptionMixHeaderFooterAndPreFixAndPostFixManyCharacterFormattingCharacter:messageLengthFour
 						createHeaderFooter() { echo " !#*@!#*@!#*@"; }
 						cat() { createHeaderFooter; }
 						When run output -m=msg1 --header-footer --pp
@@ -124,10 +124,10 @@ Describe "Output:" output
 						The stdout line 3 should equal " !#*@!#*@!#*@"
 						The status should be success
 					End
-					It "Message length five" outputOutputOptionMixHeaderFooterAndPpSingleCharacterFormattingCharacter:messageLengthFive
+					It "Message length five" outputOutputOptionMixHeaderFooterAndPreFixAndPostFixManyCharacterFormattingCharacter:messageLengthFive
 						createHeaderFooter() { echo " !#*@!#*@!#*@!"; }
 						cat() { createHeaderFooter; }
-						When run output -m=msg1m --header-footer --pp
+						When run output -m=msg1m --header-footer --pre-post-fix
 						The stderr should not be present
 						The lines of stdout should equal 3
 						The stdout line 1 should equal " !#*@!#*@!#*@!"
@@ -135,7 +135,7 @@ Describe "Output:" output
 						The stdout line 3 should equal " !#*@!#*@!#*@!"
 						The status should be success
 					End
-					It "Message onto next line" outputOutputOptionMixHeaderFooterAndPpSingleCharacterFormattingCharacter:messageOntoNextLine
+					It "Message onto next line" outputOutputOptionMixHeaderFooterAndPreFixAndPostFixManyCharacterFormattingCharacter:messageOntoNextLine
 						createHeaderFooter() { echo " !#*@!#*@!#*@!"; }
 						cat() { createHeaderFooter; }
 						When run output -m=msg1ms --header-footer --pp

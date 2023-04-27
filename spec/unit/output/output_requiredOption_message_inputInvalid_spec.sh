@@ -1,4 +1,5 @@
 # Setup required environment variable(s).
+% OUTPUT_DOC:"#/ DESCRIPTION:"
 % DEFAULT_LINE_LENGTH:10
 readonly DEFAULT_LINE_LENGTH
 % DEFAULT_INDENT:0
@@ -7,33 +8,36 @@ readonly DEFAULT_INDENT
 Describe "Output:" output
 	Describe "output():" output:output
 		# Track path to file that contains CUT.
-		outputPath=$PWD/src/shell/functions/output/output.sh
+		cutPath=$PWD/src/shell/functions/output/output.sh
 		# Source CUT function file so function may be called directly.
-		sourceCut() { . $outputPath; }
+		sourceCut() { . $cutPath; }
 		BeforeAll 'sourceCut'
 		
 		Describe "Required option:" outputOutput:requiredOption
-			Describe "Message:" outputOutputrequiredOption:message
-				Describe "Input invalid:" outputOutputrequiredOptionMessage:inputInvalid
-					It "None" outputOutputrequiredOptionMessageInputInvalid:none
+			Describe "Message:" outputOutputRequiredOption:message
+				Describe "Input invalid:" outputOutputRequiredOptionMessage:inputInvalid
+					It "None" outputOutputRequiredOptionMessageInputInvalid:none
 						When run output
 						The stdout should not be present
-						The stderr should include "ERROR"
+						The stderr line 1 should start with "ERROR output(): "
+						The stderr should include "$OUTPUT_DOC"
 						The status should equal $OPTION_REQUIRED_NOT_PROVIDED_RT
 					End
-					Describe "-m:" outputOutputrequiredOptionMessageInputInvalid:m
-						It "Missing" outputOutputrequiredOptionMessageInputInvalidM:missing
+					Describe "-m:" outputOutputRequiredOptionMessageInputInvalid:m
+						It "Missing" outputOutputRequiredOptionMessageInputInvalidM:missing
 							When run output -m
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_NAME_INVALID_RT
 						End
 					End
-					Describe "--msg:" outputOutputrequiredOptionMessageInputInvalid:msg
-						It "Missing" outputOutputrequiredOptionMessageInputInvalidMsg:missing
+					Describe "--msg:" outputOutputRequiredOptionMessageInputInvalid:msg
+						It "Missing" outputOutputRequiredOptionMessageInputInvalidMsg:missing
 							When run output --msg
 							The stdout should not be present
-							The stderr should include "ERROR"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_NAME_INVALID_RT
 						End
 					End

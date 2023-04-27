@@ -11,15 +11,17 @@ if [ -f $PWD/util/main.sh ]; then
 	inScriptSource $PWD/util/main.sh
 elif [ -f $PWD/src/shell/functions/$funcName/util/main.sh ]; then
 	inScriptSource $PWD/src/shell/functions/$funcName/util/main.sh
+elif [ -f $HOME/shell/functions/$funcName/util/main.sh ]; then
+	inScriptSource $HOME/shell/functions/$funcName/util/main.sh
 elif [ "$SHELL_FUNCTIONS" != "" ]; then
 	if [ -f $SHELL_FUNCTIONS/$funcName/util/main.sh ]; then
 		inScriptSource $SHELL_FUNCTIONS/$funcName/util/main.sh
 	else
-		echo "ERROR $funcName(): Couldn't find 'main.sh' file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		echo "ERROR $funcName():    Couldn't find 'main.sh' file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
 		exit 202
 	fi
 else
-	echo "ERROR $funcName(): Couldn't find 'main.sh' file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+	echo "ERROR $funcName():    Couldn't find 'main.sh' file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
 	exit 202
 fi
 
@@ -133,6 +135,10 @@ OUTPUT_DOC=$(
 #/		- Provided max line length value is too small:
 #/			- Line length - prefix - postfix > 0.
 #/	- 142: Returned when the message text option is not provided.
+#/	- 200: Returned when an environment variable has been set to an invalid valid, for example:
+#/		- Max line length insaficent (not enought room on line for message text) and:
+#/			- `$DEFAULT_INDENT` is set to something greater than `0` or,
+#/			- '$DEFAULT_LINE_LENGTH` is smaller than provided max line length.
 #/
 #/ EXAMPLE(S):
 #/	output --help
@@ -335,40 +341,41 @@ output() {
 
 			# Max line length related messages.
 			if [ $maxAlwLineLen -ne $DEFAULT_LINE_LENGTH ] && [ $DEFAULT_LINE_LENGTH -lt $maxAlwLineLen ]; then
-				errMsg="$outputLogPrefix     Using the default line length value (DEFAULT_LINE_LENGTH: '$DEFAULT_LINE_LENGTH') by not passing in '--line-length' or '-l'"
+				errMsg="$outputLogPrefix - Using the default line length value (DEFAULT_LINE_LENGTH: '$DEFAULT_LINE_LENGTH') by not passing in '--line-length' or '-l'"
 				echo $errMsg >&2
 			elif [ $maxAlwLineLen -eq $DEFAULT_LINE_LENGTH ]; then
-				errMsg="$outputLogPrefix     Increase default line length (DEFAULT_LINE_LENGTH) value up from '$DEFAULT_LINE_LENGTH'"
+				errMsg="$outputLogPrefix - Increase default line length (DEFAULT_LINE_LENGTH) value up from '$DEFAULT_LINE_LENGTH'"
 				echo $errMsg >&2
 			fi
-			errMsg="$outputLogPrefix     Pass in larger max line length value (ex. '--line-length=$(($maxAlwLineLen + 50))')"
+			errMsg="$outputLogPrefix - Pass in larger max line length value (ex. '--line-length=$(($maxAlwLineLen + 50))')"
+			echo $errMsg >&2
 
 			# Indent related messages.
 			if [ $indent -ne $DEFAULT_INDENT ] && [ $DEFAULT_INDENT -lt $indent ]; then
-				errMsg="$outputLogPrefix     Using the default indent value (DEFAULT_INDENT: '$DEFAULT_INDENT') by not passing in '--indent'"
+				errMsg="$outputLogPrefix - Using the default indent value (DEFAULT_INDENT: '$DEFAULT_INDENT') by not passing in '--indent'"
 				echo $errMsg >&2
 			elif [ $indent -eq $DEFAULT_INDENT ]; then
-				errMsg="$outputLogPrefix     Decrease default indent value (DEFAULT_INDENT: '$DEFAULT_INDENT')"
+				errMsg="$outputLogPrefix - Decrease default indent value (DEFAULT_INDENT: '$DEFAULT_INDENT')"
 				echo $errMsg >&2
 			fi
 			if [ $indent -gt 0 ]; then
-				errMsg="$outputLogPrefix     Pass in smaller indent value (ex. '--indent=0')"
+				errMsg="$outputLogPrefix - Pass in smaller indent value (ex. '--indent=0')"
 				echo $errMsg >&2
 			fi
 
 			# Formatting related messages.
 			if $prePostFix; then
-				errMsg="$outputLogPrefix     Not using a pre-fix and post-fix by not passing in: '-p', '--pretty', '--pp', or '--pre-post-fix'"
+				errMsg="$outputLogPrefix - Not using a pre-fix and post-fix by not passing in: '-p', '--pretty', '--pp', or '--pre-post-fix'"
 				echo $errMsg >&2
 				if [ "$fChar" != "$DEFAULT_CHAR" ] && [ ${#fChar} -gt ${#DEFAULT_CHAR} ]; then
-					errMsg="$outputLogPrefix     Using the default formatting character (DEFAULT_CHAR: '$DEFAULT_CHAR') by not passing in any formatting character"
+					errMsg="$outputLogPrefix - Using the default formatting character (DEFAULT_CHAR: '$DEFAULT_CHAR') by not passing in any formatting character"
 					echo $errMsg >&2
 				elif [ "$fChar" = "$DEFAULT_CHAR" ] && [ ${#DEFAULT_CHAR} -gt 1 ]; then
-					errMsg="$outputLogPrefix     Decrease length of default formatting character (DEFAULT_CHAR: '$DEFAULT_CHAR')"
+					errMsg="$outputLogPrefix - Decrease length of default formatting character (DEFAULT_CHAR: '$DEFAULT_CHAR')"
 					echo $errMsg >&2
 				fi
 				if [ ${#fChar} -gt 1 ]; then
-					errMsg="$outputLogPrefix     Using a shorter formatting character (ex. '--formatting-character=#')"
+					errMsg="$outputLogPrefix - Using a shorter formatting character (ex. '--formatting-character=#')"
 					echo $errMsg >&2
 				fi
 			fi

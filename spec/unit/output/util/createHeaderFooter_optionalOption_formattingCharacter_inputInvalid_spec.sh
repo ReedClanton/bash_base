@@ -1,5 +1,8 @@
+# Setup required environment variable(s).
+% CREATE_HEADER_FOOTER_DOC:"#/ DESCRIPTION:"
+
 Describe "Output:" output
-	Describe "util:" output:util
+	Describe "Util:" output:util
 		Describe "createHeaderFooter():" outputUtil:createHeaderFooter
 			# Source CUT function file so function may be called directly.
 			sourceCut() { . $PWD/src/shell/functions/output/util/createHeaderFooter.sh; }
@@ -12,68 +15,78 @@ Describe "Output:" output
 							It "Blank" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidF:blank
 								When run createHeaderFooter -f=""
 								The stdout should not be present
-								The stderr should include "DESCRIPTION:"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "Null" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidF:null
 								When run createHeaderFooter -f=
 								The stdout should not be present
-								The stderr should include "DESCRIPTION:"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "Missing" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidF:missing
 								When run createHeaderFooter -f
 								The stdout should not be present
-								The stderr should include "DESCRIPTION:"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_NAME_INVALID_RT
 							End
 						End
 						Describe "--formatting-character:" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalid:formattingCharacter
 							It "Blank" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidFormattingCharacter:blank
-								When run createHeaderFooter -l=1 --formatting-character=""
+								When run createHeaderFooter --formatting-character=""
 								The stdout should not be present
-								The stderr should include "DESCRIPTION:"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "Null" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidFormattingCharacter:null
-								When run createHeaderFooter -l=1 --formatting-character=
+								When run createHeaderFooter --formatting-character=
 								The stdout should not be present
-								The stderr should include "DESCRIPTION:"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "Missing" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidFormattingCharacter:missing
-								When run createHeaderFooter -l=1 --formatting-character
+								When run createHeaderFooter --formatting-character
 								The stdout should not be present
-								The stderr should include "DESCRIPTION:"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_NAME_INVALID_RT
 							End
 						End
-						Describe "Invalid character:" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacter:invalidCharacter
-							Describe "-f:" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInvalidCharacter:f
-								It "'\n'" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInvalidCharacterF:newLine
-									When run createHeaderFooter -l=1 -f="\n"
+						Describe "Invalid character:" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalid:invalidCharacter
+							Describe "-f:" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidInvalidCharacter:f
+								It "'\n'" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidInvalidCharacterF:newLine
+									When run createHeaderFooter -f="\n"
 									The stdout should not be present
-									The stderr should include "DESCRIPTION:"
+									The stderr line 1 should start with "ERROR createHeaderFooter(): "
+									The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 									The status should equal $OPTION_VALUE_INVALID_RT
 								End
-								It "'\\'" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInvalidCharacterF:backSlash
-									When run createHeaderFooter -l=1 -f="\\"
+								It "'\\'" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidInvalidCharacterF:backSlash
+									When run createHeaderFooter -f="\\"
 									The stdout should not be present
-									The stderr should include "DESCRIPTION:"
+									The stderr line 1 should start with "ERROR createHeaderFooter(): "
+									The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 									The status should equal $OPTION_VALUE_INVALID_RT
 								End
 							End
-							Describe "--formatting-character:" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInvalidCharacter:formattingCharacter
-								It "'\n'" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInvalidCharacterFormattingCharacter:newLine
-									When run createHeaderFooter -l=1 --formatting-character="\n"
+							Describe "--formatting-character:" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidInvalidCharacter:formattingCharacter
+								It "'\n'" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidInvalidCharacterFormattingCharacter:newLine
+									When run createHeaderFooter --formatting-character="\n"
 									The stdout should not be present
-									The stderr should include "DESCRIPTION:"
+									The stderr line 1 should start with "ERROR createHeaderFooter(): "
+									The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 									The status should equal $OPTION_VALUE_INVALID_RT
 								End
-								It "'\\'" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInvalidCharacterFormattingCharacter:bachSlash
-									When run createHeaderFooter -l=1 --formatting-character="\\"
+								It "'\\'" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidInvalidCharacterFormattingCharacter:bachSlash
+									When run createHeaderFooter --formatting-character="\\"
 									The stdout should not be present
-									The stderr should include "DESCRIPTION:"
+									The stderr line 1 should start with "ERROR createHeaderFooter(): "
+									The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 									The status should equal $OPTION_VALUE_INVALID_RT
 								End
 							End

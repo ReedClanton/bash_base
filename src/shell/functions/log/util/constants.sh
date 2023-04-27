@@ -48,9 +48,9 @@ TRACE=5
 readonly TRACE
 export TRACE
 # Indicates that all logs should be produced.
-ALL=$TRACE
+ALL=6
 readonly ALL
 export ALL
 # Determines shell function logging level.
-SHELL_LOG_LEVEL=$INFO
+SHELL_LOG_LEVEL=3
 export SHELL_LOG_LEVEL

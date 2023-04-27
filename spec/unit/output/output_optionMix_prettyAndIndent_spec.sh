@@ -1,4 +1,5 @@
 # Setup required environment variable(s).
+% OUTPUT_DOC:"#/ DESCRIPTION:"
 % DEFAULT_LINE_LENGTH:50
 readonly DEFAULT_LINE_LENGTH
 % DEFAULT_INDENT:0
@@ -7,13 +8,13 @@ readonly DEFAULT_INDENT
 Describe "Output:" output
 	Describe "output():" output:output
 		# Track path to file that contains CUT.
-		outputPath=$PWD/src/shell/functions/output/output.sh
+		cutPath=$PWD/src/shell/functions/output/output.sh
 		# Source CUT function file so function may be called directly.
-		sourceCut() { . $outputPath; }
+		sourceCut() { . $cutPath; }
 		BeforeAll 'sourceCut'
 		
 		Describe "Optional option:" outputOutput:optionalOption
-			Describe "--pretty and --indent:" outputOutputOptionalOption:pAndIndent
+			Describe "--pretty and --indent:" outputOutputOptionalOption:prettyAndIndent
 				Describe "Single character formatting character:" outputOutputOptionalOptionPrettyAndIndent:singleCharacterFormattingCharacter
 					DEFAULT_CHAR='#'
 					
@@ -135,7 +136,8 @@ Describe "Output:" output
 						cat() { createHeaderFooter; }
 						When run output -m=m --msg=s -m=g --pretty --indent=40
 						The stdout should not be present
-						The stderr should include "ERROR"
+						The stderr line 1 should start with "ERROR output(): "
+						The stderr should include "$OUTPUT_DOC"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 				End
