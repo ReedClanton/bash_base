@@ -266,12 +266,12 @@ log() {
 			else
 				outputCall="$outputCall --pre-post-fix"
 			fi
-			
+
 			# Ensure output() was successful prior to incorporating its output into final result.
 			unset stdOut stdRt
 			stdOut=$(eval $outputCall --msg="${msg%*\\n}" 2>/dev/null)
 			stdRt=$?
-			
+
 			# Check if output() succeeded.
 			if [ $stdRt -eq 0 ]; then
 				if [ $title -eq $FULL_TITLE ]; then
