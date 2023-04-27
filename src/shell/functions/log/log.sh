@@ -136,7 +136,7 @@ LOG_DOC=$(
 #/	log --help
 #/	log -c=${FUNCNAME[0]} -m="line1\nline2" -m="line3"
 #/	log -d -c="$USER-terminal" -m="line1" -m="line2"
-#/	log --error --line_title -m="line1" -m="line2"
+#/	log --error --line-title -m="line1" -m="line2"
 #/
 #/ TODO(S):
 #/	- Check if I can use any sort of font formatting (ex. bold) in method description as printed by --help.
@@ -163,7 +163,7 @@ log() {
 		dateSupported=true
 	fi
 	# Error prefix added to error output messages.
-	logLogPrefix="ERROR log():\t"
+	logLogPrefix="ERROR log():"
 	if $dateSupported; then
 		logLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $logLogPrefix"
 	fi
@@ -218,7 +218,7 @@ log() {
 				title=$LINE_TITLE
 				;;
 			*)
-				printf "$logLogPrefix$(output --pp -m="Calling function provided invalid option: '$fullArg', see doc:")\n" >&2
+				echo "$logLogPrefix $(output --pp -m="Calling function provided invalid option: '$fullArg', see doc:")" >&2
 				echo "$LOG_DOC" >&2
 				return 140
 				;;
@@ -231,7 +231,7 @@ log() {
 	stdErr=$({ checkRequiredOpts "$LOG_DOC" -a="$msg" >|/dev/null; } 2>&1)
 	rtVal=$?
 	if [ $rtVal -ne 0 ]; then
-		printf "$logLogPrefix$stdErr\n" >&2
+		echo "$logLogPrefix $stdErr" >&2
 		return 142
 	fi
 
@@ -247,29 +247,29 @@ log() {
 		# Determine how log message should be built.
 		if [ $title -gt $NO_TITLE ]; then
 			## Build Output Argument(s)/Option(s) ##
-			outputArgs="--line-length=200"
+			outputCall="output --line-length=200"
 			# Set level.
 			if [ $lvl -eq $TRACE ]; then
-				outputArgs="$outputArgs --trace"
+				outputCall="$outputCall --trace"
 			elif [ $lvl -eq $DEBUG ]; then
-				outputArgs="$outputArgs --debug"
+				outputCall="$outputCall --debug"
 			elif [ $lvl -eq $INFO ]; then
-				outputArgs="$outputArgs --info"
+				outputCall="$outputCall --info"
 			elif [ $lvl -eq $WARN ]; then
-				outputArgs="$outputArgs --warn"
+				outputCall="$outputCall --warn"
 			elif [ $lvl -eq $ERROR ]; then
-				outputArgs="$outputArgs --error"
+				outputCall="$outputCall --error"
 			fi
 			# Add final argument/options to output() call.
 			if [ $title -eq $FULL_TITLE ]; then
-				outputArgs="$outputArgs --indent=4 --pretty"
+				outputCall="$outputCall --indent=4 --pretty"
 			else
-				outputArgs="$outputArgs --pre-post-fix"
+				outputCall="$outputCall --pre-post-fix"
 			fi
 			
 			# Ensure output() was successful prior to incorporating its output into final result.
 			unset stdOut stdRt
-			stdOut=$(output $outputArgs --msg="${msg%*\\n}" 2>/dev/null)
+			stdOut=$(eval $outputCall --msg="${msg%*\\n}" 2>/dev/null)
 			stdRt=$?
 			
 			# Check if output() succeeded.
@@ -280,7 +280,7 @@ log() {
 					msg="$pfix$stdOut"
 				fi
 			else
-				printf "${logLogPrefix}Call to output() failed with return code '$stdRt', log will be produced without title formatting.$newLine" >&2
+				echo "$logLogPrefix Call to output() failed with return code '$stdRt', log will be produced without title formatting." >&2
 				printf "$pfix$msg"
 				return 3
 			fi

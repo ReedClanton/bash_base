@@ -65,17 +65,15 @@ Describe "Output:" output
 							It "Far bellow lower" outputUtilCreateHeaderFooterOptionalOptionLineLengthBoundL:farBellowLower
 								When run createHeaderFooter -l="-999999999"
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "Bellow lower" outputUtilCreateHeaderFooterOptionalOptionLineLengthBoundL:bellowLower
 								When run createHeaderFooter -l="0"
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "At lower" outputUtilCreateHeaderFooterOptionalOptionLineLengthBoundL:atLower
@@ -104,17 +102,15 @@ Describe "Output:" output
 							It "Far bellow lower" outputUtilCreateHeaderFooterOptionalOptionLineLengthBoundLineLength:farBellowLower
 								When run createHeaderFooter --line-length="-999999999"
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "Bellow lower" outputUtilCreateHeaderFooterOptionalOptionLineLengthBoundLineLength:bellowLower
 								When run createHeaderFooter --line-length="0"
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "At lower" outputUtilCreateHeaderFooterOptionalOptionLineLengthBoundLineLength:atLower

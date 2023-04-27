@@ -1,4 +1,5 @@
 # Setup required environment variable(s).
+% OUTPUT_DOC:"#/ DESCRIPTION:"
 % DEFAULT_LINE_LENGTH:10
 readonly DEFAULT_LINE_LENGTH
 % DEFAULT_CHAR:'#'
@@ -62,7 +63,8 @@ Describe "Output:" output
 				It "With prefix" outputOutputDefaultIndentAlmostLongerThanAllowedLineLength:withPrefix
 					When run output -m=m --pp
 					The stdout should not be present
-					The stderr should start with "ERROR output():	"
+					The stderr line 1 should start with "ERROR output(): "
+					The stderr should include "$OUTPUT_DOC"
 					The status should equal $ENV_VAR_BAD_VALUE_RT
 				End
 			End
@@ -72,13 +74,15 @@ Describe "Output:" output
 				It "No prefix" outputOutputDefaultIndentLongerThanAllowedLineLength:noPrefix
 					When run output -m=m
 					The stdout should not be present
-					The stderr should start with "ERROR output():	"
+					The stderr line 1 should start with "ERROR output(): "
+					The stderr should include "$OUTPUT_DOC"
 					The status should equal $ENV_VAR_BAD_VALUE_RT
 				End
 				It "With prefix" outputOutputDefaultIndentLongerThanAllowedLineLength:withPrefix
 					When run output -m=m --pp
 					The stdout should not be present
-					The stderr should start with "ERROR output():	"
+					The stderr line 1 should start with "ERROR output(): "
+					The stderr should include "$OUTPUT_DOC"
 					The status should equal $ENV_VAR_BAD_VALUE_RT
 				End
 			End

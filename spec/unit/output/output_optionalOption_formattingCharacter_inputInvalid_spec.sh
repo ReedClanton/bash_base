@@ -1,3 +1,6 @@
+# Setup required environment variable(s).
+% OUTPUT_DOC:"#/ DESCRIPTION:"
+
 Describe "Output:" output
 	Describe "output():" output:output
 		# Track path to file that contains CUT.
@@ -13,19 +16,22 @@ Describe "Output:" output
 						It "Blank" outputOutputOptionalOptionFormattingCharacterInputInvalidF:blank
 							When run output -m=m -f=""
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Null" outputOutputOptionalOptionFormattingCharacterInputInvalidF:null
 							When run output -m=m -f=
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Missing" outputOutputOptionalOptionFormattingCharacterInputInvalidF:missing
 							When run output -m=m -f
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_NAME_INVALID_RT
 						End
 					End
@@ -33,19 +39,22 @@ Describe "Output:" output
 						It "Blank" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidFormattingCharacter:blank
 							When run output -m=m --formatting-character=""
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Null" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidFormattingCharacter:null
 							When run output -m=m --formatting-character=
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Missing" outputUtilCreateHeaderFooterOptionalOptionFormattingCharacterInputInvalidFormattingCharacter:missing
 							When run output -m=m --formatting-character
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_NAME_INVALID_RT
 						End
 					End
@@ -54,19 +63,22 @@ Describe "Output:" output
 							It "'\n'" outputOutputOptionalOptionFormattingCharacterInputInvalidInvalidCharacterF:newLine
 								When run output -m=m -f="\n"
 								The stdout should not be present
-								The stderr should start with "ERROR output():	"
+								The stderr line 1 should start with "ERROR output(): "
+								The stderr should include "$OUTPUT_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "'\\'" outputOutputOptionalOptionFormattingCharacterInputInvalidInvalidCharacterF:backSlash
 								When run output -m=m -f="\\"
 								The stdout should not be present
-								The stderr should start with "ERROR output():	"
+								The stderr line 1 should start with "ERROR output(): "
+								The stderr should include "$OUTPUT_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "'%'" outputOutputOptionalOptionFormattingCharacterInputInvalidInvalidCharacterF:percent
 								When run output -m=m -f="%"
 								The stdout should not be present
-								The stderr should start with "ERROR output():	"
+								The stderr line 1 should start with "ERROR output(): "
+								The stderr should include "$OUTPUT_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 						End
@@ -74,19 +86,22 @@ Describe "Output:" output
 							It "'\n'" outputOutputOptionalOptionFormattingCharacterInputInvalidInvalidCharacterFormattingCharacter:newLine
 								When run output -m=m --formatting-character="\n"
 								The stdout should not be present
-								The stderr should start with "ERROR output():	"
+								The stderr line 1 should start with "ERROR output(): "
+								The stderr should include "$OUTPUT_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "'\\'" outputOutputOptionalOptionFormattingCharacterInputInvalidInvalidCharacterFormattingCharacter:bachSlash
 								When run output -m=m --formatting-character="\\"
 								The stdout should not be present
-								The stderr should start with "ERROR output():	"
+								The stderr line 1 should start with "ERROR output(): "
+								The stderr should include "$OUTPUT_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "'%'" outputOutputOptionalOptionFormattingCharacterInputInvalidInvalidCharacterFormattingCharacter:percent
 								When run output -m=m --formatting-character="%"
 								The stdout should not be present
-								The stderr should start with "ERROR output():	"
+								The stderr line 1 should start with "ERROR output(): "
+								The stderr should include "$OUTPUT_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 						End

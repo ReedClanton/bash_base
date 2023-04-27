@@ -22,16 +22,16 @@ Describe "Log:" log
 						}
 						When run log
 						The stdout should not be present
-						The stderr line 1 should start with "ERROR log():	"
-						The stderr line 2 should equal "$LOG_DOC"
+						The stderr line 1 should start with "ERROR log(): "
+						The stderr should include "$LOG_DOC"
 						The status should equal $OPTION_REQUIRED_NOT_PROVIDED_RT
 					End
 					Describe "-m:" logLogRequiredOptionMessageInputInvalid:m
 						It "Missing" logLogRequiredOptionMessageInputInvalidM:missing
 							When run log -m
 							The stdout should not be present
-							The stderr line 1 should start with "ERROR log():	"
-							The stderr line 2 should equal "$LOG_DOC"
+							The stderr line 1 should start with "ERROR log(): "
+							The stderr should include "$LOG_DOC"
 							The status should equal $OPTION_NAME_INVALID_RT
 						End
 					End
@@ -39,8 +39,8 @@ Describe "Log:" log
 						It "Missing" logLogRequiredOptionMessageInputInvalidMsg:missing
 							When run log --msg
 							The stdout should not be present
-							The stderr line 1 should start with "ERROR log():	"
-							The stderr line 2 should equal "$LOG_DOC"
+							The stderr line 1 should start with "ERROR log(): "
+							The stderr should include "$LOG_DOC"
 							The status should equal $OPTION_NAME_INVALID_RT
 						End
 					End

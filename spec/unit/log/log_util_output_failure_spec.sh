@@ -27,7 +27,7 @@ Describe "Log:" log
 							output() { return $MINOR_EXECUTION_FAILURE_RT; }
 							When run log -m=m --full-title
 							The lines of stderr should equal 1
-							The stderr line 1 should start with "ERROR log():	"
+							The stderr line 1 should start with "ERROR log(): "
 							The lines of stdout should equal 1
 							The stdout line 1 should equal "TRACE:	m"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
@@ -36,7 +36,7 @@ Describe "Log:" log
 							output() { return $OPTION_NAME_INVALID_RT; }
 							When run log -m=m --line-title
 							The lines of stderr should equal 1
-							The stderr line 1 should start with "ERROR log():	"
+							The stderr line 1 should start with "ERROR log(): "
 							The lines of stdout should equal 1
 							The stdout line 1 should equal "TRACE:	m"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
@@ -45,7 +45,7 @@ Describe "Log:" log
 							output() { return $OPTION_VALUE_INVALID_RT; }
 							When run log -m=ms --full-title
 							The lines of stderr should equal 1
-							The stderr line 1 should start with "ERROR log():	"
+							The stderr line 1 should start with "ERROR log(): "
 							The lines of stdout should equal 1
 							The stdout line 1 should equal "TRACE:	ms"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
@@ -54,7 +54,7 @@ Describe "Log:" log
 							output() { return $OPTION_REQUIRED_NOT_PROVIDED_RT; }
 							When run log -m=ms --line-title
 							The lines of stderr should equal 1
-							The stderr line 1 should start with "ERROR log():	"
+							The stderr line 1 should start with "ERROR log(): "
 							The lines of stdout should equal 1
 							The stdout line 1 should equal "TRACE:	ms"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
@@ -63,7 +63,7 @@ Describe "Log:" log
 							output() { return $ENV_VAR_BAD_VALUE_RT; }
 							When run log -m="message 1" -m=msg2 --full-title
 							The lines of stderr should equal 1
-							The stderr line 1 should start with "ERROR log():	"
+							The stderr line 1 should start with "ERROR log(): "
 							The lines of stdout should equal 2
 							The stdout line 1 should equal "TRACE:	message 1"
 							The stdout line 2 should equal "msg2"

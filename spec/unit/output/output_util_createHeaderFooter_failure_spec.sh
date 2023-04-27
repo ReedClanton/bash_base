@@ -21,7 +21,7 @@ Describe "Output:" output
 							cat() { createHeaderFooter; }
 							When run output -m=m -p
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "141" outputOutputUtilCreateHeaderFooterFailureNonZeroReturnCode:141
@@ -29,7 +29,7 @@ Describe "Output:" output
 							cat() { createHeaderFooter; }
 							When run output -m=ms --header-footer
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "142" outputOutputUtilCreateHeaderFooterFailureNonZeroReturnCode:142
@@ -37,7 +37,7 @@ Describe "Output:" output
 							cat() { createHeaderFooter; }
 							When run output -m="message 1" -m=msg2 --pretty
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 					End

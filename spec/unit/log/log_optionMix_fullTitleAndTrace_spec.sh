@@ -44,7 +44,7 @@ Describe "Log:" log
 						esac
 					done
 					# Ensure required option(s) were provided.
-					if ($lvlGiven && $titleGiven) || ($lvlGiven && $headerGiven && $preGiven); then
+					if $lvlGiven && ($titleGiven || ($headerGiven && $preGiven)); then
 						echo " ###"
 						echo "# m #"
 						echo " ###"

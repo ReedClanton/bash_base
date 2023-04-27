@@ -14,14 +14,14 @@ Describe "Output:" output
 						When run createHeaderFooter -h
 						The stderr should not be present
 						The lines of stdout should equal 1
-						The stdout should equal "$CREATE_HEADER_FOOTER_DOC"
+						The stdout line 1 should equal "$CREATE_HEADER_FOOTER_DOC"
 						The status should be success
 					End
 					It "--help" outputUtilCreateHeaderFooterOptionalOptionHelp:help
 						When run createHeaderFooter --help
 						The stderr should not be present
 						The lines of stdout should equal 1
-						The stdout should equal "$CREATE_HEADER_FOOTER_DOC"
+						The stdout line 1 should equal "$CREATE_HEADER_FOOTER_DOC"
 						The status should be success
 					End
 				End

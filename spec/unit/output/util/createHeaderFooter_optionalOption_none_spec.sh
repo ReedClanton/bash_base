@@ -14,9 +14,8 @@ Describe "Output:" output
 				It "None" outputUtilCreateHeaderFooterOptionalOption:none outputUtilCreateHeaderFooterOptionalOptionNone
 					When run createHeaderFooter
 					The stdout should not be present
-					The lines of stderr should equal 2
-					The stderr line 1 should start with "ERROR createHeaderFooter():	"
-					The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+					The stderr line 1 should start with "ERROR createHeaderFooter(): "
+					The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 					The status should equal $OPTION_REQUIRED_NOT_PROVIDED_RT
 				End
 			End

@@ -1,4 +1,5 @@
 # Setup required environment variable(s).
+% OUTPUT_DOC:"#/ DESCRIPTION:"
 % DEFAULT_LINE_LENGTH:10
 readonly DEFAULT_LINE_LENGTH
 % DEFAULT_INDENT:0
@@ -81,19 +82,22 @@ Describe "Output:" output
 						It "Far bellow lower" outputOutputOptionalOptionLineLengthBoundL:farBellowLower
 							When run output -m=m -l="-999999999"
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Bellow lower" outputOutputOptionalOptionLineLengthBoundL:bellowLower
 							When run output -m=m -l="-1"
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "At lower" outputOutputOptionalOptionLineLengthBoundL:atLower
 							When run output -m=m -l=0
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Above lower" outputOutputOptionalOptionLineLengthBoundL:aboveLower
@@ -122,19 +126,22 @@ Describe "Output:" output
 						It "Far bellow lower" outputOutputOptionalOptionLineLengthBoundLineLength:farBellowLower
 							When run output -m=m --line-length="-999999999"
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Bellow lower" outputOutputOptionalOptionLineLengthBoundLineLength:bellowLower
 							When run output -m=m --line-length="-1"
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "At lower" outputOutputOptionalOptionLineLengthBoundLineLength:atLower
 							When run output -m=m --line-length=0
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Above lower" outputOutputOptionalOptionLineLengthBoundLineLength:aboveLower

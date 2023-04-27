@@ -17,49 +17,43 @@ Describe "Output:" output
 							It "Blank" outputUtilCreateHeaderFooterOptionalOptionLineLengthInputInvalidL:blank
 								When run createHeaderFooter -l=""
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "Null" outputUtilCreateHeaderFooterOptionalOptionLineLengthInputInvalidL:null
 								When run createHeaderFooter -l=
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "Missing" outputUtilCreateHeaderFooterOptionalOptionLineLengthInputInvalidL:missing
 								When run createHeaderFooter -l
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_NAME_INVALID_RT
 							End
 							It "Float" outputUtilCreateHeaderFooterOptionalOptionLineLengthInputInvalidL:float
 								When run createHeaderFooter -l="1.1"
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "'+'" outputUtilCreateHeaderFooterOptionalOptionLineLengthInputInvalidL:plus
 								When run createHeaderFooter -l="+50"
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "'-'" outputUtilCreateHeaderFooterOptionalOptionLineLengthInputInvalidL:minus
 								When run createHeaderFooter -l="-50"
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 						End
@@ -67,49 +61,43 @@ Describe "Output:" output
 							It "Blank" outputUtilCreateHeaderFooterOptionalOptionLineLengthInputInvalidLineLength:blank
 								When run createHeaderFooter --line-length=""
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "Null" outputUtilCreateHeaderFooterOptionalOptionLineLengthInputInvalidLineLength:null
 								When run createHeaderFooter --line-length=
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "Missing" outputUtilCreateHeaderFooterOptionalOptionLineLengthInputInvalidLineLength:missing
 								When run createHeaderFooter --line-length
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_NAME_INVALID_RT
 							End
 							It "Float" outputUtilCreateHeaderFooterOptionalOptionLineLengthInputInvalidLineLength:float
 								When run createHeaderFooter --line-length="1.1"
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "'+'" outputUtilCreateHeaderFooterOptionalOptionLineLengthInputInvalidLineLength:plus
 								When run createHeaderFooter --line-length="+50"
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 							It "'-'" outputUtilCreateHeaderFooterOptionalOptionLineLengthInputInvalidLineLength:minus
 								When run createHeaderFooter --line-length="-50"
 								The stdout should not be present
-								The lines of stderr should equal 2
-								The stderr line 1 should start with "ERROR createHeaderFooter():	"
-								The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
+								The stderr line 1 should start with "ERROR createHeaderFooter(): "
+								The stderr should include "$CREATE_HEADER_FOOTER_DOC"
 								The status should equal $OPTION_VALUE_INVALID_RT
 							End
 						End

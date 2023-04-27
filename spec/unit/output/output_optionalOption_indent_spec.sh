@@ -18,13 +18,15 @@ Describe "Output:" output
 					It "Far bellow lower" outputOutputOptionalOptionIndentBound:farBellowLower
 						When run output -m="m" --indent="-999999999"
 						The stdout should not be present
-						The stderr should start with "ERROR output():	"
+						The stderr line 1 should start with "ERROR output(): "
+						The stderr should include "$OUTPUT_DOC"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "Bellow lower" outputOutputOptionalOptionIndentBound:bellowLower
 						When run output -m="m" --indent="-1"
 						The stdout should not be present
-						The stderr should start with "ERROR output():	"
+						The stderr line 1 should start with "ERROR output(): "
+						The stderr should include "$OUTPUT_DOC"
 						The status should equal $OPTION_VALUE_INVALID_RT
 					End
 					It "At lower" outputOutputOptionalOptionIndentBound:atLower
@@ -66,13 +68,15 @@ Describe "Output:" output
 						It "Above upper" outputOutputOptionalOptionIndentBoundSingleCharacterMessage:aboveUpper
 							When run output -m="m" --indent=10
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Far above upper" outputOutputOptionalOptionIndentBoundSingleCharacterMessage:farAboveUpper
 							When run output -m="m" --indent=999
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 					End
@@ -111,13 +115,15 @@ Describe "Output:" output
 						It "Above upper" outputOutputOptionalOptionIndentBoundMultipleCharacterMessage:aboveUpper
 							When run output -m="msg" --indent=10
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 						It "Far above upper" outputOutputOptionalOptionIndentBoundMultipleCharacterMessage:farAboveUpper
 							When run output -m="msg" --indent=999
 							The stdout should not be present
-							The stderr should start with "ERROR output():	"
+							The stderr line 1 should start with "ERROR output(): "
+							The stderr should include "$OUTPUT_DOC"
 							The status should equal $OPTION_VALUE_INVALID_RT
 						End
 					End
