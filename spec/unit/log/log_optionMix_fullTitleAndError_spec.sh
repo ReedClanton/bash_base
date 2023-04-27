@@ -5,6 +5,12 @@ readonly NO_TITLE
 readonly FULL_TITLE
 % ERROR:1
 readonly ERROR
+% WARN:2
+readonly WARN
+% INFO:3
+readonly INFO
+% DEBUG:4
+readonly DEBUG
 % TRACE:5
 readonly TRACE
 % SHELL_LOG_LEVEL:$ERROR
