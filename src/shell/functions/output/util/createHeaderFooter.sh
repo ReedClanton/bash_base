@@ -65,7 +65,7 @@ createHeaderFooter() {
 	# Tracks if prefix is being used.
 	prefixUsed=false
 	# Error prefix added to error output messages.
-	createHeaderFooterLogPrefix="ERROR createHeaderFooter():"
+	createHeaderFooterLogPrefix="ERROR createHeaderFooter():\t"
 	if command -v date >/dev/null; then
 		createHeaderFooterLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $createHeaderFooterLogPrefix"
 	fi
@@ -94,7 +94,7 @@ createHeaderFooter() {
 						len=$(($arg + $len))
 						;;
 					*)
-						echo "$createHeaderFooterLogPrefix Line length must be a positive integer, was '$arg', see doc:" >&2
+						echo "${createHeaderFooterLogPrefix}Line length must be a positive integer, was '$arg', see doc:" >&2
 						echo "$CREATE_HEADER_FOOTER_DOC" >&2
 						return 141
 						;;
@@ -104,7 +104,7 @@ createHeaderFooter() {
 				# Ensure a valid value was provided.
 				case "$arg" in
 					*\\* | "")
-						echo "$createHeaderFooterLogPrefix Formatting character may not be blank or a special character (ex. new line, tab), was '$arg', see doc:" >&2
+						echo "${createHeaderFooterLogPrefix}Formatting character may not be blank or a special character (ex. new line, tab), was '$arg', see doc:" >&2
 						echo "$CREATE_HEADER_FOOTER_DOC" >&2
 						return 141
 						;;
@@ -119,7 +119,7 @@ createHeaderFooter() {
 				return 0
 				;;
 			*)
-				echo "$createHeaderFooterLogPrefix Caller provided invalid option: '$fullArg', see doc:" >&2
+				echo "${createHeaderFooterLogPrefix}Caller provided invalid option: '$fullArg', see doc:" >&2
 				echo "$CREATE_HEADER_FOOTER_DOC" >&2
 				return 140
 				;;
@@ -130,7 +130,7 @@ createHeaderFooter() {
 	## Error Check Input(s) ##
 	#########################
 	if [ $len -le 0 ]; then
-		echo "$createHeaderFooterLogPrefix Line length must be provided, see doc:" >&2
+		echo "${createHeaderFooterLogPrefix}Line length must be provided, see doc:" >&2
 		echo "$CREATE_HEADER_FOOTER_DOC" >&2
 		return 142
 	fi

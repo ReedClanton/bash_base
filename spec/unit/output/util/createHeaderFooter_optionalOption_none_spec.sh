@@ -1,4 +1,5 @@
 # Setup required environment variable(s).
+% CREATE_HEADER_FOOTER_DOC:"#/ DESCRIPTION:"
 % DEFAULT_CHAR:'#'
 readonly DEFAULT_CHAR
 
@@ -13,7 +14,9 @@ Describe "Output:" output
 				It "None" outputUtilCreateHeaderFooterOptionalOption:none outputUtilCreateHeaderFooterOptionalOptionNone
 					When run createHeaderFooter
 					The stdout should not be present
-					The stderr should include "DESCRIPTION:"
+					The lines of stderr should equal 2
+					The stderr line 1 should start with "ERROR createHeaderFooter():	"
+					The stderr line 2 should equal "$CREATE_HEADER_FOOTER_DOC"
 					The status should equal $OPTION_REQUIRED_NOT_PROVIDED_RT
 				End
 			End

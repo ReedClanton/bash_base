@@ -12,7 +12,6 @@ Describe "Output:" output
 					The status should be success
 				End
 			End
-			
 			Describe "Environment variable:" outputUtilConstants:environmentVariable
 				Describe "DEFAULT_LINE_LENGTH:" outputUtilConstantsEnvironmentVariable:defaultLineLength
 					Describe
