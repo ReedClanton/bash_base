@@ -1,4 +1,4 @@
-CHECK_REQUIRED_OPTS_DOC=$(
+VERIFY_INPUT_PROVIDED_DOC=$(
 	cat <<"EOF"
 #/ DESCRIPTION:
 #/	When given a message and any number of value(s) (see '-a'), each value will
@@ -7,7 +7,7 @@ CHECK_REQUIRED_OPTS_DOC=$(
 #/	return code of '0' will be returned. Intended to be used by shell functions
 #/	to check that requried arguments/options were provided.
 #/
-#/ USAGE: checkRequiredOpts [SPECIAL_OPTION] "[ARGUMENTS]" --arg="value"...
+#/ USAGE: verifyInputProvided [SPECIAL_OPTION] "[ARGUMENTS]" --arg="value"...
 #/
 #/ NOTE(S):
 #/	- Diffrent shells render special characters, like tab and new line,
@@ -55,8 +55,8 @@ CHECK_REQUIRED_OPTS_DOC=$(
 #/	- 152: Returned when required argument (doc) isn't provided.
 #/
 #/ EXAMPLE(S):
-#/	checkRequiredOpts --help
-#/	checkRequiredOpts "$SOME_FUNCTION_DOC" -a=<requiredArgument1> "-a=<required ArgumentN>"
+#/	verifyInputProvided --help
+#/	verifyInputProvided "$SOME_FUNCTION_DOC" -a=<requiredArgument1> "-a=<required ArgumentN>"
 #/
 #/ AUTHOR(S):
 #/	- Reed Clanton
@@ -66,7 +66,7 @@ CHECK_REQUIRED_OPTS_DOC=$(
 EOF
 )
 
-checkRequiredOpts() {
+verifyInputProvided() {
 	###########################################
 	## Special Case Processing of Help Option ##
 	###########################################
@@ -74,7 +74,7 @@ checkRequiredOpts() {
 		# Determine what type of value user gave.
 		case $fullArg in
 			-h | --help)
-				echo "$CHECK_REQUIRED_OPTS_DOC"
+				echo "$VERIFY_INPUT_PROVIDED_DOC"
 				return 0
 				;;
 		esac
@@ -84,9 +84,9 @@ checkRequiredOpts() {
 	## Reset/Set Local Variable(s) ##
 	################################
 	# Error prefix added to error output messages.
-	checkRequiredOptsLogPrefix="ERROR checkRequiredOpts():"
+	verifyInputProvidedLogPrefix="ERROR verifyInputProvided():"
 	if command -v date >/dev/null; then
-		checkRequiredOptsLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $checkRequiredOptsLogPrefix"
+		verifyInputProvidedLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $verifyInputProvidedLogPrefix"
 	fi
 
 	##################################
@@ -105,14 +105,14 @@ checkRequiredOpts() {
 				-a=* | --arg=*)
 					# Ensure all option(s) given have been set to something.
 					if [ "$arg" = "" ]; then
-						echo "$checkRequiredOptsLogPrefix Missing required value, see doc:" >&2
+						echo "$verifyInputProvidedLogPrefix Missing required value, see doc:" >&2
 						echo "'$docString'" >&2
 						return 3
 					fi
 					;;
 				*)
-					echo "$checkRequiredOptsLogPrefix Invalid option: '$fullArg', see doc:" >&2
-					echo "$CHECK_REQUIRED_OPTS_DOC" >&2
+					echo "$verifyInputProvidedLogPrefix Invalid option: '$fullArg', see doc:" >&2
+					echo "$VERIFY_INPUT_PROVIDED_DOC" >&2
 					return 140
 					;;
 			esac
@@ -122,12 +122,12 @@ checkRequiredOpts() {
 
 	# Ensure at least one value was passed in.
 	if [ $inputCount -lt 1 ]; then
-		echo "$checkRequiredOptsLogPrefix Required argument wasn't provided, see doc:" >&2
-		echo "$CHECK_REQUIRED_OPTS_DOC" >&2
+		echo "$verifyInputProvidedLogPrefix Required argument wasn't provided, see doc:" >&2
+		echo "$VERIFY_INPUT_PROVIDED_DOC" >&2
 		return 152
 	elif [ $inputCount -lt 2 ]; then
-		echo "$checkRequiredOptsLogPrefix Required option wasn't provided, see doc:" >&2
-		echo "$CHECK_REQUIRED_OPTS_DOC" >&2
+		echo "$verifyInputProvidedLogPrefix Required option wasn't provided, see doc:" >&2
+		echo "$VERIFY_INPUT_PROVIDED_DOC" >&2
 		return 142
 	fi
 	return 0

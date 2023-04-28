@@ -13,7 +13,7 @@ Describe "Log:" log
 		sourceCut() { . $cutPath; }
 		BeforeAll 'sourceCut'
 		# Mock out.
-		checkRequiredOpts() { :; }
+		verifyInputProvided() { :; }
 		
 		Describe "Required option:" logLog:requiredOption
 			Describe "Message:" logLogRequiredOption:message

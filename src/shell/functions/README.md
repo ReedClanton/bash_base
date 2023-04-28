@@ -64,7 +64,7 @@ Alternatively, enter `<funcationName> --help` for a document that describes how 
 
 Script that copies files and directories from user's home directory to another location.
 
-## `checkRequiredOpts`
+## `verifyInputProvided`
 
 Used by other scripts to ensure that all option(s) passed into it are valid (contain something).
 If that's not the case, then the calling scripts doc is produced to std out.

@@ -146,7 +146,7 @@ functionName {
 	## Error Check Input(s) ##
 	#########################
 	log $traceLvl -m="Ensuring all required argument(s) were given..."
-	checkRequiredOpts "$FUNCTION_NAME_DOC" "-a=$varHoldingValOfRequiredArg"
+	verifyInputProvided "$FUNCTION_NAME_DOC" "-a=$varHoldingValOfRequiredArg"
 	rtVal=$?
 	if [[ $rtVal -ne 0 ]]; then
 		return $rtVal

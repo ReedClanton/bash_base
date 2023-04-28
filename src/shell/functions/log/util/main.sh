@@ -46,22 +46,22 @@ if ! command -v output >/dev/null; then
 		exit 202
 	fi
 fi
-if ! command -v checkRequiredOpts >/dev/null; then
-	if [ -f $PWD/../../util/checkRequiredOpts.sh ]; then
-		. $PWD/../../util/checkRequiredOpts.sh
-	elif [ -f $PWD/src/shell/functions/util/checkRequiredOpts.sh ]; then
-		. $PWD/src/shell/functions/util/checkRequiredOpts.sh
-	elif [ -f $HOME/shell/functions/util/checkRequiredOpts.sh ]; then
-		. $HOME/shell/functions/util/checkRequiredOpts.sh
+if ! command -v verifyInputProvided >/dev/null; then
+	if [ -f $PWD/../../util/verifyInputProvided.sh ]; then
+		. $PWD/../../util/verifyInputProvided.sh
+	elif [ -f $PWD/src/shell/functions/util/verifyInputProvided.sh ]; then
+		. $PWD/src/shell/functions/util/verifyInputProvided.sh
+	elif [ -f $HOME/shell/functions/util/verifyInputProvided.sh ]; then
+		. $HOME/shell/functions/util/verifyInputProvided.sh
 	elif [ "$SHELL_FUNCTIONS" != "" ]; then
-		if [ -f $SHELL_FUNCTIONS/util/checkRequiredOpts.sh ]; then
-			. $SHELL_FUNCTIONS/util/checkRequiredOpts.sh
+		if [ -f $SHELL_FUNCTIONS/util/verifyInputProvided.sh ]; then
+			. $SHELL_FUNCTIONS/util/verifyInputProvided.sh
 		else
-			echo "ERROR $funcName(): checkRequiredOpts() wasn't already defined and couldn't be found from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+			echo "ERROR $funcName(): verifyInputProvided() wasn't already defined and couldn't be found from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
 			exit 202
 		fi
 	else
-		echo "ERROR $funcName(): checkRequiredOpts() wasn't already defined and couldn't be found from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+		echo "ERROR $funcName(): verifyInputProvided() wasn't already defined and couldn't be found from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
 		exit 202
 	fi
 fi
