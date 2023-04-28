@@ -51,7 +51,8 @@ VERIFY_INPUT_PROVIDED_DOC=$(
 #/		- Processing is successful.
 #/	- 3: Returned when one or more of the options provided for error checking are invalid.
 #/	- 140: Returned when given option name is invalid.
-#/	- 142: TODO
+#/	- 142: Returned when required option isn't provided, for example:
+#/		- -a/--arg not provided.
 #/	- 152: Returned when required argument (doc) isn't provided.
 #/
 #/ EXAMPLE(S):
