@@ -10,584 +10,584 @@ Describe "Util:" util
 		BeforeAll 'sourceCut'
 		
 		Describe "Required option:" utilVerifyInputProvided:requiredOption
-			Describe "Arg:" utilVerifyInputProvidedRequiredOption:arg
-				Describe "Calling doc not returned:" utilVerifyInputProvidedRequiredOptionArgInputInvalid:callingDocNotReturned
-					Describe "Alphanumeric:" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturned:alphanumeric
-						Describe "-a:" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedAlphanumeric:a
-							It "Upper case letter" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedAlphanumericA:upperCaseLetter
-								When run verifyInputProvided "$CALLING_DOC" -a=A
+			Describe "Value:" utilVerifyInputProvidedRequiredOption:value
+				Describe "Calling doc not returned:" utilVerifyInputProvidedRequiredOptionValueInputInvalid:callingDocNotReturned
+					Describe "Alphanumeric:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturned:alphanumeric
+						Describe "-v:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedAlphanumeric:a
+							It "Upper case letter" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedAlphanumericV:upperCaseLetter
+								When run verifyInputProvided "$CALLING_DOC" -v=A
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "Lower case letter" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedAlphanumericA:lowerCaseLetter
-								When run verifyInputProvided "$CALLING_DOC" -a=x
+							It "Lower case letter" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedAlphanumericV:lowerCaseLetter
+								When run verifyInputProvided "$CALLING_DOC" -v=x
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "Single digit number" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedAlphanumericA:singleDigitNumber
-								When run verifyInputProvided "$CALLING_DOC" -a=3
+							It "Single digit number" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedAlphanumericV:singleDigitNumber
+								When run verifyInputProvided "$CALLING_DOC" -v=3
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "Sentence" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedAlphanumericA:sentence
-								When run verifyInputProvided "$CALLING_DOC" -a="someText s p a c e s and n1u2m3b4e5r6s7"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-						End
-						Describe "--arg:" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedAlphanumeric:arg
-							It "Upper case letter" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedAlphanumericArg:upperCaseLetter
-								When run verifyInputProvided "$CALLING_DOC" --arg=A
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "Lower case letter" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedAlphanumericArg:lowerCaseLetter
-								When run verifyInputProvided "$CALLING_DOC" --arg=x
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "Single digit number" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedAlphanumericArg:singleDigitNumber
-								When run verifyInputProvided "$CALLING_DOC" --arg=3
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "Sentence" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedAlphanumericA:sentence
-								When run verifyInputProvided "$CALLING_DOC" --arg="someText s p a c e s and n1u2m3b4e5r6s7"
+							It "Sentence" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedAlphanumericV:sentence
+								When run verifyInputProvided "$CALLING_DOC" -v="someText s p a c e s and n1u2m3b4e5r6s7"
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
 						End
-					End
-					Describe "Symbols:" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturned:symbols
-						Describe "-a:" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbols:a
-							It "'\`'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:backtick
-								When run verifyInputProvided "$CALLING_DOC" -a=\`
+						Describe "--value:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedAlphanumeric:value
+							It "Upper case letter" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedAlphanumericValue:upperCaseLetter
+								When run verifyInputProvided "$CALLING_DOC" --value=A
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'~'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:tilde
-								When run verifyInputProvided "$CALLING_DOC" -a=~
+							It "Lower case letter" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedAlphanumericValue:lowerCaseLetter
+								When run verifyInputProvided "$CALLING_DOC" --value=x
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'!'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:exclamationMark
-								When run verifyInputProvided "$CALLING_DOC" -a=!
+							It "Single digit number" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedAlphanumericValue:singleDigitNumber
+								When run verifyInputProvided "$CALLING_DOC" --value=3
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'@'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:at
-								When run verifyInputProvided "$CALLING_DOC" -a=@
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'#'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:hashtag
-								When run verifyInputProvided "$CALLING_DOC" -a=#
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'$'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:dollar
-								When run verifyInputProvided "$CALLING_DOC" -a=$
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'%'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:percentSign
-								When run verifyInputProvided "$CALLING_DOC" -a=%
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'^'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:caret
-								When run verifyInputProvided "$CALLING_DOC" -a=^
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'&'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:ampersand
-								When run verifyInputProvided "$CALLING_DOC" -a="&"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'*'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:asterisk
-								When run verifyInputProvided "$CALLING_DOC" -a="*"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'('" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:openParentheses
-								When run verifyInputProvided "$CALLING_DOC" -a="("
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "')'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:closeParentheses
-								When run verifyInputProvided "$CALLING_DOC" -a=")"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'-'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:hyphen
-								When run verifyInputProvided "$CALLING_DOC" -a=-
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'_'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:underscore
-								When run verifyInputProvided "$CALLING_DOC" -a=_
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'='" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:equal
-								When run verifyInputProvided "$CALLING_DOC" -a==
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'+'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:plus
-								When run verifyInputProvided "$CALLING_DOC" -a=+
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'['" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:openSquareBracket
-								When run verifyInputProvided "$CALLING_DOC" -a="["
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'{'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:openCurlyBracket
-								When run verifyInputProvided "$CALLING_DOC" -a="{"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "']'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:closeSquareBracket
-								When run verifyInputProvided "$CALLING_DOC" -a="]"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'}'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:closeCurlyBracket
-								When run verifyInputProvided "$CALLING_DOC" -a="}"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'\\'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:backslash
-								When run verifyInputProvided "$CALLING_DOC" -a="\\"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'|'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:verticalBar
-								When run verifyInputProvided "$CALLING_DOC" -a="|"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "';'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:semicolon
-								When run verifyInputProvided "$CALLING_DOC" -a=";"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "':'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:colon
-								When run verifyInputProvided "$CALLING_DOC" -a=:
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'''" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:apostrophe
-								When run verifyInputProvided "$CALLING_DOC" -a=\'
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It '"' utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:quotationMark
-								When run verifyInputProvided "$CALLING_DOC" -a=\"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "','" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:comma
-								When run verifyInputProvided "$CALLING_DOC" -a=,
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'<'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:lessThanSign
-								When run verifyInputProvided "$CALLING_DOC" -a="<"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'.'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:period
-								When run verifyInputProvided "$CALLING_DOC" -a=.
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'>'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:greaterThanSign
-								When run verifyInputProvided "$CALLING_DOC" -a=">"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'/'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:forwardSlash
-								When run verifyInputProvided "$CALLING_DOC" -a=/
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'?'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:questionMark
-								When run verifyInputProvided "$CALLING_DOC" -a="?"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "' '" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsA:space
-								When run verifyInputProvided "$CALLING_DOC" -a=" "
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-						End
-						Describe "--arg:" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbols:arg
-							It "'\`'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:backtick
-								When run verifyInputProvided "$CALLING_DOC" --arg=\`
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'~'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:tilde
-								When run verifyInputProvided "$CALLING_DOC" --arg=~
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'!'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:exclamationMark
-								When run verifyInputProvided "$CALLING_DOC" --arg=!
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'@'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:at
-								When run verifyInputProvided "$CALLING_DOC" --arg=@
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'#'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:hashtag
-								When run verifyInputProvided "$CALLING_DOC" --arg=#
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'$'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:dollar
-								When run verifyInputProvided "$CALLING_DOC" --arg=$
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'%'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:percentSign
-								When run verifyInputProvided "$CALLING_DOC" --arg=%
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'^'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:caret
-								When run verifyInputProvided "$CALLING_DOC" --arg=^
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'&'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:ampersand
-								When run verifyInputProvided "$CALLING_DOC" --arg="&"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'*'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:asterisk
-								When run verifyInputProvided "$CALLING_DOC" --arg="*"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'('" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:openParentheses
-								When run verifyInputProvided "$CALLING_DOC" --arg="("
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "')'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:closeParentheses
-								When run verifyInputProvided "$CALLING_DOC" --arg=")"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'-'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:hyphen
-								When run verifyInputProvided "$CALLING_DOC" --arg=-
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'_'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:underscore
-								When run verifyInputProvided "$CALLING_DOC" --arg=_
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'='" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:equal
-								When run verifyInputProvided "$CALLING_DOC" --arg==
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'+'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:plus
-								When run verifyInputProvided "$CALLING_DOC" --arg=+
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'['" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:openSquareBracket
-								When run verifyInputProvided "$CALLING_DOC" --arg="["
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'{'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:openCurlyBracket
-								When run verifyInputProvided "$CALLING_DOC" --arg="{"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "']'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:closeSquareBracket
-								When run verifyInputProvided "$CALLING_DOC" --arg="]"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'}'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:closeCurlyBracket
-								When run verifyInputProvided "$CALLING_DOC" --arg="}"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'\\'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:backslash
-								When run verifyInputProvided "$CALLING_DOC" --arg="\\"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'|'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:verticalBar
-								When run verifyInputProvided "$CALLING_DOC" --arg="|"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "';'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:semicolon
-								When run verifyInputProvided "$CALLING_DOC" --arg=";"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "':'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:colon
-								When run verifyInputProvided "$CALLING_DOC" --arg=:
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'''" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:apostrophe
-								When run verifyInputProvided "$CALLING_DOC" --arg=\'
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It '"' utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:quotationMark
-								When run verifyInputProvided "$CALLING_DOC" --arg=\"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "','" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:comma
-								When run verifyInputProvided "$CALLING_DOC" --arg=,
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'<'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:lessThanSign
-								When run verifyInputProvided "$CALLING_DOC" --arg="<"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'.'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:period
-								When run verifyInputProvided "$CALLING_DOC" --arg=.
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'>'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:greaterThanSign
-								When run verifyInputProvided "$CALLING_DOC" --arg=">"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'/'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:forwardSlash
-								When run verifyInputProvided "$CALLING_DOC" --arg=/
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "'?'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:questionMark
-								When run verifyInputProvided "$CALLING_DOC" --arg="?"
-								The stderr should not be present
-								The stdout should not be present
-								The status should be success
-							End
-							It "' '" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSymbolsArg:space
-								When run verifyInputProvided "$CALLING_DOC" --arg=" "
+							It "Sentence" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedAlphanumericValue:sentence
+								When run verifyInputProvided "$CALLING_DOC" --value="someText s p a c e s and n1u2m3b4e5r6s7"
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
 						End
 					End
-					Describe "Special character:" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturned:specialCharacter
-						Describe "-a:" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacter:a
-							It "'\0'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterA:nullCharacter
-								When run verifyInputProvided "$CALLING_DOC" -a=\0
+					Describe "Symbols:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturned:symbols
+						Describe "-v:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbols:v
+							It "'\`'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:backtick
+								When run verifyInputProvided "$CALLING_DOC" -v=\`
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\a'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterA:alarm
-								When run verifyInputProvided "$CALLING_DOC" -a=\a
+							It "'~'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:tilde
+								When run verifyInputProvided "$CALLING_DOC" -v=~
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\b'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterA:backspace
-								When run verifyInputProvided "$CALLING_DOC" -a=\b
+							It "'!'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:exclamationMark
+								When run verifyInputProvided "$CALLING_DOC" -v=!
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\t'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterA:tab
-								When run verifyInputProvided "$CALLING_DOC" -a=\t
+							It "'@'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:at
+								When run verifyInputProvided "$CALLING_DOC" -v=@
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\n'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterA:newLine
-								When run verifyInputProvided "$CALLING_DOC" -a=\n
+							It "'#'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:hashtag
+								When run verifyInputProvided "$CALLING_DOC" -v=#
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\v'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterA:verticalTab
-								When run verifyInputProvided "$CALLING_DOC" -a=\v
+							It "'$'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:dollar
+								When run verifyInputProvided "$CALLING_DOC" -v=$
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\f'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterA:formFeed
-								When run verifyInputProvided "$CALLING_DOC" -a=\f
+							It "'%'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:percentSign
+								When run verifyInputProvided "$CALLING_DOC" -v=%
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\r'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterA:carriageReturn
-								When run verifyInputProvided "$CALLING_DOC" -a=\r
+							It "'^'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:caret
+								When run verifyInputProvided "$CALLING_DOC" -v=^
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'EOF'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterA:eof
-								When run verifyInputProvided "$CALLING_DOC" -a=EOF
+							It "'&'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:ampersand
+								When run verifyInputProvided "$CALLING_DOC" -v="&"
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\e'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterA:escapeSequence
-								When run verifyInputProvided "$CALLING_DOC" -a=\e
+							It "'*'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:asterisk
+								When run verifyInputProvided "$CALLING_DOC" -v="*"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'('" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:openParentheses
+								When run verifyInputProvided "$CALLING_DOC" -v="("
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "')'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:closeParentheses
+								When run verifyInputProvided "$CALLING_DOC" -v=")"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'-'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:hyphen
+								When run verifyInputProvided "$CALLING_DOC" -v=-
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'_'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:underscore
+								When run verifyInputProvided "$CALLING_DOC" -v=_
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'='" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:equal
+								When run verifyInputProvided "$CALLING_DOC" -v==
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'+'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:plus
+								When run verifyInputProvided "$CALLING_DOC" -v=+
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'['" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:openSquareBracket
+								When run verifyInputProvided "$CALLING_DOC" -v="["
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'{'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:openCurlyBracket
+								When run verifyInputProvided "$CALLING_DOC" -v="{"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "']'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:closeSquareBracket
+								When run verifyInputProvided "$CALLING_DOC" -v="]"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'}'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:closeCurlyBracket
+								When run verifyInputProvided "$CALLING_DOC" -v="}"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\\'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:backslash
+								When run verifyInputProvided "$CALLING_DOC" -v="\\"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'|'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:verticalBar
+								When run verifyInputProvided "$CALLING_DOC" -v="|"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "';'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:semicolon
+								When run verifyInputProvided "$CALLING_DOC" -v=";"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "':'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:colon
+								When run verifyInputProvided "$CALLING_DOC" -v=:
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'''" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:apostrophe
+								When run verifyInputProvided "$CALLING_DOC" -v=\'
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It '"' utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:quotationMark
+								When run verifyInputProvided "$CALLING_DOC" -v=\"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "','" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:comma
+								When run verifyInputProvided "$CALLING_DOC" -v=,
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'<'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:lessThanSign
+								When run verifyInputProvided "$CALLING_DOC" -v="<"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'.'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:period
+								When run verifyInputProvided "$CALLING_DOC" -v=.
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'>'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:greaterThanSign
+								When run verifyInputProvided "$CALLING_DOC" -v=">"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'/'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:forwardSlash
+								When run verifyInputProvided "$CALLING_DOC" -v=/
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'?'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:questionMark
+								When run verifyInputProvided "$CALLING_DOC" -v="?"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "' '" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsV:space
+								When run verifyInputProvided "$CALLING_DOC" -v=" "
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
 						End
-						Describe "--arg:" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacter:arg
-							It "'\0'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterArg:nullCharacter
-								When run verifyInputProvided "$CALLING_DOC" --arg=\0
+						Describe "--value:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbols:value
+							It "'\`'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:backtick
+								When run verifyInputProvided "$CALLING_DOC" --value=\`
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\a'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterArg:alarm
-								When run verifyInputProvided "$CALLING_DOC" --arg=\a
+							It "'~'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:tilde
+								When run verifyInputProvided "$CALLING_DOC" --value=~
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\b'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterArg:backspace
-								When run verifyInputProvided "$CALLING_DOC" --arg=\b
+							It "'!'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:exclamationMark
+								When run verifyInputProvided "$CALLING_DOC" --value=!
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\t'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterArg:tab
-								When run verifyInputProvided "$CALLING_DOC" --arg=\t
+							It "'@'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:at
+								When run verifyInputProvided "$CALLING_DOC" --value=@
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\n'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterArg:newLine
-								When run verifyInputProvided "$CALLING_DOC" --arg=\n
+							It "'#'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:hashtag
+								When run verifyInputProvided "$CALLING_DOC" --value=#
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\v'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterArg:verticalTab
-								When run verifyInputProvided "$CALLING_DOC" --arg=\v
+							It "'$'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:dollar
+								When run verifyInputProvided "$CALLING_DOC" --value=$
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\f'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterArg:formFeed
-								When run verifyInputProvided "$CALLING_DOC" --arg=\f
+							It "'%'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:percentSign
+								When run verifyInputProvided "$CALLING_DOC" --value=%
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\r'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterArg:carriageReturn
-								When run verifyInputProvided "$CALLING_DOC" --arg=\r
+							It "'^'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:caret
+								When run verifyInputProvided "$CALLING_DOC" --value=^
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'EOF'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterArg:eof
-								When run verifyInputProvided "$CALLING_DOC" --arg=EOF
+							It "'&'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:ampersand
+								When run verifyInputProvided "$CALLING_DOC" --value="&"
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
 							End
-							It "'\e'" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocNotReturnedSpecialCharacterArg:escapeSequence
-								When run verifyInputProvided "$CALLING_DOC" --arg=\e
+							It "'*'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:asterisk
+								When run verifyInputProvided "$CALLING_DOC" --value="*"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'('" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:openParentheses
+								When run verifyInputProvided "$CALLING_DOC" --value="("
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "')'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:closeParentheses
+								When run verifyInputProvided "$CALLING_DOC" --value=")"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'-'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:hyphen
+								When run verifyInputProvided "$CALLING_DOC" --value=-
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'_'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:underscore
+								When run verifyInputProvided "$CALLING_DOC" --value=_
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'='" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:equal
+								When run verifyInputProvided "$CALLING_DOC" --value==
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'+'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:plus
+								When run verifyInputProvided "$CALLING_DOC" --value=+
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'['" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:openSquareBracket
+								When run verifyInputProvided "$CALLING_DOC" --value="["
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'{'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:openCurlyBracket
+								When run verifyInputProvided "$CALLING_DOC" --value="{"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "']'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:closeSquareBracket
+								When run verifyInputProvided "$CALLING_DOC" --value="]"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'}'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:closeCurlyBracket
+								When run verifyInputProvided "$CALLING_DOC" --value="}"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\\'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:backslash
+								When run verifyInputProvided "$CALLING_DOC" --value="\\"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'|'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:verticalBar
+								When run verifyInputProvided "$CALLING_DOC" --value="|"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "';'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:semicolon
+								When run verifyInputProvided "$CALLING_DOC" --value=";"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "':'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:colon
+								When run verifyInputProvided "$CALLING_DOC" --value=:
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'''" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:apostrophe
+								When run verifyInputProvided "$CALLING_DOC" --value=\'
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It '"' utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:quotationMark
+								When run verifyInputProvided "$CALLING_DOC" --value=\"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "','" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:comma
+								When run verifyInputProvided "$CALLING_DOC" --value=,
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'<'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:lessThanSign
+								When run verifyInputProvided "$CALLING_DOC" --value="<"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'.'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:period
+								When run verifyInputProvided "$CALLING_DOC" --value=.
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'>'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:greaterThanSign
+								When run verifyInputProvided "$CALLING_DOC" --value=">"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'/'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:forwardSlash
+								When run verifyInputProvided "$CALLING_DOC" --value=/
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'?'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:questionMark
+								When run verifyInputProvided "$CALLING_DOC" --value="?"
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "' '" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSymbolsValue:space
+								When run verifyInputProvided "$CALLING_DOC" --value=" "
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+						End
+					End
+					Describe "Special character:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturned:specialCharacter
+						Describe "-v:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacter:v
+							It "'\0'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterV:nullCharacter
+								When run verifyInputProvided "$CALLING_DOC" -v=\0
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\a'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterV:alarm
+								When run verifyInputProvided "$CALLING_DOC" -v=\a
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\b'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterV:backspace
+								When run verifyInputProvided "$CALLING_DOC" -v=\b
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\t'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterV:tab
+								When run verifyInputProvided "$CALLING_DOC" -v=\t
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\n'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterV:newLine
+								When run verifyInputProvided "$CALLING_DOC" -v=\n
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\v'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterV:verticalTab
+								When run verifyInputProvided "$CALLING_DOC" -v=\v
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\f'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterV:formFeed
+								When run verifyInputProvided "$CALLING_DOC" -v=\f
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\r'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterV:carriageReturn
+								When run verifyInputProvided "$CALLING_DOC" -v=\r
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'EOF'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterV:eof
+								When run verifyInputProvided "$CALLING_DOC" -v=EOF
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\e'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterV:escapeSequence
+								When run verifyInputProvided "$CALLING_DOC" -v=\e
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+						End
+						Describe "--value:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacter:value
+							It "'\0'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterValue:nullCharacter
+								When run verifyInputProvided "$CALLING_DOC" --value=\0
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\a'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterValue:alarm
+								When run verifyInputProvided "$CALLING_DOC" --value=\a
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\b'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterValue:backspace
+								When run verifyInputProvided "$CALLING_DOC" --value=\b
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\t'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterValue:tab
+								When run verifyInputProvided "$CALLING_DOC" --value=\t
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\n'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterValue:newLine
+								When run verifyInputProvided "$CALLING_DOC" --value=\n
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\v'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterValue:verticalTab
+								When run verifyInputProvided "$CALLING_DOC" --value=\v
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\f'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterValue:formFeed
+								When run verifyInputProvided "$CALLING_DOC" --value=\f
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\r'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterValue:carriageReturn
+								When run verifyInputProvided "$CALLING_DOC" --value=\r
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'EOF'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterValue:eof
+								When run verifyInputProvided "$CALLING_DOC" --value=EOF
+								The stderr should not be present
+								The stdout should not be present
+								The status should be success
+							End
+							It "'\e'" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedSpecialCharacterValue:escapeSequence
+								When run verifyInputProvided "$CALLING_DOC" --value=\e
 								The stderr should not be present
 								The stdout should not be present
 								The status should be success
@@ -595,33 +595,33 @@ Describe "Util:" util
 						End
 					End
 				End
-				Describe "Calling doc returned:" utilVerifyInputProvidedRequiredOptionArgInputInvalid:callingDocReturned
-					Describe "-a:" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocReturned:a
-						It "Blank" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocReturnedA:blank
-							When run verifyInputProvided "$CALLING_DOC" -a=""
+				Describe "Calling doc returned:" utilVerifyInputProvidedRequiredOptionValueInputInvalid:callingDocReturned
+					Describe "-v:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocReturned:v
+						It "Blank" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocReturnedV:blank
+							When run verifyInputProvided "$CALLING_DOC" -v=""
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "$CALLING_DOC"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
-						It "Null" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocReturnedA:null
-							When run verifyInputProvided "$CALLING_DOC" -a=
+						It "Null" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocReturnedV:null
+							When run verifyInputProvided "$CALLING_DOC" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "$CALLING_DOC"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 					End
-					Describe "--arg:" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocReturned:arg
-						It "Blank" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocReturnedArg:blank
-							When run verifyInputProvided "$CALLING_DOC" --arg=""
+					Describe "--value:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocReturned:value
+						It "Blank" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocReturnedValue:blank
+							When run verifyInputProvided "$CALLING_DOC" --value=""
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "$CALLING_DOC"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
-						It "Null" utilVerifyInputProvidedRequiredOptionArgInputInvalidCallingDocReturnedArg:null
-							When run verifyInputProvided "$CALLING_DOC" --arg=
+						It "Null" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocReturnedValue:null
+							When run verifyInputProvided "$CALLING_DOC" --value=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "$CALLING_DOC"

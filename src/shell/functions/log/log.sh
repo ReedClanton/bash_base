@@ -236,7 +236,7 @@ log() {
 	############################
 	## Error Check Argument(s) ##
 	############################
-	stdErr=$({ verifyInputProvided "$LOG_DOC" -a="$msg" >|/dev/null; } 2>&1)
+	stdErr=$({ verifyInputProvided "$LOG_DOC" --value="$msg" >|/dev/null; } 2>&1)
 	rtVal=$?
 	if [ $rtVal -ne 0 ]; then
 		echo "$logLogPrefix $stdErr" >&2

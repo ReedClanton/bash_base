@@ -45,28 +45,28 @@ Describe "Util:" util
 				Describe "Single line:" utilVerifyInputProvidedRequiredArgumentCallingDoc:singleLine
 					Describe "Alphanumeric" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLine:alphanumeric
 						It "Upper case letter" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineAlphanumeric:upperCaseLetter
-							When run verifyInputProvided "A" -a=
+							When run verifyInputProvided "A" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "A"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "Lower case letter" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineAlphanumeric:lowerCaseLetter
-							When run verifyInputProvided "z" --arg=
+							When run verifyInputProvided "z" --value=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "z"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "Single digit number" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineAlphanumeric:singleDigitNumber
-							When run verifyInputProvided "5" -a= --arg=
+							When run verifyInputProvided "5" -v= --value=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "5"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "Sentence" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineAlphanumeric:sentence
-							When run verifyInputProvided "bla4BLA" --arg= -a=
+							When run verifyInputProvided "bla4BLA" --value= -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "bla4BLA"
@@ -75,224 +75,224 @@ Describe "Util:" util
 					End
 					Describe "Symbols:" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLine:symbols
 						It "'\`'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:backtick
-							When run verifyInputProvided "\`" -a=
+							When run verifyInputProvided "\`" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "\`"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'~'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:tilde
-							When run verifyInputProvided "~" -a=
+							When run verifyInputProvided "~" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "~"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'!'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:exclamationMark
-							When run verifyInputProvided "!" -a=
+							When run verifyInputProvided "!" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "!"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'@'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:at
-							When run verifyInputProvided "@" -a=
+							When run verifyInputProvided "@" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "@"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'#'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:hashtag
-							When run verifyInputProvided "#" -a=
+							When run verifyInputProvided "#" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "#"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'$'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:dollar
-							When run verifyInputProvided "$" -a=
+							When run verifyInputProvided "$" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "$"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'%'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:percentSign
-							When run verifyInputProvided "%" -a=
+							When run verifyInputProvided "%" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "%"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'^'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:caret
-							When run verifyInputProvided "^" -a=
+							When run verifyInputProvided "^" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "^"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'&'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:ampersand
-							When run verifyInputProvided "&" -a=
+							When run verifyInputProvided "&" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "&"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'*'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:asterisk
-							When run verifyInputProvided "*" -a=
+							When run verifyInputProvided "*" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "*"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'('" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:openParentheses
-							When run verifyInputProvided "(" -a=
+							When run verifyInputProvided "(" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "("
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "')'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:closeParentheses
-							When run verifyInputProvided ")" -a=
+							When run verifyInputProvided ")" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include ")"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'-'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:hyphen
-							When run verifyInputProvided "-" -a=
+							When run verifyInputProvided "-" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "-"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'_'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:underscore
-							When run verifyInputProvided "_" -a=
+							When run verifyInputProvided "_" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "_"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'='" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:equal
-							When run verifyInputProvided "=" -a=
+							When run verifyInputProvided "=" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "="
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'+'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:plus
-							When run verifyInputProvided "+" -a=
+							When run verifyInputProvided "+" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "+"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'['" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:openSquareBracket
-							When run verifyInputProvided "[" -a=
+							When run verifyInputProvided "[" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "["
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'{'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:openCurlyBracket
-							When run verifyInputProvided "{" -a=
+							When run verifyInputProvided "{" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "{"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "']'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:closeSquareBracket
-							When run verifyInputProvided "]" -a=
+							When run verifyInputProvided "]" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "]"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'}'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:closeCurlyBracket
-							When run verifyInputProvided "}" -a=
+							When run verifyInputProvided "}" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "}"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'\\'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:backslash
-							When run verifyInputProvided "\\" -a=
+							When run verifyInputProvided "\\" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "\\"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'|'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:verticalBar
-							When run verifyInputProvided "|" -a=
+							When run verifyInputProvided "|" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "|"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "';'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:semicolon
-							When run verifyInputProvided ";" -a=
+							When run verifyInputProvided ";" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include ";"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "':'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:colon
-							When run verifyInputProvided ":" -a=
+							When run verifyInputProvided ":" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include ":"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'''" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:apostrophe
-							When run verifyInputProvided "'" -a=
+							When run verifyInputProvided "'" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "'"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It '"' utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:quotationMark
-							When run verifyInputProvided '"' -a=
+							When run verifyInputProvided '"' -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include '"'
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "','" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:comma
-							When run verifyInputProvided "," -a=
+							When run verifyInputProvided "," -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include ","
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'<'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:lessThanSign
-							When run verifyInputProvided "<" -a=
+							When run verifyInputProvided "<" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "<"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'.'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:period
-							When run verifyInputProvided "." -a=
+							When run verifyInputProvided "." -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "."
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'>'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:greaterThanSign
-							When run verifyInputProvided ">" -a=
+							When run verifyInputProvided ">" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include ">"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'/'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:forwardSlash
-							When run verifyInputProvided "/" -a=
+							When run verifyInputProvided "/" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "/"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'?'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSymbols:questionMark
-							When run verifyInputProvided "?" -a=
+							When run verifyInputProvided "?" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "?"
@@ -301,42 +301,42 @@ Describe "Util:" util
 					End
 					Describe "Special character:" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLine:specialCharacter
 						It "'\t'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSpecialCharacter:tab
-							When run verifyInputProvided "\t" -a=
+							When run verifyInputProvided "\t" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should satisfy containsTab
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'\v'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSpecialCharacter:verticalTab
-							When run verifyInputProvided "\v" -a=
+							When run verifyInputProvided "\v" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should satisfy containsVerticalTab
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'\f'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSpecialCharacter:formFeed
-							When run verifyInputProvided "\f" -a=
+							When run verifyInputProvided "\f" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should satisfy containsFormFeed
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'\r'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSpecialCharacter:carriageReturn
-							When run verifyInputProvided "\r" -a=
+							When run verifyInputProvided "\r" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should satisfy containsCarriageReturn
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'EOF'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSpecialCharacter:eof
-							When run verifyInputProvided "EOF" -a=
+							When run verifyInputProvided "EOF" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "EOF"
 							The status should equal $MINOR_EXECUTION_FAILURE_RT
 						End
 						It "'\e'" utilVerifyInputProvidedRequiredArgumentCallingDocSingleLineSpecialCharacter:escapeSequence
-							When run verifyInputProvided "\e" -a=
+							When run verifyInputProvided "\e" -v=
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should satisfy containsEscapeSequence
@@ -346,7 +346,7 @@ Describe "Util:" util
 				End
 				Describe "Multiple lines:" utilVerifyInputProvidedRequiredArgumentCallingDoc:multipleLines
 					It "Real doc" utilVerifyInputProvidedRequiredArgumentCallingDocMultipleLines:realDoc
-						When run verifyInputProvided "$LOG_DOC" -a=
+						When run verifyInputProvided "$LOG_DOC" -v=
 						The stdout should not be present
 						The stderr line 1 should start with "ERROR verifyInputProvided(): "
 						The stderr should include "$LOG_DOC"

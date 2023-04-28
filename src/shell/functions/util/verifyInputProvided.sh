@@ -1,13 +1,13 @@
 VERIFY_INPUT_PROVIDED_DOC=$(
 	cat <<"EOF"
 #/ DESCRIPTION:
-#/	When given a message and any number of value(s) (see '-a'), each value will
+#/	When given a message and any number of value(s) (see '-v'), each value will
 #/	be checked to ensure it's been set (it's not empty). If it has not been
 #/	set, a non-zero code will be returned. If all given value(s) were set, a
 #/	return code of '0' will be returned. Intended to be used by shell functions
 #/	to check that requried arguments/options were provided.
 #/
-#/ USAGE: verifyInputProvided [SPECIAL_OPTION] "[ARGUMENTS]" --arg="value"...
+#/ USAGE: verifyInputProvided [SPECIAL_OPTION] "[ARGUMENTS]" --value="value"...
 #/
 #/ NOTE(S):
 #/	- Diffrent shells render special characters, like tab and new line,
@@ -22,27 +22,26 @@ VERIFY_INPUT_PROVIDED_DOC=$(
 #/
 #/ ARGUMENT(S):
 #/	"<callingFuncDoc>"
-#/		Message that should be produced if any of the following given argument(s) have
-#/		not been set.
+#/		Message (calling function doc) that should be produced if any of the
+#/		provided value(s) have not been set.
 #/			- Note: This value *must* be surrounded with '"'
-#/				(i.e. "$CHECK_MAIN_ARGS_DOC").
-#/			- Note: This *must* be the first argument provided.
+#/				(i.e. "$VERIFY_INPUT_PROVIDED_DOC").
+#/			- Note: This *must* be the first argument provided (other than special options).
 #/		(REQUIRED)
 #/
 #/ OPTION(S):
-#/	-a=<val>, --arg=<val>
-#/		Signifies some value is being given.
-#/			- Note: Will return code '0' if all argument(s) have been set, '1'
-#/				otherwise.
-#/			- Note: Some special cases, such as arguments that contain spaces, may
-#/				require the '"' around the entire argument
-#/				(i.e. "-a=<specialCaseVal>").
-#/			- Note: Some special cases, such as arguments that contain spaces, may
-#/				require the offending value be surrounded with escapted '"' before
-#/				and after the value (i.e. -a=\"argValWith spaces\").
-#/			- Note: In addition to the above, some cases may *also* require the
-#/				offending value be surrounded with escapted '" before and after
-#/				the value (i.e. "-a=\"<specialCaseVal>\"').
+#/	-v=<val>, --value=<val>
+#/		'<val>' will be checked to ensure it's been set to something that's not blank.
+#/			- Note: Some special cases, such as values that contain spaces, may
+#/				require quotes, '"' or "'", around the *entire option*
+#/				(i.e. "-v=<specialCaseVal>").
+#/			- Note: Some *other* special cases, such as values that contain
+#/				spaces, may require the *value* be surrounded with escaped
+#/				quotes, '"' or "'", before and after the value
+#/				(i.e. -v=\"value with spaces\").
+#/			- Note: Some special cases may require a combination of the above.
+#/				Specificly surronding the *value* with escaped quotes, '"' or
+#/				"'", *and* the entire *option* (i.e. "-v=\"<specialCaseVal>\"").
 #/		(REQUIRED)
 #/
 #/ RETURN CODE(S):
@@ -52,12 +51,12 @@ VERIFY_INPUT_PROVIDED_DOC=$(
 #/	- 3: Returned when one or more of the options provided for error checking are invalid.
 #/	- 140: Returned when given option name is invalid.
 #/	- 142: Returned when required option isn't provided, for example:
-#/		- -a/--arg not provided.
+#/		- -v/--value not provided.
 #/	- 152: Returned when required argument (doc) isn't provided.
 #/
 #/ EXAMPLE(S):
 #/	verifyInputProvided --help
-#/	verifyInputProvided "$SOME_FUNCTION_DOC" -a=<requiredArgument1> "-a=<required ArgumentN>"
+#/	verifyInputProvided "$SOME_FUNCTION_DOC" -v=<value1> "-v=<valueN>"
 #/
 #/ AUTHOR(S):
 #/	- Reed Clanton
@@ -68,11 +67,10 @@ EOF
 )
 
 verifyInputProvided() {
-	###########################################
-	## Special Case Processing of Help Option ##
-	###########################################
+	######################################
+	## Processing Special Case Option(s) ##
+	######################################
 	for fullArg in "$@"; do
-		# Determine what type of value user gave.
 		case $fullArg in
 			-h | --help)
 				echo "$VERIFY_INPUT_PROVIDED_DOC"
@@ -84,7 +82,7 @@ verifyInputProvided() {
 	################################
 	## Reset/Set Local Variable(s) ##
 	################################
-	# Error prefix added to error output messages.
+	# Error prefix added to error logs.
 	verifyInputProvidedLogPrefix="ERROR verifyInputProvided():"
 	if command -v date >/dev/null; then
 		verifyInputProvidedLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $verifyInputProvidedLogPrefix"
@@ -103,7 +101,7 @@ verifyInputProvided() {
 
 			# Determine what type of value user gave.
 			case $fullArg in
-				-a=* | --arg=*)
+				-v=* | --value=*)
 					# Ensure all option(s) given have been set to something.
 					if [ "$arg" = "" ]; then
 						echo "$verifyInputProvidedLogPrefix Missing required value, see doc:" >&2

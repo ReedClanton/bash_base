@@ -10,27 +10,27 @@ Describe "Util:" util
 		BeforeAll 'sourceCut'
 		
 		Describe "Required option:" utilVerifyInputProvided:requiredOption
-			Describe "Arg:" utilVerifyInputProvidedRequiredOption:arg
-				Describe "Input invalid:" utilVerifyInputProvidedRequiredOptionArg:inputInvalid
-					It "None" utilVerifyInputProvidedRequiredOptionArgInputInvalid:none
+			Describe "Value:" utilVerifyInputProvidedRequiredOption:value
+				Describe "Input invalid:" utilVerifyInputProvidedRequiredOptionValue:inputInvalid
+					It "None" utilVerifyInputProvidedRequiredOptionValueInputInvalid:none
 						When run verifyInputProvided "$CALLING_DOC"
 						The stdout should not be present
 						The stderr line 1 should start with "ERROR verifyInputProvided(): "
 						The stderr line 2 should include "$VERIFY_INPUT_PROVIDED_DOC"
 						The status should equal $OPTION_REQUIRED_NOT_PROVIDED_RT
 					End
-					Describe "-a:" utilVerifyInputProvidedRequiredOptionArgInputInvalid:a
-						It "Missing" utilVerifyInputProvidedRequiredOptionArgInputInvalidA:missing
-							When run verifyInputProvided "$CALLING_DOC" -a
+					Describe "-v:" utilVerifyInputProvidedRequiredOptionValueInputInvalid:v
+						It "Missing" utilVerifyInputProvidedRequiredOptionValueInputInvalidV:missing
+							When run verifyInputProvided "$CALLING_DOC" -v
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "$VERIFY_INPUT_PROVIDED_DOC"
 							The status should equal $OPTION_NAME_INVALID_RT
 						End
 					End
-					Describe "--arg:" utilVerifyInputProvidedRequiredOptionArgInputInvalid:arg
-						It "Missing" utilVerifyInputProvidedRequiredOptionArgInputInvalidArg:missing
-							When run verifyInputProvided "$CALLING_DOC" --arg
+					Describe "--value:" utilVerifyInputProvidedRequiredOptionValueInputInvalid:value
+						It "Missing" utilVerifyInputProvidedRequiredOptionValueInputInvalidValue:missing
+							When run verifyInputProvided "$CALLING_DOC" --value
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR verifyInputProvided(): "
 							The stderr line 2 should include "$VERIFY_INPUT_PROVIDED_DOC"
