@@ -1,5 +1,5 @@
 # Example doc used for testing bellow. It's generated in the same way as real function docs.
-LOG_DOC=$(
+TEST_DOC=$(
 	cat <<"EOF"
 #/ DESCRIPTION:
 #/	Used to produce log messages. Current global log level, tracked by
@@ -346,10 +346,10 @@ Describe "Util:" util
 				End
 				Describe "Multiple lines:" utilVerifyInputProvidedRequiredArgumentCallingDoc:multipleLines
 					It "Real doc" utilVerifyInputProvidedRequiredArgumentCallingDocMultipleLines:realDoc
-						When run verifyInputProvided "$LOG_DOC" -v=
+						When run verifyInputProvided "$TEST_DOC" -v=
 						The stdout should not be present
 						The stderr line 1 should start with "ERROR verifyInputProvided(): "
-						The stderr should include "$LOG_DOC"
+						The stderr should include "$TEST_DOC"
 						The status should equal $MINOR_EXECUTION_FAILURE_RT
 						Skip "TODO #58: Figure out why shellspec only returns first line of doc."
 					End
