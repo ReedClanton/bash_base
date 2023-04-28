@@ -13,7 +13,7 @@ Describe "Util:" util
 			Describe "Value:" utilVerifyInputProvidedRequiredOption:value
 				Describe "Calling doc not returned:" utilVerifyInputProvidedRequiredOptionValueInputInvalid:callingDocNotReturned
 					Describe "Alphanumeric:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturned:alphanumeric
-						Describe "-v:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedAlphanumeric:a
+						Describe "-v:" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedAlphanumeric:v
 							It "Upper case letter" utilVerifyInputProvidedRequiredOptionValueInputInvalidCallingDocNotReturnedAlphanumericV:upperCaseLetter
 								When run verifyInputProvided "$CALLING_DOC" -v=A
 								The stderr should not be present
