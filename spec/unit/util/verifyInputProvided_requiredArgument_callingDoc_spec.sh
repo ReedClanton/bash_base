@@ -351,7 +351,7 @@ Describe "Util:" util
 						The stderr line 1 should start with "ERROR verifyInputProvided(): "
 						The stderr should include "$LOG_DOC"
 						The status should equal $MINOR_EXECUTION_FAILURE_RT
-						Skip "TODO: Figure out why shellspec only returns first line of doc."
+						Skip "TODO #58: Figure out why shellspec only returns first line of doc."
 					End
 				End
 			End
