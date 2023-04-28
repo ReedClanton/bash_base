@@ -110,7 +110,7 @@ checkRequiredOpts() {
 		fi
 		inputCount=$(($inputCount + 1))
 	done
-	
+
 	# Ensure at least one value was passed in.
 	if [ $inputCount -lt 1 ]; then
 		echo "$checkRequiredOptsLogPrefix Required argument wasn't provided, see doc:" >&2
