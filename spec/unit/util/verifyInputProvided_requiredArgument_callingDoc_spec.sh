@@ -1,4 +1,4 @@
-# TODO: Comment.
+# Example doc used for testing bellow. It's generated in the same way as real function docs.
 LOG_DOC=$(
 	cat <<"EOF"
 #/ DESCRIPTION:
