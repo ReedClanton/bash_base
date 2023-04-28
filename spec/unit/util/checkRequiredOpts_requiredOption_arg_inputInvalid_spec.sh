@@ -16,7 +16,7 @@ Describe "Util:" util
 						When run checkRequiredOpts "$CALLING_DOC"
 						The stdout should not be present
 						The stderr line 1 should start with "ERROR checkRequiredOpts(): "
-						The stderr should include "$CHECK_REQUIRED_OPTS_DOC"
+						The stderr line 2 should include "$CHECK_REQUIRED_OPTS_DOC"
 						The status should equal $OPTION_REQUIRED_NOT_PROVIDED_RT
 					End
 					Describe "-a:" utilCheckRequiredOptsRequiredOptionArgInputInvalid:a
@@ -24,7 +24,7 @@ Describe "Util:" util
 							When run checkRequiredOpts "$CALLING_DOC" -a
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR checkRequiredOpts(): "
-							The stderr should include "$CHECK_REQUIRED_OPTS_DOC"
+							The stderr line 2 should include "$CHECK_REQUIRED_OPTS_DOC"
 							The status should equal $OPTION_NAME_INVALID_RT
 						End
 					End
@@ -33,16 +33,8 @@ Describe "Util:" util
 							When run checkRequiredOpts "$CALLING_DOC" --arg
 							The stdout should not be present
 							The stderr line 1 should start with "ERROR checkRequiredOpts(): "
-							The stderr should include "$CHECK_REQUIRED_OPTS_DOC"
+							The stderr line 2 should include "$CHECK_REQUIRED_OPTS_DOC"
 							The status should equal $OPTION_NAME_INVALID_RT
-						End
-					End
-					Describe "Invalid character:" utilCheckRequiredOptsRequiredOptionArgInputInvalid:invalidCharacter
-						Describe "-a" utilCheckRequiredOptsRequiredOptionArgInputInvalidInvalidCharacter:a
-							Todo "Write tests"
-						End
-						Describe "--arg" utilCheckRequiredOptsRequiredOptionArgInputInvalidInvalidCharacter:arg
-							Todo "Write tests"
 						End
 					End
 				End

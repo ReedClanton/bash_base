@@ -34,16 +34,21 @@ LOG_DOC=$(
 #/	Used to produce log messages. Current global log level, tracked by
 #/	'SHELL_LOG_LEVEL', is used to determine if given message should be printed.
 #/
-#/ USAGE: log [OPTIONS]... -m="message text"...
+#/ USAGE: log [SPECIAL_OPTION] [OPTIONS...] -m="message text"... [OPTIONS...]
 #/
 #/ NOTE(S):
-#/	- Method may not use log... hopfully it's obvious why.
+#/	- Diffrent shells render special characters, like tab and new line,
+#/		diffrently. Thus if this doc contains any special characters that have
+#/		two backslashes, know that only one is intended.
+#/	- Method may not use log()... hopfully it's obvious why.
 #/	- If calling shell doesn't support `date` then logs won't include a time stamp.
 #/
-#/ OPTION(S):
+#/ SPECIAL OPTION(S):
 #/	-h, --help
 #/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
+#/
+#/ OPTION(S):
 #/	-c=<functionName>, --caller=<functionName>
 #/		Name of calling code (function).
 #/			- Note: If not given, field won't be included in log message.
@@ -134,9 +139,12 @@ LOG_DOC=$(
 #/
 #/ EXAMPLE(S):
 #/	log --help
-#/	log -c=${FUNCNAME[0]} -m="line1\nline2" -m="line3"
+#/	log -c=${FUNCNAME[0]} -m="line1\\nline2" -m="line3"
 #/	log -d -c="$USER-terminal" -m="line1" -m="line2"
 #/	log --error --line-title -m="line1" -m="line2"
+#/
+#/ AUTHOR(S):
+#/	- Reed Clanton
 #/
 #/ TODO(S):
 #/	- Check if I can use any sort of font formatting (ex. bold) in method description as printed by --help.

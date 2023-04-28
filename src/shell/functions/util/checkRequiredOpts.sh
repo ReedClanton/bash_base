@@ -1,18 +1,27 @@
 CHECK_REQUIRED_OPTS_DOC=$(
 	cat <<"EOF"
 #/ DESCRIPTION:
-#/	When given a message and any number of variable(s) (see '-a'), each
-#/	variables will be checked to ensure it has been set to something, If it has
-#/	not been, a code of '1' will be returned. If all given value(s) were set,
-#/	a code of '0' will be returned.
+#/	When given a message and any number of value(s) (see '-a'), each value will
+#/	be checked to ensure it's been set (it's not empty). If it has not been
+#/	set, a non-zero code will be returned. If all given value(s) were set, a
+#/	return code of '0' will be returned. Intended to be used by shell functions
+#/	to check that requried arguments/options were provided.
 #/
-#/ USAGE: checkRequiredOpts "<callingFunctionDoc>" [OPTIONS]...
+#/ USAGE: checkRequiredOpts [SPECIAL_OPTION] "[ARGUMENTS]" --arg="value"...
 #/
 #/ NOTE(S):
-#/	- Method may not use the log function because this is used by that method.
+#/	- Diffrent shells render special characters, like tab and new line,
+#/		diffrently. Thus if this doc contains any special characters that have
+#/		two backslashes, know that only one is intended.
+#/	- Method may not use the log() function because this is used by that method.
+#/
+#/ SPECIAL OPTION(S):
+#/	-h, --help
+#/		Print this help message. Function will return code of '0'. No processing will be done.
+#/		(OPTIONAL)
 #/
 #/ ARGUMENT(S):
-#/	"<CallingFuncDoc>"
+#/	"<callingFuncDoc>"
 #/		Message that should be produced if any of the following given argument(s) have
 #/		not been set.
 #/			- Note: This value *must* be surrounded with '"'
@@ -29,15 +38,12 @@ CHECK_REQUIRED_OPTS_DOC=$(
 #/				require the '"' around the entire argument
 #/				(i.e. "-a=<specialCaseVal>").
 #/			- Note: Some special cases, such as arguments that contain spaces, may
-#/				require the offending value be surrounded with excapted '"' before
+#/				require the offending value be surrounded with escapted '"' before
 #/				and after the value (i.e. -a=\"argValWith spaces\").
 #/			- Note: In addition to the above, some cases may *also* require the
-#/				offending value be surrounded with excapted '" before and after
+#/				offending value be surrounded with escapted '" before and after
 #/				the value (i.e. "-a=\"<specialCaseVal>\"').
 #/		(REQUIRED)
-#/	-h, --help
-#/		Print this help message. Function will return code of '0'. No processing will be done.
-#/		(OPTIONAL)
 #/
 #/ RETURN CODE(S):
 #/	- 0: Returned when:
@@ -51,6 +57,9 @@ CHECK_REQUIRED_OPTS_DOC=$(
 #/ EXAMPLE(S):
 #/	checkRequiredOpts --help
 #/	checkRequiredOpts "$SOME_FUNCTION_DOC" -a=<requiredArgument1> "-a=<required ArgumentN>"
+#/
+#/ AUTHOR(S):
+#/	- Reed Clanton
 #/
 #/ TODO(S):
 #/	- None.
@@ -97,7 +106,7 @@ checkRequiredOpts() {
 					# Ensure all option(s) given have been set to something.
 					if [ "$arg" = "" ]; then
 						echo "$checkRequiredOptsLogPrefix Missing required value, see doc:" >&2
-						echo "$docString" >&2
+						echo "'$docString'" >&2
 						return 3
 					fi
 					;;
