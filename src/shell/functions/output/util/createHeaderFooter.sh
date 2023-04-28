@@ -5,10 +5,18 @@ CREATE_HEADER_FOOTER_DOC=$(
 #/	failure, a non-zero code will be returned and output will be produced to
 #/	stderr.
 #/
-#/ USAGE: createHeaderFooter [OPTIONS]...
+#/ USAGE: createHeaderFooter [SPECIAL_OPTION] [OPTIONS...] --line-length=<maxMsgLength> [OPTIONS...]
 #/
 #/ NOTE(S):
-#/	- Method may not use the log function because this is used by that method.
+#/	- Diffrent shells render special characters, like tab and new line,
+#/		diffrently. Thus if this doc contains any special characters that have
+#/		two backslashes, know that only one is intended.
+#/	- Method may not use the log() function because this is used by that method.
+#/
+#/ SPECIAL OPTION(S):
+#/	-h, --help
+#/		Print this help message. Function will return code of '0'. No processing will be done.
+#/		(OPTIONAL)
 #/
 #/ OPTION(S):
 #/	-f=<formattingCharacter>, --formatting-character=<formattingCharacter>
@@ -17,9 +25,6 @@ CREATE_HEADER_FOOTER_DOC=$(
 #/			- Note: Some special characters may require two to be given.
 #/			- Note: Some characters may require quotes (ex. `>`).
 #/			- Note: Given value may not include a back slash.
-#/		(OPTIONAL)
-#/	-h, --help
-#/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
 #/	-l=<maxMsgLength>, --line-length=<maxMsgLength>
 #/		Max number of characters in any line of message. Used to determine how
@@ -46,6 +51,9 @@ CREATE_HEADER_FOOTER_DOC=$(
 #/	createHeaderFooter -l=96 --prefix -f='#'
 #/	createHeaderFooter -l=10 -f="@@"
 #/	createHeaderFooter -l=12 -f=!
+#/
+#/ AUTHOR(S):
+#/	- Reed Clanton
 #/
 #/ TODO(S):
 #/	- None

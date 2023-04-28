@@ -80,7 +80,7 @@ export SHELL_FUNCTIONS=$SHELL_ROOT/functions
 #   Note: If location/name of this file changes, update all other *.sh files in the same directory.
 . $SHELL_FUNCTIONS/output/output.sh
 # Include shell option checking function used by other function(s) in the same/child directories.
-. $SHELL_FUNCTIONS/util/checkRequiredOpts.sh
+. $SHELL_FUNCTIONS/util/verifyInputProvided.sh
 # Include log function used by other function(s) in the same/child directories.
 . $SHELL_FUNCTIONS/log/log.sh
 # Include function for returning name of current shell.

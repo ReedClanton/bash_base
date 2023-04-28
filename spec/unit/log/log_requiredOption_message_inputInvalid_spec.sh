@@ -15,7 +15,7 @@ Describe "Log:" log
 			Describe "Message:" logLogRequiredOption:message
 				Describe "Input invalid:" logLogRequiredOptionMessage:inputInvalid
 					It "None" logLogRequiredOptionMessageInputInvalid:none
-						checkRequiredOpts() {
+						verifyInputProvided() {
 							printf "# Missing required argument(s), see doc bellow... #\n" >&2
 							echo "$LOG_DOC" >&2
 							return 3

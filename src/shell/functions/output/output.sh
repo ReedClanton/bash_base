@@ -38,23 +38,32 @@ OUTPUT_DOC=$(
 #/			 ############
 #/		- Example 2:
 #/			## --pre-post-fix ##
+#/		- Example 3:
+#/			 #############
+#/			--header-footer
+#/			 #############
 #/
-#/ USAGE: output [OPTIONS]... -m="message text"...
+#/ USAGE: output [SPECIAL_OPTION] [OPTIONS...] -m="message text"... [OPTIONS...]
 #/
 #/ NOTE(S):
-#/	- Method may not use the log function because this is used by that method.
+#/	- Diffrent shells render special characters, like tab and new line,
+#/		diffrently. Thus if this doc contains any special characters that have
+#/		two backslashes, know that only one is intended.
+#/	- Method may not use the log() function because this is used by that method.
 #/
-#/ OPTION(S):
+#/ SPECIAL OPTION(S):
 #/	-h, --help
 #/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
+#/
+#/ OPTION(S):
 #/	-m=<msg>, --msg=<msg>
 #/		Message user would like formatted output produced of.
 #/			- Note: If multiple are given, each will show up on a new line.
 #/			- Note: If one line exceeds the set max line length, it will be
 #/				broken up. The rest of the line will start with the same
-#/				inditation.
-#/			- Note: '\t' and '\n\ will be handled as the 'printf' function would.
+#/				indentation.
+#/			- Note: '\\t' and '\\n' will be handled as the 'printf' function would.
 #/			- Note: At least one instance of this option must be provided.
 #/			- Note: All provided values may be blank if desired.
 #/		(REQUIRED)
@@ -136,13 +145,13 @@ OUTPUT_DOC=$(
 #/			- Line length - prefix - postfix > 0.
 #/	- 142: Returned when the message text option is not provided.
 #/	- 200: Returned when an environment variable has been set to an invalid valid, for example:
-#/		- Max line length insaficent (not enought room on line for message text) and:
+#/		- Max line length insufficient (not enough room on line for message text) and:
 #/			- `$DEFAULT_INDENT` is set to something greater than `0` or,
 #/			- '$DEFAULT_LINE_LENGTH` is smaller than provided max line length.
 #/
 #/ EXAMPLE(S):
 #/	output --help
-#/	output -m="line 1" -m="line 2" -m="line 3\nline 4" -m="line 5"
+#/	output -m="line 1" -m="line 2" -m="line 3\\nline 4" -m="line 5"
 #/	output -m="line 1" -m="longline 2" -l=6
 #/	output -m="line 1" -m="longline 2" -l=10 -p
 #/	output -m="line 1" -m="longline 2" -l=10 --pre-post-fix --header-footer
@@ -150,6 +159,9 @@ OUTPUT_DOC=$(
 #/	output -m="line 1" -p -w
 #/	output -m="line 1" -p -f="^"
 #/	output -m="line 1" -p --formatting-character="&&"
+#/
+#/ AUTHOR(S):
+#/	- Reed Clanton
 #/
 #/ TODO(S):
 #/	- Implement: Dynamically determine, based on last character of line being

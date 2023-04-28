@@ -13,7 +13,7 @@ Describe "Log:" log
 		sourceCut() { . $cutPath; }
 		BeforeAll 'sourceCut'
 		# Mock out.
-		checkRequiredOpts() { :; }
+		verifyInputProvided() { :; }
 		
 		Describe "Mock date():" logLog:mockDate
 			It "Not defined" logLogMockDate:notDefined

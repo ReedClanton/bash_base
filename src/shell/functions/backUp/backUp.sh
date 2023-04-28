@@ -39,15 +39,20 @@ BACKUP_DOC=$(
 #/	that don't start with '.bash' won't be included. Also the folder called
 #/	'GDrive' at the root of $DEFAULT_BACK_UP_SOURCE_PATH will be ignored.
 #/ 
-#/ USAGE: backUp [OPTIONS]...
+#/ USAGE: backUp [SPECIAL_OPTION] [OPTIONS...]
 #/
 #/ NOTE(S):
+#/	- Diffrent shells render special characters, like tab and new line,
+#/		diffrently. Thus if this doc contains any special characters that have
+#/		two backslashes, know that only one is intended.
 #/	- This is intended to be run each time a terminal is opened.
-#/  
-#/ OPTION(S):
+#/
+#/ SPECIAL OPTION(S):
 #/	-h, --help
 #/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
+#/  
+#/ OPTION(S):
 #/	-q, --quiet
 #/		Produces no output other than error level.
 #/			- Note: Default log level value: $SHELL_LOG_LEVEL.
@@ -65,6 +70,9 @@ BACKUP_DOC=$(
 #/	backUp
 #/	backUp --help
 #/	backUp -q
+#/
+#/ AUTHOR(S):
+#/	- Reed Clanton
 #/ 
 #/ TODO(S):
 #/	- Implement -q option.

@@ -35,15 +35,23 @@ FUNCTION_NAME_DOC=$(
 #/ DESCRIPTION:
 #/	TODO
 #/
-#/ USAGE: functionName [OPTIONS]... [ARGUMENTS]...
+#/ USAGE: functionName [SPECIAL_OPTION] [OPTIONS...] [ARGUMENTS...]
 #/
 #/ NOTE(S):
-#/	- TODO
+#/	- Diffrent shells render special characters, like tab and new line,
+#/		diffrently. Thus if this doc contains any special characters that have
+#/		two backslashes, know that only one is intended.
 #/
-#/ OPTION(S):
+#/ SPECIAL OPTION(S):
 #/	-h, --help
 #/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
+#/
+#/ OPTION(S):
+#/	-s=<someValue>, --some-option-name=<someValue>
+#/		<optionDescriptionText>:
+#/			- Note: <someNote>.
+#/		(OPTIONAL/REQUIRED)
 #/ 
 #/ RETURN CODE(S):
 #/	- 0: Returned when:
@@ -53,6 +61,9 @@ FUNCTION_NAME_DOC=$(
 #/
 #/ EXAMPLE(S):
 #/	functionName --help
+#/
+#/ AUTHOR(S):
+#/	- <authorName>
 #/
 #/ TODO(S):
 #/	- TODO
@@ -135,7 +146,7 @@ functionName {
 	## Error Check Input(s) ##
 	#########################
 	log $traceLvl -m="Ensuring all required argument(s) were given..."
-	checkRequiredOpts "$FUNCTION_NAME_DOC" "-a=$varHoldingValOfRequiredArg"
+	verifyInputProvided "$FUNCTION_NAME_DOC" "--value=$varHoldingValOfRequiredArg"
 	rtVal=$?
 	if [[ $rtVal -ne 0 ]]; then
 		return $rtVal

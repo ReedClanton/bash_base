@@ -5,12 +5,15 @@ SHELL_NAME_DOC=$(
 #/ DESCRIPTION:
 #/	Produces the name of shell that this code is running under to stdOut.
 #/ 
-#/ USAGE: shellName [OPTIONS]...
+#/ USAGE: shellName [SPECIAL_OPTION]
 #/
 #/ NOTE(S):
-#/	- Used by shell environment config file(s). Thus log function can't be used.
-#/  
-#/ OPTION(S):
+#/	- Diffrent shells render special characters, like tab and new line,
+#/		diffrently. Thus if this doc contains any special characters that have
+#/		two backslashes, know that only one is intended.
+#/	- Used by shell environment config file(s), thus the log() function can't be used.
+#/
+#/ SPECIAL OPTION(S):
 #/	-h, --help
 #/		Print this help message. Function will return code of '0'. No processing will be done.
 #/		(OPTIONAL)
@@ -25,6 +28,9 @@ SHELL_NAME_DOC=$(
 #/ EXAMPLE(S):
 #/	shellName
 #/	shellName --help
+#/
+#/ AUTHOR(S):
+#/	- Reed Clanton
 #/ 
 #/ TODO(S):
 #/	- None

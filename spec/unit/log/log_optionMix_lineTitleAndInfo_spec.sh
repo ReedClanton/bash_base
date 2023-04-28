@@ -25,7 +25,7 @@ Describe "Log:" log
 		sourceCut() { . $cutPath; }
 		BeforeAll 'sourceCut'
 		# Mock out.
-		checkRequiredOpts() { :; }
+		verifyInputProvided() { :; }
 		
 		Describe "Option mix:" logLog:optionMix
 			Describe "--line-title and info:" logLogUtilOptionMix:lineTitleAndInfo
