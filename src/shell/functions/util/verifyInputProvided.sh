@@ -82,7 +82,7 @@ verifyInputProvided() {
 	################################
 	## Reset/Set Local Variable(s) ##
 	################################
-	# Error prefix added to error logs.
+	# Error prefix appended to error logs.
 	verifyInputProvidedLogPrefix="ERROR verifyInputProvided():"
 	if command -v date >/dev/null; then
 		verifyInputProvidedLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $verifyInputProvidedLogPrefix"

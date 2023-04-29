@@ -72,7 +72,7 @@ createHeaderFooter() {
 	len=0
 	# Tracks if prefix is being used.
 	prefixUsed=false
-	# Error prefix added to error output messages.
+	# Error prefix appended to error logs.
 	createHeaderFooterLogPrefix="ERROR createHeaderFooter():"
 	if command -v date >/dev/null; then
 		createHeaderFooterLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $createHeaderFooterLogPrefix"
