@@ -84,6 +84,6 @@ export SHELL_FUNCTIONS=$SHELL_ROOT/functions
 # Include log function used by other function(s) in the same/child directories.
 . $SHELL_FUNCTIONS/log/log.sh
 # Include function for returning name of current shell.
-alias shellName=$SHELL_FUNCTIONS/shellName.sh
+. $SHELL_FUNCTIONS/shellName/shellName.sh
 # Include function that backs up local home directory to "external" drive.
 alias backUp=$SHELL_FUNCTIONS/backUp/backUp.sh

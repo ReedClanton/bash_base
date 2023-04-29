@@ -1,19 +1,38 @@
+###########################################################################
+## Source Shell Function(s) So They May be Used Durring Environment Setup ##
+###########################################################################
+if [ -f $HOME/shell/shell_functions ]; then
+	. $HOME/shell/shell_functions
+fi
+
+###################################
+## Determine Current Shell's Name ##
+###################################
+SHELL_NAME=$(shellName)
+stdRt=$?
+if [ $stdRt -ne 0 ]; then
+	echo "ERROR .shellrc: shellName() failed with return code '$stdRt', falling back to using SHELL ($SHELL) to get shell name." >&2
+	if [ "$SHELL" != "" ]; then
+		# TODO: Refactor so it cleans SHELL value.
+		SHELL_NAME=$SHELL
+	else
+		echo "ERROR .shellrc: Failed to determine shell name, defaulting to 'bash'." >&2
+	fi
+else
+	export SHELL_NAME
+fi
+
 ##############################
 ## Source Global Definitions ##
 ##############################
-# TODO #54: Make this not shit.
-shellName=$($HOME/shell/functions/shellName.sh)
-if compgen -G "/etc/${shellName}rc" > /dev/null; then
-	. /etc/${shellName}rc
+if compgen -G "/etc/${SHELL_NAME}rc" > /dev/null; then
+	. /etc/${SHELL_NAME}rc
 fi
 if [ -f $HOME/shell/shell_aliases ]; then
 	. $HOME/shell/shell_aliases
 fi
 if [ -f $HOME/shell/shell_flatpak_aliases ]; then
 	. $HOME/shell/shell_flatpak_aliases
-fi
-if [ -f $HOME/shell/shell_functions ]; then
-	. $HOME/shell/shell_functions
 fi
 
 ######################
