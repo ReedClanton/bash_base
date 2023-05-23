@@ -66,4 +66,4 @@ unset rc
 ## Backup ##
 ###########
 # Back up home directory each time any terminal is opened.
-backUp
+backUp >$HOME/.backUp.log 2>&1 &

@@ -6,3 +6,12 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
 fi
 # Look in PWD last.
 export PATH=$PATH:.
+
+######################
+## Environment Setup ##
+######################
+if [ -f "$HOME/.rc" ]; then
+	. $HOME/.rc
+else
+	echo "ERROR .rc: Failed to source .rc because it couldn't be found." >&2
+fi
