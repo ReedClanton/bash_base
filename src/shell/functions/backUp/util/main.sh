@@ -13,6 +13,8 @@ if [ -f $PWD/constants.sh ]; then
 	. $PWD/constants.sh
 elif [ -f $PWD/src/shell/functions/$funcName/util/constants.sh ]; then
 	. $PWD/src/shell/functions/$funcName/util/constants.sh
+elif [ -f $HOME/shell/functions/$funcName/util/constants.sh ]; then
+	. $HOME/shell/functions/$funcName/util/constants.sh
 elif [ "$SHELL_FUNCTIONS" != "" ]; then
 	if [ -f $SHELL_FUNCTIONS/$funcName/util/constants.sh ]; then
 		. $SHELL_FUNCTIONS/$funcName/util/constants.sh
@@ -30,6 +32,8 @@ if ! command -v log >/dev/null; then
 		. $PWD/../../log/log.sh
 	elif [ -f $PWD/src/shell/functions/log/log.sh ]; then
 		. $PWD/src/shell/functions/log/log.sh
+	elif [ -f $HOME/shell/functions/log/log.sh ]; then
+		. $HOME/shell/functions/log/log.sh
 	elif [ "$SHELL_FUNCTIONS" != "" ]; then
 		if [ -f $SHELL_FUNCTIONS/log/log.sh ]; then
 			. $SHELL_FUNCTIONS/log/log.sh

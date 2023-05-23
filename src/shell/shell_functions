@@ -68,6 +68,8 @@ else
 fi
 # Shell function(s) root.
 export SHELL_FUNCTIONS=$SHELL_ROOT/functions
+# Git root.
+export GIT_ROOT=$HOME/git
 
 ############################
 ## Global Function(s)/Data ##
@@ -86,4 +88,4 @@ export SHELL_FUNCTIONS=$SHELL_ROOT/functions
 # Include function for returning name of current shell.
 . $SHELL_FUNCTIONS/shellName/shellName.sh
 # Include function that backs up local home directory to "external" drive.
-alias backUp=$SHELL_FUNCTIONS/backUp/backUp.sh
+. $SHELL_FUNCTIONS/backUp/backUp.sh

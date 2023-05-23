@@ -1,5 +1,24 @@
 #!/usr/bin/env sh
 
+# Needed so unit tests can mock out sourced file(s).
+if ! command -v inScriptSource >/dev/null; then
+	inScriptSource() { . "$@"; }
+fi
+
+##############
+## Import(s) ##
+##############
+funcName="environmentSetup"
+if [ -f $PWD/util/main.sh ]; then
+	inScriptSource $PWD/util/main.sh
+else
+	echo "ERROR $funcName(): Couldn't find 'main.sh' file from PWD ($PWD)." >&2
+	exit 202
+fi
+
+################
+## Function(s) ##
+################
 ENVIRONMENT_SETUP_DOC=$(
 	cat <<"EOF"
 #/ DESCRIPTION:
