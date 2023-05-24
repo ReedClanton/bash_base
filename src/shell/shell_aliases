@@ -30,7 +30,7 @@ if command -v tmux >/dev/null; then
 	alias tmuxCreateWindowGit2=" tmux new-window -d -n git2 -c $GIT_ROOT -t tmp;tmux send-keys -t tmp:git2 'c' Enter"
 	alias tmuxCreateWindowShellBaseWorking="\
 		tmux new-window -d -n shell_base_working -c $GIT_ROOT/shell_base -t tmp;\
-		tmux send-keys -t tmp:shell_base_working 'tmux split-window -v -t tmp:shell_base_working -l 8%' Enter 'g' Enter;\
+		tmux send-keys -t tmp:shell_base_working 'tmux split-window -v -t tmp:shell_base_working -l 10' Enter 'g' Enter;\
 		sleep .3;\
 		tmux send-keys -t tmp:shell_base_working 'tmux select-pane -t 1.0;clear' Enter\
 	"
