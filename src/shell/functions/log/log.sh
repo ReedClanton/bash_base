@@ -173,12 +173,12 @@ log() {
 	# Error prefix added to error output messages.
 	logLogPrefix="ERROR log():"
 	if $dateSupported; then
-		logLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $logLogPrefix"
+		logLogPrefix="$($(command -v date) +'%Y/%m/%d %I:%M:%S %Z') $logLogPrefix"
 	fi
 	# Used to build prefix to log message.
 	pfix=""
 	if $dateSupported; then
-		pfix="$(date +"%Y/%m/%d %H:%M:%S %Z") "
+		pfix="$(date +"%Y/%m/%d %I:%M:%S %Z") "
 	fi
 	# Used to build final output message.
 	msg=""

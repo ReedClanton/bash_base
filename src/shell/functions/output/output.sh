@@ -17,11 +17,11 @@ elif [ "$SHELL_FUNCTIONS" != "" ]; then
 	if [ -f $SHELL_FUNCTIONS/$funcName/util/main.sh ]; then
 		inScriptSource $SHELL_FUNCTIONS/$funcName/util/main.sh
 	else
-		echo "ERROR $funcName():    Couldn't find 'main.sh' file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		echo "ERROR $funcName(): Couldn't find 'main.sh' file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
 		exit 202
 	fi
 else
-	echo "ERROR $funcName():    Couldn't find 'main.sh' file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+	echo "ERROR $funcName(): Couldn't find 'main.sh' file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
 	exit 202
 fi
 
@@ -208,7 +208,7 @@ output() {
 	# Error prefix added to error output messages.
 	outputLogPrefix="ERROR output():"
 	if command -v date >/dev/null; then
-		outputLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $outputLogPrefix"
+		outputLogPrefix="$($(command -v date) +'%Y/%m/%d %I:%M:%S %Z') $outputLogPrefix"
 	fi
 	# Tracks if caller provided a message option so correct return value may be provided.
 	msgGiven=false

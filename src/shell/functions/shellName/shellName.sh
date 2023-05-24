@@ -117,7 +117,7 @@ shellName() {
 	# Error prefix appended to error logs.
 	shellNameLogPrefix="ERROR shellName():"
 	if command -v date >/dev/null; then
-		shellNameLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $shellNameLogPrefix"
+		shellNameLogPrefix="$($(command -v date) +'%Y/%m/%d %I:%M:%S %Z') $shellNameLogPrefix"
 	fi
 
 	######################

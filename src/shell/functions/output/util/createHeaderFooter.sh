@@ -75,7 +75,7 @@ createHeaderFooter() {
 	# Error prefix appended to error logs.
 	createHeaderFooterLogPrefix="ERROR createHeaderFooter():"
 	if command -v date >/dev/null; then
-		createHeaderFooterLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $createHeaderFooterLogPrefix"
+		createHeaderFooterLogPrefix="$($(command -v date) +'%Y/%m/%d %I:%M:%S %Z') $createHeaderFooterLogPrefix"
 	fi
 
 	######################

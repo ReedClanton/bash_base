@@ -16,9 +16,14 @@ report/
 ######################
 *_history
 
+############################
+## Log & Temporary File(s) ##
+############################
+*~
+*.log
+
  #########
 ## Other ##
  #########
 # **Note**: You need to have an extreamlly compelling reason to add something here...
 tmp.sh
-*~

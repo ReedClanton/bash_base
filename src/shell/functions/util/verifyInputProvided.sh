@@ -85,7 +85,7 @@ verifyInputProvided() {
 	# Error prefix appended to error logs.
 	verifyInputProvidedLogPrefix="ERROR verifyInputProvided():"
 	if command -v date >/dev/null; then
-		verifyInputProvidedLogPrefix="$($(command -v date) +'%Y/%m/%d %H:%M:%S %Z') $verifyInputProvidedLogPrefix"
+		verifyInputProvidedLogPrefix="$($(command -v date) +'%Y/%m/%d %I:%M:%S %Z') $verifyInputProvidedLogPrefix"
 	fi
 
 	##################################
