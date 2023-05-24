@@ -7,6 +7,9 @@ alias ssh='ssh -X'
 if command -v gdm >/dev/null; then
 	alias gnome='sudo systemctl start gdm'
 fi
+alias grep="grep --color=auto"
+alias ip="ip --color=auto"
+alias ls="ls --color=auto"
 
 ########################
 ## Development Tool(s) ##
@@ -39,7 +42,7 @@ if command -v tmux >/dev/null; then
 		tmux new-window -d -n web -c $HOME -t tmp;\
 		tmux send-keys -t tmp:web 'lynx' Enter;\
 		tmux send-keys -t tmp:web 'g';\
-		tmux send-keys -t tmp:web '.ggoogle.com'\
+		tmux send-keys -t tmp:web '.ggoogle.com' Enter\
 	"
 	# Attach to Default Session #
 	alias t="\
