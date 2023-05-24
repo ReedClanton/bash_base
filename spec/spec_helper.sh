@@ -66,7 +66,36 @@ containsEscapeSequence() {
 	return 3
 }
 # Shell Checking Function(s) #
-# NoOp
+isNotBash() {
+	psCmd=$(ps -p$$ -ocommand=)
+	if [ "$psCmd" = "${psCmd%bash*}" ]; then
+		return 0
+	fi
+	return 1
+}
+isNotDash() {
+	psCmd=$(ps -p$$ -ocommand=)
+	if [ "$psCmd" = "${psCmd%*dash*}" ]; then
+		return 0
+	fi
+	return 1
+}
+isNotKsh() {
+	psCmd=$(ps -p$$ -ocommand=)
+	if [ "$psCmd" = "${psCmd%ksh*}" ]; then
+		return 0
+	fi
+	return 1
+}
+isNotZsh() {
+	psCmd=$(ps -p$$ -ocommand=)
+	echo "psCmd: '$psCmd'"
+	echo "{psCmd%zsh*}: '${psCmd%zsh*}'"
+	if [ "$psCmd" = "${psCmd%zsh*}" ]; then
+		return 0
+	fi
+	return 1
+}
 # Mocking System Commands #
 # Most code uses the 'cat' command to copy method doc to a variable, so it's mocked here.
 cat() { input=""; read input; echo $input; }
