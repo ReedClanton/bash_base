@@ -59,6 +59,8 @@ bind "set show-all-if-ambiguous on"
 #bind "set match-hidden-files off"
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
+# Setup `less` so `man` pages use pretty formatting.
+export MANPAGER="less -R --use-color -Dd+r -Du+b"
 
 unset rc
 
@@ -66,4 +68,4 @@ unset rc
 ## Backup ##
 ###########
 # Back up home directory each time any terminal is opened.
-backUp >$HOME/.backUp.log 2>&1 &
+backUp >$HOME/shell/functions/backUp/backUp.log 2>&1 &
