@@ -144,15 +144,18 @@ shellName() {
 	if command -v ps >/dev/null; then
 		# List of ps commands that may be used to get shell name. Different
 		#	ones work on different shells.
-		psShellNameCommands="ps -p$$ -ocommand= \n ps -p$$ -ocmd= \n ps -p$$ \n "
-		# Try each command.
-		while
-			# Split out current ps command from the rest and run it.
-			currentShellNameCommand=${psShellNameCommands%%" \n "*}
-			shellNameCommandResult=$($currentShellNameCommand)
+		psCmdAdditionalOptions="<-ocommand=> <-ocmd=> <> "
+
+		while [ "$psCmdAdditionalOptions" ]; do
+			# Split out current loop's command option(s) from the rest.
+			currentPsCmdOpt=${psCmdAdditionalOptions#*<}
+			currentPsCmdOpt=${currentPsCmdOpt%%> *}
+			# Remove current option(s) from the list.
+			psCmdAdditionalOptions=${psCmdAdditionalOptions#*> }
+			# Build and run current command.
+			psCmdResult=$(ps -p$$ $currentPsCmdOpt) 2>/dev/null
 			stdRt=$?
-			# Remove current command from the rest.
-			psShellNameCommands=${knownShellNames#*" \n "}
+
 			# If command ran successfully, attempt to use output to determine current shell name.
 			if [ $stdRt -eq 0 ]; then
 				# Search for a recognized shell name.
@@ -163,30 +166,13 @@ shellName() {
 					knownShellNames=${knownShellNames#*" "}
 
 					# Check if current shell name is found in command output.
-					if [ "${shellNameCommandResult%%*"$currentShellName"*}" != "$shellNameCommandResult" ]; then
+					if [ "${psCmdResult%%*"$currentShellName"*}" != "$psCmdResult" ]; then
 						echo $currentShellName
 						return 0
 					fi
 				done
 			else
-				echo "$shellNameLogPrefix ps command 'currentShellNameCommand' returned code '$stdRt'." >&2
-			fi
-
-			[ "$psShellNameCommands" ]
-		do :; done
-	elif [ "$SHELL" != "" ]; then
-		echo "$shellNameLogPrefix ps command not usable, using environment variable SHELL as a fall back." >&2
-		# Search for a recognized shell name.
-		knownShellNames=$RECOGNIZED_SHELL_NAMES
-		while [ "$knownShellNames" ]; do
-			# Split out current shell name from the rest.
-			currentShellName=${knownShellNames%%" "*}
-			knownShellNames=${knownShellNames#*" "}
-
-			# Check if current shell name is found in command output.
-			if [ "${shellNameCommandResult%%*"$SHELL"*}" != "$shellNameCommandResult" ]; then
-				echo $currentShellName
-				return 203
+				echo "$shellNameLogPrefix ps command 'ps -p$$ $currentPsCmdOpt' returned code '$stdRt'." >&2
 			fi
 		done
 	else
@@ -194,3 +180,5 @@ shellName() {
 		return 209
 	fi
 }
+
+shellName

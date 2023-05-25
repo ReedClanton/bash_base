@@ -89,8 +89,6 @@ isNotKsh() {
 }
 isNotZsh() {
 	psCmd=$(ps -p$$ -ocommand=)
-	echo "psCmd: '$psCmd'"
-	echo "{psCmd%zsh*}: '${psCmd%zsh*}'"
 	if [ "$psCmd" = "${psCmd%zsh*}" ]; then
 		return 0
 	fi

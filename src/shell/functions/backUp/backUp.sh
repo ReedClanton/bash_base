@@ -315,7 +315,7 @@ backUp() {
 			currentExclude=${excludeList#*<}
 			currentExclude=${currentExclude%%> *}
 			log $TRACE_LVL -m="Excluding '$currentExclude'..."
-			# Remove current element from the rest of list.
+			# Remove current element from the rest of the list.
 			excludeList=${excludeList#*> }
 			# Add current element to options.
 			options="$options --exclude='$currentExclude'"
