@@ -180,5 +180,3 @@ shellName() {
 		return 209
 	fi
 }
-
-shellName
