@@ -82,21 +82,14 @@ SHELL_NAME_DOC=$(
 #/		- stdout:
 #/			- N/A
 #/		- stderr:
-#/			- Error logs & function doc.
+#/			- Error log(s) & function doc.
 #/	- 203:
 #/		- Returned when:
-#/			- Required system command wasn't usable.
-#/		- stdout:
-#/			- Best guess of shell name.
-#/		- stderr:
-#/			- Error logs.
-#/	- 209:
-#/		- Returned when:
-#/			- Required system command wasn't usable *and* environment variables couldn't be found.
+#/			- Required system command wasn't usable/accessible.
 #/		- stdout:
 #/			- N/A
 #/		- stderr:
-#/			- Error logs.
+#/			- Error log(s).
 #/ 
 #/ EXAMPLE(S):
 #/	shellName
@@ -175,8 +168,11 @@ shellName() {
 				echo "$shellNameLogPrefix ps command 'ps -p$$ $currentPsCmdOpt' returned code '$stdRt'." >&2
 			fi
 		done
-	else
-		echo "$shellNameLogPrefix Couldn't find way of getting shell name." >&2
+
+		echo "$shellNameLogPrefix Failed to determine shell name with `ps`." >&2
 		return 209
+	else
+		echo "$shellNameLogPrefix Couldn't find way of getting shell name. Ensure `ps` and `command` are installed." >&2
+		return 203
 	fi
 }
