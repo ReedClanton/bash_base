@@ -15,3 +15,9 @@ if [ -f "$HOME/.rc" ]; then
 else
 	echo "ERROR .rc: Failed to source .rc because it couldn't be found." >&2
 fi
+
+#######################
+## Lynx Configuration ##
+#######################
+# Set home page.
+export WWW_HOME=https://www.google.com
