@@ -89,3 +89,6 @@ export GIT_ROOT=$HOME/git
 . $SHELL_FUNCTIONS/shellName/shellName.sh
 # Include function that backs up local home directory to "external" drive.
 . $SHELL_FUNCTIONS/backUp/backUp.sh
+# Includes function(s) for creating and configuring `tmux` sessions.
+. $SHELL_FUNCTIONS/tmux/tDefault.sh
+#. $SHELL_FUNCTIONS/tmux/tCode.sh

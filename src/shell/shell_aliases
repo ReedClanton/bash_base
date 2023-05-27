@@ -22,12 +22,9 @@ if command -v tmux >/dev/null; then
 	# Session Creation #
 	alias tmuxCreateSession="tmux new-session -d -s tmp -n home -c $HOME"
 	# Rename Temporary Session #
-	alias tmuxRenameSessionDefault="tmux send-keys -t tmp:home 'tmux rename-session default' Enter 'clear;neofetch;pwd;ls -GAp' Enter;sleep .3"
-	alias tmuxRenameSessionCode="   tmux send-keys -t tmp:home 'tmux rename-session code'    Enter 'clear;neofetch;pwd;ls -GAp' Enter;sleep .3"
+	alias tmuxRenameSessionCode="   tmux send-keys -t tmp:home 'tmux rename-session code' Enter 'clear;neofetch;pwd;ls -GAp' Enter;sleep .3"
 	# Create Window(s) #
 	alias tmuxCreateWindowHome2="tmux new-window -d -n home2 -c $HOME -t tmp;tmux send-keys -t tmp:home2 'c' Enter"
-	alias tmuxCreateWindowHome3="tmux new-window -d -n home3 -c $HOME -t tmp;tmux send-keys -t tmp:home3 'c' Enter"
-	alias tmuxCreateWindowHome4="tmux new-window -d -n home4 -c $HOME -t tmp;tmux send-keys -t tmp:home4 'c' Enter"
 	alias tmuxCreateWindowGit="  tmux new-window -d -n git -c $GIT_ROOT -t tmp;tmux send-keys -t tmp:git 'c' Enter"
 	alias tmuxCreateWindowGit2=" tmux new-window -d -n git2 -c $GIT_ROOT -t tmp;tmux send-keys -t tmp:git2 'c' Enter"
 	alias tmuxCreateWindowShellBaseWorking="\
@@ -61,17 +58,6 @@ if command -v tmux >/dev/null; then
 		tmux send-keys -t tmp:web2 'lynx' Enter;\
 		sleep .1;\
 		tmux send-keys -t tmp:web2 Down Down Down Down Down Down Down Down Down Down Down\
-	"
-	# Attach to Default Session #
-	alias t="\
-		tmuxCreateSession;\
-		tmuxCreateWindowHome2;\
-		tmuxCreateWindowHome3;\
-		tmuxCreateWindowHome4;\
-		tmuxCreateWindowWeb;\
-		tmuxCreateWindowWeb2;\
-		tmuxRenameSessionDefault;\
-		tmux attach -t default:home\
 	"
 	# Attach to Code Session #
 	alias tCode="\
