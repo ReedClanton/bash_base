@@ -32,12 +32,14 @@ fi
 T_DEFAULT_DOC=$(
 	cat <<"EOF"
 #/ DESCRIPTION:
-#/	TODO
+#/	Creates and configures `default` TMUX session. This includes TMUX
+#/	window(s) at `$HOME` as well as window(s) that contain terminal web
+#/	browser.
 #/
 #/ USAGE: tDefault [SPECIAL_OPTION]
 #/
 #/ NOTE(S):
-#/	- TODO
+#/	- None.
 #/
 #/ SPECIAL OPTION(S):
 #/	-h, --help
@@ -48,10 +50,12 @@ T_DEFAULT_DOC=$(
 #/	- 0: Returned when:
 #/		- Help message is requested and produced.
 #/		- TMUX session is created succesfully.
+#/	- 3: Returned when:
+#/		- Any shell util function call fails.
+#/	- 126: Returned when:
+#/		- Any `tmux` command fails to execute.
 #/	- 140: Returned when:
 #/		- Provided option name is invalid.
-#/	- 126: Returned when:
-#/		- TODO
 #/
 #/ EXAMPLE(S):
 #/	tDefault --help
@@ -62,12 +66,7 @@ T_DEFAULT_DOC=$(
 #/	- Reed Clanton
 #/
 #/ TODO(S):
-#/	- Document: Return code(s).
-#/	- Document: Description.
-#/	- Document: Notes
-#/	- Implement: Split out window creation: home[0-...]
-#/	- Implement: Split out window creation: web[0-...]
-#/	- Implement: Add logs.
+#/	- Implement: Remove existing temporary session.
 EOF
 )
 
@@ -77,10 +76,10 @@ tDefault() {
 	## Reset/Set Local Variable(s) ##
 	################################
 	# Logging var(s).
-	TRACE_LVL="-c=${FUNCNAME[0]}"
+	TRACE_LVL="-t -c=${FUNCNAME[0]}"
 	DEBUG_LVL="-d -c=${FUNCNAME[0]}"
-	INFO_LVL="-i -c=${FUNCNAME[0]}"
-	WARN_LVL="-w -c=${FUNCNAME[0]}"
+	INFO_LVL=" -i -c=${FUNCNAME[0]}"
+	WARN_LVL=" -w -c=${FUNCNAME[0]}"
 	ERROR_LVL="-e -c=${FUNCNAME[0]}"
 	# Final tmux session name.
 	finalTmuxSessionName="default"
@@ -101,75 +100,137 @@ tDefault() {
 				return 0
 				;;
 			*)
-				log $ERROR_LVL -m="Calling function provided invalid option: '$fullArg', see doc:"
+				log $ERROR_LVL --full-title -m="Calling function provided invalid option: '$fullArg', see doc:"
 				echo "$T_DEFAULT_DOC" >&2
 				return 140
 				;;
 		esac
 	done
 
+	#############################
+	## Remove Existing Sessions ##
+	#############################
+#	log $TRACE_LVL -m="Checking for pre-existing temporary session..."
+#	unset stdOutAll stdRt
+#	stdOutAll=$(tmux ls 2>&1)
+#	stdRt=$?
+#	if [ $stdRt -eq 0 ]; then
+		# Check if session with temporary name already exists.
+		
+#	else
+		# TODO
+#	fi
+
 	###################
 	## Create Session ##
 	###################
-	log $TRACE_LVL -m="Creating new session named '$TEMP_SESSION_NAME'..."
+	cmd="tmux new-session -d -s $TEMP_SESSION_NAME -n home -c $HOME"
+	log $DEBUG_LVL -m="Creating new session with command: '$cmd'..."
         unset stdOutAll stdRt
-	stdOutAll=$(tmux new-session -d -s $TEMP_SESSION_NAME -n home -c $HOME 2>&1)
+	stdOutAll=$(eval $cmd 2>&1)
         stdRt=$?
-
         if [ $stdRt -eq 0 ]; then
+
 		#######################
 		## Setup Window: Home ##
 		#######################
-		log $DEBUG_LVL -m="Calling tCreateWindowHome()..."
+		functionCall="tConfigureWindowHome"
+		log $DEBUG_LVL -m="Configuring 'home' window by calling '$functionCall'..."
 		unset stdOutAll stdRt
-		stdOutAll=$(tCreateWindowHome 2>&1)
+		stdOutAll=$(eval $functionCall 2>&1)
 		stdRt=$?
-
 	        if [ $stdRt -eq 0 ]; then
+
 			#################################
 			## Create & Setup Window: Home2 ##
 			#################################
-			tmux new-window -d -n home2 -c $HOME -t $TEMP_SESSION_NAME
-			tmux send-keys -t $TEMP_SESSION_NAME:home2 'c' Enter
+			createWindow="home2"
+			functionCall="tCreateWindowHome --window-name='$createWindow'"
+			log $DEBUG_LVL -m="Creating '$createWindow' window by calling '$functionCall'..."
+			unset stdOutAll stdRt
+			stdOutAll=$(eval $functionCall 2>&1)
+			stdRt=$?
+			if [ $stdRt -eq 0 ]; then
 
-			#################################
-			## Create & Setup Window: Home3 ##
-			#################################
-			tmux new-window -d -n home3 -c $HOME -t $TEMP_SESSION_NAME
-			tmux send-keys -t $TEMP_SESSION_NAME:home3 'c' Enter
+				#################################
+				## Create & Setup Window: Home3 ##
+				#################################
+				createWindow="home3"
+				functionCall="tCreateWindowHome --window-name='$createWindow'"
+				log $DEBUG_LVL -m="Creating '$createWindow' by calling '$functionCall'..."
+				unset stdOutAll stdRt
+				stdOutAll=$(eval $functionCall 2>&1)
+				stdRt=$?
+				if [ $stdRt -eq 0 ]; then
 
-			#################################
-			## Create & Setup Window: Home4 ##
-			#################################
-			tmux new-window -d -n home4 -c $HOME -t $TEMP_SESSION_NAME
-			tmux send-keys -t $TEMP_SESSION_NAME:home4 'c' Enter
+					#################################
+					## Create & Setup Window: Home4 ##
+					#################################
+					createWindow="home4"
+					functionCall="tCreateWindowHome --window-name='$createWindow'"
+					log $DEBUG_LVL -m="Creating '$createWindow' by calling '$functionCall'..."
+					unset stdOutAll stdRt
+					stdOutAll=$(eval $functionCall 2>&1)
+					stdRt=$?
+					if [ $stdRt -eq 0 ]; then
 
-			###############################
-			## Create & Setup Window: Web ##
-			###############################
-			tmux new-window -d -n web -c $HOME -t $TEMP_SESSION_NAME
-			tmux send-keys -t $TEMP_SESSION_NAME:web 'lynx' Enter
-			tmux send-keys -t $TEMP_SESSION_NAME:web Down Down Down Down Down Down Down Down Down Down Down
+						###############################
+						## Create & Setup Window: Web ##
+						###############################
+						createWindow="web"
+						functionCall="tCreateWindowWeb --window-name='$createWindow'"
+						log $DEBUG_LVL -m="Creating '$createWindow' by calling '$functionCall'..."
+						unset stdOutAll stdRt
+						stdOutAll=$(eval $functionCall 2>&1)
+						stdRt=$?
+						if [ $stdRt -eq 0 ]; then
 
-			################################
-			## Create & Setup Window: Web2 ##
-			################################
-			tmux new-window -d -n web2 -c $HOME -t $TEMP_SESSION_NAME
-			tmux send-keys -t $TEMP_SESSION_NAME:web2 'lynx' Enter
-			tmux send-keys -t $TEMP_SESSION_NAME:web2 Down Down Down Down Down Down Down Down Down Down Down
+							################################
+							## Create & Setup Window: Web2 ##
+							################################
+							createWindow="web2"
+							functionCall="tCreateWindowWeb --window-name='$createWindow'"
+							log $DEBUG_LVL -m="Creating '$createWindow' by calling '$functionCall'..."
+							unset stdOutAll stdRt
+							stdOutAll=$(eval $functionCall 2>&1)
+							stdRt=$?
+							if [ $stdRt -eq 0 ]; then
 
-			###################
-			## Rename Session ##
-			###################
-			tmux rename-session -t $TEMP_SESSION_NAME $finalTmuxSessionName
+								###################
+								## Rename Session ##
+								###################
+								cmd="tmux rename-session -t $TEMP_SESSION_NAME $finalTmuxSessionName"
+								log $DEBUG_LVL -m="Renaming session with command: '$cmd'..."
+								unset stdOutAll stdRt
+								stdOutAll=$(eval $cmd 2>&1)
+								stdRt=$?
+								if [ $stdRt -eq 0 ]; then
 
-			###########
-			## Attach ##
-			###########
-			tmux attach -t $finalTmuxSessionName:home
+									###########
+									## Attach ##
+									###########
+									cmd="tmux attach -t $finalTmuxSessionName:home"
+									unset stdOutAll stdRt
+									stdOutAll=$(eval $cmd 2>&1)
+									stdRt=$?
+									if [ $stdRt -eq 0 ]; then
+										return 0
+									fi
+								fi
+
+								log $ERROR_LVL -m="Command: '$cmd' failed with with error code: '$stdRt' and output:" -m="$stdOutAll"
+								return 126
+							fi
+						fi
+					fi
+				fi
+			fi
+
+			log $ERROR_LVL -m="'$functionCall' failed to create and configure window '$createWindow' with error code: '$stdRt' and the bellow output:" -m="$stdOutAll"
+			return 3
 		else
-	                log $ERROR_LVL -m="tCreateWindowHome failed with error code: '$stdRt' and the bellow output:" -m="$stdOutAll"
-			return 126
+	                log $ERROR_LVL -m="'$functionCall' failed to configure window with error code: '$stdRt' and the bellow output:" -m="$stdOutAll"
+			return 3
 		fi
 	else
 		log $ERROR_LVL -m="Tmux session creation failed with code: '$stdRt' and the bellow output:" -m="$stdOutAll"

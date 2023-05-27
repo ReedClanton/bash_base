@@ -1,13 +1,13 @@
 ################
 ## Function(s) ##
 ################
-T_CREATE_WINDOW_HOME_DOC=$(
+T_CREATE_WINDOW_WEB_DOC=$(
 	cat <<"EOF"
 #/ DESCRIPTION:
 #/	Creates and configures a new window in the `$TEMP_SESSION_NAME` session
-#/	at `$HOME` and runs the `c` alias.
+#/	at `$HOME` and launches the `lynx` terminal browser.
 #/
-#/ USAGE: tCreateWindowHome [SPECIAL_OPTION] [OPTION]
+#/ USAGE: tCreateWindowWeb [SPECIAL_OPTION] [OPTION]
 #/
 #/ NOTE(S):
 #/	- TMUX session `$TEMP_SESSION_NAME` must already exist and there shouldn't
@@ -27,7 +27,7 @@ T_CREATE_WINDOW_HOME_DOC=$(
 #/ RETURN CODE(S):
 #/	- 0: Returned when:
 #/		- Help message is requested and produced.
-#/		- TMUX window at `$HOME` is created succesfully.
+#/		- TMUX window containing a 'lynx' terminal browser is created succesfully.
 #/	- 126: Returned when:
 #/		- Any `tmux` command fails to execute.
 #/	- 140: Returned when:
@@ -37,10 +37,10 @@ T_CREATE_WINDOW_HOME_DOC=$(
 #/		- Required option value is invalid.
 #/
 #/ EXAMPLE(S):
-#/	tCreateWindowHome --help
-#/	tCreateWindowHome -h
-#/	tCreateWindowHome -w=home2
-#/	tCreateWindowHome --window-name="home3"
+#/	tCreateWindowWeb --help
+#/	tCreateWindowWeb -h
+#/	tCreateWindowWeb -w=web
+#/	tCreateWindowWeb --window-name="web2"
 #/
 #/ AUTHOR(S):
 #/	- Reed Clanton
@@ -51,7 +51,7 @@ T_CREATE_WINDOW_HOME_DOC=$(
 EOF
 )
 
-tCreateWindowHome() {
+tCreateWindowWeb() {
 	log -c=${FUNCNAME[0]} -m="Resetting local variable(s)..."
 	################################
 	## Reset/Set Local Variable(s) ##
@@ -65,7 +65,7 @@ tCreateWindowHome() {
 	# Name of window being configured.
 	windowName=""
 	# Command(s) run by new window.
-	windowCmds="c"
+	windowCmds="lynx"
 	log $TRACE_LVL -m="Local variable(s) reset."
 
 	######################
@@ -79,7 +79,7 @@ tCreateWindowHome() {
 		# Determine what option user gave.
 		case $fullArg in
 			-h | --help)
-				echo "$T_CREATE_WINDOW_HOME_DOC"
+				echo "$T_CREATE_WINDOW_WEB_DOC"
 				return 0
 				;;
 			-w=* | --window-name=*)
@@ -89,7 +89,7 @@ tCreateWindowHome() {
 				;;
 			*)
 				log $ERROR_LVL --full-title -m="Calling function provided invalid option: '$fullArg', see doc:"
-				echo "$T_CREATE_WINDOW_HOME_DOC" >&2
+				echo "$T_CREATE_WINDOW_WEB_DOC" >&2
 				return 140
 				;;
 		esac
@@ -99,7 +99,7 @@ tCreateWindowHome() {
 	## Error Check Input(s) ##
 	#########################
 	log $DEBUG_LVL -m="Ensuring all required options(s) were given..."
-	verifyInputProvided "$T_CREATE_WINDOW_HOME_DOC" "--value=$windowName"
+	verifyInputProvided "$T_CREATE_WINDOW_WEB_DOC" "--value=$windowName"
 	if [ $? -eq 0 ]; then
 
 		##################
@@ -121,7 +121,15 @@ tCreateWindowHome() {
 			stdOutAll=$(eval $cmd 2>&1)
 			stdRt=$?
 			if [ $stdRt -eq 0 ]; then
-				return 0
+
+				cmd="tmux send-keys -t $TEMP_SESSION_NAME:$windowName Down Down Down Down Down Down Down Down Down Down Down"
+				log $DEBUG_LVL -m="Sending keyboard input with command: '$cmd'..."
+				unset stdOutAll stdRt
+				stdOutAll=$(eval $cmd 2>&1)
+				stdRt=$?
+				if [ $stdRt -eq 0 ]; then
+					return 0
+				fi
 			fi
 		fi
 

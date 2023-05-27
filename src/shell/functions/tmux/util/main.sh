@@ -28,6 +28,28 @@ else
 	exit 202
 fi
 ## Code ##
+# verifyInputProvided() #
+importFuncDirName="util"
+importFuncName="verifyInputProvided"
+if ! command -v verifyInputProvided >/dev/null; then
+	if [ -f $PWD/../../$importFuncDirName/$importFuncName.sh ]; then
+		. $PWD/../../$importFuncDirName/$importFuncName.sh
+	elif [ -f $PWD/src/shell/functions/$importFuncDirName/$importFuncName.sh ]; then
+		. $PWD/src/shell/functions/$importFuncDirName/$importFuncName.sh
+	elif [ -f $HOME/shell/functions/$importFuncDirName/$importFuncName.sh ]; then
+		. $HOME/shell/functions/$importFuncDirName/$importFuncName.sh
+	elif [ "$SHELL_FUNCTIONS" != "" ]; then
+		if [ -f $SHELL_FUNCTIONS/$importFuncDirName/$importFuncName.sh ]; then
+			. $SHELL_FUNCTIONS/$importFuncDirName/$importFuncName.sh
+		else
+			echo "ERROR $funcName(): $importFuncName() wasn't already defined and couldn't be found from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+			exit 202
+		fi
+	else
+		echo "ERROR $funcName(): $importFuncName() wasn't already defined and couldn't be found from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+		exit 202
+	fi
+fi
 # log() #
 importFuncName="log"
 if ! command -v log >/dev/null; then
@@ -49,8 +71,46 @@ if ! command -v log >/dev/null; then
 		exit 202
 	fi
 fi
+# tConfigureWindowHome() #
+importFuncName="tConfigureWindowHome"
+if [ -f $PWD/$importFuncName.sh ]; then
+	. $PWD/$importFuncName.sh
+elif [ -f $PWD/src/shell/functions/$funcDirName/util/$importFuncName.sh ]; then
+	. $PWD/src/shell/functions/$funcDirName/util/$importFuncName.sh
+elif [ -f $HOME/shell/functions/$funcDirName/util/$importFuncName.sh ]; then
+	. $HOME/shell/functions/$funcDirName/util/$importFuncName.sh
+elif [ "$SHELL_FUNCTIONS" != "" ]; then
+	if [ -f $SHELL_FUNCTIONS/$funcDirName/util/$importFuncName.sh ]; then
+		. $SHELL_FUNCTIONS/$funcDirName/util/$importFuncName.sh
+	else
+		echo "ERROR $funcName: Couldn't find $importFuncName() util function file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		exit 202
+	fi
+else
+	echo "ERROR $funcName: Couldn't find $importFuncName() util function file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+	exit 202
+fi
 # tCreateWindowHome() #
 importFuncName="tCreateWindowHome"
+if [ -f $PWD/$importFuncName.sh ]; then
+	. $PWD/$importFuncName.sh
+elif [ -f $PWD/src/shell/functions/$funcDirName/util/$importFuncName.sh ]; then
+	. $PWD/src/shell/functions/$funcDirName/util/$importFuncName.sh
+elif [ -f $HOME/shell/functions/$funcDirName/util/$importFuncName.sh ]; then
+	. $HOME/shell/functions/$funcDirName/util/$importFuncName.sh
+elif [ "$SHELL_FUNCTIONS" != "" ]; then
+	if [ -f $SHELL_FUNCTIONS/$funcDirName/util/$importFuncName.sh ]; then
+		. $SHELL_FUNCTIONS/$funcDirName/util/$importFuncName.sh
+	else
+		echo "ERROR $funcName: Couldn't find $importFuncName() util function file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
+		exit 202
+	fi
+else
+	echo "ERROR $funcName: Couldn't find $importFuncName() util function file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
+	exit 202
+fi
+# tCreateWindowWeb() #
+importFuncName="tCreateWindowWeb"
 if [ -f $PWD/$importFuncName.sh ]; then
 	. $PWD/$importFuncName.sh
 elif [ -f $PWD/src/shell/functions/$funcDirName/util/$importFuncName.sh ]; then
