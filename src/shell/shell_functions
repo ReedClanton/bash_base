@@ -91,4 +91,5 @@ export GIT_ROOT=$HOME/git
 . $SHELL_FUNCTIONS/backUp/backUp.sh
 # Includes function(s) for creating and configuring `tmux` sessions.
 . $SHELL_FUNCTIONS/tmux/tDefault.sh
-#. $SHELL_FUNCTIONS/tmux/tCode.sh
+. $SHELL_FUNCTIONS/tmux/tCode.sh
+. $SHELL_FUNCTIONS/tmux/tShellBase.sh

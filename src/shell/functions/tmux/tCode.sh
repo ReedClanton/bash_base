@@ -7,7 +7,7 @@ fi
 ## Import(s) ##
 ##############
 funcDirName="tmux"
-funcName="tDefault"
+funcName="tCode"
 if [ -f $PWD/util/main.sh ]; then
 	inScriptSource $PWD/util/main.sh
 elif [ -f $PWD/src/shell/functions/$funcDirName/util/main.sh ]; then
@@ -29,14 +29,14 @@ fi
 ################
 ## Function(s) ##
 ################
-T_DEFAULT_DOC=$(
+T_CODE_DOC=$(
 	cat <<"EOF"
 #/ DESCRIPTION:
-#/	Creates and configures `default` TMUX session. This includes TMUX
-#/	window(s) at `$HOME` as well as window(s) that contain terminal web
-#/	browser(s).
+#/	Creates and configures `code` TMUX session. This includes TMUX
+#/	window(s) at `$HOME` and `$GIT_ROOT` as well as ones that contain
+#/	terminal web browser(s).
 #/
-#/ USAGE: tDefault [SPECIAL_OPTION]
+#/ USAGE: tCode [SPECIAL_OPTION]
 #/
 #/ NOTE(S):
 #/	- None.
@@ -58,9 +58,9 @@ T_DEFAULT_DOC=$(
 #/		- Provided option name is invalid.
 #/
 #/ EXAMPLE(S):
-#/	tDefault --help
-#/	tDefault -h
-#/	tDefault
+#/	tCode --help
+#/	tCode -h
+#/	tCode
 #/
 #/ AUTHOR(S):
 #/	- Reed Clanton
@@ -70,13 +70,13 @@ T_DEFAULT_DOC=$(
 EOF
 )
 
-tDefault() {
+tCode() {
 	log -t -c=${FUNCNAME[0]} -m="Resetting local variable(s)..."
 	################################
 	## Reset/Set Local Variable(s) ##
 	################################
 	# Final tmux session name.
-	finalTmuxSessionName="default"
+	finalTmuxSessionName="code"
 	# Root path of window(s).
 	rootDirectory="$HOME"
 	log -t -c=${FUNCNAME[0]} -m="Local variable(s) reset."
@@ -92,12 +92,12 @@ tDefault() {
 		# Determine what option user gave.
 		case $fullArg in
 			-h | --help)
-				echo "$T_DEFAULT_DOC"
+				echo "$T_CODE_DOC"
 				return 0
 				;;
 			*)
-				log -e -c=${FUNCNAME[0]} --full-title -m="Calling function provided invalid option: '$fullArg', see doc:"
-				echo "$T_DEFAULT_DOC" >&2
+				log -t -c=${FUNCNAME[0]} --full-title -m="Calling function provided invalid option: '$fullArg', see doc:"
+				echo "$T_CODE_DOC" >&2
 				return 140
 				;;
 		esac
@@ -124,10 +124,11 @@ tDefault() {
 		stdRt=$?
 		if [ $stdRt -eq 0 ]; then
 
-			#################################
-			## Create & Setup Window: Home3 ##
-			#################################
-			newWindowName="home3"
+			###############################
+			## Create & Setup Window: Git ##
+			###############################
+			newWindowName="git"
+			rootDirectory="$GIT_ROOT"
 			functionCall="tCreateWindow --window-name='$newWindowName' --location='$rootDirectory'"
 			log -d -c=${FUNCNAME[0]} -m="Creating '$newWindowName' window at '$rootDirectory' by calling '$functionCall'..."
 			unset stdRt
@@ -135,10 +136,10 @@ tDefault() {
 			stdRt=$?
 			if [ $stdRt -eq 0 ]; then
 
-				#################################
-				## Create & Setup Window: Home4 ##
-				#################################
-				newWindowName="home4"
+				################################
+				## Create & Setup Window: Git2 ##
+				################################
+				newWindowName="git2"
 				functionCall="tCreateWindow --window-name='$newWindowName' --location='$rootDirectory'"
 				log -d -c=${FUNCNAME[0]} -m="Creating '$newWindowName' window at '$rootDirectory' by calling '$functionCall'..."
 				unset stdRt
@@ -146,10 +147,10 @@ tDefault() {
 				stdRt=$?
 				if [ $stdRt -eq 0 ]; then
 
-					#################################
-					## Create & Setup Window: Home5 ##
-					#################################
-					newWindowName="home5"
+					################################
+					## Create & Setup Window: Git3 ##
+					################################
+					newWindowName="git3"
 					functionCall="tCreateWindow --window-name='$newWindowName' --location='$rootDirectory'"
 					log -d -c=${FUNCNAME[0]} -m="Creating '$newWindowName' window at '$rootDirectory' by calling '$functionCall'..."
 					unset stdRt
@@ -157,10 +158,10 @@ tDefault() {
 					stdRt=$?
 					if [ $stdRt -eq 0 ]; then
 
-						#################################
-						## Create & Setup Window: Home6 ##
-						#################################
-						newWindowName="home6"
+						################################
+						## Create & Setup Window: Git4 ##
+						################################
+						newWindowName="git4"
 						functionCall="tCreateWindow --window-name='$newWindowName' --location='$rootDirectory'"
 						log -d -c=${FUNCNAME[0]} -m="Creating '$newWindowName' window at '$rootDirectory' by calling '$functionCall'..."
 						unset stdRt
@@ -172,6 +173,7 @@ tDefault() {
 							## Create & Setup Window: Web ##
 							###############################
 							newWindowName="web"
+							rootDirectory="$HOME"
 							functionCall="tCreateWindow --window-name='$newWindowName' --location='$rootDirectory' --window-command='lynx'"
 							log -d -c=${FUNCNAME[0]} -m="Creating '$newWindowName' window at '$rootDirectory' by calling '$functionCall'..."
 							unset stdRt

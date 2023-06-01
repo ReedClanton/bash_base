@@ -1,13 +1,13 @@
 ################
 ## Function(s) ##
 ################
-T_CREATE_WINDOW_HOME_DOC=$(
+T_CREATE_WINDOW_DOC=$(
 	cat <<"EOF"
 #/ DESCRIPTION:
 #/	Creates and configures a new window in the `$TEMP_SESSION_NAME` session
-#/	at `$HOME` and runs the `c` alias.
+#/	at `$HOME` (or `-l=<dirPath>`) and runs the `c` alias.
 #/
-#/ USAGE: tCreateWindowHome [SPECIAL_OPTION] [OPTION]
+#/ USAGE: tCreateWindow [SPECIAL_OPTION] [OPTION...]
 #/
 #/ NOTE(S):
 #/	- TMUX session `$TEMP_SESSION_NAME` must already exist and there shouldn't
@@ -19,10 +19,20 @@ T_CREATE_WINDOW_HOME_DOC=$(
 #/		(OPTIONAL)
 #/
 #/ OPTION(S):
-#/	-w=<newWindowName>, --window-name=<newWindowName>
+#/	--window-command=<commandToRunInWindow>
+#/		Command to be run in created window.
+#/			- Note: All commands should be provided at once.
+#/			- Note: If more than one is provided, the last will be used.
+#/			- Default: The `c` alias.
+#/		(OPTIONAL)
+#/	--window-name=<newWindowName>
 #/		Name of window to be created.
 #/			- Note: Only the last value provided will be used.
 #/		(REQUIRED)
+#/	--location=<dirPath>
+#/		Location window should be rooted at (start at).
+#/			- Note: Default is `$HOME`.
+#/		(OPTIONAL)
 #/
 #/ RETURN CODE(S):
 #/	- 0: Returned when:
@@ -37,36 +47,32 @@ T_CREATE_WINDOW_HOME_DOC=$(
 #/		- Required option value is invalid.
 #/
 #/ EXAMPLE(S):
-#/	tCreateWindowHome --help
-#/	tCreateWindowHome -h
-#/	tCreateWindowHome -w=home2
-#/	tCreateWindowHome --window-name="home3"
+#/	tCreateWindow --help
+#/	tCreateWindow -h
+#/	tCreateWindow -w=home2
+#/	tCreateWindow --window-name="git" -l=$GIT_ROOT
 #/
 #/ AUTHOR(S):
 #/	- Reed Clanton
 #/
 #/ TODO(S):
-#/	- Implement: Fix for logs that break input processing (see commented out line).
+#/	- Implement: Fix for logs that break input processing (see commented out line in process options section).
 #/      - Implement: Convert window name option to argument.
 EOF
 )
 
-tCreateWindowHome() {
-	log -c=${FUNCNAME[0]} -m="Resetting local variable(s)..."
+tCreateWindow() {
+	log -t -c=${FUNCNAME[0]} -m="Resetting local variable(s)..."
 	################################
 	## Reset/Set Local Variable(s) ##
 	################################
-	# Logging constant(s).
-	TRACE_LVL="-t -c=${FUNCNAME[0]}"
-	DEBUG_LVL="-d -c=${FUNCNAME[0]}"
-	INFO_LVL=" -i -c=${FUNCNAME[0]}"
-	WARN_LVL=" -w -c=${FUNCNAME[0]}"
-	ERROR_LVL="-e -c=${FUNCNAME[0]}"
 	# Name of window being configured.
 	windowName=""
+	# Root directory of new window.
+	windowRoot=$HOME
 	# Command(s) run by new window.
 	windowCmds="c"
-	log $TRACE_LVL -m="Local variable(s) reset."
+	log -t -c=${FUNCNAME[0]} -m="Local variable(s) reset."
 
 	######################
 	## Process Option(s) ##
@@ -79,17 +85,27 @@ tCreateWindowHome() {
 		# Determine what option user gave.
 		case $fullArg in
 			-h | --help)
-				echo "$T_CREATE_WINDOW_HOME_DOC"
+				echo "$T_CREATE_WINDOW_DOC"
 				return 0
 				;;
-			-w=* | --window-name=*)
-#				log $DEBUG_LVL -m="Processing provied window name: '$arg'..."
+			--window-command=*)
+#				log -d -c=${FUNCNAME[0]} -m="Processing provided window comand(s): '$arg'..."
+				windowCmds="$arg"
+				log -t -c=${FUNCNAME[0]} -m="Window commands saved."
+				;;
+			--window-name=*)
+#				log -d -c=${FUNCNAME[0]} -m="Processing provied window name: '$arg'..."
 				windowName="$arg"
-				log $TRACE_LVL -m="Window name saved."
+				log -t -c=${FUNCNAME[0]} -m="Window name saved."
+				;;
+			--location=*)
+#				log -d -c=${FUNCNAME[0]} -m="Processing provided window root path: '$arg'..."
+				windowRoot="$arg"
+				log -t -c=${FUNCNAME[0]} -m="Window root path saved."
 				;;
 			*)
-				log $ERROR_LVL --full-title -m="Calling function provided invalid option: '$fullArg', see doc:"
-				echo "$T_CREATE_WINDOW_HOME_DOC" >&2
+				log -e -c=${FUNCNAME[0]} --full-title -m="Calling function provided invalid option: '$fullArg', see doc:"
+				echo "$T_CREATE_WINDOW_DOC" >&2
 				return 140
 				;;
 		esac
@@ -98,15 +114,15 @@ tCreateWindowHome() {
 	#########################
 	## Error Check Input(s) ##
 	#########################
-	log $DEBUG_LVL -m="Ensuring all required options(s) were given..."
-	verifyInputProvided "$T_CREATE_WINDOW_HOME_DOC" "--value=$windowName"
+	log -d -c=${FUNCNAME[0]} -m="Ensuring all required options(s) were given..."
+	verifyInputProvided "$T_CREATE_WINDOW_DOC" "--value=$windowName" "--value=$windowRoot"
 	if [ $? -eq 0 ]; then
 
 		##################
 		## Create Window ##
 		##################
-		cmd="tmux new-window -d -n $windowName -c $HOME -t $TEMP_SESSION_NAME"
-		log $DEBUG_LVL -m="Creating window with command: '$cmd'..."
+		cmd="tmux new-window -d -n $windowName -c $windowRoot -t $TEMP_SESSION_NAME"
+		log -d -c=${FUNCNAME[0]} -m="Creating window with command: '$cmd'..."
 		unset stdOutAll stdRt
 		stdOutAll=$(eval $cmd 2>&1)
 		stdRt=$?
@@ -116,7 +132,7 @@ tCreateWindowHome() {
 			## Setup Window ##
 			#################
 			cmd="tmux send-keys -t $TEMP_SESSION_NAME:$windowName $windowCmds Enter"
-			log $DEBUG_LVL -m="Setting up window with command: '$cmd'..."
+			log -d -c=${FUNCNAME[0]} -m="Setting up window with command: '$cmd'..."
 			unset stdOutAll stdRt
 			stdOutAll=$(eval $cmd 2>&1)
 			stdRt=$?
@@ -125,7 +141,7 @@ tCreateWindowHome() {
 			fi
 		fi
 
-		log $ERROR_LVL -m="Command: '$cmd' failed with error code: '$stdRt'."
+		log -e -c=${FUNCNAME[0]} -m="Command: '$cmd' failed with error code: '$stdRt'."
 		return 126
 	fi
 	return 142

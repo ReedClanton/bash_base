@@ -71,8 +71,8 @@ if ! command -v log >/dev/null; then
 		exit 202
 	fi
 fi
-# tConfigureWindowHome() #
-importFuncName="tConfigureWindowHome"
+# tCreateSession() #
+importFuncName="tCreateSession"
 if [ -f $PWD/$importFuncName.sh ]; then
 	. $PWD/$importFuncName.sh
 elif [ -f $PWD/src/shell/functions/$funcDirName/util/$importFuncName.sh ]; then
@@ -90,27 +90,8 @@ else
 	echo "ERROR $funcName: Couldn't find $importFuncName() util function file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
 	exit 202
 fi
-# tCreateWindowHome() #
-importFuncName="tCreateWindowHome"
-if [ -f $PWD/$importFuncName.sh ]; then
-	. $PWD/$importFuncName.sh
-elif [ -f $PWD/src/shell/functions/$funcDirName/util/$importFuncName.sh ]; then
-	. $PWD/src/shell/functions/$funcDirName/util/$importFuncName.sh
-elif [ -f $HOME/shell/functions/$funcDirName/util/$importFuncName.sh ]; then
-	. $HOME/shell/functions/$funcDirName/util/$importFuncName.sh
-elif [ "$SHELL_FUNCTIONS" != "" ]; then
-	if [ -f $SHELL_FUNCTIONS/$funcDirName/util/$importFuncName.sh ]; then
-		. $SHELL_FUNCTIONS/$funcDirName/util/$importFuncName.sh
-	else
-		echo "ERROR $funcName: Couldn't find $importFuncName() util function file from SHELL_FUNCTIONS: '$SHELL_FUNCTIONS'." >&2
-		exit 202
-	fi
-else
-	echo "ERROR $funcName: Couldn't find $importFuncName() util function file from PWD ($PWD) and SHELL_FUNCTIONS isn't set." >&2
-	exit 202
-fi
-# tCreateWindowWeb() #
-importFuncName="tCreateWindowWeb"
+# tCreateWindow() #
+importFuncName="tCreateWindow"
 if [ -f $PWD/$importFuncName.sh ]; then
 	. $PWD/$importFuncName.sh
 elif [ -f $PWD/src/shell/functions/$funcDirName/util/$importFuncName.sh ]; then
